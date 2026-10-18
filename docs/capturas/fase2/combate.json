@@ -1,0 +1,177 @@
+{
+  "history": [
+    {
+      "health": 100,
+      "phase": 1,
+      "playerHealth": 93,
+      "stamina": 65.3006
+    },
+    {
+      "health": 50,
+      "phase": 2,
+      "playerHealth": 81,
+      "stamina": 45.80179999999983
+    },
+    {
+      "health": 0,
+      "phase": 2,
+      "playerHealth": 69,
+      "stamina": 26.83599999999973
+    }
+  ],
+  "errors": [],
+  "final": {
+    "state": {
+      "version": 1,
+      "room": 7,
+      "x": 1.5,
+      "z": -2.0848199999999997,
+      "health": 69,
+      "sanity": 86.29206499999967,
+      "items": [
+        "Llave de latón",
+        "Medallón Veyr"
+      ],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy7"
+      ],
+      "seals": [],
+      "elapsed": 9.649600000000015,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0,
+          1,
+          5,
+          6,
+          3,
+          7
+        ],
+        "solved": [
+          "manuscripts",
+          "genealogy",
+          "astronomy",
+          "basement"
+        ],
+        "steps": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "discoveries": [
+          "adrien"
+        ],
+        "shortcuts": [
+          "library-chapel"
+        ],
+        "ending": false
+      }
+    },
+    "paused": false,
+    "camera": [
+      5.1283431382441576,
+      2.1348851121053305,
+      2.260309183915216
+    ],
+    "target": [
+      1.5,
+      0,
+      -2.0848199999999997
+    ],
+    "combat": {
+      "enemyHealth": 0,
+      "windup": -2.914335439641036e-16,
+      "guarding": false,
+      "animation": 0.2831999999999989,
+      "kind": "guardian",
+      "aiState": "dead",
+      "phase": 2,
+      "vulnerable": 0,
+      "stamina": 26.83599999999973,
+      "dodge": 0
+    },
+    "cinematicZone": "seguimiento",
+    "cameraMode": "classic",
+    "corpse": {
+      "visible": true,
+      "progress": 0.0335
+    },
+    "cameraCorrected": true,
+    "cameraQuaternion": [
+      -0.07281406300851812,
+      0.33987342005304744,
+      0.026403700245765084,
+      0.9372763814281081
+    ],
+    "cameraFov": 58,
+    "quality": {
+      "name": "Baja",
+      "scale": 0.8,
+      "maxPixels": 589824,
+      "shadows": false,
+      "shadowSize": 512,
+      "dust": 32
+    },
+    "performance": {
+      "samples": 456,
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 33.40000000000009,
+      "renderMedianMs": 4.100000001490116,
+      "averageFps": 46.13983608216128
+    },
+    "gpuTime": {
+      "available": true,
+      "samples": 460,
+      "medianMs": 6.267333,
+      "p95Ms": 14.31225
+    },
+    "sanityEvent": {
+      "id": "",
+      "count": 0
+    },
+    "memory": {
+      "geometries": 110,
+      "textures": 14
+    },
+    "textures": {
+      "surfaces": 6,
+      "maps": 18,
+      "bytes": 1572864
+    },
+    "playerRig": true,
+    "limbPose": -7.13190250340962e-41,
+    "enemy": {
+      "position": [
+        1.9125129452914307,
+        0,
+        -2.6939312323311575
+      ],
+      "visible": false
+    },
+    "draw": {
+      "frame": 463,
+      "calls": 81,
+      "triangles": 42848,
+      "points": 32,
+      "lines": 0
+    },
+    "canvas": {
+      "width": 1024,
+      "height": 576,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720,
+        "top": 0,
+        "right": 1280,
+        "bottom": 720,
+        "left": 0
+      }
+    },
+    "objects": 37
+  }
+}

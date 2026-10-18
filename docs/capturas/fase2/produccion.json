@@ -1,0 +1,11 @@
+{
+  "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+  "canvas": [
+    1024,
+    576
+  ],
+  "hud": 1280,
+  "observerAbsent": true,
+  "title": "Invernadero de vidrio negro",
+  "errors": []
+}

@@ -1,0 +1,74 @@
+{
+  "logs": [
+    "puzzle manuscripts",
+    "sala 5",
+    "puzzle genealogy",
+    "sala 6",
+    "sala 3",
+    "puzzle astronomy",
+    "sala 7",
+    "puzzle basement",
+    "guardado y carga",
+    "desenlace fase 2"
+  ],
+  "errors": [],
+  "state": {
+    "version": 1,
+    "room": 7,
+    "x": -0.10518000000002248,
+    "z": -5.714820000000041,
+    "health": 100,
+    "sanity": 82.01386249998264,
+    "items": [
+      "Llave de latón",
+      "Medallón Veyr"
+    ],
+    "collected": [],
+    "read": [
+      "1",
+      "5",
+      "6",
+      "3",
+      "7"
+    ],
+    "defeated": [
+      "enemy1",
+      "enemy3",
+      "enemy5",
+      "enemy6",
+      "enemy7"
+    ],
+    "seals": [],
+    "elapsed": 82.88010000000213,
+    "ended": true,
+    "phase2": {
+      "visited": [
+        0,
+        1,
+        5,
+        6,
+        3,
+        7
+      ],
+      "solved": [
+        "manuscripts",
+        "genealogy",
+        "astronomy",
+        "basement"
+      ],
+      "steps": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "discoveries": [
+        "adrien"
+      ],
+      "shortcuts": [
+        "library-chapel"
+      ],
+      "ending": true
+    }
+  }
+}

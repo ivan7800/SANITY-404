@@ -1,0 +1,136 @@
+import { newPhase2, validPhase2, type Phase2Progress } from "./phase2";
+export interface State {
+  version: 1;
+  room: number;
+  x: number;
+  z: number;
+  health: number;
+  sanity: number;
+  items: string[];
+  collected: string[];
+  read: string[];
+  defeated: string[];
+  seals: number[];
+  elapsed: number;
+  ended: boolean;
+  phase2: Phase2Progress;
+}
+export const fresh = (): State => ({
+  version: 1,
+  room: 0,
+  x: 0,
+  z: 5,
+  health: 100,
+  sanity: 100,
+  items: [],
+  collected: [],
+  read: [],
+  defeated: [],
+  seals: [],
+  elapsed: 0,
+  ended: false,
+  phase2: newPhase2(),
+});
+export const clamp = (n: number, min = 0, max = 100) =>
+  Math.max(min, Math.min(max, n));
+export interface Obstacle {
+  height?: number;
+  x: number;
+  z: number;
+  w: number;
+  d: number;
+}
+export function blocked(
+  x: number,
+  z: number,
+  obstacles: Obstacle[],
+  radius = 0.34,
+) {
+  return (
+    Math.abs(x) > 8 - radius ||
+    Math.abs(z) > 8 - radius ||
+    obstacles.some(
+      (o) =>
+        Math.abs(x - o.x) < o.w / 2 + radius &&
+        Math.abs(z - o.z) < o.d / 2 + radius,
+    )
+  );
+}
+export function move(
+  x: number,
+  z: number,
+  dx: number,
+  dz: number,
+  obstacles: Obstacle[],
+) {
+  const nx = blocked(x + dx, z, obstacles) ? x : x + dx;
+  return { x: nx, z: blocked(nx, z + dz, obstacles) ? z : z + dz };
+}
+export function parseSave(raw: string): State | null {
+  try {
+    const s = JSON.parse(raw);
+    if (
+      s.version !== 1 ||
+      !Number.isInteger(s.room) ||
+      s.room < 0 ||
+      s.room > 7 ||
+      !["x", "z", "health", "sanity", "elapsed"].every((k) =>
+        Number.isFinite(s[k]),
+      ) ||
+      Math.abs(s.x) > 8 ||
+      Math.abs(s.z) > 8 ||
+      s.health < 0 ||
+      s.health > 100 ||
+      s.sanity < 0 ||
+      s.sanity > 100 ||
+      s.elapsed < 0 ||
+      typeof s.ended !== "boolean"
+    )
+      return null;
+    for (const k of ["items", "collected", "read", "defeated"])
+      if (
+        !Array.isArray(s[k]) ||
+        s[k].length > 100 ||
+        !s[k].every((v: unknown) => typeof v === "string")
+      )
+        return null;
+    const allowedItems = [
+      "Llave de latón",
+      "Medallón Veyr",
+      "Tónico 0",
+      "Tónico 1",
+      "Tónico 2",
+      "Tónico 3",
+      "Tónico 5",
+      "Tónico 6",
+      "Tónico 7",
+    ];
+    if (
+      !s.items.every((v: string) => allowedItems.includes(v)) ||
+      !s.collected.every((v: string) => allowedItems.includes(v)) ||
+      !s.read.every((v: string) => /^[0-7]$/.test(v)) ||
+      !s.defeated.every((v: string) => /^enemy[0-7]$/.test(v))
+    )
+      return null;
+    if (
+      !Array.isArray(s.seals) ||
+      new Set(s.seals).size !== s.seals.length ||
+      !s.seals.every(
+        (v: unknown) => Number.isInteger(v) && Number(v) >= 0 && Number(v) < 3,
+      )
+    )
+      return null;
+    // Old v1 saves did not contain the lateral mansion campaign.
+    if (s.phase2 === undefined) {
+      s.phase2 = newPhase2();
+      if (!s.phase2.visited.includes(s.room)) s.phase2.visited.push(s.room);
+    } else if (!validPhase2(s.phase2)) return null;
+    return s;
+  } catch {
+    return null;
+  }
+}
+export function damage(s: State, amount: number) {
+  s.health = clamp(s.health - amount);
+  s.sanity = clamp(s.sanity - amount * 0.45);
+}

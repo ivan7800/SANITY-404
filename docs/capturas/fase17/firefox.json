@@ -1,0 +1,47 @@
+{
+  "browser": "firefox",
+  "version": "158.0",
+  "webgl": {
+    "version": "WebGL 2.0",
+    "renderer": "Intel(R) HD Graphics 400, or similar"
+  },
+  "before": {
+    "draw": {
+      "frame": 6,
+      "calls": 73,
+      "triangles": 46416,
+      "points": 80,
+      "lines": 0
+    },
+    "position": 5,
+    "camera": [
+      6.8,
+      2.35,
+      7.25
+    ]
+  },
+  "after": {
+    "position": 2.165702000000003,
+    "camera": [
+      6.8,
+      2.35,
+      7.25
+    ]
+  },
+  "modern": {
+    "draw": {
+      "frame": 6,
+      "calls": 67,
+      "triangles": 45944,
+      "points": 32,
+      "lines": 0
+    },
+    "camera": [
+      2.1,
+      2.05,
+      7.2
+    ],
+    "mode": "modern"
+  },
+  "errors": []
+}

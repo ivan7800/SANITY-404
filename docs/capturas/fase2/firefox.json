@@ -1,0 +1,19 @@
+{
+  "browser": "firefox",
+  "version": "158.0",
+  "webgl": {
+    "version": "WebGL 2.0",
+    "renderer": "Intel(R) HD Graphics 400, or similar"
+  },
+  "room": 6,
+  "before": 0,
+  "after": -2.3846939999999996,
+  "draw": {
+    "frame": 27,
+    "calls": 47,
+    "triangles": 25174,
+    "points": 32,
+    "lines": 0
+  },
+  "errors": []
+}

@@ -1,0 +1,114 @@
+{
+  "records": [
+    {
+      "mode": "classic",
+      "before": {
+        "camera": [
+          6.8,
+          2.35,
+          7.25
+        ],
+        "zone": "entrada"
+      },
+      "after": {
+        "camera": [
+          -1.2052508712712307,
+          2.1846022547258013,
+          4.702874722777335
+        ],
+        "zone": "galería",
+        "state": {
+          "version": 1,
+          "room": 0,
+          "x": 0,
+          "z": 0.455360000000001,
+          "health": 100,
+          "sanity": 100,
+          "items": [],
+          "collected": [],
+          "read": [],
+          "defeated": [
+            "enemy0"
+          ],
+          "seals": [],
+          "elapsed": 2.916499999999997,
+          "ended": false
+        }
+      }
+    },
+    {
+      "mode": "modern",
+      "before": {
+        "camera": [
+          2.1,
+          2.05,
+          7.2
+        ],
+        "zone": "entrada"
+      },
+      "after": {
+        "camera": [
+          2.1,
+          2.05,
+          4.7706783139655276
+        ],
+        "zone": "galería",
+        "state": {
+          "version": 1,
+          "room": 0,
+          "x": 0,
+          "z": 0.4550900000000022,
+          "health": 100,
+          "sanity": 100,
+          "items": [],
+          "collected": [],
+          "read": [],
+          "defeated": [
+            "enemy0"
+          ],
+          "seals": [],
+          "elapsed": 2.5667,
+          "ended": false
+        }
+      }
+    },
+    {
+      "switchDuringCombat": {
+        "before": {
+          "enemy": {
+            "position": [
+              2.789635732597002,
+              0,
+              -2.789635732597002
+            ],
+            "visible": true
+          },
+          "combat": {
+            "enemyHealth": 60,
+            "windup": 0,
+            "guarding": false,
+            "animation": 0
+          }
+        },
+        "after": {
+          "enemy": {
+            "position": [
+              2.789635732597002,
+              0,
+              -2.789635732597002
+            ],
+            "visible": true
+          },
+          "combat": {
+            "enemyHealth": 60,
+            "windup": 0,
+            "guarding": false,
+            "animation": 0
+          },
+          "mode": "modern"
+        }
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "room": 5,
+    "event": {
+      "id": "missing-door",
+      "count": 1
+    },
+    "errors": []
+  },
+  {
+    "room": 6,
+    "event": {
+      "id": "shadow-without-body",
+      "count": 1
+    },
+    "errors": []
+  }
+]

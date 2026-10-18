@@ -1,0 +1,464 @@
+{
+  "date": "2026-10-18T15:33:02.545Z",
+  "results": [
+    {
+      "round": 1,
+      "room": 6,
+      "gpu": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "snapshot": {
+        "state": {
+          "version": 1,
+          "room": 6,
+          "x": 0,
+          "z": 0,
+          "health": 67,
+          "sanity": 77.35029999999954,
+          "items": [],
+          "collected": [],
+          "read": [],
+          "defeated": [],
+          "seals": [],
+          "elapsed": 12.999499999999978,
+          "ended": false,
+          "phase2": {
+            "visited": [
+              0,
+              6
+            ],
+            "solved": [],
+            "steps": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "discoveries": [],
+            "shortcuts": [],
+            "ending": false
+          }
+        },
+        "paused": false,
+        "camera": [
+          3.640000000000003,
+          2.15,
+          4.3250000000000055
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "combat": {
+          "enemyHealth": 75,
+          "windup": -0.0032999999999992757,
+          "guarding": true,
+          "animation": 0,
+          "kind": "stalker",
+          "aiState": "recover",
+          "phase": 1,
+          "vulnerable": 0,
+          "stamina": 100,
+          "dodge": 0
+        },
+        "cinematicZone": "seguimiento",
+        "cameraMode": "classic",
+        "corpse": {
+          "visible": false,
+          "progress": 0
+        },
+        "cameraCorrected": false,
+        "cameraQuaternion": [
+          -0.07861040443726608,
+          0.30013647217440453,
+          0.024827075487151892,
+          0.9503273744913735
+        ],
+        "cameraFov": 59,
+        "quality": {
+          "name": "Baja",
+          "scale": 0.8,
+          "maxPixels": 589824,
+          "shadows": false,
+          "shadowSize": 512,
+          "dust": 32
+        },
+        "performance": {
+          "samples": 600,
+          "frameMedianMs": 16.69999999999891,
+          "frameP95Ms": 16.800000000000182,
+          "renderMedianMs": 2.300000000745058,
+          "averageFps": 58.730251952780876
+        },
+        "gpuTime": {
+          "available": true,
+          "samples": 600,
+          "medianMs": 4.507083,
+          "p95Ms": 10.345916
+        },
+        "sanityEvent": {
+          "id": "",
+          "count": 0
+        },
+        "memory": {
+          "geometries": 79,
+          "textures": 14
+        },
+        "textures": {
+          "surfaces": 6,
+          "maps": 18,
+          "bytes": 1572864
+        },
+        "playerRig": true,
+        "limbPose": 0,
+        "enemy": {
+          "position": [
+            1.016565478771735,
+            0,
+            -1.016565478771735
+          ],
+          "visible": true
+        },
+        "draw": {
+          "frame": 759,
+          "calls": 76,
+          "triangles": 45412,
+          "points": 32,
+          "lines": 0
+        },
+        "canvas": {
+          "width": 1024,
+          "height": 576,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          }
+        },
+        "objects": 38
+      },
+      "frame": {
+        "samples": 599,
+        "fps": 58.72779324679399,
+        "p95": 16.800000000000182,
+        "p99": 33.30000000000109,
+        "max": 33.399999999999636,
+        "over25": 13,
+        "over50": 0,
+        "minRolling60": 55.38120731031929
+      },
+      "heap": 17709259,
+      "errors": []
+    },
+    {
+      "round": 2,
+      "room": 6,
+      "gpu": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "snapshot": {
+        "state": {
+          "version": 1,
+          "room": 6,
+          "x": 0,
+          "z": 0,
+          "health": 67,
+          "sanity": 77.35035999999963,
+          "items": [],
+          "collected": [],
+          "read": [],
+          "defeated": [],
+          "seals": [],
+          "elapsed": 12.999399999999973,
+          "ended": false,
+          "phase2": {
+            "visited": [
+              0,
+              6
+            ],
+            "solved": [],
+            "steps": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "discoveries": [],
+            "shortcuts": [],
+            "ending": false
+          }
+        },
+        "paused": false,
+        "camera": [
+          3.640000000000002,
+          2.15,
+          4.325000000000004
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "combat": {
+          "enemyHealth": 75,
+          "windup": -0.00330000000000108,
+          "guarding": true,
+          "animation": 0,
+          "kind": "stalker",
+          "aiState": "recover",
+          "phase": 1,
+          "vulnerable": 0,
+          "stamina": 100,
+          "dodge": 0
+        },
+        "cinematicZone": "seguimiento",
+        "cameraMode": "classic",
+        "corpse": {
+          "visible": false,
+          "progress": 0
+        },
+        "cameraCorrected": false,
+        "cameraQuaternion": [
+          -0.07861040443726612,
+          0.3001364721744045,
+          0.024827075487151896,
+          0.9503273744913737
+        ],
+        "cameraFov": 59,
+        "quality": {
+          "name": "Baja",
+          "scale": 0.8,
+          "maxPixels": 589824,
+          "shadows": false,
+          "shadowSize": 512,
+          "dust": 32
+        },
+        "performance": {
+          "samples": 600,
+          "frameMedianMs": 16.699999999999818,
+          "frameP95Ms": 16.800000000000182,
+          "renderMedianMs": 2.5,
+          "averageFps": 58.63497771870847
+        },
+        "gpuTime": {
+          "available": true,
+          "samples": 600,
+          "medianMs": 4.602416,
+          "p95Ms": 11.22625
+        },
+        "sanityEvent": {
+          "id": "",
+          "count": 0
+        },
+        "memory": {
+          "geometries": 79,
+          "textures": 14
+        },
+        "textures": {
+          "surfaces": 6,
+          "maps": 18,
+          "bytes": 1572864
+        },
+        "playerRig": true,
+        "limbPose": 0,
+        "enemy": {
+          "position": [
+            1.0165654787717369,
+            0,
+            -1.0165654787717369
+          ],
+          "visible": true
+        },
+        "draw": {
+          "frame": 763,
+          "calls": 76,
+          "triangles": 45412,
+          "points": 32,
+          "lines": 0
+        },
+        "canvas": {
+          "width": 1024,
+          "height": 576,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          }
+        },
+        "objects": 38
+      },
+      "frame": {
+        "samples": 599,
+        "fps": 58.63236819952625,
+        "p95": 16.800000000000182,
+        "p99": 33.30000000000109,
+        "max": 50,
+        "over25": 13,
+        "over50": 0,
+        "minRolling60": 53.72973941076391
+      },
+      "heap": 17171079,
+      "errors": []
+    },
+    {
+      "round": 3,
+      "room": 6,
+      "gpu": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "snapshot": {
+        "state": {
+          "version": 1,
+          "room": 6,
+          "x": 0,
+          "z": 0,
+          "health": 67,
+          "sanity": 77.45025999999973,
+          "items": [],
+          "collected": [],
+          "read": [],
+          "defeated": [],
+          "seals": [],
+          "elapsed": 12.832899999999968,
+          "ended": false,
+          "phase2": {
+            "visited": [
+              0,
+              6
+            ],
+            "solved": [],
+            "steps": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "discoveries": [],
+            "shortcuts": [],
+            "ending": false
+          }
+        },
+        "paused": false,
+        "camera": [
+          3.640000000000003,
+          2.15,
+          4.3250000000000055
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "combat": {
+          "enemyHealth": 75,
+          "windup": -0.0032999999999992202,
+          "guarding": true,
+          "animation": 0,
+          "kind": "stalker",
+          "aiState": "recover",
+          "phase": 1,
+          "vulnerable": 0,
+          "stamina": 100,
+          "dodge": 0
+        },
+        "cinematicZone": "seguimiento",
+        "cameraMode": "classic",
+        "corpse": {
+          "visible": false,
+          "progress": 0
+        },
+        "cameraCorrected": false,
+        "cameraQuaternion": [
+          -0.07861040443726608,
+          0.30013647217440453,
+          0.024827075487151892,
+          0.9503273744913735
+        ],
+        "cameraFov": 59,
+        "quality": {
+          "name": "Baja",
+          "scale": 0.8,
+          "maxPixels": 589824,
+          "shadows": false,
+          "shadowSize": 512,
+          "dust": 32
+        },
+        "performance": {
+          "samples": 600,
+          "frameMedianMs": 16.699999999999818,
+          "frameP95Ms": 16.700000000000728,
+          "renderMedianMs": 2.300000000745058,
+          "averageFps": 59.60482004311415
+        },
+        "gpuTime": {
+          "available": true,
+          "samples": 600,
+          "medianMs": 4.325,
+          "p95Ms": 8.077
+        },
+        "sanityEvent": {
+          "id": "",
+          "count": 0
+        },
+        "memory": {
+          "geometries": 79,
+          "textures": 14
+        },
+        "textures": {
+          "surfaces": 6,
+          "maps": 18,
+          "bytes": 1572864
+        },
+        "playerRig": true,
+        "limbPose": 0,
+        "enemy": {
+          "position": [
+            1.0165654787717353,
+            0,
+            -1.0165654787717353
+          ],
+          "visible": true
+        },
+        "draw": {
+          "frame": 763,
+          "calls": 76,
+          "triangles": 45412,
+          "points": 32,
+          "lines": 0
+        },
+        "canvas": {
+          "width": 1024,
+          "height": 576,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          }
+        },
+        "objects": 38
+      },
+      "frame": {
+        "samples": 599,
+        "fps": 59.604362362681115,
+        "p95": 16.700000000000728,
+        "p99": 16.80000000000109,
+        "max": 33.30000000000018,
+        "over25": 4,
+        "over50": 0,
+        "minRolling60": 59.01445854234283
+      },
+      "heap": 17067175,
+      "errors": []
+    }
+  ]
+}
