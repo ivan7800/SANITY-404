@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { animateCharacter, character, type Rig } from "../src/world/character";
+import { animateCharacter, animateDeath, character, type Rig } from "../src/world/character";
 
 const rigOf = (actor: ReturnType<typeof character>) => actor.userData.rig as Rig;
 
@@ -27,6 +27,18 @@ describe("animación articulada Fase 3", () => {
     animateCharacter(actor, 1 / 60, false, 0, false, 0, false, 1 / 60);
     expect(actor.userData.defenceWeight).toBeLessThan(before);
     expect(actor.userData.defenceWeight).toBeGreaterThan(0);
+  });
+
+  it("anima los faldones del abrigo sin afectar a la pose de reposo", () => {
+    const actor = character();
+    const rig = rigOf(actor);
+    expect(rig.coatTails.children).toHaveLength(2);
+    animateCharacter(actor, 0.2, false, 0, false, 0, false, 1 / 60);
+    expect(rig.coatTails.rotation.x).toBeCloseTo(0);
+    animateCharacter(actor, 0.4, true, 0, false, 0, true, 1 / 60);
+    expect(rig.coatTails.rotation.x).toBeLessThan(0);
+    animateDeath(actor, 0.9);
+    expect(Number.isFinite(rig.coatTails.rotation.x)).toBe(true);
   });
 
   it("muestra una reacción de impacto que desaparece al recuperarse", () => {
