@@ -377,11 +377,7 @@ export function animateCharacter(
   // Blend combat poses instead of snapping between locomotion and defence.
   // Preserve immediate updates when dt is omitted (used by existing callers/tests).
   const blend = dt > 0 ? 1 - Math.exp(-dt * 14) : 1;
-  const defence = T.MathUtils.lerp(
-    root.userData.defenceWeight ?? 0,
-    guard ? 1 : 0,
-    blend,
-  );
+  const defence = T.MathUtils.lerp(root.userData.defenceWeight ?? 0, guard ? 1 : 0, blend);
   root.userData.defenceWeight = defence;
   const attackPhase = T.MathUtils.clamp(attack / 0.3, 0, 1);
   const strike = attack > 0 ? Math.sin(attackPhase * Math.PI) : 0;
@@ -392,11 +388,7 @@ export function animateCharacter(
     -1.1,
     defence,
   );
-  r.rightArm.rotation.z = T.MathUtils.lerp(
-    -strike * 0.35,
-    -0.55,
-    defence,
-  );
+  r.rightArm.rotation.z = T.MathUtils.lerp(-strike * 0.35, -0.55, defence);
   r.leftArm.rotation.z = defence * 0.55;
   r.hips.rotation.z =
     hurt > 0
