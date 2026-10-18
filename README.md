@@ -74,7 +74,7 @@ Three.js, TypeScript, Vite, Web Audio y localStorage. Sin frameworks de interfaz
 
 ## GitHub Pages
 
-El [repositorio público](https://github.com/ivan7800/SANITY-404) publica la versión de producción en [SANITY-404 para navegador](https://ivan7800.github.io/SANITY-404/). El workflow `.github/workflows/pages.yml` ejecuta formato, pruebas y build en cada push a `main`, y despliega `dist` en GitHub Pages. Vite genera las rutas de producción con la base `/SANITY-404/`; el servidor local conserva `/` para los lanzadores. En un repositorio nuevo puede ser necesario seleccionar **Settings → Pages → Build and deployment → Source: GitHub Actions** antes del primer despliegue.
+El [repositorio público](https://github.com/ivan7800/SANITY-404) contiene el código y prepara [SANITY-404 para navegador](https://ivan7800.github.io/SANITY-404/). El workflow `.github/workflows/pages.yml` ejecuta formato, pruebas y build en cada push a `main`, y despliega `dist` en GitHub Pages. Vite genera las rutas de producción con la base `/SANITY-404/`; el servidor local conserva `/` para los lanzadores. Para que la URL pública sirva el juego compilado, selecciona **Settings → Pages → Build and deployment → Source: GitHub Actions**. Si permanece «Deploy from a branch», GitHub puede volver a publicar el HTML fuente después del workflow y mostrar una página vacía.
 
 Consulta [la revisión y prueba de Fase 1](docs/FASE1-REVISION.md), [los lanzadores](docs/LANZADORES.md), [el registro histórico de verificación](docs/VERIFICACION.md) y [el registro de REA](docs/REA.md).
 
