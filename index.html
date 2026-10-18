@@ -6,9 +6,44 @@
     <meta name="theme-color" content="#111310" />
     <link rel="icon" type="image/svg+xml" href="./sanity-404-icon.svg" />
     <title>SANITY-404 · El archivo de las ausencias</title>
+    <style>
+      body {
+        margin: 0;
+        background: #080d12;
+        color: #e7e0ca;
+      }
+      .startup-fallback {
+        box-sizing: border-box;
+        min-height: 100vh;
+        display: grid;
+        place-content: center;
+        padding: 2rem;
+        text-align: center;
+        font-family: Georgia, serif;
+      }
+      .startup-fallback h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-weight: normal;
+        letter-spacing: 0.12em;
+      }
+      .startup-fallback p {
+        line-height: 1.5;
+      }
+      .startup-fallback .help {
+        color: #b8b19d;
+        font-size: 0.9rem;
+      }
+    </style>
   </head>
   <body>
-    <main id="app"></main>
+    <main id="app">
+      <section class="startup-fallback" role="status">
+        <h1>SANITY—404</h1>
+        <p>Iniciando la Mansión Veyr…</p>
+        <p class="help">Si el juego no arranca, recarga la página sin caché.</p>
+      </section>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
