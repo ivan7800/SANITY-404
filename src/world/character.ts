@@ -374,14 +374,30 @@ export function animateCharacter(
   r.rightKnee.rotation.x = moving
     ? Math.max(0, Math.sin(phase)) * (running ? 0.9 : 0.45)
     : 0.025;
-  r.leftArm.rotation.x = guard ? -1.2 : -stride * 0.65;
-  r.rightArm.rotation.x = guard
-    ? -1.1
-    : attack > 0
-      ? -Math.sin((attack / 0.3) * Math.PI) * 2.1
-      : stride * 0.65;
-  r.rightArm.rotation.z = guard ? -0.55 : attack > 0 ? -0.35 : 0;
-  r.leftArm.rotation.z = guard ? 0.55 : 0;
+  // Blend combat poses instead of snapping between locomotion and defence.
+  // Preserve immediate updates when dt is omitted (used by existing callers/tests).
+  const blend = dt > 0 ? 1 - Math.exp(-dt * 14) : 1;
+  const defence = T.MathUtils.lerp(
+    root.userData.defenceWeight ?? 0,
+    guard ? 1 : 0,
+    blend,
+  );
+  root.userData.defenceWeight = defence;
+  const attackPhase = T.MathUtils.clamp(attack / 0.3, 0, 1);
+  const strike = attack > 0 ? Math.sin(attackPhase * Math.PI) : 0;
+  const armSwing = -stride * 0.65;
+  r.leftArm.rotation.x = T.MathUtils.lerp(armSwing, -1.2, defence);
+  r.rightArm.rotation.x = T.MathUtils.lerp(
+    stride * 0.65 - strike * 2.1,
+    -1.1,
+    defence,
+  );
+  r.rightArm.rotation.z = T.MathUtils.lerp(
+    -strike * 0.35,
+    -0.55,
+    defence,
+  );
+  r.leftArm.rotation.z = defence * 0.55;
   r.hips.rotation.z =
     hurt > 0
       ? Math.sin(hurt * 40) * 0.07
