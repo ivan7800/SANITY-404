@@ -31,6 +31,10 @@ export const notes = [
     "Plano de las tres mordazas",
     "El guardián fue un hombre hasta que la Sociedad le enseñó a sostener una puerta con el cuerpo. Sus brazaletes se abren después de cada ataque largo. El sello del sótano se cierra en este orden: piedra para anclar, bronce para contener, cristal para recordar. Ningún error rompe el mecanismo; solo pide repetir el gesto. Adrien está al otro lado, o quizá el recuerdo que la casa hizo de él.",
   ],
+  [
+    "El mapa que no conoce Roma",
+    "Año 189. Lucius Varro, cartógrafo, descubrió bajo un santuario una piedra que registra el nombre de quien todavía no ha nacido. La inscripción dice: «Cuando el último testigo recuerde al primero, la puerta volverá a abrirse». En el altar descansa una tablilla; su signo coincide con el medallón de la familia Veyr. Lucius decidió ocultarla antes de que llegaran los custodios.",
+  ],
 ];
 
 export const discoveries: Record<string, [string, string]> = {
