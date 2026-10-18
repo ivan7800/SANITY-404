@@ -1,0 +1,33 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+coverage/
+.vite/
+.cache/
+
+.sanity-launcher/
+
+# Local configuration and private material
+.env
+.env.*
+!.env.example
+*.local
+*.log
+*.pid
+*.pid.lock
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*
+*secrets*
+
+# Editor and operating-system scratch files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+tmp/
+temp/
