@@ -338,6 +338,10 @@ function interact(o: Interactable) {
     world.scene.remove(o.mesh!);
     world.objects = world.objects.filter((i) => i !== o);
     toast("Recogido: " + o.value);
+    if (o.id === "roman-tablet") {
+      panel(`<div class="eyebrow">ROMA · 189 D. C. · EPÍLOGO</div><h2>El cartógrafo del vacío</h2><p>Lucius arranca del altar la última inscripción. El centurión permanece inmóvil. Bajo la piedra descubre el mapa de una casa que aún tardará siglos en construirse. Su nombre no figura en él: el de Élise Moreau sí.</p><p>La tablilla queda ligada a su recuerdo. El arco al sur conduce de regreso a 1927.</p><button id="close">Continuar</button>`);
+      button("close", resume);
+    }
   }
   if (o.kind === "note") {
     if (!state.read.includes(String(state.room))) {
