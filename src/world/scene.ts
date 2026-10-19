@@ -8,6 +8,7 @@ import { qualityProfile } from "../render/quality";
 import { prop } from "./props";
 import { mansion } from "./mansion";
 import { decorateRomanSanctuary } from "./roman-sanctuary";
+import { decorateMedievalAbbey } from "./medieval-abbey";
 import { decoratePhase2Room } from "./phase2-rooms";
 import { newPhase2, type Phase2Progress } from "../systems/phase2";
 export { character } from "./character";
@@ -34,6 +35,8 @@ export const names = [
   "Invernadero de vidrio negro",
   "Sótanos de la vigilia",
   "Santuario de los nombres",
+  "Claustro de la ceniza",
+  "Scriptorium del silencio",
 ];
 export const subtitles = [
   "ALPES EUROPEOS · NOVIEMBRE DE 1927",
@@ -45,6 +48,8 @@ export const subtitles = [
   "LA LLUVIA CRECE HACIA ADENTRO",
   "BAJO LA CASA, ALGUIEN SIGUE CONTANDO",
   "ROMA · AÑO 189 D. C. · EL PRIMER INTERVALO",
+  "FRANCIA · AÑO 1348 · EL CLAUSTRO CERRADO",
+  "FRANCIA · AÑO 1348 · LOS LIBROS SIN AUTORES",
 ];
 export interface Interactable {
   id: string;
@@ -61,7 +66,8 @@ export interface Interactable {
     | "phase2Puzzle"
     | "discovery"
     | "phase2End"
-    | "romanPuzzle";
+    | "romanPuzzle"
+    | "medievalPuzzle";
   value?: string;
   target?: number;
   rotation?: number;
@@ -210,6 +216,7 @@ export class World {
       this.lamp(0, 2, -3, 0x72e8c0, 35);
     }
     if (room === 8) decorateRomanSanctuary(this);
+    else if (room === 9 || room === 10) decorateMedievalAbbey(this);
     else decoratePhase2Room(this);
     this.add(
       {
@@ -243,7 +250,7 @@ export class World {
         },
         0xc2a15b,
       );
-    if (room !== 4 && room !== 8 && !collected.includes("Tónico " + room))
+    if (room !== 4 && room !== 8 && room !== 9 && room !== 10 && !collected.includes("Tónico " + room))
       this.add(
         {
           id: "tonic" + room,
@@ -291,6 +298,16 @@ export class World {
         },
         0x9b8050,
       );
+    }
+    if (room === 9) {
+      this.add({id:"medieval-return", name:"Regresar a 1927", x:0, z:6.1, kind:"door", target:0}, 0x9a866a);
+      this.add({id:"medieval-scriptorium", name:"Entrar al scriptorium", x:0, z:-6.1, kind:"door", target:10}, 0x9a866a);
+    }
+    if (room === 10) {
+      this.add({id:"medieval-back", name:"Volver al claustro", x:0, z:6.1, kind:"door", target:9}, 0x9a866a);
+      this.add({id:"medieval-manuscript", name:"Descifrar el códice sellado", x:-2.9, z:-4.7, kind:"medievalPuzzle"}, 0xa89c7d);
+      if (!collected.includes("Códice de Montfort"))
+        this.add({id:"medieval-codex", name:"Recuperar el códice de Montfort", x:0, z:-4.1, kind:"item", value:"Códice de Montfort"}, 0xc3ac87);
     }
     if (room === 8) {
       this.add(
