@@ -28,6 +28,7 @@ import {
 import { Audio } from "./systems/audio";
 import { notes, discoveries } from "./world/narrative";
 import { readSave, writeSave } from "./systems/save";
+import { legacy, reconcileLegacy, legacyEnding } from "./systems/legacy";
 import { Combat } from "./systems/combat";
 import { Sanity } from "./systems/sanity";
 import { drinkTonic } from "./systems/inventory";
@@ -264,7 +265,7 @@ function options() {
 }
 function inventory() {
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${state.items.includes("Tablilla del intervalo") ? "Legado romano: tablilla recuperada" : "Legado romano: desconocido"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
   );
   button("close", resume);
   button("heal", () => {
@@ -312,6 +313,22 @@ function phase2Puzzle(id: PuzzleId) {
 }
 function interact(o: Interactable) {
   audio.tone(260);
+  if (o.kind === "legacy") {
+    const result = reconcileLegacy(state);
+    if (result === "missing") {
+      panel(`<div class="eyebrow">MANSIÓN VEYR · 1927</div><h2>La mesa de las tres edades</h2><p>${legacy(state).clue}</p><p>Regresa con los dos testimonios para reconstruir la ruta del Intervalo. Puedes continuar la historia original sin resolver este misterio.</p><button id="close">Volver</button>`);
+      button("close", resume);
+    } else if (result === "already") {
+      toast("La memoria ya está reconciliada. Busca el pasaje junto al muro norte.");
+    } else {
+      // Rebuild the entrance and reciprocal passage immediately.
+      loadRoom();
+      panel(`<div class="eyebrow">LAS TRES ÉPOCAS · MEMORIA RECONCILIADA</div><h2>La grieta ha encontrado su origen</h2><p>Lucius escondió la tablilla en 189; Isabelle preservó su lectura en 1348. Élise reúne ambas pruebas en 1927 y descubre que la Sociedad Veyr borró deliberadamente el nombre de su guardián.</p><p>Recuperas 20 de cordura. Un pasaje hacia el archivo familiar se ha abierto en el vestíbulo, y el círculo de las ruinas ha cambiado.</p><button id="close">Continuar</button>`);
+      button("close", resume);
+      audio.tone(630, 0.6);
+    }
+    return;
+  }
   if (o.kind === "medievalPuzzle") {
     if (state.items.includes("Sello de Montfort")) {
       toast("El códice ya conserva la respuesta de Isabelle.");
@@ -461,7 +478,10 @@ function interact(o: Interactable) {
       return;
     }
     state.room = o.target!;
-    if (
+    if (o.id === "legacy-passage" || o.id === "legacy-back") {
+      state.x = o.id === "legacy-passage" ? -2.8 : 2.7;
+      state.z = -4.3;
+    } else if (
       [
         "medieval-portal",
         "medieval-return",
@@ -510,8 +530,9 @@ function interact(o: Interactable) {
     state.phase2.ending = true;
     state.ended = true;
     const remembered = state.phase2.discoveries.includes("adrien");
+    const temporalEnding = legacyEnding(state);
     panel(
-      `<div class="eyebrow">FIN · LA MANSIÓN DE LOS ECOS</div><h2>${remembered ? "Una puerta puede elegir a quién deja salir." : "El nombre que faltaba."}</h2><p>${remembered ? "Élise pronuncia el verdadero nombre del guardián. Étienne deja caer los brazos y Adrien cruza el umbral por su propia voluntad. La casa pierde una voz, pero los hermanos conservan la historia que escribieron juntos." : "El guardián se disuelve cuando cesa el mecanismo. Adrien sale con Élise; en el tren, ninguno puede recordar cómo se abrió la puerta. El cuaderno mojado habría conservado esa respuesta."}</p><p>Investigación: ${state.phase2.discoveries.length}/3 · Documentos: ${state.read.length}/${notes.length} · Cordura: ${Math.round(state.sanity)}</p><button id="finish">Volver al título</button>`,
+      `<div class="eyebrow">FIN · LA MANSIÓN DE LOS ECOS</div><h2>${temporalEnding ? temporalEnding.title : remembered ? "Una puerta puede elegir a quién deja salir." : "El nombre que faltaba."}</h2><p>${temporalEnding ? temporalEnding.text : remembered ? "Élise pronuncia el verdadero nombre del guardián. Étienne deja caer los brazos y Adrien cruza el umbral por su propia voluntad. La casa pierde una voz, pero los hermanos conservan la historia que escribieron juntos." : "El guardián se disuelve cuando cesa el mecanismo. Adrien sale con Élise; en el tren, ninguno puede recordar cómo se abrió la puerta. El cuaderno mojado habría conservado esa respuesta."}</p><p>Investigación: ${state.phase2.discoveries.length}/3 · Documentos: ${state.read.length}/${notes.length} · Cordura: ${Math.round(state.sanity)}</p><button id="finish">Volver al título</button>`,
     );
     button("finish", () => {
       started = false;
@@ -553,8 +574,9 @@ function interact(o: Interactable) {
   if (o.kind === "end") {
     if (state.seals.length < 3) return;
     state.ended = true;
+    const temporalEnding = legacyEnding(state);
     panel(
-      `<div class="eyebrow">FIN · ${state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/5</p><button id="finish">Volver al título</button>`,
+      `<div class="eyebrow">FIN · ${temporalEnding ? temporalEnding.title : state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${temporalEnding ? "Lo que tres épocas protegieron." : state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${temporalEnding ? temporalEnding.text : state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/5</p><button id="finish">Volver al título</button>`,
     );
     button("finish", () => {
       started = false;
