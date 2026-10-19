@@ -2,33 +2,18 @@ name: Verify pull requests
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: ["feature/fase4-3-isabelle"]
 permissions:
-  contents: write
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'push' && github.ref_name || '' }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Apply Prettier on the feature branch
-        if: github.event_name == 'push'
-        run: |
-          npx prettier --write src tests scripts index.html package.json tsconfig.json vite.config.ts
-          if ! git diff --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add src tests scripts index.html package.json tsconfig.json vite.config.ts
-            git commit -m "style: format medieval phase"
-            git push origin "HEAD:${{ github.ref_name }}"
-          fi
       - run: npm run format:check
       - run: npm test
       - run: npm run build
