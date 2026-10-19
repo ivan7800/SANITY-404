@@ -1,3 +1,17 @@
+# Fase 4.4 — Decisiones que sobreviven a los siglos
+
+Además de la mesa de las tres edades, el archivo familiar Veyr contiene ahora un altar de memoria. Solo aparece después de recuperar la Tablilla del intervalo y el Códice de Montfort y reconciliar ambas memorias.
+
+- **Juramento de Lucius:** restaura 30 de salud una sola vez y enciende un círculo de bronce.
+- **Promesa de Isabelle:** restaura 30 de cordura una sola vez e ilumina el círculo de tinta violeta.
+- La elección es excluyente, se conserva en el guardado v1 y añade un matiz propio al desenlace de memoria reconciliada. No altera ni bloquea los finales originales.
+- El inventario muestra la elección activa. Al volver al altar se recuerda la opción tomada; no se puede repetir la bonificación.
+- Se añaden pruebas de exclusividad, efectos, guardado, regreso a la campaña y presencia del altar.
+
+**Límites:** elecciones y visuales implementados, sin animaciones cinematográficas nuevas ni escenas adicionales en esta entrega. Deben validarse con pruebas GitHub Actions y navegación real. No afirmar FPS sin mediciones.
+
+---
+
 # Fase 4.4 — El legado de las tres edades
 
 Los resultados de Roma (189), Francia (1348) y la mansión (1927) ahora afectan de forma persistente a la aventura de Élise.
