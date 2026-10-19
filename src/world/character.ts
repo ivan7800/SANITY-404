@@ -12,6 +12,7 @@ export interface Rig {
   leftKnee: T.Group;
   rightKnee: T.Group;
   coat: T.Mesh;
+  coatTails: T.Group;
 }
 export function character(enemy = false): T.Group {
   const root = new T.Group();
@@ -118,6 +119,22 @@ export function character(enemy = false): T.Group {
     0,
   );
   coat.scale.z = 0.65;
+  // Independent coat tails create a readable 1920s silhouette in the
+  // third-person camera without a costly cloth simulation.
+  const coatTails = new T.Group();
+  coatTails.position.set(0, -0.15, -0.105);
+  hips.add(coatTails);
+  for (const side of [-1, 1]) {
+    const tail = add(
+      coatTails,
+      new T.BoxGeometry(0.19, 0.36, 0.055),
+      cloth,
+      side * 0.12,
+      -0.15,
+      0,
+    );
+    tail.rotation.z = side * 0.12;
+  }
   for (const side of [-1, 1]) {
     const pocket = add(
       hips,
@@ -130,6 +147,34 @@ export function character(enemy = false): T.Group {
     pocket.rotation.z = side * 0.12;
   }
   // Tailored cuffs, leather satchel, strap, seams and high blouse collar.
+  if (!enemy) {
+    // A contrasting shoulder cape and collar break up the cylindrical torso.
+    const trim = pbr("leather", 0x27313a);
+    for (const side of [-1, 1]) {
+      const shoulder = oval(
+        hips,
+        cloth,
+        side * 0.205,
+        0.615,
+        -0.01,
+        0.135,
+        0.07,
+        0.145,
+      );
+      shoulder.rotation.z = side * 0.2;
+      const seam = add(
+        hips,
+        new T.BoxGeometry(0.025, 0.33, 0.015),
+        trim,
+        side * 0.13,
+        0.43,
+        0.151,
+      );
+      seam.rotation.z = side * 0.18;
+    }
+    // The small scarf keeps the face and neck recognisable from distant shots.
+    oval(hips, blouse, 0, 0.70, 0.105, 0.12, 0.042, 0.055);
+  }
   const bag = add(
     hips,
     new T.BoxGeometry(0.19, 0.24, 0.11),
@@ -287,6 +332,7 @@ export function character(enemy = false): T.Group {
   knob.visible = !enemy;
   root.userData.rig = {
     hips,
+    coatTails,
     leftLeg: l.pivot,
     rightLeg: r.pivot,
     leftArm,
@@ -358,36 +404,63 @@ export function animateCharacter(
         ? 1
         : 0;
   root.userData.locomotion = weight;
-  const phase = time * (running ? 13 : 9),
-    stride = weight * Math.sin(phase) * (running ? 0.72 : 0.46);
-  r.hips.position.y =
-    0.91 +
-    (moving
-      ? Math.abs(Math.sin(phase)) * (running ? 0.055 : 0.025)
-      : Math.sin(time * 2) * 0.008);
-  r.hips.rotation.x = running && moving ? 0.08 : 0;
+  // Keep the footstep phase continuous when toggling between walk and run.
+  const motionBlend = dt > 0 ? 1 - Math.exp(-dt * 8) : 1;
+  const runWeight = T.MathUtils.lerp(
+    root.userData.runWeight ?? 0,
+    running && moving ? 1 : 0,
+    motionBlend,
+  );
+  root.userData.runWeight = runWeight;
+  const strideRate = T.MathUtils.lerp(9, 13, runWeight);
+  const phase =
+    dt > 0
+      ? (root.userData.stepPhase ?? 0) + strideRate * Math.min(dt, 0.1)
+      : time * strideRate;
+  root.userData.stepPhase = phase % (Math.PI * 2);
+  const swing = Math.sin(phase);
+  const stride = weight * swing * T.MathUtils.lerp(0.46, 0.72, runWeight);
+  const bounce =
+    weight * Math.abs(swing) * T.MathUtils.lerp(0.025, 0.055, runWeight);
+  const idleBreath = (1 - weight) * Math.sin(time * 2) * 0.008;
+  r.hips.position.y = 0.91 + bounce + idleBreath;
+  const hit = T.MathUtils.clamp(hurt / 0.35, 0, 1);
+  r.hips.rotation.x = runWeight * weight * 0.08 - hit * 0.12;
   r.leftLeg.rotation.x = stride;
   r.rightLeg.rotation.x = -stride;
-  r.leftKnee.rotation.x = moving
-    ? Math.max(0, -Math.sin(phase)) * (running ? 0.9 : 0.45)
-    : 0.025;
-  r.rightKnee.rotation.x = moving
-    ? Math.max(0, Math.sin(phase)) * (running ? 0.9 : 0.45)
-    : 0.025;
-  r.leftArm.rotation.x = guard ? -1.2 : -stride * 0.65;
-  r.rightArm.rotation.x = guard
-    ? -1.1
-    : attack > 0
-      ? -Math.sin((attack / 0.3) * Math.PI) * 2.1
-      : stride * 0.65;
-  r.rightArm.rotation.z = guard ? -0.55 : attack > 0 ? -0.35 : 0;
-  r.leftArm.rotation.z = guard ? 0.55 : 0;
-  r.hips.rotation.z =
-    hurt > 0
-      ? Math.sin(hurt * 40) * 0.07
-      : Math.sin(phase) * (moving ? 0.018 : 0);
-  r.coat.rotation.x = moving ? Math.sin(phase) * 0.045 : 0;
+  const kneeLift = T.MathUtils.lerp(0.45, 0.9, runWeight);
+  r.leftKnee.rotation.x = T.MathUtils.lerp(
+    0.025,
+    Math.max(0, -swing) * kneeLift,
+    weight,
+  );
+  r.rightKnee.rotation.x = T.MathUtils.lerp(
+    0.025,
+    Math.max(0, swing) * kneeLift,
+    weight,
+  );
+  // Blend combat poses instead of snapping between locomotion and defence.
+  // Preserve immediate updates when dt is omitted (used by existing callers/tests).
+  const blend = dt > 0 ? 1 - Math.exp(-dt * 14) : 1;
+  const defence = T.MathUtils.lerp(root.userData.defenceWeight ?? 0, guard ? 1 : 0, blend);
+  root.userData.defenceWeight = defence;
+  const attackPhase = T.MathUtils.clamp(attack / 0.3, 0, 1);
+  const strike = attack > 0 ? Math.sin(attackPhase * Math.PI) : 0;
+  const armSwing = -stride * 0.65;
+  r.leftArm.rotation.x = T.MathUtils.lerp(armSwing, -1.2, defence);
+  r.rightArm.rotation.x = T.MathUtils.lerp(
+    stride * 0.65 - strike * 2.1,
+    -1.1,
+    defence,
+  );
+  r.rightArm.rotation.z = T.MathUtils.lerp(-strike * 0.35, -0.55, defence);
+  r.leftArm.rotation.z = defence * 0.55;
+  r.hips.rotation.z = swing * weight * 0.018 + Math.sin(hurt * 40) * hit * 0.07;
+  r.coat.rotation.x = swing * weight * 0.045 + runWeight * weight * 0.025;
+  r.coatTails.rotation.x = -weight * (0.06 + runWeight * 0.14);
+  r.coatTails.rotation.z = swing * weight * 0.045;
   r.head.rotation.y = Math.sin(time * 0.6) * 0.035;
+  r.head.rotation.z = Math.sin(hurt * 24) * hit * 0.065;
 }
 
 /** Articulated collapse, shared by the protagonist and the enemy's visual corpse. */
@@ -402,4 +475,5 @@ export function animateDeath(root: T.Group, progress: number) {
   r.leftArm.rotation.x = -t * 0.8;
   r.rightArm.rotation.x = -t * 0.55;
   r.head.rotation.x = t * 0.5;
+  r.coatTails.rotation.x = -t * 0.25;
 }
