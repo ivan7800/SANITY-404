@@ -345,6 +345,8 @@ export class World {
         );
     }
     if (room === 0)
+      this.add({id:"medieval-portal", name:"Cruzar el recuerdo de 1348", x:-5.8, z:-5.2, kind:"door", target:9}, 0x877c69);
+    if (room === 0)
       this.add(
         {
           id: "mansion-puzzle",
