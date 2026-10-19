@@ -73,7 +73,7 @@ export function parseSave(raw: string): State | null {
       s.version !== 1 ||
       !Number.isInteger(s.room) ||
       s.room < 0 ||
-      s.room > 8 ||
+      s.room > 10 ||
       !["x", "z", "health", "sanity", "elapsed"].every((k) =>
         Number.isFinite(s[k]),
       ) ||
@@ -106,12 +106,14 @@ export function parseSave(raw: string): State | null {
       "Tónico 7",
       "Tablilla del intervalo",
       "Marca de Varro",
+      "Sello de Montfort",
+      "Códice de Montfort",
     ];
     if (
       !s.items.every((v: string) => allowedItems.includes(v)) ||
       !s.collected.every((v: string) => allowedItems.includes(v)) ||
-      !s.read.every((v: string) => /^[0-8]$/.test(v)) ||
-      !s.defeated.every((v: string) => /^enemy[0-8]$/.test(v))
+      !s.read.every((v: string) => /^(?:[0-9]|10)$/.test(v)) ||
+      !s.defeated.every((v: string) => /^enemy(?:[0-9]|10)$/.test(v))
     )
       return null;
     if (

@@ -20,7 +20,7 @@ describe("Persistencia y supervivencia", () => {
     "{}",
     "null",
     "invalid",
-    JSON.stringify({ ...fresh(), room: 9 }),
+    JSON.stringify({ ...fresh(), room: 11 }),
     JSON.stringify({ ...fresh(), health: -1 }),
     JSON.stringify({ ...fresh(), items: [12] }),
     JSON.stringify({ ...fresh(), x: 400 }),

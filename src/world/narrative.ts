@@ -35,6 +35,14 @@ export const notes = [
     "El mapa que no conoce Roma",
     "Año 189. Lucius Varro, cartógrafo, descubrió bajo un santuario una piedra que registra el nombre de quien todavía no ha nacido. La inscripción dice: «Cuando el último testigo recuerde al primero, la puerta volverá a abrirse». En el altar descansa una tablilla; su signo coincide con el medallón de la familia Veyr. Lucius decidió ocultarla antes de que llegaran los custodios.",
   ],
+  [
+    "La última campana",
+    "Francia, año 1348. Isabelle de Montfort entró en un monasterio aislado. Cada mañana faltaba un nombre en el registro y sobraba una sombra en el claustro. Para hallar el códice siguió los pasillos hasta el scriptorium.",
+  ],
+  [
+    "El códice de los que recuerdan",
+    "Isabelle copió tres signos: ceniza para la pérdida, marea para el retorno y umbral para el cruce. En el margen encontró el sello de Lucius Varro, mil años más antiguo. Una restauradora llamada Élise leería sus palabras en 1927.",
+  ],
 ];
 
 export const discoveries: Record<string, [string, string]> = {

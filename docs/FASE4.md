@@ -1,3 +1,19 @@
+# Fase 4.3 — Francia, 1348
+
+Se implementan dos salas nuevas: claustro (9) y scriptorium (10), conectadas con un portal opcional desde el vestíbulo de 1927. Protagonista: Isabelle de Montfort, copista, modelo procedural original sobre el rig animado existente. Enemigo: copista de las fiebres (plagueScribe), con perfil de combate propio. Objetivo: descifrar el primer signo del registro, vencer al custodio y recuperar el Códice de Montfort. Final narrativo conectado a Lucius Varro y Élise.
+
+El regreso está disponible aunque no se complete la misión para evitar bloqueos. El esquema de partidas guardadas mantiene la versión 1 y admite nuevas salas, notas, adversarios y objetos. Tres pruebas automatizadas cubren rutas, personaje, enemigo y guardado.
+
+## Limitaciones
+
+Es un capítulo medieval compacto en dos salas, no un monasterio extensivo con catacumbas. Los modelos son geometría Three.js, no GLB riggeados. No se han medido FPS en Intel HD 620 ni realizado prueba visual local desde este entorno.
+
+## Validación
+
+Exigir GitHub Actions verde: formato, Vitest y compilación Vite/TypeScript. Luego comprobar manualmente en Chrome: portal de 1927, control de Isabelle, acceso al scriptorium, resolución del puzle, combate, adquisición del códice, guardado/carga y regreso sin bloqueos.
+
+---
+
 # SANITY-404 — Fase 4.2: Lucius Varro (189 d. C.)
 
 ## Nueva entrega
