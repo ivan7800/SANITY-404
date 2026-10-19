@@ -67,7 +67,8 @@ export interface Interactable {
     | "discovery"
     | "phase2End"
     | "romanPuzzle"
-    | "medievalPuzzle";
+    | "medievalPuzzle"
+    | "legacy";
   value?: string;
   target?: number;
   rotation?: number;
@@ -411,6 +412,23 @@ export class World {
         },
         0x877c69,
       );
+    if (room === 0) {
+      this.add(
+        {id:"legacy-desk", name:"Reconstruir la memoria de las tres épocas", x: -2.5, z: -4.7, kind:"legacy"},
+        0xaeb993,
+      );
+      if (items.includes("Memoria reconciliada"))
+        this.add(
+          {id:"legacy-passage", name:"Atravesar el pasaje temporal · archivo Veyr", x:2.7, z:-5.8, kind:"door", target:5},
+          0x79b89d,
+        );
+    }
+    if (room === 5 && items.includes("Memoria reconciliada")) {
+      this.add(
+        {id:"legacy-back", name:"Volver por el pasaje temporal · vestíbulo", x: -2.8, z: -5.8, kind:"door", target:0},
+        0x79b89d,
+      );
+    }
     if (room === 0)
       this.add(
         {
@@ -435,6 +453,14 @@ export class World {
         },
         seals.includes(room - 1) ? 0x427b60 : 0x968b6a,
       );
+    if (room === 4 && items.includes("Memoria reconciliada")) {
+      const ring = new T.Mesh(
+        new T.TorusGeometry(0.7, 0.065, 8, 32),
+        new T.MeshStandardMaterial({color: 0x9fc8a8, emissive: 0x3b796b, emissiveIntensity: 0.7}),
+      );
+      ring.position.set(0, 2.2, -3.2);
+      this.scene.add(ring);
+    }
     if (room === 4)
       this.add(
         { id: "end", name: "Cerrar el intervalo", x: 0, z: -3, kind: "end" },
