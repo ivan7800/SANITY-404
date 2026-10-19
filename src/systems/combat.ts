@@ -67,7 +67,8 @@ export class Combat {
                 : 60 + room * 10;
   }
   startDodge() {
-    if (this.stamina < 25 || this.dodge > 0) return false;
+    if (this.stamina < 25 || this.dodge > 0 || this.windup > 0 || this.hurt > 0)
+      return false;
     this.stamina -= 25;
     this.dodge = 0.32;
     return true;
@@ -85,7 +86,7 @@ export class Combat {
     heavy = false,
     noise = 0,
   ) {
-    this.stamina = clamp(this.stamina + dt * (guard ? 4 : 18));
+    this.stamina = clamp(this.stamina + dt * (guard ? -7 : 18));
     this.guarding = guard && this.stamina > 0;
     this.dodge = Math.max(0, this.dodge - dt);
     this.enemyHurt = Math.max(0, this.enemyHurt - dt);
