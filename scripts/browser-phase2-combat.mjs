@@ -23,7 +23,13 @@ const state = {
   z: -1.5,
   health: 100,
   sanity: 100,
-  items: ["Llave de latón", "Medallón Veyr"],
+  items: [
+    "Llave de latón",
+    "Medallón Veyr",
+    "Tónico 0",
+    "Tónico 1",
+    "Tónico 2",
+  ],
   collected: [],
   read: [],
   defeated: [],
@@ -111,7 +117,15 @@ try {
       playerHealth: result.state.health,
       stamina: result.combat.stamina,
     });
-    if (expected !== 0) await page.keyboard.down("f");
+    if (expected !== 0) {
+      if (result.state.health < 90) await page.keyboard.press("h");
+      await page.waitForFunction(
+        () => window.sanityInspect().combat.stamina >= 70,
+        null,
+        { timeout: 20000 },
+      );
+      await page.keyboard.down("f");
+    }
   }
   const result = await inspect();
   assert.equal(result.enemy.visible, false);
