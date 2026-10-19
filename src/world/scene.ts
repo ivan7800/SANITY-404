@@ -414,18 +414,38 @@ export class World {
       );
     if (room === 0) {
       this.add(
-        {id:"legacy-desk", name:"Reconstruir la memoria de las tres épocas", x: -2.5, z: -4.7, kind:"legacy"},
+        {
+          id: "legacy-desk",
+          name: "Reconstruir la memoria de las tres épocas",
+          x: -2.5,
+          z: -4.7,
+          kind: "legacy",
+        },
         0xaeb993,
       );
       if (items.includes("Memoria reconciliada"))
         this.add(
-          {id:"legacy-passage", name:"Atravesar el pasaje temporal · archivo Veyr", x:2.7, z:-5.8, kind:"door", target:5},
+          {
+            id: "legacy-passage",
+            name: "Atravesar el pasaje temporal · archivo Veyr",
+            x: 2.7,
+            z: -5.8,
+            kind: "door",
+            target: 5,
+          },
           0x79b89d,
         );
     }
     if (room === 5 && items.includes("Memoria reconciliada")) {
       this.add(
-        {id:"legacy-back", name:"Volver por el pasaje temporal · vestíbulo", x: -2.8, z: -5.8, kind:"door", target:0},
+        {
+          id: "legacy-back",
+          name: "Volver por el pasaje temporal · vestíbulo",
+          x: -2.8,
+          z: -5.8,
+          kind: "door",
+          target: 0,
+        },
         0x79b89d,
       );
     }
@@ -456,7 +476,11 @@ export class World {
     if (room === 4 && items.includes("Memoria reconciliada")) {
       const ring = new T.Mesh(
         new T.TorusGeometry(0.7, 0.065, 8, 32),
-        new T.MeshStandardMaterial({color: 0x9fc8a8, emissive: 0x3b796b, emissiveIntensity: 0.7}),
+        new T.MeshStandardMaterial({
+          color: 0x9fc8a8,
+          emissive: 0x3b796b,
+          emissiveIntensity: 0.7,
+        }),
       );
       ring.position.set(0, 2.2, -3.2);
       this.scene.add(ring);

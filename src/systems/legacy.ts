@@ -20,7 +20,9 @@ export function legacy(state: Pick<State, "items">) {
 }
 
 /** Reconciliation is optional and cannot block the original mansion campaign. */
-export function reconcileLegacy(state: State): "missing" | "already" | "reconciled" {
+export function reconcileLegacy(
+  state: State,
+): "missing" | "already" | "reconciled" {
   if (!legacy(state).complete) return "missing";
   if (state.items.includes("Memoria reconciliada")) return "already";
   state.items.push("Memoria reconciliada");

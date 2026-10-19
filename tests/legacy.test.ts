@@ -23,10 +23,14 @@ describe("Fase 4.4 — consecuencias entre épocas", () => {
     expect(reconcileLegacy(s)).toBe("reconciled");
     expect(s.sanity).toBe(95);
     expect(reconcileLegacy(s)).toBe("already");
-    expect(s.items.filter((item) => item === "Memoria reconciliada")).toHaveLength(1);
+    expect(
+      s.items.filter((item) => item === "Memoria reconciliada"),
+    ).toHaveLength(1);
     expect(s.sanity).toBe(95);
     const entrance = new World(0, s.items, s.seals, s.read);
-    expect(entrance.objects.find((o) => o.id === "legacy-passage")?.target).toBe(5);
+    expect(
+      entrance.objects.find((o) => o.id === "legacy-passage")?.target,
+    ).toBe(5);
     entrance.dispose();
     const archive = new World(5, s.items, s.seals, s.read);
     expect(archive.objects.find((o) => o.id === "legacy-back")?.target).toBe(0);

@@ -316,14 +316,20 @@ function interact(o: Interactable) {
   if (o.kind === "legacy") {
     const result = reconcileLegacy(state);
     if (result === "missing") {
-      panel(`<div class="eyebrow">MANSIÓN VEYR · 1927</div><h2>La mesa de las tres edades</h2><p>${legacy(state).clue}</p><p>Regresa con los dos testimonios para reconstruir la ruta del Intervalo. Puedes continuar la historia original sin resolver este misterio.</p><button id="close">Volver</button>`);
+      panel(
+        `<div class="eyebrow">MANSIÓN VEYR · 1927</div><h2>La mesa de las tres edades</h2><p>${legacy(state).clue}</p><p>Regresa con los dos testimonios para reconstruir la ruta del Intervalo. Puedes continuar la historia original sin resolver este misterio.</p><button id="close">Volver</button>`,
+      );
       button("close", resume);
     } else if (result === "already") {
-      toast("La memoria ya está reconciliada. Busca el pasaje junto al muro norte.");
+      toast(
+        "La memoria ya está reconciliada. Busca el pasaje junto al muro norte.",
+      );
     } else {
       // Rebuild the entrance and reciprocal passage immediately.
       loadRoom();
-      panel(`<div class="eyebrow">LAS TRES ÉPOCAS · MEMORIA RECONCILIADA</div><h2>La grieta ha encontrado su origen</h2><p>Lucius escondió la tablilla en 189; Isabelle preservó su lectura en 1348. Élise reúne ambas pruebas en 1927 y descubre que la Sociedad Veyr borró deliberadamente el nombre de su guardián.</p><p>Recuperas 20 de cordura. Un pasaje hacia el archivo familiar se ha abierto en el vestíbulo, y el círculo de las ruinas ha cambiado.</p><button id="close">Continuar</button>`);
+      panel(
+        `<div class="eyebrow">LAS TRES ÉPOCAS · MEMORIA RECONCILIADA</div><h2>La grieta ha encontrado su origen</h2><p>Lucius escondió la tablilla en 189; Isabelle preservó su lectura en 1348. Élise reúne ambas pruebas en 1927 y descubre que la Sociedad Veyr borró deliberadamente el nombre de su guardián.</p><p>Recuperas 20 de cordura. Un pasaje hacia el archivo familiar se ha abierto en el vestíbulo, y el círculo de las ruinas ha cambiado.</p><button id="close">Continuar</button>`,
+      );
       button("close", resume);
       audio.tone(630, 0.6);
     }
