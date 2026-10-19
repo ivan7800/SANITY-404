@@ -109,12 +109,19 @@ export function parseSave(raw: string): State | null {
       "Sello de Montfort",
       "Códice de Montfort",
       "Memoria reconciliada",
+      "Juramento de Lucius",
+      "Promesa de Isabelle",
     ];
     if (
       !s.items.every((v: string) => allowedItems.includes(v)) ||
       !s.collected.every((v: string) => allowedItems.includes(v)) ||
       !s.read.every((v: string) => /^(?:[0-9]|10)$/.test(v)) ||
       !s.defeated.every((v: string) => /^enemy(?:[0-9]|10)$/.test(v))
+    )
+      return null;
+    if (
+      s.items.includes("Juramento de Lucius") &&
+      s.items.includes("Promesa de Isabelle")
     )
       return null;
     if (

@@ -68,7 +68,8 @@ export interface Interactable {
     | "phase2End"
     | "romanPuzzle"
     | "medievalPuzzle"
-    | "legacy";
+    | "legacy"
+    | "memoryChoice";
   value?: string;
   target?: number;
   rotation?: number;
@@ -439,6 +440,16 @@ export class World {
     if (room === 5 && items.includes("Memoria reconciliada")) {
       this.add(
         {
+          id: "memory-altar",
+          name: "Elegir el legado que sobrevivirá",
+          x: 2.8,
+          z: 3.2,
+          kind: "memoryChoice",
+        },
+        0xb0a079,
+      );
+      this.add(
+        {
           id: "legacy-back",
           name: "Volver por el pasaje temporal · vestíbulo",
           x: -2.8,
@@ -473,6 +484,25 @@ export class World {
         },
         seals.includes(room - 1) ? 0x427b60 : 0x968b6a,
       );
+    if (
+      room === 5 &&
+      (items.includes("Juramento de Lucius") ||
+        items.includes("Promesa de Isabelle"))
+    ) {
+      const roman = items.includes("Juramento de Lucius");
+      const aura = new T.Mesh(
+        new T.TorusGeometry(0.65, 0.06, 8, 32),
+        new T.MeshStandardMaterial({
+          color: roman ? 0xc69a54 : 0xa18cc8,
+          emissive: roman ? 0x795327 : 0x513d7d,
+          emissiveIntensity: 0.7,
+        }),
+      );
+      aura.rotation.x = Math.PI / 2;
+      aura.position.set(2.8, 1.45, 3.2);
+      this.scene.add(aura);
+      this.lamp(2.8, 2.5, 3.2, roman ? 0xdab16f : 0x9889d0, 7);
+    }
     if (room === 4 && items.includes("Memoria reconciliada")) {
       const ring = new T.Mesh(
         new T.TorusGeometry(0.7, 0.065, 8, 32),
