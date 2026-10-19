@@ -108,6 +108,7 @@ export function parseSave(raw: string): State | null {
       "Marca de Varro",
       "Sello de Montfort",
       "Códice de Montfort",
+      "Memoria reconciliada",
     ];
     if (
       !s.items.every((v: string) => allowedItems.includes(v)) ||
