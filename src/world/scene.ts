@@ -250,7 +250,13 @@ export class World {
         },
         0xc2a15b,
       );
-    if (room !== 4 && room !== 8 && room !== 9 && room !== 10 && !collected.includes("Tónico " + room))
+    if (
+      room !== 4 &&
+      room !== 8 &&
+      room !== 9 &&
+      room !== 10 &&
+      !collected.includes("Tónico " + room)
+    )
       this.add(
         {
           id: "tonic" + room,
@@ -300,14 +306,63 @@ export class World {
       );
     }
     if (room === 9) {
-      this.add({id:"medieval-return", name:"Regresar a 1927", x:0, z:6.1, kind:"door", target:0}, 0x9a866a);
-      this.add({id:"medieval-scriptorium", name:"Entrar al scriptorium", x:0, z:-6.1, kind:"door", target:10}, 0x9a866a);
+      this.add(
+        {
+          id: "medieval-return",
+          name: "Regresar a 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0x9a866a,
+      );
+      this.add(
+        {
+          id: "medieval-scriptorium",
+          name: "Entrar al scriptorium",
+          x: 0,
+          z: -6.1,
+          kind: "door",
+          target: 10,
+        },
+        0x9a866a,
+      );
     }
     if (room === 10) {
-      this.add({id:"medieval-back", name:"Volver al claustro", x:0, z:6.1, kind:"door", target:9}, 0x9a866a);
-      this.add({id:"medieval-manuscript", name:"Descifrar el códice sellado", x:-2.9, z:-4.7, kind:"medievalPuzzle"}, 0xa89c7d);
+      this.add(
+        {
+          id: "medieval-back",
+          name: "Volver al claustro",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 9,
+        },
+        0x9a866a,
+      );
+      this.add(
+        {
+          id: "medieval-manuscript",
+          name: "Descifrar el códice sellado",
+          x: -2.9,
+          z: -4.7,
+          kind: "medievalPuzzle",
+        },
+        0xa89c7d,
+      );
       if (!collected.includes("Códice de Montfort"))
-        this.add({id:"medieval-codex", name:"Recuperar el códice de Montfort", x:0, z:-4.1, kind:"item", value:"Códice de Montfort"}, 0xc3ac87);
+        this.add(
+          {
+            id: "medieval-codex",
+            name: "Recuperar el códice de Montfort",
+            x: 0,
+            z: -4.1,
+            kind: "item",
+            value: "Códice de Montfort",
+          },
+          0xc3ac87,
+        );
     }
     if (room === 8) {
       this.add(
@@ -345,7 +400,17 @@ export class World {
         );
     }
     if (room === 0)
-      this.add({id:"medieval-portal", name:"Cruzar el recuerdo de 1348", x:-5.8, z:-5.2, kind:"door", target:9}, 0x877c69);
+      this.add(
+        {
+          id: "medieval-portal",
+          name: "Cruzar el recuerdo de 1348",
+          x: -5.8,
+          z: -5.2,
+          kind: "door",
+          target: 9,
+        },
+        0x877c69,
+      );
     if (room === 0)
       this.add(
         {

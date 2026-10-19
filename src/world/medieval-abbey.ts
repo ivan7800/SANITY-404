@@ -44,7 +44,11 @@ export function decorateMedievalAbbey(world: World) {
     b(0, 1.35, -5.6, 2.4, 0.14, 1.24, 0xa99a7b, false);
     const glyph = new T.Mesh(
       new T.TorusGeometry(0.42, 0.045, 6, 28),
-      new T.MeshStandardMaterial({color: 0xb8a177, emissive: 0x463725, emissiveIntensity: 0.5}),
+      new T.MeshStandardMaterial({
+        color: 0xb8a177,
+        emissive: 0x463725,
+        emissiveIntensity: 0.5,
+      }),
     );
     glyph.position.set(0, 2.3, -7.38);
     world.scene.add(glyph);

@@ -90,9 +90,23 @@ export function createEnemy(kind: EnemyKind): T.Group {
   if (kind === "plagueScribe") {
     root.name = "El copista de las fiebres";
     root.scale.set(1.02, 1.2, 0.94);
-    const hood = mesh(rig.head, new T.ConeGeometry(0.24, 0.42, 8), dark, 0, 0.28, -0.07);
+    const hood = mesh(
+      rig.head,
+      new T.ConeGeometry(0.24, 0.42, 8),
+      dark,
+      0,
+      0.28,
+      -0.07,
+    );
     hood.rotation.x = 0.18;
-    mesh(rig.hips, new T.CylinderGeometry(0.23, 0.36, 0.75, 10), dark, 0, 0.06, 0);
+    mesh(
+      rig.hips,
+      new T.CylinderGeometry(0.23, 0.36, 0.75, 10),
+      dark,
+      0,
+      0.06,
+      0,
+    );
     mesh(rig.head, new T.SphereGeometry(0.058, 8, 6), glow, 0, 0.12, 0.135);
     rig.leftArm.scale.y = 1.15;
     rig.rightArm.scale.y = 1.15;

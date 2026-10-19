@@ -60,11 +60,11 @@ export class Combat {
           ? 115
           : this.kind === "plagueScribe"
             ? 85
-          : this.kind === "ritual"
-            ? 105
-            : this.kind === "stalker"
-              ? 75
-              : 60 + room * 10;
+            : this.kind === "ritual"
+              ? 105
+              : this.kind === "stalker"
+                ? 75
+                : 60 + room * 10;
   }
   startDodge() {
     if (this.stamina < 25 || this.dodge > 0) return false;
@@ -285,15 +285,15 @@ export class Combat {
             const amount =
               this.kind === "plagueScribe"
                 ? 13
-              : this.kind === "centurion"
-                ? 17
-                : this.kind === "guardian"
-                  ? this.longAttack
-                    ? 24
-                    : 16
-                  : this.kind === "ritual"
-                    ? 14
-                    : 9;
+                : this.kind === "centurion"
+                  ? 17
+                  : this.kind === "guardian"
+                    ? this.longAttack
+                      ? 24
+                      : 16
+                    : this.kind === "ritual"
+                      ? 14
+                      : 9;
             damage(state, this.guarding ? Math.ceil(amount * 0.28) : amount);
             if (this.kind === "ritual") state.sanity = clamp(state.sanity - 7);
             this.hurt = 0.32;
@@ -326,13 +326,13 @@ export class Combat {
           ? 0.28
           : this.kind === "plagueScribe"
             ? 0.72
-          : this.kind === "centurion"
-            ? 0.8
-            : this.kind === "ritual"
-              ? 0.68
-              : this.longAttack
-                ? 0.9
-                : 0.5;
+            : this.kind === "centurion"
+              ? 0.8
+              : this.kind === "ritual"
+                ? 0.68
+                : this.longAttack
+                  ? 0.9
+                  : 0.5;
       this.aiState = "windup";
       onMessage(
         this.kind === "guardian"
@@ -341,11 +341,11 @@ export class Combat {
             : "Étienne barre el suelo con el brazo."
           : this.kind === "plagueScribe"
             ? "El copista susurra un nombre. Se prepara para atacar."
-          : this.kind === "centurion"
-            ? "El centurión marca el suelo con su hoja. ¡Prepárate!"
-            : this.kind === "ritual"
-              ? "La criatura traza un signo en el aire."
-              : "Algo salta desde las sombras.",
+            : this.kind === "centurion"
+              ? "El centurión marca el suelo con su hoja. ¡Prepárate!"
+              : this.kind === "ritual"
+                ? "La criatura traza un signo en el aire."
+                : "Algo salta desde las sombras.",
       );
     } else {
       if (this.aiState === "recover" || this.aiState === "vulnerable")

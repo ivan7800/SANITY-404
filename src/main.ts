@@ -117,7 +117,12 @@ function loadRoom() {
     settings.quality,
     state.phase2,
   );
-  player = state.room === 8 ? luciusVarro() : state.room >= 9 ? isabelleDeMontfort() : character();
+  player =
+    state.room === 8
+      ? luciusVarro()
+      : state.room >= 9
+        ? isabelleDeMontfort()
+        : character();
   player.position.set(state.x, 0, state.z);
   world.scene.add(player);
   enemy = createEnemy(enemyKindForRoom(state.room));
@@ -166,9 +171,11 @@ function loadRoom() {
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
   el("hero-name").textContent =
-    state.room >= 9 ? "ISABELLE DE MONTFORT · COPISTA" : state.room === 8
-      ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
-      : "ÉLISE MOREAU · RESTAURADORA";
+    state.room >= 9
+      ? "ISABELLE DE MONTFORT · COPISTA"
+      : state.room === 8
+        ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
+        : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
   cinematic.update(
     camera,
@@ -313,18 +320,23 @@ function interact(o: Interactable) {
     panel(
       `<div class="eyebrow">FRANCIA · 1348</div><h2>El nombre anterior</h2><p>El registro menciona tres huellas: lo que arde, lo que vuelve y aquello que cruza. ¿Qué signo antecede a los otros dos?</p><div class="actions"><button id="med-answer0">Marea</button><button id="med-answer1">Ceniza</button><button id="med-answer2">Umbral</button><button id="close">Volver</button></div>`,
     );
-    for (let i = 0; i < 3; i++) button("med-answer" + i, () => {
-      if (i === 1) {
-        state.items.push("Sello de Montfort");
-        resume();
-        toast("Isabelle descifra el primer signo. El códice puede recuperarse.");
-        audio.tone(590, 0.5);
-      } else {
-        state.sanity = clamp(state.sanity - 4);
-        resume();
-        toast("Una voz repite la respuesta equivocada. Pierdes 4 de cordura.");
-      }
-    });
+    for (let i = 0; i < 3; i++)
+      button("med-answer" + i, () => {
+        if (i === 1) {
+          state.items.push("Sello de Montfort");
+          resume();
+          toast(
+            "Isabelle descifra el primer signo. El códice puede recuperarse.",
+          );
+          audio.tone(590, 0.5);
+        } else {
+          state.sanity = clamp(state.sanity - 4);
+          resume();
+          toast(
+            "Una voz repite la respuesta equivocada. Pierdes 4 de cordura.",
+          );
+        }
+      });
     button("close", resume);
     return;
   }
@@ -353,7 +365,10 @@ function interact(o: Interactable) {
     return;
   }
   if (o.kind === "item") {
-    if (o.id === "medieval-codex" && !state.items.includes("Sello de Montfort")) {
+    if (
+      o.id === "medieval-codex" &&
+      !state.items.includes("Sello de Montfort")
+    ) {
       toast("El códice está protegido por la inscripción. Descífrala primero.");
       return;
     }
@@ -446,9 +461,21 @@ function interact(o: Interactable) {
       return;
     }
     state.room = o.target!;
-    if (["medieval-portal", "medieval-return", "medieval-scriptorium", "medieval-back"].includes(o.id)) {
+    if (
+      [
+        "medieval-portal",
+        "medieval-return",
+        "medieval-scriptorium",
+        "medieval-back",
+      ].includes(o.id)
+    ) {
       state.x = 0;
-      state.z = o.id === "medieval-portal" || o.id === "medieval-scriptorium" || o.id === "medieval-back" ? 5.2 : -4.2;
+      state.z =
+        o.id === "medieval-portal" ||
+        o.id === "medieval-scriptorium" ||
+        o.id === "medieval-back"
+          ? 5.2
+          : -4.2;
     } else if (o.id === "roman-portal" || o.id === "roman-return") {
       state.x = 0;
       state.z = o.id === "roman-portal" ? 5.2 : -4.2;
