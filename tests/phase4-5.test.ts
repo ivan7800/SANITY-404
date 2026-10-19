@@ -85,6 +85,13 @@ describe("Fase 4.5 — sanity, combat and low-cost hallucinations", () => {
     expect(combat.stamina).toBeLessThan(50);
     combat.hurt = 0.5;
     expect(combat.startDodge()).toBe(false);
+    combat.hurt = 0;
+    combat.animation = 0.3;
+    expect(combat.startDodge()).toBe(false);
+    combat.animation = 0;
+    combat.windup = 0.4;
+    expect(combat.startDodge()).toBe(true);
+    expect(combat.stamina).toBeLessThan(25);
     world.dispose();
   });
 });

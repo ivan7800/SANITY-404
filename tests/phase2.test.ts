@@ -119,6 +119,8 @@ it("el golpe fuerte explota la vulnerabilidad ritual; esquiva y coraza limitan e
   );
   expect(heavy.health).toBe(55);
   expect(heavy.stamina).toBeLessThan(70);
+  expect(heavy.startDodge()).toBe(false);
+  heavy.update(0.31, state, player, enemy, [], false, vi.fn(), vi.fn());
   expect(heavy.startDodge()).toBe(true);
   expect(heavy.stamina).toBeLessThan(50);
 
