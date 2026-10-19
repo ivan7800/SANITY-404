@@ -26,7 +26,9 @@ describe("Fase 4.2 — Lucius Varro", () => {
   });
   it("places the altar puzzle and persists its solution", () => {
     const world = new World(8, [], [], []);
-    expect(world.objects.find((o) => o.id === "roman-inscription")?.kind).toBe("romanPuzzle");
+    expect(world.objects.find((o) => o.id === "roman-inscription")?.kind).toBe(
+      "romanPuzzle",
+    );
     const state = fresh();
     state.room = 8;
     state.phase2.visited.push(8);

@@ -2,7 +2,8 @@ import * as T from "three";
 import { pbr } from "../render/materials";
 import { character } from "./character";
 
-export type EnemyKind = "shade" | "stalker" | "ritual" | "guardian" | "centurion";
+export type EnemyKind =
+  "shade" | "stalker" | "ritual" | "guardian" | "centurion";
 export function enemyKindForRoom(room: number): EnemyKind {
   if (room === 8) return "centurion";
   if (room === 5 || room === 6) return "stalker";
@@ -88,7 +89,14 @@ export function createEnemy(kind: EnemyKind): T.Group {
   if (kind === "centurion") {
     root.name = "El centurión sin rostro";
     root.scale.set(1.13, 1.12, 1.08);
-    const crest = mesh(rig.head, new T.BoxGeometry(0.12, 0.3, 0.38), dark, 0, 0.34, 0);
+    const crest = mesh(
+      rig.head,
+      new T.BoxGeometry(0.12, 0.3, 0.38),
+      dark,
+      0,
+      0.34,
+      0,
+    );
     crest.rotation.x = -0.16;
     mesh(rig.hips, new T.BoxGeometry(0.51, 0.4, 0.34), bone, 0, 0.46, 0);
     mesh(rig.hips, new T.TorusGeometry(0.14, 0.04, 6, 16), glow, 0, 0.45, 0.21);

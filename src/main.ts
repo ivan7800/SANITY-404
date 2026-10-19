@@ -164,9 +164,10 @@ function loadRoom() {
   if (settings.quality === 1) simplifyLowMaterials(world.scene);
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
-  el("hero-name").textContent = state.room === 8
-    ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
-    : "ÉLISE MOREAU · RESTAURADORA";
+  el("hero-name").textContent =
+    state.room === 8
+      ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
+      : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
   cinematic.update(
     camera,
@@ -308,25 +309,30 @@ function interact(o: Interactable) {
       toast("La inscripción ya ha revelado su nombre.");
       return;
     }
-    panel(`<div class="eyebrow">ROMA · AÑO 189</div><h2>Las tres edades del intervalo</h2><p>El testamento de Lucius ordena recordar primero lo que se consume, luego lo que retorna, y por último lo que se atraviesa. ¿Cuál es el orden?</p><div class="actions"><button id="roman-answer0">Umbral · Ceniza · Marea</button><button id="roman-answer1">Ceniza · Marea · Umbral</button><button id="roman-answer2">Marea · Umbral · Ceniza</button><button id="close">Volver</button></div>`);
-    for (let i = 0; i < 3; i++) button("roman-answer" + i, () => {
-      if (i === 1) {
-        state.items.push("Marca de Varro");
-        resume();
-        toast("La inscripción cede. La marca de Varro ha quedado grabada.");
-        audio.tone(580, 0.6);
-      } else {
-        state.sanity = clamp(state.sanity - 4);
-        resume();
-        toast("Las palabras vuelven a desordenarse. Pierdes 4 de cordura.");
-      }
-    });
+    panel(
+      `<div class="eyebrow">ROMA · AÑO 189</div><h2>Las tres edades del intervalo</h2><p>El testamento de Lucius ordena recordar primero lo que se consume, luego lo que retorna, y por último lo que se atraviesa. ¿Cuál es el orden?</p><div class="actions"><button id="roman-answer0">Umbral · Ceniza · Marea</button><button id="roman-answer1">Ceniza · Marea · Umbral</button><button id="roman-answer2">Marea · Umbral · Ceniza</button><button id="close">Volver</button></div>`,
+    );
+    for (let i = 0; i < 3; i++)
+      button("roman-answer" + i, () => {
+        if (i === 1) {
+          state.items.push("Marca de Varro");
+          resume();
+          toast("La inscripción cede. La marca de Varro ha quedado grabada.");
+          audio.tone(580, 0.6);
+        } else {
+          state.sanity = clamp(state.sanity - 4);
+          resume();
+          toast("Las palabras vuelven a desordenarse. Pierdes 4 de cordura.");
+        }
+      });
     button("close", resume);
     return;
   }
   if (o.kind === "item") {
     if (o.id === "roman-tablet" && !state.items.includes("Marca de Varro")) {
-      toast("La tablilla está sellada. Descifra la inscripción junto al altar.");
+      toast(
+        "La tablilla está sellada. Descifra la inscripción junto al altar.",
+      );
       return;
     }
     if (o.id === "roman-tablet" && !state.defeated.includes("enemy8")) {
@@ -339,7 +345,9 @@ function interact(o: Interactable) {
     world.objects = world.objects.filter((i) => i !== o);
     toast("Recogido: " + o.value);
     if (o.id === "roman-tablet") {
-      panel(`<div class="eyebrow">ROMA · 189 D. C. · EPÍLOGO</div><h2>El cartógrafo del vacío</h2><p>Lucius arranca del altar la última inscripción. El centurión permanece inmóvil. Bajo la piedra descubre el mapa de una casa que aún tardará siglos en construirse. Su nombre no figura en él: el de Élise Moreau sí.</p><p>La tablilla queda ligada a su recuerdo. El arco al sur conduce de regreso a 1927.</p><button id="close">Continuar</button>`);
+      panel(
+        `<div class="eyebrow">ROMA · 189 D. C. · EPÍLOGO</div><h2>El cartógrafo del vacío</h2><p>Lucius arranca del altar la última inscripción. El centurión permanece inmóvil. Bajo la piedra descubre el mapa de una casa que aún tardará siglos en construirse. Su nombre no figura en él: el de Élise Moreau sí.</p><p>La tablilla queda ligada a su recuerdo. El arco al sur conduce de regreso a 1927.</p><button id="close">Continuar</button>`,
+      );
       button("close", resume);
     }
   }

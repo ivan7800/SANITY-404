@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { animateCharacter, animateDeath, character, type Rig } from "../src/world/character";
+import {
+  animateCharacter,
+  animateDeath,
+  character,
+  type Rig,
+} from "../src/world/character";
 
-const rigOf = (actor: ReturnType<typeof character>) => actor.userData.rig as Rig;
+const rigOf = (actor: ReturnType<typeof character>) =>
+  actor.userData.rig as Rig;
 
 describe("animación articulada Fase 3", () => {
   it("conserva la fase al alternar caminar y correr", () => {
