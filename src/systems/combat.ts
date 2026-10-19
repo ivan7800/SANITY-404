@@ -56,6 +56,8 @@ export class Combat {
     this.health =
       this.kind === "guardian"
         ? 150
+        : this.kind === "centurion"
+          ? 115
         : this.kind === "ritual"
           ? 105
           : this.kind === "stalker"
@@ -279,7 +281,9 @@ export class Combat {
           if (this.dodge > 0) onMessage("Esquivas el ataque.");
           else {
             const amount =
-              this.kind === "guardian"
+              this.kind === "centurion"
+                ? 17
+              : this.kind === "guardian"
                 ? this.longAttack
                   ? 24
                   : 16
@@ -316,6 +320,8 @@ export class Combat {
       this.windup =
         this.kind === "stalker"
           ? 0.28
+          : this.kind === "centurion"
+            ? 0.8
           : this.kind === "ritual"
             ? 0.68
             : this.longAttack
@@ -327,6 +333,8 @@ export class Combat {
           ? this.longAttack
             ? "Étienne prepara una embestida larga."
             : "Étienne barre el suelo con el brazo."
+          : this.kind === "centurion"
+            ? "El centurión marca el suelo con su hoja. ¡Prepárate!"
           : this.kind === "ritual"
             ? "La criatura traza un signo en el aire."
             : "Algo salta desde las sombras.",
