@@ -60,7 +60,8 @@ export interface Interactable {
     | "end"
     | "phase2Puzzle"
     | "discovery"
-    | "phase2End";
+    | "phase2End"
+    | "romanPuzzle";
   value?: string;
   target?: number;
   rotation?: number;
@@ -292,6 +293,16 @@ export class World {
       );
     }
     if (room === 8) {
+      this.add(
+        {
+          id: "roman-inscription",
+          name: "Descifrar la inscripción del altar",
+          x: -2.9,
+          z: -4.25,
+          kind: "romanPuzzle",
+        },
+        0xb09a70,
+      );
       this.add(
         {
           id: "roman-return",
