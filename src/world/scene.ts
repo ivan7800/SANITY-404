@@ -438,7 +438,16 @@ export class World {
         );
     }
     if (room === 5 && items.includes("Memoria reconciliada")) {
-      this.add({id:"memory-altar", name:"Elegir el legado que sobrevivirá", x:2.8, z:3.2, kind:"memoryChoice"}, 0xb0a079);
+      this.add(
+        {
+          id: "memory-altar",
+          name: "Elegir el legado que sobrevivirá",
+          x: 2.8,
+          z: 3.2,
+          kind: "memoryChoice",
+        },
+        0xb0a079,
+      );
       this.add(
         {
           id: "legacy-back",
@@ -475,7 +484,11 @@ export class World {
         },
         seals.includes(room - 1) ? 0x427b60 : 0x968b6a,
       );
-    if (room === 5 && (items.includes("Juramento de Lucius") || items.includes("Promesa de Isabelle"))) {
+    if (
+      room === 5 &&
+      (items.includes("Juramento de Lucius") ||
+        items.includes("Promesa de Isabelle"))
+    ) {
       const roman = items.includes("Juramento de Lucius");
       const aura = new T.Mesh(
         new T.TorusGeometry(0.65, 0.06, 8, 32),

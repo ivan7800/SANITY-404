@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { fresh, parseSave } from "../src/systems/state";
 import { reconcileLegacy } from "../src/systems/legacy";
-import { chosenMemory, chooseMemory, memoryConsequence } from "../src/systems/memory-choice";
+import {
+  chosenMemory,
+  chooseMemory,
+  memoryConsequence,
+} from "../src/systems/memory-choice";
 import { World } from "../src/world/scene";
 
 describe("Fase 4.4 — decisiones de las tres edades", () => {

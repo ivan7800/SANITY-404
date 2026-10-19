@@ -29,7 +29,11 @@ import { Audio } from "./systems/audio";
 import { notes, discoveries } from "./world/narrative";
 import { readSave, writeSave } from "./systems/save";
 import { legacy, reconcileLegacy, legacyEnding } from "./systems/legacy";
-import { chosenMemory, chooseMemory, memoryConsequence } from "./systems/memory-choice";
+import {
+  chosenMemory,
+  chooseMemory,
+  memoryConsequence,
+} from "./systems/memory-choice";
 import { Combat } from "./systems/combat";
 import { Sanity } from "./systems/sanity";
 import { drinkTonic } from "./systems/inventory";
@@ -317,7 +321,9 @@ function interact(o: Interactable) {
   if (o.kind === "memoryChoice") {
     const chosen = memoryConsequence(state);
     if (chosen) {
-      panel(`<div class="eyebrow">ARCHIVO VEYR · UN LEGADO</div><h2>${chosen.heading}</h2><p>${chosen.description}</p><button id="close">Continuar</button>`);
+      panel(
+        `<div class="eyebrow">ARCHIVO VEYR · UN LEGADO</div><h2>${chosen.heading}</h2><p>${chosen.description}</p><button id="close">Continuar</button>`,
+      );
       button("close", resume);
       return;
     }
@@ -328,7 +334,9 @@ function interact(o: Interactable) {
       const result = chooseMemory(state, "Juramento de Lucius");
       if (result === "chosen") {
         loadRoom();
-        panel(`<h2>El juramento de Lucius</h2><p>El cartógrafo entrega su última defensa. La memoria de las tres épocas adopta el brillo del bronce.</p><button id="close">Continuar</button>`);
+        panel(
+          `<h2>El juramento de Lucius</h2><p>El cartógrafo entrega su última defensa. La memoria de las tres épocas adopta el brillo del bronce.</p><button id="close">Continuar</button>`,
+        );
         button("close", resume);
       } else resume();
     });
@@ -336,7 +344,9 @@ function interact(o: Interactable) {
       const result = chooseMemory(state, "Promesa de Isabelle");
       if (result === "chosen") {
         loadRoom();
-        panel(`<h2>La promesa de Isabelle</h2><p>La copista inscribe el nombre que ningún siglo borrará. El umbral adquiere el color de la tinta.</p><button id="close">Continuar</button>`);
+        panel(
+          `<h2>La promesa de Isabelle</h2><p>La copista inscribe el nombre que ningún siglo borrará. El umbral adquiere el color de la tinta.</p><button id="close">Continuar</button>`,
+        );
         button("close", resume);
       } else resume();
     });
