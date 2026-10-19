@@ -85,8 +85,14 @@ try {
   assert.ok(current.state.items.includes("Juramento de Lucius"));
   assert.ok(!current.state.items.includes("Promesa de Isabelle"));
   await page.getByRole("button", { name: "Continuar" }).click();
-  await page.keyboard.press("Tab");
-  assert.match(await page.locator("#panel").innerText(), /Juramento de Lucius/);
+  await page.evaluate((saved) => localStorage.setItem("sanity404-save", JSON.stringify(saved)), current.state);
+  await page.reload();
+  await page.getByRole("button", { name: "Continuar", exact: true }).click();
+  await page.waitForFunction(() => window.sanityInspect().draw.frame > 4);
+  current = await inspect();
+  assert.equal(current.state.room, 5);
+  assert.ok(current.state.items.includes("Juramento de Lucius"));
+  assert.ok(!current.state.items.includes("Promesa de Isabelle"));
   assert.deepEqual(faults, []);
   console.log("PASS 3 historical rooms, selectable consequence and HUD");
 } finally {
