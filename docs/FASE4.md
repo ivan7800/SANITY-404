@@ -1,3 +1,22 @@
+# Fase 4.4 — El legado de las tres edades
+
+Los resultados de Roma (189), Francia (1348) y la mansión (1927) ahora afectan de forma persistente a la aventura de Élise.
+
+- La mesa de las tres edades, situada en el vestíbulo de 1927, revela qué testimonio falta.
+- Recuperar la Tablilla del intervalo y el Códice de Montfort permite reconciliar las memorias de Lucius e Isabelle. La acción añade Memoria reconciliada al inventario, restaura una sola vez hasta 20 de cordura y crea un pasaje temporal reversible entre el vestíbulo y el archivo Veyr.
+- Las ruinas muestran un nuevo círculo luminoso tras reconciliar los testimonios.
+- Un desenlace alternativo se desbloquea si se reconcilian las dos memorias y además se investiga el cuaderno de Adrien en el invernadero. Los desenlaces originales no quedan bloqueados.
+- El progreso utiliza la estructura de guardado v1 ya existente, sin modificar las partidas anteriores.
+- Las pruebas verifican reconciliación única, shortcut bidireccional, persistencia y condiciones de final.
+
+## Validaciones pendientes
+GitHub Actions: npm ci, npm run format:check, npm test, npm run build. Después comprobar en Chrome el acceso al escritorio de recuerdos, salida del pasaje, controles, guardado en ambas puntas, desenlace con y sin la investigación opcional, y FPS sobre Intel HD 620.
+
+## Limitaciones
+Todavía no hay nuevas cinemáticas 3D, doblaje ni transición temporal elaborada. Se trata de consecuencias jugables y narrativas sobre el mundo existente, no de una campaña totalmente rehecha.
+
+---
+
 # Fase 4.3 — Francia, 1348
 
 Se implementan dos salas nuevas: claustro (9) y scriptorium (10), conectadas con un portal opcional desde el vestíbulo de 1927. Protagonista: Isabelle de Montfort, copista, modelo procedural original sobre el rig animado existente. Enemigo: copista de las fiebres (plagueScribe), con perfil de combate propio. Objetivo: descifrar el primer signo del registro, vencer al custodio y recuperar el Códice de Montfort. Final narrativo conectado a Lucius Varro y Élise.
