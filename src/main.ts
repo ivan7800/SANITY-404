@@ -368,10 +368,6 @@ function interact(o: Interactable) {
     button("close", resume);
   }
   if (o.kind === "door") {
-    if (o.id === "roman-return" && !state.items.includes("Tablilla del intervalo")) {
-      toast("Lucius debe recuperar la tablilla antes de abandonar el recuerdo.");
-      return;
-    }
     const phase2Lock = phase2DoorLocked(o.id, state.phase2);
     if (phase2Lock) {
       toast(phase2Lock);
