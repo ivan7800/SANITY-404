@@ -29,6 +29,7 @@ import { Audio } from "./systems/audio";
 import { notes, discoveries } from "./world/narrative";
 import { readSave, writeSave } from "./systems/save";
 import { legacy, reconcileLegacy, legacyEnding } from "./systems/legacy";
+import { chosenMemory, chooseMemory, memoryConsequence } from "./systems/memory-choice";
 import { Combat } from "./systems/combat";
 import { Sanity } from "./systems/sanity";
 import { drinkTonic } from "./systems/inventory";
@@ -265,7 +266,7 @@ function options() {
 }
 function inventory() {
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
   );
   button("close", resume);
   button("heal", () => {
@@ -313,6 +314,35 @@ function phase2Puzzle(id: PuzzleId) {
 }
 function interact(o: Interactable) {
   audio.tone(260);
+  if (o.kind === "memoryChoice") {
+    const chosen = memoryConsequence(state);
+    if (chosen) {
+      panel(`<div class="eyebrow">ARCHIVO VEYR · UN LEGADO</div><h2>${chosen.heading}</h2><p>${chosen.description}</p><button id="close">Continuar</button>`);
+      button("close", resume);
+      return;
+    }
+    panel(
+      `<div class="eyebrow">ARCHIVO VEYR · 1927</div><h2>¿Qué recuerdo salvarás?</h2><p>Solo uno de los dos testimonios puede fijarse en el umbral. Tu elección permanecerá grabada en esta partida y cambiará el desenlace.</p><div class="actions"><button id="choose-lucius">El juramento de Lucius · +30 salud</button><button id="choose-isabelle">La promesa de Isabelle · +30 cordura</button><button id="close">Volver</button></div>`,
+    );
+    button("choose-lucius", () => {
+      const result = chooseMemory(state, "Juramento de Lucius");
+      if (result === "chosen") {
+        loadRoom();
+        panel(`<h2>El juramento de Lucius</h2><p>El cartógrafo entrega su última defensa. La memoria de las tres épocas adopta el brillo del bronce.</p><button id="close">Continuar</button>`);
+        button("close", resume);
+      } else resume();
+    });
+    button("choose-isabelle", () => {
+      const result = chooseMemory(state, "Promesa de Isabelle");
+      if (result === "chosen") {
+        loadRoom();
+        panel(`<h2>La promesa de Isabelle</h2><p>La copista inscribe el nombre que ningún siglo borrará. El umbral adquiere el color de la tinta.</p><button id="close">Continuar</button>`);
+        button("close", resume);
+      } else resume();
+    });
+    button("close", resume);
+    return;
+  }
   if (o.kind === "legacy") {
     const result = reconcileLegacy(state);
     if (result === "missing") {
@@ -537,8 +567,9 @@ function interact(o: Interactable) {
     state.ended = true;
     const remembered = state.phase2.discoveries.includes("adrien");
     const temporalEnding = legacyEnding(state);
+    const chosenEnding = temporalEnding && memoryConsequence(state);
     panel(
-      `<div class="eyebrow">FIN · LA MANSIÓN DE LOS ECOS</div><h2>${temporalEnding ? temporalEnding.title : remembered ? "Una puerta puede elegir a quién deja salir." : "El nombre que faltaba."}</h2><p>${temporalEnding ? temporalEnding.text : remembered ? "Élise pronuncia el verdadero nombre del guardián. Étienne deja caer los brazos y Adrien cruza el umbral por su propia voluntad. La casa pierde una voz, pero los hermanos conservan la historia que escribieron juntos." : "El guardián se disuelve cuando cesa el mecanismo. Adrien sale con Élise; en el tren, ninguno puede recordar cómo se abrió la puerta. El cuaderno mojado habría conservado esa respuesta."}</p><p>Investigación: ${state.phase2.discoveries.length}/3 · Documentos: ${state.read.length}/${notes.length} · Cordura: ${Math.round(state.sanity)}</p><button id="finish">Volver al título</button>`,
+      `<div class="eyebrow">FIN · LA MANSIÓN DE LOS ECOS</div><h2>${temporalEnding ? temporalEnding.title : remembered ? "Una puerta puede elegir a quién deja salir." : "El nombre que faltaba."}</h2><p>${temporalEnding ? temporalEnding.text + (chosenEnding ? " " + chosenEnding.description : "") : remembered ? "Élise pronuncia el verdadero nombre del guardián. Étienne deja caer los brazos y Adrien cruza el umbral por su propia voluntad. La casa pierde una voz, pero los hermanos conservan la historia que escribieron juntos." : "El guardián se disuelve cuando cesa el mecanismo. Adrien sale con Élise; en el tren, ninguno puede recordar cómo se abrió la puerta. El cuaderno mojado habría conservado esa respuesta."}</p><p>Investigación: ${state.phase2.discoveries.length}/3 · Documentos: ${state.read.length}/${notes.length} · Cordura: ${Math.round(state.sanity)}</p><button id="finish">Volver al título</button>`,
     );
     button("finish", () => {
       started = false;
@@ -581,8 +612,9 @@ function interact(o: Interactable) {
     if (state.seals.length < 3) return;
     state.ended = true;
     const temporalEnding = legacyEnding(state);
+    const chosenEnding = temporalEnding && memoryConsequence(state);
     panel(
-      `<div class="eyebrow">FIN · ${temporalEnding ? temporalEnding.title : state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${temporalEnding ? "Lo que tres épocas protegieron." : state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${temporalEnding ? temporalEnding.text : state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/5</p><button id="finish">Volver al título</button>`,
+      `<div class="eyebrow">FIN · ${temporalEnding ? temporalEnding.title : state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${temporalEnding ? "Lo que tres épocas protegieron." : state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${temporalEnding ? temporalEnding.text + (chosenEnding ? " " + chosenEnding.description : "") : state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/5</p><button id="finish">Volver al título</button>`,
     );
     button("finish", () => {
       started = false;
