@@ -68,7 +68,8 @@ export interface Interactable {
     | "phase2End"
     | "romanPuzzle"
     | "medievalPuzzle"
-    | "legacy";
+    | "legacy"
+    | "memoryChoice";
   value?: string;
   target?: number;
   rotation?: number;
@@ -437,6 +438,7 @@ export class World {
         );
     }
     if (room === 5 && items.includes("Memoria reconciliada")) {
+      this.add({id:"memory-altar", name:"Elegir el legado que sobrevivirá", x:2.8, z:3.2, kind:"memoryChoice"}, 0xb0a079);
       this.add(
         {
           id: "legacy-back",
