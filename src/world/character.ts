@@ -173,7 +173,7 @@ export function character(enemy = false): T.Group {
       seam.rotation.z = side * 0.18;
     }
     // The small scarf keeps the face and neck recognisable from distant shots.
-    oval(hips, blouse, 0, 0.70, 0.105, 0.12, 0.042, 0.055);
+    oval(hips, blouse, 0, 0.7, 0.105, 0.12, 0.042, 0.055);
   }
   const bag = add(
     hips,
@@ -442,7 +442,11 @@ export function animateCharacter(
   // Blend combat poses instead of snapping between locomotion and defence.
   // Preserve immediate updates when dt is omitted (used by existing callers/tests).
   const blend = dt > 0 ? 1 - Math.exp(-dt * 14) : 1;
-  const defence = T.MathUtils.lerp(root.userData.defenceWeight ?? 0, guard ? 1 : 0, blend);
+  const defence = T.MathUtils.lerp(
+    root.userData.defenceWeight ?? 0,
+    guard ? 1 : 0,
+    blend,
+  );
   root.userData.defenceWeight = defence;
   const attackPhase = T.MathUtils.clamp(attack / 0.3, 0, 1);
   const strike = attack > 0 ? Math.sin(attackPhase * Math.PI) : 0;

@@ -6,6 +6,7 @@ import { FrameMetrics } from "./render/metrics";
 import { GpuTimer } from "./render/gpu-timer";
 import { CinematicCamera } from "./engine/camera";
 import { animateCharacter, animateDeath } from "./world/character";
+import { luciusVarro } from "./world/lucius";
 import { createEnemy, enemyKindForRoom } from "./world/enemies";
 import { Input } from "./engine/input";
 import {
@@ -115,7 +116,7 @@ function loadRoom() {
     settings.quality,
     state.phase2,
   );
-  player = character();
+  player = state.room === 8 ? luciusVarro() : character();
   player.position.set(state.x, 0, state.z);
   world.scene.add(player);
   enemy = createEnemy(enemyKindForRoom(state.room));
@@ -163,9 +164,10 @@ function loadRoom() {
   if (settings.quality === 1) simplifyLowMaterials(world.scene);
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
-  el("hero-name").textContent = state.room === 8
-    ? "ÉLISE MOREAU · RECUERDO DE LUCIUS VARRO"
-    : "ÉLISE MOREAU · RESTAURADORA";
+  el("hero-name").textContent =
+    state.room === 8
+      ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
+      : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
   cinematic.update(
     camera,
@@ -254,7 +256,7 @@ function options() {
 }
 function inventory() {
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: bastón de fresno · golpes sin munición</p><p>${state.items.includes("Tablilla del intervalo") ? "Legado romano: tablilla recuperada" : "Legado romano: desconocido"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : "bastón de fresno"} · golpes sin munición</p><p>${state.items.includes("Tablilla del intervalo") ? "Legado romano: tablilla recuperada" : "Legado romano: desconocido"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
   );
   button("close", resume);
   button("heal", () => {
@@ -302,12 +304,52 @@ function phase2Puzzle(id: PuzzleId) {
 }
 function interact(o: Interactable) {
   audio.tone(260);
+  if (o.kind === "romanPuzzle") {
+    if (state.items.includes("Marca de Varro")) {
+      toast("La inscripción ya ha revelado su nombre.");
+      return;
+    }
+    panel(
+      `<div class="eyebrow">ROMA · AÑO 189</div><h2>Las tres edades del intervalo</h2><p>El testamento de Lucius ordena recordar primero lo que se consume, luego lo que retorna, y por último lo que se atraviesa. ¿Cuál es el orden?</p><div class="actions"><button id="roman-answer0">Umbral · Ceniza · Marea</button><button id="roman-answer1">Ceniza · Marea · Umbral</button><button id="roman-answer2">Marea · Umbral · Ceniza</button><button id="close">Volver</button></div>`,
+    );
+    for (let i = 0; i < 3; i++)
+      button("roman-answer" + i, () => {
+        if (i === 1) {
+          state.items.push("Marca de Varro");
+          resume();
+          toast("La inscripción cede. La marca de Varro ha quedado grabada.");
+          audio.tone(580, 0.6);
+        } else {
+          state.sanity = clamp(state.sanity - 4);
+          resume();
+          toast("Las palabras vuelven a desordenarse. Pierdes 4 de cordura.");
+        }
+      });
+    button("close", resume);
+    return;
+  }
   if (o.kind === "item") {
+    if (o.id === "roman-tablet" && !state.items.includes("Marca de Varro")) {
+      toast(
+        "La tablilla está sellada. Descifra la inscripción junto al altar.",
+      );
+      return;
+    }
+    if (o.id === "roman-tablet" && !state.defeated.includes("enemy8")) {
+      toast("El centurión sin rostro protege la tablilla. Debes derrotarlo.");
+      return;
+    }
     state.items.push(o.value!);
     state.collected.push(o.value!);
     world.scene.remove(o.mesh!);
     world.objects = world.objects.filter((i) => i !== o);
     toast("Recogido: " + o.value);
+    if (o.id === "roman-tablet") {
+      panel(
+        `<div class="eyebrow">ROMA · 189 D. C. · EPÍLOGO</div><h2>El cartógrafo del vacío</h2><p>Lucius arranca del altar la última inscripción. El centurión permanece inmóvil. Bajo la piedra descubre el mapa de una casa que aún tardará siglos en construirse. Su nombre no figura en él: el de Élise Moreau sí.</p><p>La tablilla queda ligada a su recuerdo. El arco al sur conduce de regreso a 1927.</p><button id="close">Continuar</button>`,
+      );
+      button("close", resume);
+    }
   }
   if (o.kind === "note") {
     if (!state.read.includes(String(state.room))) {

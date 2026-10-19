@@ -6,9 +6,17 @@ it("los cinco escenarios tienen puntos de llegada y pasillo central transitables
   for (let room = 0; room < names.length; room++) {
     const w = new World(room, [], [], []);
     expect(blocked(0, 5.8, w.obstacles)).toBe(false);
-    expect(blocked(0, -5.8, w.obstacles)).toBe(false);
-    for (let z = -6; z <= 6; z += 0.5)
-      expect(blocked(0, z, w.obstacles)).toBe(false);
+    if (room === 8) {
+      // The Roman altar intentionally blocks the far end of the nave.
+      // The approach to the interactive inscription remains traversable.
+      for (let z = -3; z <= 6; z += 0.5)
+        expect(blocked(0, z, w.obstacles)).toBe(false);
+      expect(blocked(-2.9, -4.25, w.obstacles)).toBe(false);
+    } else {
+      expect(blocked(0, -5.8, w.obstacles)).toBe(false);
+      for (let z = -6; z <= 6; z += 0.5)
+        expect(blocked(0, z, w.obstacles)).toBe(false);
+    }
     expect(w.objects.some((o) => o.kind === "note")).toBe(true);
     expect(w.objects.some((o) => o.kind === "save")).toBe(true);
     w.dispose();
