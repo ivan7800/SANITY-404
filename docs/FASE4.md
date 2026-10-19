@@ -1,3 +1,15 @@
+# Fase 4.5 — Alucinaciones históricas y combate más táctico
+
+Esta entrega amplía el sistema original con cinco efectos perceptivos no letales ni persistentes: testigos de Roma, falsas salidas romanas, visitantes del claustro, copistas ilusorios y ecos en la mansión. Los efectos reutilizan modelos y recursos ya cargados para reducir asignaciones por fotograma; el cambio de tonalidad de los retratos también reutiliza su color.
+
+Mantener la guardia ahora consume resistencia de forma gradual, y el personaje no puede iniciar una esquiva mientras recibe daño o está iniciando una acción ofensiva. Se han añadido pruebas de umbrales, accesibilidad, inmutabilidad del guardado y resistencia.
+
+## Límites y validación
+
+No hay nuevas cinemáticas ni modelos GLB en esta entrega. El objetivo de 45–60 FPS en Intel HD Graphics 620 sigue sujeto a medición real, no puede darse por alcanzado solo por pasar tests. Validación obligatoria antes de fusionar: npm ci, npm run format:check, npm test y npm run build; después prueba en navegador, ajustes de accesibilidad y benchmarks.
+
+---
+
 # Fase 4.4 — Decisiones que sobreviven a los siglos
 
 Además de la mesa de las tres edades, el archivo familiar Veyr contiene ahora un altar de memoria. Solo aparece después de recuperar la Tablilla del intervalo y el Códice de Montfort y reconciliar ambas memorias.
