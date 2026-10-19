@@ -67,7 +67,14 @@ export class Combat {
                 : 60 + room * 10;
   }
   startDodge() {
-    if (this.stamina < 25 || this.dodge > 0 || this.windup > 0 || this.hurt > 0)
+    // windup belongs to the enemy's telegraphed attack; the player must be
+    // able to dodge that attack unless their own strike or stagger prevents it.
+    if (
+      this.stamina < 25 ||
+      this.dodge > 0 ||
+      this.animation > 0 ||
+      this.hurt > 0
+    )
       return false;
     this.stamina -= 25;
     this.dodge = 0.32;

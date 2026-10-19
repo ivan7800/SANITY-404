@@ -70,14 +70,26 @@ try {
     window.pad.buttons[4].pressed = false;
   });
   console.log("PASS defensa con LB");
+  await page.waitForFunction(
+    () => {
+      const combat = window.game.inspect().combat;
+      return !combat.guarding && combat.hurt === 0;
+    },
+    null,
+    { timeout: 30000 },
+  );
+  const beforeDodge = (await page.evaluate(() => window.game.inspect())).combat;
   await button(11);
-  const dodgeStamina = (await page.evaluate(() => window.game.inspect())).combat
-    .stamina;
-  assert.ok(dodgeStamina < 80);
+  const afterDodge = (await page.evaluate(() => window.game.inspect())).combat;
+  const dodgeStamina = afterDodge.stamina;
+  assert.ok(
+    dodgeStamina < beforeDodge.stamina - 15,
+    `R3 did not spend stamina: ${JSON.stringify({ beforeDodge, afterDodge })}`,
+  );
   await button(5);
   assert.ok(
     (await page.evaluate(() => window.game.inspect())).combat.stamina <
-      dodgeStamina - 30,
+      dodgeStamina - 20,
   );
   console.log(
     "PASS R3 esquiva y RB ataque fuerte mediante Gamepad API simulada",

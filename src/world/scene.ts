@@ -789,19 +789,11 @@ export class World {
     intensity: number,
     lit = true,
   ) {
+    if (!lit) return;
     const l = new T.PointLight(color, intensity, 10, 2);
     l.position.set(x, y, z);
-    if (lit) {
-      this.scene.add(l);
-      this.lights.push(l);
-    }
-    const b = new T.Mesh(
-      new T.SphereGeometry(0.09, 6, 6),
-      new T.MeshBasicMaterial({ color }),
-    );
-    b.position.copy(l.position);
-    b.visible = false;
-    this.scene.add(b);
+    this.scene.add(l);
+    this.lights.push(l);
   }
   add(o: Interactable, color: number) {
     const m = prop(o.kind, o.id, color);
@@ -810,6 +802,41 @@ export class World {
     this.scene.add(m);
     o.mesh = m;
     this.objects.push(o);
+  }
+  nearest(x: number, z: number, radius = 1.9) {
+    let nearest: Interactable | undefined;
+    let best = radius * radius;
+    for (const object of this.objects) {
+      const dx = object.x - x;
+      const dz = object.z - z;
+      const distance = dx * dx + dz * dz;
+      if (distance < best) {
+        best = distance;
+        nearest = object;
+      }
+    }
+    return nearest;
+  }
+  remove(o: Interactable) {
+    if (!this.objects.includes(o)) return;
+    this.objects = this.objects.filter((item) => item !== o);
+    if (!o.mesh) return;
+    this.scene.remove(o.mesh);
+    // Each prop owns its geometry and materials. Surface textures are shared
+    // across rooms and remain in the cache for subsequent props.
+    const geometries = new Set<T.BufferGeometry>();
+    const materials = new Set<T.Material>();
+    o.mesh.traverse((child) => {
+      if (!(child instanceof T.Mesh)) return;
+      geometries.add(child.geometry);
+      for (const material of Array.isArray(child.material)
+        ? child.material
+        : [child.material])
+        materials.add(material);
+    });
+    for (const geometry of geometries) geometry.dispose();
+    for (const material of materials) material.dispose();
+    o.mesh = undefined;
   }
   dispose() {
     const geometries = new Set<T.BufferGeometry>(),

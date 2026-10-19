@@ -451,8 +451,7 @@ function interact(o: Interactable) {
     }
     state.items.push(o.value!);
     state.collected.push(o.value!);
-    world.scene.remove(o.mesh!);
-    world.objects = world.objects.filter((i) => i !== o);
+    world.remove(o);
     toast("Recogido: " + o.value);
     if (o.id === "medieval-codex") {
       panel(
@@ -488,8 +487,7 @@ function interact(o: Interactable) {
   if (o.kind === "discovery") {
     if (!state.phase2.discoveries.includes(o.id))
       state.phase2.discoveries.push(o.id);
-    world.scene.remove(o.mesh!);
-    world.objects = world.objects.filter((item) => item !== o);
+    world.remove(o);
     panel(
       `<div class="eyebrow">DESCUBRIMIENTO OPCIONAL</div><h2>${discoveries[o.id][0]}</h2><p>${discoveries[o.id][1]}</p><button id="close">Conservar en el diario</button>`,
     );
@@ -770,13 +768,7 @@ function update(dt: number) {
       combat: enemy.visible && enemy.position.distanceTo(player.position) < 2.8,
     },
   );
-  near = world.objects
-    .filter((o) => Math.hypot(o.x - state.x, o.z - state.z) < 1.9)
-    .sort(
-      (a, b) =>
-        Math.hypot(a.x - state.x, a.z - state.z) -
-        Math.hypot(b.x - state.x, b.z - state.z),
-    )[0];
+  near = world.nearest(state.x, state.z);
   world.highlight.visible = Boolean(near);
   if (near) world.highlight.position.set(near.x, 0.075, near.z);
   world.atmosphere.update(dt, state.elapsed, settings.reduced);
@@ -877,6 +869,7 @@ export function inspect() {
       vulnerable: combat.vulnerable,
       stamina: combat.stamina,
       dodge: combat.dodge,
+      hurt: combat.hurt,
     },
     cinematicZone: cinematic.zone,
     cameraMode: settings.cameraMode,

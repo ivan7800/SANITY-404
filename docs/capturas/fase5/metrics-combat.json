@@ -1,0 +1,243 @@
+{
+  "date": "2026-10-19T16:42:24.569Z",
+  "url": "http://127.0.0.1:5173/",
+  "runs": 2,
+  "frames": 240,
+  "viewport": "1280x720",
+  "quality": "Baja",
+  "scene": "Enemy attacking; guard held; character at (0,0)",
+  "results": [
+    {
+      "room": 0,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 94,
+      "frames": 240,
+      "fpsMean": 59.50462400515708,
+      "frameMs": {
+        "mean": 16.805416666666662,
+        "median": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182,
+        "max": 33.29999999999927
+      },
+      "draw": {
+        "calls": 88,
+        "triangles": 65316
+      },
+      "memory": {
+        "geometries": 99,
+        "textures": 14
+      },
+      "heapAfterGc": 15747956,
+      "errors": []
+    },
+    {
+      "room": 0,
+      "run": 2,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 91,
+      "frames": 240,
+      "fpsMean": 52.94273360981206,
+      "frameMs": {
+        "mean": 18.888333333333332,
+        "median": 16.699999999999818,
+        "p95": 33.30000000000018,
+        "p99": 33.399999999999636,
+        "max": 33.399999999999636
+      },
+      "draw": {
+        "calls": 88,
+        "triangles": 65316
+      },
+      "memory": {
+        "geometries": 99,
+        "textures": 14
+      },
+      "heapAfterGc": 15673408,
+      "errors": []
+    },
+    {
+      "room": 8,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 90,
+      "frames": 240,
+      "fpsMean": 59.75351674343334,
+      "frameMs": {
+        "mean": 16.735416666666666,
+        "median": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182,
+        "max": 33.399999999999636
+      },
+      "draw": {
+        "calls": 92,
+        "triangles": 42732
+      },
+      "memory": {
+        "geometries": 94,
+        "textures": 14
+      },
+      "heapAfterGc": 14741700,
+      "errors": []
+    },
+    {
+      "room": 8,
+      "run": 2,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 90,
+      "frames": 240,
+      "fpsMean": 60.003000150007495,
+      "frameMs": {
+        "mean": 16.665833333333335,
+        "median": 16.699999999999818,
+        "p95": 16.800000000000182,
+        "p99": 16.800000000000182,
+        "max": 16.800000000000182
+      },
+      "draw": {
+        "calls": 92,
+        "triangles": 42732
+      },
+      "memory": {
+        "geometries": 94,
+        "textures": 14
+      },
+      "heapAfterGc": 14638972,
+      "errors": []
+    },
+    {
+      "room": 9,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 92,
+      "frames": 240,
+      "fpsMean": 59.507574818377925,
+      "frameMs": {
+        "mean": 16.804583333333333,
+        "median": 16.699999999999818,
+        "p95": 16.799999999999272,
+        "p99": 16.800000000000182,
+        "max": 33.30000000000018
+      },
+      "draw": {
+        "calls": 83,
+        "triangles": 40976
+      },
+      "memory": {
+        "geometries": 84,
+        "textures": 14
+      },
+      "heapAfterGc": 14438262,
+      "errors": []
+    },
+    {
+      "room": 9,
+      "run": 2,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 92,
+      "frames": 240,
+      "fpsMean": 59.50757481837793,
+      "frameMs": {
+        "mean": 16.80458333333333,
+        "median": 16.699999999999818,
+        "p95": 16.800000000000182,
+        "p99": 16.800000000000182,
+        "max": 33.399999999999636
+      },
+      "draw": {
+        "calls": 83,
+        "triangles": 40976
+      },
+      "memory": {
+        "geometries": 84,
+        "textures": 14
+      },
+      "heapAfterGc": 14436454,
+      "errors": []
+    },
+    {
+      "room": 10,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 92,
+      "frames": 240,
+      "fpsMean": 59.26218578695245,
+      "frameMs": {
+        "mean": 16.874166666666664,
+        "median": 16.699999999999818,
+        "p95": 16.799999999999272,
+        "p99": 16.800000000000182,
+        "max": 33.399999999999636
+      },
+      "draw": {
+        "calls": 91,
+        "triangles": 42884
+      },
+      "memory": {
+        "geometries": 92,
+        "textures": 14
+      },
+      "heapAfterGc": 14590432,
+      "errors": []
+    },
+    {
+      "room": 10,
+      "run": 2,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 92,
+      "frames": 240,
+      "fpsMean": 60.001500037500946,
+      "frameMs": {
+        "mean": 16.666249999999998,
+        "median": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182,
+        "max": 16.800000000000182
+      },
+      "draw": {
+        "calls": 91,
+        "triangles": 42884
+      },
+      "memory": {
+        "geometries": 92,
+        "textures": 14
+      },
+      "heapAfterGc": 14593556,
+      "errors": []
+    }
+  ]
+}

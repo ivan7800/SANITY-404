@@ -94,6 +94,8 @@ try {
   await page.waitForFunction(() => !window.game.inspect().enemy.visible);
   assert.ok((await inspect()).state.defeated.includes("enemy0"));
   console.log("PASS combate cuerpo a cuerpo y enemigo derrotado");
+  // Circle the solid table before heading toward the document desk.
+  await go(-2.2, 5);
   await go(-4.2, 5);
   await key("e");
   await page.getByRole("button", { name: "Guardar en el diario" }).click();

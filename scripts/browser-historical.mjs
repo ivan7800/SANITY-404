@@ -4,11 +4,21 @@ import assert from "node:assert/strict";
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH || chromium.executablePath(),
   headless: true,
-  args: [
-    "--no-sandbox",
-    "--use-angle=swiftshader",
-    "--enable-unsafe-swiftshader",
-  ],
+  args:
+    process.env.SANITY_HARDWARE === "1"
+      ? [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--use-gl=angle",
+          "--use-angle=gl",
+          "--ignore-gpu-blocklist",
+          "--enable-gpu",
+        ]
+      : [
+          "--no-sandbox",
+          "--use-angle=swiftshader",
+          "--enable-unsafe-swiftshader",
+        ],
 });
 const page = await browser.newPage({ viewport: { width: 960, height: 640 } });
 const faults = [];
@@ -50,6 +60,7 @@ async function seed(patch) {
   await page.reload();
   await page.getByRole("button", { name: "Continuar", exact: true }).click();
   await page.waitForFunction(() => window.sanityInspect().draw.frame > 4);
+  await page.waitForFunction(() => window.sanityInspect().state.elapsed > 0.05);
   assert.equal((await inspect()).paused, false);
 }
 async function checkRoom(room, title, hero) {
@@ -96,8 +107,79 @@ try {
   assert.equal(current.state.room, 5);
   assert.ok(current.state.items.includes("Juramento de Lucius"));
   assert.ok(!current.state.items.includes("Promesa de Isabelle"));
+
+  await seed({
+    room: 0,
+    x: 5.8,
+    z: -6,
+    phase2: { ...fresh.phase2, visited: [0] },
+  });
+  assert.match(await page.locator("#prompt").innerText(), /grieta romana/);
+  await page.keyboard.press("e");
+  await page.waitForFunction(() => window.sanityInspect().state.room === 8);
+  await checkRoom(8, "Santuario de los nombres", /LUCIUS/);
+  await seed({
+    room: 8,
+    x: -2.9,
+    z: -4.25,
+    defeated: ["enemy8"],
+    phase2: { ...fresh.phase2, visited: [0, 8] },
+  });
+  await page.keyboard.press("e");
+  await page.locator("#roman-answer1").click();
+  assert.ok((await inspect()).state.items.includes("Marca de Varro"));
+  await seed({
+    room: 8,
+    x: 0,
+    z: -4.1,
+    items: ["Marca de Varro"],
+    defeated: ["enemy8"],
+    phase2: { ...fresh.phase2, visited: [0, 8] },
+  });
+  await page.keyboard.press("e");
+  await page.getByRole("button", { name: "Continuar" }).click();
+  assert.ok((await inspect()).state.items.includes("Tablilla del intervalo"));
+
+  await seed({
+    room: 0,
+    x: -5.8,
+    z: -6,
+    phase2: { ...fresh.phase2, visited: [0] },
+  });
+  await page.keyboard.press("e");
+  await page.waitForFunction(() => window.sanityInspect().state.room === 9);
+  await checkRoom(9, "Claustro de la ceniza", /ISABELLE/);
+  await seed({
+    room: 10,
+    x: -2.9,
+    z: -4.7,
+    defeated: ["enemy10"],
+    phase2: { ...fresh.phase2, visited: [0, 9, 10] },
+  });
+  await page.keyboard.press("e");
+  await page.locator("#med-answer1").click();
+  assert.ok((await inspect()).state.items.includes("Sello de Montfort"));
+  await seed({
+    room: 10,
+    x: 0,
+    z: -4.1,
+    items: ["Sello de Montfort"],
+    defeated: ["enemy10"],
+    phase2: { ...fresh.phase2, visited: [0, 9, 10] },
+  });
+  await page.keyboard.press("e");
+  await page.getByRole("button", { name: "Continuar" }).click();
+  current = await inspect();
+  assert.ok(current.state.items.includes("Códice de Montfort"));
+  await page.evaluate(
+    (saved) => localStorage.setItem("sanity404-save", JSON.stringify(saved)),
+    current.state,
+  );
+  await page.reload();
+  await page.getByRole("button", { name: "Continuar", exact: true }).click();
+  assert.ok((await inspect()).state.items.includes("Códice de Montfort"));
   assert.deepEqual(faults, []);
-  console.log("PASS 3 historical rooms, selectable consequence and HUD");
+  console.log("PASS historical portals, puzzles, artifacts, save and choice");
 } finally {
   await browser.close();
 }
