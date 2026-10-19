@@ -2,16 +2,17 @@ import { it, expect } from "vitest";
 import { World, names } from "../src/world/scene";
 import { blocked, fresh } from "../src/systems/state";
 import { drinkTonic } from "../src/systems/inventory";
-it("los cinco escenarios tienen puntos de llegada y pasillo central transitables", () => {
+it("los escenarios tienen puntos de llegada y caminos transitables", () => {
   for (let room = 0; room < names.length; room++) {
     const w = new World(room, [], [], []);
     expect(blocked(0, 5.8, w.obstacles)).toBe(false);
-    if (room === 8) {
+    if (room >= 8) {
       // The Roman altar intentionally blocks the far end of the nave.
       // The approach to the interactive inscription remains traversable.
       for (let z = -3; z <= 6; z += 0.5)
         expect(blocked(0, z, w.obstacles)).toBe(false);
-      expect(blocked(-2.9, -4.25, w.obstacles)).toBe(false);
+      if (room === 8) expect(blocked(-2.9, -4.25, w.obstacles)).toBe(false);
+      if (room === 10) expect(blocked(-2.9, -4.7, w.obstacles)).toBe(false);
     } else {
       expect(blocked(0, -5.8, w.obstacles)).toBe(false);
       for (let z = -6; z <= 6; z += 0.5)
