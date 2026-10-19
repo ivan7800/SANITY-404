@@ -85,7 +85,10 @@ try {
   assert.ok(current.state.items.includes("Juramento de Lucius"));
   assert.ok(!current.state.items.includes("Promesa de Isabelle"));
   await page.getByRole("button", { name: "Continuar" }).click();
-  await page.evaluate((saved) => localStorage.setItem("sanity404-save", JSON.stringify(saved)), current.state);
+  await page.evaluate(
+    (saved) => localStorage.setItem("sanity404-save", JSON.stringify(saved)),
+    current.state,
+  );
   await page.reload();
   await page.getByRole("button", { name: "Continuar", exact: true }).click();
   await page.waitForFunction(() => window.sanityInspect().draw.frame > 4);
