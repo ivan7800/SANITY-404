@@ -17,6 +17,11 @@ export interface SanityEvent {
   discovery?: string;
 }
 export const sanityEvents: SanityEvent[] = [
+  { id: "roman-witness", rooms: [8], threshold: 75, text: "Una figura de bronce aparece donde Lucius no recuerda haber mirado." },
+  { id: "roman-false-exit", rooms: [8], threshold: 45, text: "El santuario abre una salida que solo existe en tu memoria." },
+  { id: "abbey-visitor", rooms: [9], threshold: 65, text: "Una figura inmóvil te espera bajo el arco del claustro." },
+  { id: "ink-apparition", rooms: [10], threshold: 55, text: "El copista vuelve a aparecer entre los pergaminos." },
+  { id: "mansion-echo", rooms: [0], threshold: 35, text: "Alguien se mueve junto al portal, pero no proyecta sombra." },
   {
     id: "hushed-index",
     rooms: [1],
@@ -119,6 +124,7 @@ export class Sanity {
   private rain: T.Points;
   private portraits: T.Mesh[] = [];
   private portraitColor = new T.Color();
+  private alteredPortraitColor = new T.Color(0x8b6271);
   private ring: T.Object3D | undefined;
   private baseFog = 0;
   constructor(world: World) {
@@ -246,6 +252,10 @@ export class Sanity {
       "glass-double",
       "silent-choir",
       "unknown-penitent",
+      "roman-witness",
+      "abbey-visitor",
+      "ink-apparition",
+      "mansion-echo",
     ].includes(active);
     if (this.apparition.visible)
       this.apparition.position.set(
@@ -266,7 +276,7 @@ export class Sanity {
       );
       this.book.rotation.y = state.elapsed * 0.7;
     }
-    this.falseDoor.visible = ["missing-door", "lengthened-aisle"].includes(
+    this.falseDoor.visible = ["missing-door", "lengthened-aisle", "roman-false-exit"].includes(
       active,
     );
     if (this.falseDoor.visible) {
@@ -296,7 +306,7 @@ export class Sanity {
       const material = this.portraits[0].material as T.MeshStandardMaterial;
       material.color.copy(this.portraitColor);
       if (active === "portraits-turn" && !options.reduceDistortion)
-        material.color.lerp(new T.Color(0x8b6271), 0.72);
+        material.color.lerp(this.alteredPortraitColor, 0.72);
     }
     if (this.ring)
       this.ring.scale.setScalar(
