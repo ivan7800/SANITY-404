@@ -17,11 +17,36 @@ export interface SanityEvent {
   discovery?: string;
 }
 export const sanityEvents: SanityEvent[] = [
-  { id: "roman-witness", rooms: [8], threshold: 75, text: "Una figura de bronce aparece donde Lucius no recuerda haber mirado." },
-  { id: "roman-false-exit", rooms: [8], threshold: 45, text: "El santuario abre una salida que solo existe en tu memoria." },
-  { id: "abbey-visitor", rooms: [9], threshold: 65, text: "Una figura inmóvil te espera bajo el arco del claustro." },
-  { id: "ink-apparition", rooms: [10], threshold: 55, text: "El copista vuelve a aparecer entre los pergaminos." },
-  { id: "mansion-echo", rooms: [0], threshold: 35, text: "Alguien se mueve junto al portal, pero no proyecta sombra." },
+  {
+    id: "roman-witness",
+    rooms: [8],
+    threshold: 75,
+    text: "Una figura de bronce aparece donde Lucius no recuerda haber mirado.",
+  },
+  {
+    id: "roman-false-exit",
+    rooms: [8],
+    threshold: 45,
+    text: "El santuario abre una salida que solo existe en tu memoria.",
+  },
+  {
+    id: "abbey-visitor",
+    rooms: [9],
+    threshold: 65,
+    text: "Una figura inmóvil te espera bajo el arco del claustro.",
+  },
+  {
+    id: "ink-apparition",
+    rooms: [10],
+    threshold: 55,
+    text: "El copista vuelve a aparecer entre los pergaminos.",
+  },
+  {
+    id: "mansion-echo",
+    rooms: [0],
+    threshold: 35,
+    text: "Alguien se mueve junto al portal, pero no proyecta sombra.",
+  },
   {
     id: "hushed-index",
     rooms: [1],
@@ -276,9 +301,11 @@ export class Sanity {
       );
       this.book.rotation.y = state.elapsed * 0.7;
     }
-    this.falseDoor.visible = ["missing-door", "lengthened-aisle", "roman-false-exit"].includes(
-      active,
-    );
+    this.falseDoor.visible = [
+      "missing-door",
+      "lengthened-aisle",
+      "roman-false-exit",
+    ].includes(active);
     if (this.falseDoor.visible) {
       this.falseDoor.position.set(
         0,

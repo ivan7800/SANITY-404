@@ -67,7 +67,8 @@ export class Combat {
                 : 60 + room * 10;
   }
   startDodge() {
-    if (this.stamina < 25 || this.dodge > 0 || this.windup > 0 || this.hurt > 0) return false;
+    if (this.stamina < 25 || this.dodge > 0 || this.windup > 0 || this.hurt > 0)
+      return false;
     this.stamina -= 25;
     this.dodge = 0.32;
     return true;
