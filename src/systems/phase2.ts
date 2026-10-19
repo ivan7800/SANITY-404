@@ -104,7 +104,7 @@ export function validPhase2(value: unknown): value is Phase2Progress {
     new Set(values).size === values.length &&
     values.every((v) => allowed.includes(v));
   return (
-    unique(p.visited, [0, 1, 2, 3, 4, 5, 6, 7]) &&
+    unique(p.visited, [0, 1, 2, 3, 4, 5, 6, 7, 8]) &&
     unique(p.solved, puzzleIds) &&
     Array.isArray(p.steps) &&
     p.steps.length === 4 &&

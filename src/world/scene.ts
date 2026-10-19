@@ -7,6 +7,7 @@ import { lightScene } from "../render/lighting";
 import { qualityProfile } from "../render/quality";
 import { prop } from "./props";
 import { mansion } from "./mansion";
+import { decorateRomanSanctuary } from "./roman-sanctuary";
 import { decoratePhase2Room } from "./phase2-rooms";
 import { newPhase2, type Phase2Progress } from "../systems/phase2";
 export { character } from "./character";
@@ -32,6 +33,7 @@ export const names = [
   "Archivo familiar",
   "Invernadero de vidrio negro",
   "Sótanos de la vigilia",
+  "Santuario de los nombres",
 ];
 export const subtitles = [
   "ALPES EUROPEOS · NOVIEMBRE DE 1927",
@@ -42,6 +44,7 @@ export const subtitles = [
   "LOS RETRATOS CONSERVAN OTRAS FECHAS",
   "LA LLUVIA CRECE HACIA ADENTRO",
   "BAJO LA CASA, ALGUIEN SIGUE CONTANDO",
+  "ROMA · AÑO 189 D. C. · EL PRIMER INTERVALO",
 ];
 export interface Interactable {
   id: string;
@@ -205,7 +208,8 @@ export class World {
       scene.add(ring);
       this.lamp(0, 2, -3, 0x72e8c0, 35);
     }
-    decoratePhase2Room(this);
+    if (room === 8) decorateRomanSanctuary(this);
+    else decoratePhase2Room(this);
     this.add(
       {
         id: "save" + room,
@@ -238,7 +242,7 @@ export class World {
         },
         0xc2a15b,
       );
-    if (room !== 4 && !collected.includes("Tónico " + room))
+    if (room !== 4 && room !== 8 && !collected.includes("Tónico " + room))
       this.add(
         {
           id: "tonic" + room,
@@ -274,6 +278,44 @@ export class World {
         },
         0x756749,
       );
+    if (room === 0) {
+      this.add(
+        {
+          id: "roman-portal",
+          name: "Atravesar la grieta romana · año 189",
+          x: 5.8,
+          z: -5.2,
+          kind: "door",
+          target: 8,
+        },
+        0x9b8050,
+      );
+    }
+    if (room === 8) {
+      this.add(
+        {
+          id: "roman-return",
+          name: "Regresar a la mansión · año 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0x9b8050,
+      );
+      if (!collected.includes("Tablilla del intervalo"))
+        this.add(
+          {
+            id: "roman-tablet",
+            name: "Recoger tablilla del intervalo",
+            x: 0,
+            z: -4.1,
+            kind: "item",
+            value: "Tablilla del intervalo",
+          },
+          0xb8a27c,
+        );
+    }
     if (room === 0)
       this.add(
         {

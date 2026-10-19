@@ -32,7 +32,7 @@ import { drinkTonic } from "./systems/inventory";
 import { readSettings } from "./systems/config";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
 const el = (id: string) => document.getElementById(id)!;
 trapFocus(el("overlay"));
 let renderer: T.WebGLRenderer;
@@ -163,6 +163,9 @@ function loadRoom() {
   if (settings.quality === 1) simplifyLowMaterials(world.scene);
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
+  el("hero-name").textContent = state.room === 8
+    ? "ÉLISE MOREAU · RECUERDO DE LUCIUS VARRO"
+    : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
   cinematic.update(
     camera,
@@ -189,7 +192,7 @@ function begin(s: State) {
 
 function menu() {
   panel(
-    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Ocho lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña de horror cósmico · auriculares recomendados<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
+    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Nueve lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña de horror cósmico · auriculares recomendados<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
   );
   button("new", () => {
     if (started) {
@@ -251,7 +254,7 @@ function options() {
 }
 function inventory() {
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: bastón de fresno · golpes sin munición</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: bastón de fresno · golpes sin munición</p><p>${state.items.includes("Tablilla del intervalo") ? "Legado romano: tablilla recuperada" : "Legado romano: desconocido"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
   );
   button("close", resume);
   button("heal", () => {
@@ -363,7 +366,10 @@ function interact(o: Interactable) {
       return;
     }
     state.room = o.target!;
-    if (o.id === "back" || o.id === "next") {
+    if (o.id === "roman-portal" || o.id === "roman-return") {
+      state.x = 0;
+      state.z = o.id === "roman-portal" ? 5.2 : -4.2;
+    } else if (o.id === "back" || o.id === "next") {
       state.x = 0;
       state.z = o.id === "back" ? -5.8 : 5.8;
     } else {
@@ -375,6 +381,8 @@ function interact(o: Interactable) {
     audio.cue("door");
     loadRoom();
     toast(names[state.room]);
+    if (o.id === "roman-portal")
+      toast("189 d. C. · Un recuerdo anterior a la casa. Busca el altar.");
   }
   if (o.kind === "phase2End") {
     if (!state.phase2.solved.includes("basement")) {
