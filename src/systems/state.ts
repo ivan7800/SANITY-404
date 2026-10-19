@@ -105,6 +105,7 @@ export function parseSave(raw: string): State | null {
       "Tónico 6",
       "Tónico 7",
       "Tablilla del intervalo",
+      "Marca de Varro",
     ];
     if (
       !s.items.every((v: string) => allowedItems.includes(v)) ||
