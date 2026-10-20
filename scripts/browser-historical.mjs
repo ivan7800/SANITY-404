@@ -1,8 +1,13 @@
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
+
+const bundledChrome = chromium.executablePath();
 
 const browser = await chromium.launch({
-  executablePath: process.env.CHROME_PATH || chromium.executablePath(),
+  executablePath:
+    process.env.CHROME_PATH ||
+    (existsSync(bundledChrome) ? bundledChrome : "/usr/bin/google-chrome"),
   headless: true,
   args:
     process.env.SANITY_HARDWARE === "1"
@@ -23,7 +28,7 @@ const browser = await chromium.launch({
 const page = await browser.newPage({ viewport: { width: 960, height: 640 } });
 const faults = [];
 page.on("pageerror", (error) => faults.push(error.message));
-const url = process.env.SANITY_TEST_URL || "http://localhost:5173";
+const url = process.env.SANITY_TEST_URL || "http://127.0.0.1:5173/";
 const inspect = () => page.evaluate(() => window.sanityInspect());
 const fresh = {
   version: 1,

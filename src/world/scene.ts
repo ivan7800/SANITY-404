@@ -1,7 +1,7 @@
 import * as T from "three";
 import { ShadowBudget } from "../render/shadow-budget";
 import { batchRigid } from "../render/batch";
-import { pbr } from "../render/materials";
+import { pbr, type Surface } from "../render/materials";
 import { Atmosphere } from "../render/atmosphere";
 import { lightScene } from "../render/lighting";
 import { qualityProfile } from "../render/quality";
@@ -113,23 +113,58 @@ export class World {
       ),
     );
     const wall =
-      room === 0
-        ? 0x343c35
-        : room === 1
-          ? 0x323331
-          : room === 3
-            ? 0x393e3b
-            : 0x353c3d;
-    this.box(0, -0.25, 0, 16, 0.5, 16, 0x333532, false);
+      room === 8
+        ? 0x5f5543
+        : room === 9
+          ? 0x444940
+          : room === 10
+            ? 0x4a4542
+            : room === 0
+              ? 0x343c35
+              : room === 1
+                ? 0x323331
+                : room === 3
+                  ? 0x393e3b
+                  : 0x353c3d;
+    this.box(
+      0,
+      -0.25,
+      0,
+      16,
+      0.5,
+      16,
+      room === 8 ? 0x6f644e : room >= 9 ? 0x55574e : 0x333532,
+      false,
+      room >= 8 ? "stone" : undefined,
+    );
     this.box(0, 2.5, -8, 16, 5, 0.35, wall);
     this.box(-8, 2.5, 0, 0.35, 5, 16, wall);
     this.box(8, 2.5, 0, 0.35, 5, 16, wall);
     this.box(0, 2.5, 8, 16, 5, 0.35, wall);
     for (let i = -7; i <= 7; i += 2) {
-      this.box(i, 0.01, 0, 0.025, 0.015, 16, 0x171e1a, false);
-      this.box(0, 0.012, i, 16, 0.015, 0.025, 0x171e1a, false);
-      this.box(i, 2.4, -7.72, 0.16, 4.8, 0.14, 0x686555, false);
-      this.box(i, 4.5, -7.65, 1.8, 0.12, 0.18, 0x77705b, false);
+      const joint = room === 8 ? 0x3c382f : room >= 9 ? 0x333831 : 0x171e1a;
+      this.box(i, 0.01, 0, 0.025, 0.015, 16, joint, false);
+      this.box(0, 0.012, i, 16, 0.015, 0.025, joint, false);
+      this.box(
+        i,
+        2.4,
+        -7.72,
+        0.16,
+        4.8,
+        0.14,
+        room === 8 ? 0x776b54 : 0x686555,
+        false,
+      );
+      this.box(
+        i,
+        4.5,
+        -7.65,
+        1.8,
+        0.12,
+        0.18,
+        room === 8 ? 0x8e795a : 0x77705b,
+        false,
+      );
     }
     this.box(
       0,
@@ -138,7 +173,13 @@ export class World {
       3.5,
       0.025,
       12,
-      room === 0 ? 0x502f2b : 0x273732,
+      room === 0
+        ? 0x502f2b
+        : room === 8
+          ? 0x64513d
+          : room >= 9
+            ? 0x3d4642
+            : 0x273732,
       false,
     );
     for (const x of [-6.8, 6.8])
@@ -738,9 +779,9 @@ export class World {
       if (object.userData.staticBox) staticGroup.add(object);
     batchRigid(staticGroup);
     scene.add(staticGroup);
-    this.shadowLight = lightScene(scene, quality);
+    this.shadowLight = lightScene(scene, quality, room);
     this.shadowBudget = new ShadowBudget(quality);
-    this.atmosphere = new Atmosphere(scene, qualityProfile(quality).dust);
+    this.atmosphere = new Atmosphere(scene, qualityProfile(quality).dust, room);
     this.highlight = new T.Mesh(
       new T.TorusGeometry(0.45, 0.014, 6, 32),
       new T.MeshBasicMaterial({
@@ -764,8 +805,11 @@ export class World {
     d: number,
     color: number,
     solid = true,
+    surfaceOverride?: Surface,
   ) {
-    const surface = h < 0.05 && w > 2 ? "fabric" : h > 3 ? "plaster" : "stone";
+    const surface =
+      surfaceOverride ??
+      (h < 0.05 && w > 2 ? "fabric" : h > 3 ? "plaster" : "stone");
     const key = surface + color;
     let material = this.materials.get(key);
     if (!material) {
