@@ -43,6 +43,25 @@ import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
 const el = (id: string) => document.getElementById(id)!;
+const hud = {
+  health: el("health"),
+  sanity: el("sanity"),
+  stamina: el("stamina"),
+  hptext: el("hptext"),
+  sptext: el("sptext"),
+  sttext: el("sttext"),
+  veil: el("veil"),
+};
+function setHudText(element: HTMLElement, value: string) {
+  if (element.textContent !== value) element.textContent = value;
+}
+function setHudStyle(
+  element: HTMLElement,
+  property: "width" | "opacity",
+  value: string,
+) {
+  if (element.style[property] !== value) element.style[property] = value;
+}
 trapFocus(el("overlay"));
 let renderer: T.WebGLRenderer;
 try {
@@ -784,19 +803,27 @@ function update(dt: number) {
   world.highlight.visible = Boolean(near);
   if (near) world.highlight.position.set(near.x, 0.075, near.z);
   world.atmosphere.update(dt, state.elapsed, settings.reduced);
-  el("prompt").style.display = near ? "block" : "none";
-  el("prompt").textContent = near ? "E / A · " + near.name : "";
+  const prompt = el("prompt");
+  const promptText = near ? "E / A · " + near.name : "";
+  if (prompt.textContent !== promptText) prompt.textContent = promptText;
+  const promptDisplay = near ? "block" : "none";
+  if (prompt.style.display !== promptDisplay)
+    prompt.style.display = promptDisplay;
   if (input.take("KeyE") && near) interact(near);
   state.elapsed += dt;
-  el("health").style.width = state.health + "%";
-  el("sanity").style.width = state.sanity + "%";
-  el("hptext").textContent = String(Math.ceil(state.health));
-  el("sptext").textContent = String(Math.ceil(state.sanity));
-  el("stamina").style.width = combat.stamina + "%";
-  el("sttext").textContent = String(Math.ceil(combat.stamina));
-  el("veil").style.opacity = String(
-    sanity.update(state, world, settings, toast, (event) =>
-      audio.sanityEvent(event),
+  setHudStyle(hud.health, "width", state.health + "%");
+  setHudStyle(hud.sanity, "width", state.sanity + "%");
+  setHudText(hud.hptext, String(Math.ceil(state.health)));
+  setHudText(hud.sptext, String(Math.ceil(state.sanity)));
+  setHudStyle(hud.stamina, "width", combat.stamina + "%");
+  setHudText(hud.sttext, String(Math.ceil(combat.stamina)));
+  setHudStyle(
+    hud.veil,
+    "opacity",
+    String(
+      sanity.update(state, world, settings, toast, (event) =>
+        audio.sanityEvent(event),
+      ),
     ),
   );
 }

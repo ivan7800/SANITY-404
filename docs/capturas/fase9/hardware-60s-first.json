@@ -1,0 +1,443 @@
+{
+  "date": "2026-10-21T17:50:04.754Z",
+  "url": "http://127.0.0.1:5173/",
+  "requestedSecondsPerScenario": 60,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "155.0.8059.84",
+  "results": [
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "exploration",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.009800000000006,
+      "elapsedSeconds": 60.019,
+      "gameElapsedSeconds": 60.02640000000118,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 75,
+      "triangles": 49100,
+      "gpuResources": {
+        "geometries": 89,
+        "textures": 14
+      },
+      "jsHeapBytes": 28748019,
+      "frames": 3599,
+      "averageFps": 59.97353765551947,
+      "minimumObservedFps": 20.040080160320056,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "combat",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.026700000000005,
+      "elapsedSeconds": 60.04,
+      "gameElapsedSeconds": 60.043400000000794,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 1,
+      "combatEngagedRatio": 1,
+      "eventCount": 0,
+      "tonicsUsed": 9,
+      "healthAtEnd": 76,
+      "pausedAtEnd": false,
+      "enemyVisible": true,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 90,
+      "triangles": 66326,
+      "gpuResources": {
+        "geometries": 114,
+        "textures": 14
+      },
+      "jsHeapBytes": 32707123,
+      "frames": 3440,
+      "averageFps": 57.307831348385875,
+      "minimumObservedFps": 20,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.80000000000291,
+      "frameP99Ms": 33.400000000001455,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "psychological",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.0103,
+      "elapsedSeconds": 60.02520000000018,
+      "gameElapsedSeconds": 60.026900000001,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 1,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 86,
+      "triangles": 49716,
+      "gpuResources": {
+        "geometries": 109,
+        "textures": 14
+      },
+      "jsHeapBytes": 27160204,
+      "frames": 3556,
+      "averageFps": 59.256494301814556,
+      "minimumObservedFps": 8.56898029134501,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "189",
+      "room": 8,
+      "scenario": "exploration",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.0102,
+      "elapsedSeconds": 60.02280000000074,
+      "gameElapsedSeconds": 60.02690000000115,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 8,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 74,
+      "triangles": 24218,
+      "gpuResources": {
+        "geometries": 85,
+        "textures": 14
+      },
+      "jsHeapBytes": 32120610,
+      "frames": 3602,
+      "averageFps": 60.02312940133824,
+      "minimumObservedFps": 59.523809523799216,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "189",
+      "room": 8,
+      "scenario": "combat",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.0103,
+      "elapsedSeconds": 60.01560000000056,
+      "gameElapsedSeconds": 60.02690000000107,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 1,
+      "combatEngagedRatio": 1,
+      "eventCount": 1,
+      "tonicsUsed": 6,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": true,
+      "roomAtEnd": 8,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 48,
+      "triangles": 19370,
+      "gpuResources": {
+        "geometries": 136,
+        "textures": 14
+      },
+      "jsHeapBytes": 25594009,
+      "frames": 3595,
+      "averageFps": 59.906382737633066,
+      "minimumObservedFps": 29.94011976047774,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "189",
+      "room": 8,
+      "scenario": "psychological",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.0102,
+      "elapsedSeconds": 60.02020000000112,
+      "gameElapsedSeconds": 60.02690000000102,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 4,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 8,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 86,
+      "triangles": 24758,
+      "gpuResources": {
+        "geometries": 111,
+        "textures": 14
+      },
+      "jsHeapBytes": 25774576,
+      "frames": 3589,
+      "averageFps": 59.80649956174438,
+      "minimumObservedFps": 6.666666666666667,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "1348",
+      "room": 9,
+      "scenario": "exploration",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.00999999999999,
+      "elapsedSeconds": 60.023599999999625,
+      "gameElapsedSeconds": 60.02670000000103,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 9,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 65,
+      "triangles": 21242,
+      "gpuResources": {
+        "geometries": 73,
+        "textures": 14
+      },
+      "jsHeapBytes": 27832547,
+      "frames": 3601,
+      "averageFps": 60.00666555574384,
+      "minimumObservedFps": 30.030030030030687,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "1348",
+      "room": 9,
+      "scenario": "combat",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.01,
+      "elapsedSeconds": 60.023300000000745,
+      "gameElapsedSeconds": 60.026700000001114,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 1,
+      "combatEngagedRatio": 1,
+      "eventCount": 0,
+      "tonicsUsed": 8,
+      "healthAtEnd": 87,
+      "pausedAtEnd": false,
+      "enemyVisible": true,
+      "roomAtEnd": 9,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 89,
+      "triangles": 39844,
+      "gpuResources": {
+        "geometries": 102,
+        "textures": 14
+      },
+      "jsHeapBytes": 16277836,
+      "frames": 3569,
+      "averageFps": 59.473421096486916,
+      "minimumObservedFps": 29.94011976047774,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    },
+    {
+      "era": "1348",
+      "room": 9,
+      "scenario": "psychological",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "expectedGameSeconds": 60.01,
+      "elapsedSeconds": 60.022,
+      "gameElapsedSeconds": 60.02670000000105,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 2,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 9,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 74,
+      "triangles": 21734,
+      "gpuResources": {
+        "geometries": 97,
+        "textures": 14
+      },
+      "jsHeapBytes": 25340670,
+      "frames": 3601,
+      "averageFps": 60.006665555743886,
+      "minimumObservedFps": 29.940119760478552,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}
