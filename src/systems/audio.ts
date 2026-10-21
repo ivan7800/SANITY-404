@@ -7,13 +7,21 @@ export class Audio {
   reduceAudio = false;
   private windLevel?: GainNode;
   private rainLevel?: GainNode;
+  private ambientBus?: GainNode;
   private nextAmbient = 7;
+  private silenceUntil = 0;
+  private activeTones = 0;
+  get activeVoices() {
+    return this.activeTones;
+  }
   async start() {
     if (!this.ctx) {
       this.ctx = new AudioContext();
       this.gain = this.ctx.createGain();
       this.gain.gain.value = this.volume;
       this.gain.connect(this.ctx.destination);
+      this.ambientBus = this.ctx.createGain();
+      this.ambientBus.connect(this.gain);
       // Original filtered wind, generated once; no external audio assets.
       const buffer = this.ctx.createBuffer(
         1,
@@ -37,7 +45,7 @@ export class Audio {
       this.windLevel = level;
       wind.connect(filter);
       filter.connect(level);
-      level.connect(this.gain);
+      level.connect(this.ambientBus);
       wind.start();
       const rain = this.ctx.createBufferSource(),
         rainFilter = this.ctx.createBiquadFilter(),
@@ -49,7 +57,7 @@ export class Audio {
       rainLevel.gain.value = 0;
       rain.connect(rainFilter);
       rainFilter.connect(rainLevel);
-      rainLevel.connect(this.gain);
+      rainLevel.connect(this.ambientBus);
       rain.start();
       this.rainLevel = rainLevel;
       for (const f of [55, 82.41, 110.3]) {
@@ -59,7 +67,7 @@ export class Audio {
         o.frequency.value = f;
         g.gain.value = 0.035;
         o.connect(g);
-        g.connect(this.gain);
+        g.connect(this.ambientBus);
         o.start();
       }
     }
@@ -67,7 +75,14 @@ export class Audio {
     await this.ctx.resume();
   }
   tone(f = 180, d = 0.15, type: OscillatorType = "sine") {
-    if (!this.ctx || !this.gain) return;
+    if (
+      !this.ctx ||
+      !this.gain ||
+      this.ctx.state !== "running" ||
+      this.activeTones >= 12
+    )
+      return;
+    this.activeTones++;
     const o = this.ctx.createOscillator(),
       g = this.ctx.createGain();
     o.type = type;
@@ -86,12 +101,59 @@ export class Audio {
     o.start();
     o.stop(this.ctx.currentTime + d);
     o.onended = () => {
+      this.activeTones--;
       o.disconnect();
       g.disconnect();
     };
   }
+  directional(frequency: number, pan: number, duration = 0.45) {
+    if (
+      !this.ctx ||
+      !this.gain ||
+      this.ctx.state !== "running" ||
+      this.activeTones >= 12 ||
+      this.reduceAudio
+    )
+      return;
+    this.activeTones++;
+    const oscillator = this.ctx.createOscillator();
+    const level = this.ctx.createGain();
+    const stereo = this.ctx.createStereoPanner();
+    const now = this.ctx.currentTime;
+    oscillator.type = "triangle";
+    oscillator.frequency.setValueAtTime(frequency, now);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      frequency * 0.76,
+      now + duration,
+    );
+    level.gain.setValueAtTime(0.001, now);
+    level.gain.linearRampToValueAtTime(0.09, now + 0.05);
+    level.gain.exponentialRampToValueAtTime(0.001, now + duration);
+    stereo.pan.value = Math.max(-1, Math.min(1, pan));
+    oscillator.connect(level);
+    level.connect(stereo);
+    stereo.connect(this.gain);
+    oscillator.start(now);
+    oscillator.stop(now + duration);
+    oscillator.onended = () => {
+      this.activeTones--;
+      oscillator.disconnect();
+      level.disconnect();
+      stereo.disconnect();
+    };
+  }
+  silence(time: number, seconds: number) {
+    this.silenceUntil = Math.max(this.silenceUntil, time + seconds);
+    if (!this.ctx || !this.ambientBus) return;
+    const now = this.ctx.currentTime;
+    const gain = this.ambientBus.gain;
+    gain.cancelScheduledValues(now);
+    gain.setValueAtTime(gain.value, now);
+    gain.setTargetAtTime(0.015, now, 0.18);
+    gain.setTargetAtTime(1, now + seconds, 0.5);
+  }
   ambient(time: number, sanity: number) {
-    if (time < this.nextAmbient) return;
+    if (time < this.nextAmbient || time < this.silenceUntil) return;
     this.nextAmbient = time + 9 + Math.sin(time) * 2;
     // Slow wood creak; interval and pitch respond to sanity without sudden peaks.
     this.tone(
@@ -102,6 +164,8 @@ export class Audio {
   }
   setRoom(room: number) {
     this.room = room;
+    this.nextAmbient = 7;
+    this.silenceUntil = 0;
     if (!this.ctx) return;
     this.windLevel?.gain.setTargetAtTime(
       room === 6 ? 0.055 : room === 7 ? 0.016 : 0.035,
@@ -149,5 +213,11 @@ export class Audio {
   }
   resume() {
     void this.ctx?.resume();
+  }
+  dispose() {
+    void this.ctx?.close();
+    this.ctx = undefined;
+    this.gain = undefined;
+    this.ambientBus = undefined;
   }
 }

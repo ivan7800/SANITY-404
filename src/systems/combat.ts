@@ -23,6 +23,40 @@ export function strikeClear(a: T.Vector3, b: T.Vector3, obstacles: Obstacle[]) {
     return !!ray.intersectBox(box, hit) && hit.distanceTo(start) <= length;
   });
 }
+export function canSeeTarget(
+  enemy: T.Group,
+  player: T.Group,
+  obstacles: Obstacle[],
+  range: number,
+  halfAngle = Math.PI * 0.4,
+) {
+  const direction = player.position.clone().sub(enemy.position).setY(0);
+  const distance = direction.length();
+  if (
+    distance > range ||
+    !strikeClear(enemy.position, player.position, obstacles)
+  )
+    return false;
+  if (distance < 2.2) return true; // A nearby opponent is visible at the edge of the frame.
+  const forward = enemy.getWorldDirection(new T.Vector3()).setY(0).normalize();
+  return forward.dot(direction.divideScalar(distance)) >= Math.cos(halfAngle);
+}
+export function inAttackArc(
+  enemy: T.Group,
+  player: T.Group,
+  halfAngle = Math.PI * 0.38,
+) {
+  const direction = player.position.clone().sub(enemy.position).setY(0);
+  if (direction.lengthSq() < 0.001) return true;
+  direction.normalize();
+  return (
+    enemy
+      .getWorldDirection(new T.Vector3())
+      .setY(0)
+      .normalize()
+      .dot(direction) >= Math.cos(halfAngle)
+  );
+}
 export class Combat {
   kind: EnemyKind;
   aiState:
@@ -39,6 +73,8 @@ export class Combat {
   vulnerable = 0;
   private lost = 0;
   private patrolSide = 1;
+  private patrolOrigin?: T.Vector3;
+  private searchTime = 0;
   private lastSeen = new T.Vector3(0, 0, -2);
   private attacks = 0;
   private longAttack = false;
@@ -49,6 +85,7 @@ export class Combat {
   attackCooldown = 0;
   animation = 0;
   windup = 0;
+  windupDuration = 0.42;
   hurt = 0;
   guarding = false;
   constructor(room: number) {
@@ -138,6 +175,9 @@ export class Combat {
         }
         if (exposed) {
           this.enemyHurt = 0.35;
+          this.windup = 0;
+          this.enemyCooldown = Math.max(this.enemyCooldown, 0.55);
+          if (this.aiState !== "dead") this.aiState = "recover";
           this.impact = 0.18;
           onSound(92, 0.12);
           state.sanity = clamp(state.sanity + 2);
@@ -171,74 +211,18 @@ export class Combat {
       state.sanity = clamp(state.sanity + dt * 0.35);
       return;
     }
-    if (this.kind !== "shade") {
-      this.updatePhase2AI(
-        dt,
-        state,
-        player,
-        enemy,
-        obstacles,
-        noise,
-        onSound,
-        onMessage,
-      );
-      return;
-    }
-    const dist = enemy.position.distanceTo(player.position);
-    if (dist < 8 && dist > 1.1) {
-      const d = player.position
-        .clone()
-        .sub(enemy.position)
-        .normalize()
-        .multiplyScalar((0.85 + state.room * 0.08) * dt);
-      let p = move(enemy.position.x, enemy.position.z, d.x, d.z, obstacles);
-      if (Math.hypot(p.x - enemy.position.x, p.z - enemy.position.z) < 0.001) {
-        p = move(enemy.position.x, enemy.position.z, -d.z, d.x, obstacles);
-      }
-      enemy.position.set(p.x, 0, p.z);
-      enemy.lookAt(player.position);
-    }
-    if (this.windup > 0) {
-      this.windup -= dt;
-      if (this.windup <= 0) {
-        if (
-          dist < 1.8 &&
-          strikeClear(enemy.position, player.position, obstacles)
-        ) {
-          if (this.dodge > 0) {
-            onMessage("Esquivas las garras por un instante.");
-          } else damage(state, this.guarding ? 3 : 12);
-          this.hurt = 0.3;
-          onSound(this.guarding ? 200 : 48, 0.25);
-          onMessage(
-            this.guarding
-              ? "Desvías el golpe. La defensa amortigua el daño."
-              : "La sombra te alcanza. Mantén F / LB para defender.",
-          );
-        }
-        this.enemyCooldown = 1.5;
-      }
-    } else if (
-      dist < 1.5 &&
-      this.enemyCooldown <= 0 &&
-      strikeClear(enemy.position, player.position, obstacles)
-    ) {
-      this.windup = 0.42;
-      onMessage("La sombra levanta las garras…");
-    }
-    animateCharacter(
-      enemy,
-      state.elapsed,
-      dist > 1.5,
-      this.windup > 0 ? 0.3 * (1 - this.windup / 0.42) : 0,
-      false,
-      this.enemyHurt,
-      false,
+    this.updateEnemyAI(
       dt,
+      state,
+      player,
+      enemy,
+      obstacles,
+      noise,
+      onSound,
+      onMessage,
     );
-    if (dist < 5) state.sanity = clamp(state.sanity - dt * 0.6);
   }
-  private updatePhase2AI(
+  private updateEnemyAI(
     dt: number,
     state: State,
     player: T.Group,
@@ -249,32 +233,31 @@ export class Combat {
     onMessage: (text: string) => void,
   ) {
     const dist = enemy.position.distanceTo(player.position);
+    this.patrolOrigin ??= enemy.position.clone();
     if (this.kind === "guardian" && this.health <= 75) this.phase = 2;
     this.vulnerable = Math.max(0, this.vulnerable - dt);
-    if (dist > 10) {
-      animateCharacter(
-        enemy,
-        state.elapsed,
-        false,
-        0,
-        false,
-        this.enemyHurt,
-        false,
-        dt,
-      );
-      return;
-    }
-    const seen =
-      dist < (this.kind === "stalker" ? 5.5 : 7) &&
-      strikeClear(enemy.position, player.position, obstacles);
+    const seen = canSeeTarget(
+      enemy,
+      player,
+      obstacles,
+      this.kind === "stalker" ? 5.5 : this.kind === "centurion" ? 8 : 7,
+      this.kind === "plagueScribe" ? Math.PI * 0.3 : Math.PI * 0.4,
+    );
     if (seen) {
       this.lastSeen.copy(player.position);
-      this.lost = this.kind === "stalker" ? 1.6 : 3;
+      this.lost =
+        this.kind === "stalker" ? 1.6 : this.kind === "centurion" ? 4 : 3;
+      this.searchTime = 3;
       if (this.aiState === "patrol" || this.aiState === "investigate")
         this.aiState = "chase";
-    } else if (noise > 0.5 && dist < 8 && this.aiState === "patrol") {
+    } else if (
+      noise > 0.5 &&
+      dist < (this.kind === "plagueScribe" ? 10 : 8) &&
+      this.aiState === "patrol"
+    ) {
       this.lastSeen.copy(player.position);
       this.aiState = "investigate";
+      this.searchTime = this.kind === "centurion" ? 5 : 3;
     } else if (this.aiState === "chase") {
       this.lost -= dt;
       if (this.lost <= 0) this.aiState = "investigate";
@@ -286,6 +269,11 @@ export class Combat {
         const reach = this.kind === "guardian" ? 2.35 : 1.8;
         if (
           dist < reach &&
+          inAttackArc(
+            enemy,
+            player,
+            this.kind === "guardian" ? Math.PI * 0.48 : Math.PI * 0.38,
+          ) &&
           strikeClear(enemy.position, player.position, obstacles)
         ) {
           if (this.dodge > 0) onMessage("Esquivas el ataque.");
@@ -301,8 +289,15 @@ export class Combat {
                       : 16
                     : this.kind === "ritual"
                       ? 14
-                      : 9;
-            damage(state, this.guarding ? Math.ceil(amount * 0.28) : amount);
+                      : this.kind === "shade"
+                        ? 12
+                        : 9;
+            damage(
+              state,
+              this.guarding
+                ? Math.ceil(amount * (this.kind === "shade" ? 0.25 : 0.28))
+                : amount,
+            );
             if (this.kind === "ritual") state.sanity = clamp(state.sanity - 7);
             this.hurt = 0.32;
             onSound(this.guarding ? 210 : 55, 0.28);
@@ -318,29 +313,34 @@ export class Combat {
           this.aiState = "vulnerable";
           onMessage("La coraza se abre. ¡Ahora!");
         } else this.aiState = "recover";
-        this.enemyCooldown = this.kind === "stalker" ? 0.75 : 1.2;
+        this.enemyCooldown = this.kind === "stalker" ? 0.9 : 1.2;
       }
     } else if (this.vulnerable > 0) this.aiState = "vulnerable";
     else if (this.aiState === "recover" && this.enemyCooldown > 0) {
       // A committed attack has recovery; detection and investigation do not.
     } else if (
       seen &&
+      this.enemyHurt <= 0 &&
       dist < (this.kind === "guardian" ? 2.15 : 1.45) &&
       this.enemyCooldown <= 0
     ) {
       this.longAttack = this.kind === "guardian" && this.attacks++ % 2 === 0;
       this.windup =
         this.kind === "stalker"
-          ? 0.28
-          : this.kind === "plagueScribe"
-            ? 0.72
-            : this.kind === "centurion"
-              ? 0.8
-              : this.kind === "ritual"
-                ? 0.68
-                : this.longAttack
-                  ? 0.9
-                  : 0.5;
+          ? 0.44
+          : this.kind === "shade"
+            ? 0.42
+            : this.kind === "plagueScribe"
+              ? 0.72
+              : this.kind === "centurion"
+                ? 0.8
+                : this.kind === "ritual"
+                  ? 0.68
+                  : this.longAttack
+                    ? 0.9
+                    : 0.5;
+      this.windupDuration = this.windup;
+      enemy.lookAt(player.position); // Lock the strike direction at the visible tell.
       this.aiState = "windup";
       onMessage(
         this.kind === "guardian"
@@ -353,17 +353,24 @@ export class Combat {
               ? "El centurión marca el suelo con su hoja. ¡Prepárate!"
               : this.kind === "ritual"
                 ? "La criatura traza un signo en el aire."
-                : "Algo salta desde las sombras.",
+                : this.kind === "shade"
+                  ? "La sombra levanta las garras. Puedes defenderte."
+                  : "Algo salta desde las sombras.",
       );
     } else {
       if (this.aiState === "recover" || this.aiState === "vulnerable")
         this.aiState = seen ? "chase" : "investigate";
       let target = this.lastSeen;
       if (this.aiState === "patrol") {
-        target = new T.Vector3(this.patrolSide * 2.6, 0, -2.4);
+        target = this.patrolOrigin
+          .clone()
+          .add(new T.Vector3(this.patrolSide * 2.4, 0, 0));
         if (enemy.position.distanceTo(target) < 0.5) this.patrolSide *= -1;
+      } else if (this.aiState === "investigate" && !seen) {
+        if (enemy.position.distanceTo(target) < 0.6) this.searchTime -= dt;
+        if (this.searchTime <= 0) this.aiState = "patrol";
       }
-      if (this.kind !== "guardian" || seen) {
+      if (this.kind !== "guardian" || seen || this.aiState === "investigate") {
         const vector = target.clone().sub(enemy.position).setY(0);
         if (vector.length() > 0.35) {
           vector
@@ -372,11 +379,13 @@ export class Combat {
               dt *
                 (this.kind === "stalker"
                   ? 1.65
-                  : this.kind === "ritual"
-                    ? 1.05
-                    : this.phase === 2
-                      ? 1.35
-                      : 0.9),
+                  : this.kind === "shade"
+                    ? 0.85 + state.room * 0.08
+                    : this.kind === "ritual"
+                      ? 1.05
+                      : this.phase === 2
+                        ? 1.35
+                        : 0.9),
             );
           const next = move(
             enemy.position.x,
@@ -385,16 +394,29 @@ export class Combat {
             vector.z,
             obstacles,
           );
-          enemy.position.set(next.x, 0, next.z);
+          if (next.x === enemy.position.x && next.z === enemy.position.z) {
+            const side = move(
+              enemy.position.x,
+              enemy.position.z,
+              -vector.z,
+              vector.x,
+              obstacles,
+            );
+            enemy.position.set(side.x, 0, side.z);
+          } else enemy.position.set(next.x, 0, next.z);
           enemy.lookAt(target);
-        } else if (this.aiState === "investigate") this.aiState = "patrol";
+        }
       }
     }
     animateCharacter(
       enemy,
       state.elapsed,
-      this.aiState === "chase" || this.aiState === "patrol",
-      this.windup > 0 ? 0.25 : 0,
+      this.aiState === "chase" ||
+        this.aiState === "patrol" ||
+        this.aiState === "investigate",
+      this.windup > 0
+        ? 0.3 - 0.15 * (1 - this.windup / this.windupDuration)
+        : 0,
       false,
       this.enemyHurt,
       this.kind === "stalker" && this.aiState === "chase",
