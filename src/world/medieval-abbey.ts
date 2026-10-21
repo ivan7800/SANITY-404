@@ -11,23 +11,81 @@ export function decorateMedievalAbbey(world: World) {
   // Slim columns and vaulted bays, leaving the central passage clear.
   for (const x of [-5.9, 5.9]) {
     for (const z of [-5.2, -2.6, 0, 2.6, 5.2]) {
-      b(x, 1.55, z, 0.48, 3.1, 0.48, stone);
+      b(x, 1.55, z, 0.48, 3.1, 0.48, stone, true, "stone");
       b(x, 3.16, z, 0.92, 0.2, 0.85, 0x969489, false);
+      b(x, 0.19, z, 0.77, 0.38, 0.75, 0x54564d, false, "stone");
+      for (const y of [0.82, 1.78, 2.68])
+        b(x, y, z, 0.5, 0.04, 0.5, 0x494d47, false, "stone");
     }
     b(x, 4.1, 0, 0.55, 0.28, 13, 0x494846, false);
   }
   for (const z of [-5.2, 0, 5.2]) {
     b(0, 4.14, z, 11.9, 0.28, 0.45, 0x716d65, false);
+    // The paired stone ribs read as a pointed vault from the playable camera.
+    for (const side of [-1, 1]) {
+      const rib = b(
+        side * 2.8,
+        4.0,
+        z,
+        5.85,
+        0.09,
+        0.13,
+        0x5b5e57,
+        false,
+        "stone",
+      );
+      rib.rotation.z = side * 0.14;
+    }
+  }
+  // Damp coursing and narrow lancet tracery replace the generic bare back wall.
+  for (const x of [-7.78, 7.78]) {
+    for (const y of [0.67, 1.55, 2.43]) {
+      b(x, y, 0, 0.08, 0.045, 15.7, 0x303c38, false, "stone");
+      b(
+        x - Math.sign(x) * 0.025,
+        y + 0.055,
+        0,
+        0.07,
+        0.04,
+        15.7,
+        0x565951,
+        false,
+        "stone",
+      );
+    }
+  }
+  for (const x of [-4.8, -2.4, 2.4, 4.8]) {
+    b(x, 2.72, -7.77, 0.75, 1.7, 0.055, 0x222f32, false, "stone");
+    b(x, 2.72, -7.7, 0.07, 1.78, 0.08, 0x9a9685, false, "stone");
+    b(x, 2.36, -7.69, 0.82, 0.08, 0.08, 0x9a9685, false, "stone");
+    b(x, 3.5, -7.69, 0.82, 0.08, 0.08, 0x9a9685, false, "stone");
   }
   if (cloister) {
+    const shrubs = new T.InstancedMesh(
+      new T.IcosahedronGeometry(0.29, 0),
+      new T.MeshStandardMaterial({ color: 0x485f49, roughness: 1 }),
+      6,
+    );
+    const shrubMatrix = new T.Matrix4();
+    let shrubIndex = 0;
     for (const x of [-4, 4]) {
       const bed = b(x, 0.37, 0.5, 1.15, 0.74, 2.0, 0x454c43);
       bed.name = "abbey-planter";
       b(x, 0.78, 0.5, 1.18, 0.08, 2.03, 0x4d6959, false);
+      for (const z of [-0.18, 0.42, 1.02]) {
+        shrubMatrix.makeScale(1.1, 0.68, 0.85);
+        shrubMatrix.setPosition(x, 1.04, z);
+        shrubs.setMatrixAt(shrubIndex++, shrubMatrix);
+      }
     }
+    shrubs.name = "Hierbas del claustro";
+    world.scene.add(shrubs);
     b(0, 0.18, -6.6, 2.4, 0.36, 1.2, 0x747168);
     b(0, 1.1, -6.6, 0.22, 1.6, 0.19, 0x9f9277, false);
     b(0, 1.55, -6.6, 1.2, 0.21, 0.2, 0x9f9277, false);
+    for (const x of [-4.4, 4.4])
+      for (const z of [-4.2, 3.2])
+        b(x, 0.025, z, 1.2, 0.018, 2.1, 0x43564d, false, "stone");
     world.lamp(-5, 2.8, -4.5, 0xe6aa78, 8);
     world.lamp(5, 2.8, 4.5, 0xe6aa78, 8);
   } else {
@@ -42,6 +100,23 @@ export function decorateMedievalAbbey(world: World) {
     // The codex pedestal is off the central route and stays reachable.
     b(0, 0.65, -5.6, 2.1, 1.3, 1, 0x726959);
     b(0, 1.35, -5.6, 2.4, 0.14, 1.24, 0xa99a7b, false);
+    for (const x of [-2.7, 2.7]) {
+      b(x, 0.68, -2.5, 1.2, 1.36, 0.86, 0x54463a);
+      b(x, 1.4, -2.5, 1.45, 0.1, 1.12, 0x68523d, false, "wood");
+      b(x, 1.46, -2.5, 0.78, 0.018, 0.64, 0xb5a17c, false, "plaster");
+      for (const dz of [-0.3, 0.25])
+        b(
+          x + 0.47,
+          1.48,
+          -2.5 + dz,
+          0.14,
+          0.09,
+          0.25,
+          0x51433d,
+          false,
+          "leather",
+        );
+    }
     const glyph = new T.Mesh(
       new T.TorusGeometry(0.42, 0.045, 6, 28),
       new T.MeshStandardMaterial({
@@ -54,5 +129,20 @@ export function decorateMedievalAbbey(world: World) {
     world.scene.add(glyph);
     world.lamp(-4.8, 2.75, -4, 0xffae74, 8);
     world.lamp(4.8, 2.75, -4, 0xffae74, 8);
+  }
+  // Fixed, low luminance flames retain a warm navigation cue with reduced effects.
+  const flameGeometry = new T.ConeGeometry(0.055, 0.2, 6);
+  const flameMaterial = new T.MeshStandardMaterial({
+    color: 0xffd39b,
+    emissive: 0xa15b32,
+    emissiveIntensity: 0.7,
+  });
+  for (const x of [-5.15, 5.15]) {
+    for (const z of [-4.5, 4.5]) {
+      b(x, 2.28, z, 0.13, 0.31, 0.13, 0xc0b79b, false, "plaster");
+      const flame = new T.Mesh(flameGeometry, flameMaterial);
+      flame.position.set(x, 2.55, z);
+      world.scene.add(flame);
+    }
   }
 }

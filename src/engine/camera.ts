@@ -70,6 +70,14 @@ export class CinematicCamera {
         0.45,
       );
     }
+    // The historical return portals stand at z=6.1. Their tall meshes are
+    // intentionally non-colliding, so the obstacle ray cannot move a camera
+    // that sits behind them. Keep the entrance shot inside the sanctuary.
+    if (room >= 8 && z > 3) {
+      eye.x = T.MathUtils.clamp(x + 3.2, -7.2, 7.2);
+      eye.z = Math.min(5.7, z + 1.2);
+      this.zone = "entrada histórica";
+    }
     const anchor = new T.Vector3(x, 1.25, z),
       hit = new T.Vector3();
     const resolve = (position: T.Vector3) => {

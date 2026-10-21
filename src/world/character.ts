@@ -14,16 +14,30 @@ export interface Rig {
   coat: T.Mesh;
   coatTails: T.Group;
 }
-export function character(enemy = false): T.Group {
+export type CharacterEra = "modern" | "roman" | "medieval";
+export function character(
+  enemy = false,
+  era: CharacterEra = "modern",
+): T.Group {
   const root = new T.Group();
   root.name = enemy ? "El desnombrado" : "Élise Moreau · restauradora, 1927";
-  const cloth = pbr("fabric", enemy ? 0x414c41 : 0x526476),
-    blouse = pbr("fabric", 0xd2c7ae),
+  const historical = !enemy && era !== "modern";
+  const cloth = pbr(
+      "fabric",
+      enemy
+        ? 0x414c41
+        : era === "roman"
+          ? 0x8e7962
+          : era === "medieval"
+            ? 0x484650
+            : 0x526476,
+    ),
+    blouse = pbr("fabric", era === "medieval" ? 0xb4a58a : 0xd2c7ae),
     skin = new T.MeshStandardMaterial({
       color: enemy ? 0x9a9a83 : 0xd6af93,
       roughness: 0.7,
     }),
-    leather = pbr("leather", 0x302720),
+    leather = pbr("leather", era === "roman" ? 0x5b4230 : 0x302720),
     hair = pbr("wood", enemy ? 0x252b23 : 0x3b2921),
     brass = pbr("brass", 0xc5a86a),
     eyes = new T.MeshStandardMaterial({ color: 0x25302e, roughness: 0.3 }),
@@ -119,10 +133,12 @@ export function character(enemy = false): T.Group {
     0,
   );
   coat.scale.z = 0.65;
+  coat.visible = !historical;
   // Independent coat tails create a readable 1920s silhouette in the
   // third-person camera without a costly cloth simulation.
   const coatTails = new T.Group();
   coatTails.position.set(0, -0.15, -0.105);
+  coatTails.visible = !historical;
   hips.add(coatTails);
   for (const side of [-1, 1]) {
     const tail = add(
@@ -145,9 +161,10 @@ export function character(enemy = false): T.Group {
       0.14,
     );
     pocket.rotation.z = side * 0.12;
+    pocket.visible = !historical;
   }
   // Tailored cuffs, leather satchel, strap, seams and high blouse collar.
-  if (!enemy) {
+  if (!enemy && !historical) {
     // A contrasting shoulder cape and collar break up the cylindrical torso.
     const trim = pbr("leather", 0x27313a);
     for (const side of [-1, 1]) {
@@ -175,24 +192,26 @@ export function character(enemy = false): T.Group {
     // The small scarf keeps the face and neck recognisable from distant shots.
     oval(hips, blouse, 0, 0.7, 0.105, 0.12, 0.042, 0.055);
   }
-  const bag = add(
-    hips,
-    new T.BoxGeometry(0.19, 0.24, 0.11),
-    leather,
-    -0.26,
-    -0.01,
-    -0.01,
-  );
-  bag.rotation.z = 0.1;
-  const strap = add(
-    hips,
-    new T.BoxGeometry(0.035, 0.62, 0.025),
-    leather,
-    -0.02,
-    0.41,
-    0.17,
-  );
-  strap.rotation.z = -0.62;
+  if (!historical) {
+    const bag = add(
+      hips,
+      new T.BoxGeometry(0.19, 0.24, 0.11),
+      leather,
+      -0.26,
+      -0.01,
+      -0.01,
+    );
+    bag.rotation.z = 0.1;
+    const strap = add(
+      hips,
+      new T.BoxGeometry(0.035, 0.62, 0.025),
+      leather,
+      -0.02,
+      0.41,
+      0.17,
+    );
+    strap.rotation.z = -0.62;
+  }
   add(
     hips,
     new T.CylinderGeometry(0.078, 0.095, 0.085, 16),
@@ -230,7 +249,7 @@ export function character(enemy = false): T.Group {
   );
   scalp.scale.set(0.14, 0.164, 0.129);
   oval(head, hair, 0, 0.051, -0.113, 0.122, 0.1, 0.052);
-  oval(head, hair, 0.015, -0.003, -0.154, 0.075, 0.065, 0.05);
+  if (!historical) oval(head, hair, 0.015, -0.003, -0.154, 0.075, 0.065, 0.05);
   for (let i = 0; i < 9; i++) {
     const a = (i / 8) * Math.PI;
     const strand = oval(
@@ -245,6 +264,27 @@ export function character(enemy = false): T.Group {
     );
     strand.rotation.z = -a + 0.5;
   }
+  if (!enemy && era === "modern") {
+    const felt = pbr("fabric", 0x394952);
+    const crown = add(
+      head,
+      new T.SphereGeometry(0.12, 14, 8, 0, Math.PI * 2, 0, Math.PI * 0.48),
+      felt,
+      0,
+      0.19,
+      -0.015,
+    );
+    crown.scale.z = 0.84;
+    add(
+      head,
+      new T.CylinderGeometry(0.16, 0.16, 0.026, 18),
+      felt,
+      0,
+      0.195,
+      -0.015,
+    );
+    add(head, new T.BoxGeometry(0.06, 0.023, 0.023), brass, 0.1, 0.2, 0.11);
+  }
   const leg = (x: number) => {
     const pivot = new T.Group();
     pivot.position.set(x, -0.045, 0);
@@ -254,18 +294,28 @@ export function character(enemy = false): T.Group {
     knee.position.y = -0.39;
     pivot.add(knee);
     add(knee, new T.CapsuleGeometry(0.069, 0.21, 6, 12), leather, 0, -0.16, 0);
-    const boot = oval(knee, leather, 0, -0.375, 0.05, 0.075, 0.085, 0.145);
+    const boot = oval(
+      knee,
+      leather,
+      0,
+      -0.375,
+      0.05,
+      0.075,
+      historical ? 0.055 : 0.085,
+      0.145,
+    );
     add(knee, new T.BoxGeometry(0.145, 0.025, 0.26), leather, 0, -0.438, 0.046);
     add(knee, new T.BoxGeometry(0.12, 0.055, 0.095), leather, 0, -0.414, -0.04);
-    for (let j = 0; j < 3; j++)
-      add(
-        knee,
-        new T.BoxGeometry(0.07, 0.014, 0.014),
-        brass,
-        0,
-        -0.23 + j * 0.05,
-        0.069,
-      );
+    if (!historical)
+      for (let j = 0; j < 3; j++)
+        add(
+          knee,
+          new T.BoxGeometry(0.07, 0.014, 0.014),
+          brass,
+          0,
+          -0.23 + j * 0.05,
+          0.069,
+        );
     void boot;
     return { pivot, knee };
   };
@@ -329,7 +379,7 @@ export function character(enemy = false): T.Group {
   weapon.rotation.x = Math.PI / 2;
   weapon.userData.keep = true;
   const knob = oval(rightArm, brass, 0, -0.66, 0.84, 0.039, 0.039, 0.039);
-  knob.visible = !enemy;
+  knob.visible = !enemy && !historical;
   root.userData.rig = {
     hips,
     coatTails,
@@ -423,9 +473,11 @@ export function animateCharacter(
   const bounce =
     weight * Math.abs(swing) * T.MathUtils.lerp(0.025, 0.055, runWeight);
   const idleBreath = (1 - weight) * Math.sin(time * 2) * 0.008;
+  r.hips.position.x = Math.sin(phase * 0.5) * weight * 0.009;
   r.hips.position.y = 0.91 + bounce + idleBreath;
   const hit = T.MathUtils.clamp(hurt / 0.35, 0, 1);
   r.hips.rotation.x = runWeight * weight * 0.08 - hit * 0.12;
+  r.hips.rotation.y = swing * weight * 0.024;
   r.leftLeg.rotation.x = stride;
   r.rightLeg.rotation.x = -stride;
   const kneeLift = T.MathUtils.lerp(0.45, 0.9, runWeight);
@@ -459,11 +511,14 @@ export function animateCharacter(
   );
   r.rightArm.rotation.z = T.MathUtils.lerp(-strike * 0.35, -0.55, defence);
   r.leftArm.rotation.z = defence * 0.55;
+  r.leftArm.rotation.y = -swing * weight * 0.055;
+  r.rightArm.rotation.y = swing * weight * 0.055;
   r.hips.rotation.z = swing * weight * 0.018 + Math.sin(hurt * 40) * hit * 0.07;
   r.coat.rotation.x = swing * weight * 0.045 + runWeight * weight * 0.025;
   r.coatTails.rotation.x = -weight * (0.06 + runWeight * 0.14);
-  r.coatTails.rotation.z = swing * weight * 0.045;
-  r.head.rotation.y = Math.sin(time * 0.6) * 0.035;
+  r.coatTails.rotation.z = swing * weight * 0.065;
+  r.head.rotation.x = -runWeight * weight * 0.035 + hit * 0.09;
+  r.head.rotation.y = Math.sin(time * 0.6) * 0.035 - r.hips.rotation.y * 0.5;
   r.head.rotation.z = Math.sin(hurt * 24) * hit * 0.065;
 }
 

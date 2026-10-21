@@ -12,6 +12,9 @@ export function mansion(obstacles: Obstacle[]) {
   const plaster = pbr("stone", 0x969c91);
   const marble = pbr("stone", 0xb1ae98, { roughness: 0.8 });
   const black = pbr("stone", 0x34424a, { roughness: 0.8 });
+  const damp = pbr("plaster", 0x54605b, { roughness: 1 });
+  const soot = pbr("stone", 0x282e2c, { roughness: 1 });
+  const wornGold = pbr("brass", 0x806a49, { roughness: 0.8 });
   const glass = new T.MeshStandardMaterial({
     color: 0x334f70,
     emissive: 0x1b3046,
@@ -54,11 +57,16 @@ export function mansion(obstacles: Obstacle[]) {
       box(side * 7.44, 0.92, z + 0.73, 0.04, 1.14, 0.035, trim);
       box(side * 7.6, 3.15, z, 0.15, 2.5, 1.45, black);
       box(side * 7.48, 3.15, z, 0.045, 2.25, 1.2, glass);
+      // Uneven damp marks sit behind the mullions rather than across the view.
+      box(side * 7.425, 1.04, z, 0.035, 0.84, 1.38, damp);
+      box(side * 7.398, 0.63, z - 0.33, 0.018, 0.31, 0.28, soot);
+      box(side * 7.398, 0.73, z + 0.38, 0.018, 0.46, 0.16, soot);
       box(side * 7.4, 3.15, z, 0.08, 2.3, 0.06, trim);
       box(side * 7.4, 3.15, z, 0.08, 0.07, 1.3, trim);
       for (const e of [-1, 1])
         box(side * 7.39, 3.15 + e * 1.18, z, 0.12, 0.1, 1.5, marble);
       box(side * 7.35, 2.45, z + 1, 0.3, 4.6, 0.22, wood);
+      box(side * 7.31, 1.75, z + 1, 0.045, 0.54, 0.08, wornGold);
     }
   }
   // North arch and entrance pediment: a real polygonal arch assembled from wedge voussoirs.
@@ -103,6 +111,13 @@ export function mansion(obstacles: Obstacle[]) {
       box(x, 0.016, z, 0.97, 0.025, 0.97, (x + z) % 2 === 0 ? plaster : black);
     }
   for (const x of [-1.72, 1.72]) box(x, 0.047, 0, 0.055, 0.02, 12, trim);
+  // Aged stone has fine fractures; these marks are flush with the existing
+  // collision floor and therefore cannot trap the player.
+  for (const x of [-6, -4, 3, 6])
+    for (const z of [-5, -2, 2, 5]) {
+      const crack = box(x + 0.13, 0.032, z - 0.11, 0.016, 0.006, 0.49, soot);
+      crack.rotation.y = ((x + z) % 3) * 0.24;
+    }
   // Fireplace, mantel and three framed paintings, plus furniture with carved legs.
   box(-5.7, 0.9, -5.8, 2.8, 1.8, 0.8, wood);
   box(-5.7, 1, -5.31, 1.6, 1.45, 0.04, black);
@@ -133,6 +148,17 @@ export function mansion(obstacles: Obstacle[]) {
       new T.MeshStandardMaterial({ map: portrait(x), roughness: 1 }),
     );
     for (const y of [2.3, 4.1]) box(x, y, -7.27, 1.5, 0.08, 0.1, trim);
+    const tarnish = box(x + 0.32, 3.21, -7.245, 0.1, 1.28, 0.014, damp);
+    tarnish.rotation.z = x < 0 ? 0.08 : -0.06;
+  }
+  // A warped clock face and scattered lintel fractures keep the entrance
+  // recognisably domestic, while the finishes read as neglected.
+  box(0, 3.87, -7.27, 0.92, 0.92, 0.06, wornGold);
+  box(0, 3.87, -7.19, 0.7, 0.7, 0.025, black);
+  for (const x of [-0.23, 0.23]) box(x, 3.89, -7.17, 0.035, 0.42, 0.014, trim);
+  for (const x of [-2.15, 2.15]) {
+    const fracture = box(x, 3.37, -7.17, 0.035, 0.83, 0.017, soot);
+    fracture.rotation.z = x < 0 ? -0.19 : 0.13;
   }
   // Original chandelier with solid candles and polygonal rings.
   mesh(new T.CylinderGeometry(0.04, 0.04, 1, 8), trim, 0, 4.5, 0);

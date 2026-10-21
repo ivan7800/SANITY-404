@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-19T20:45:31.002Z",
+  "source": "main f4db66d extracted with git archive",
+  "method": "Chrome DevTools MCP; 180 requestAnimationFrame intervals; quality Baja; 881x793 viewport; x=0 z=0 enemy defeated",
+  "results": [
+    {
+      "room": 0,
+      "frames": 180,
+      "fpsMean": 60.02200806962552,
+      "frameMs": {
+        "mean": 16.660555555555558,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "frame": 299,
+        "calls": 55,
+        "triangles": 44806,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 55,
+        "textures": 14
+      },
+      "jsHeap": 35637787,
+      "canvas": {
+        "width": 704,
+        "height": 634
+      }
+    },
+    {
+      "room": 8,
+      "frames": 180,
+      "fpsMean": 60.02200806962552,
+      "frameMs": {
+        "mean": 16.660555555555558,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "frame": 292,
+        "calls": 62,
+        "triangles": 23442,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 62,
+        "textures": 14
+      },
+      "jsHeap": 36215783,
+      "canvas": {
+        "width": 704,
+        "height": 634
+      }
+    },
+    {
+      "room": 9,
+      "frames": 180,
+      "fpsMean": 60.024009603841534,
+      "frameMs": {
+        "mean": 16.66,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "frame": 295,
+        "calls": 53,
+        "triangles": 21766,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 53,
+        "textures": 14
+      },
+      "jsHeap": 34354475,
+      "canvas": {
+        "width": 704,
+        "height": 634
+      }
+    },
+    {
+      "room": 10,
+      "frames": 180,
+      "fpsMean": 60.024009603841534,
+      "frameMs": {
+        "mean": 16.66,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "frame": 294,
+        "calls": 61,
+        "triangles": 23674,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 61,
+        "textures": 14
+      },
+      "jsHeap": 36187581,
+      "canvas": {
+        "width": 704,
+        "height": 634
+      }
+    }
+  ]
+}

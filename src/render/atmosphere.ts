@@ -3,7 +3,7 @@ export class Atmosphere {
   dust: T.Points;
   private mist: T.Mesh[] = [];
   private positions: Float32Array;
-  constructor(scene: T.Scene, count: number) {
+  constructor(scene: T.Scene, count: number, room = 0) {
     this.positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       this.positions[i * 3] = Math.sin(i * 11.13) * 7;
@@ -16,7 +16,7 @@ export class Atmosphere {
       g,
       new T.PointsMaterial({
         size: 0.022,
-        color: 0xd0bf91,
+        color: room === 8 ? 0xe2ad72 : room >= 9 ? 0xb8c4ad : 0xd0bf91,
         transparent: true,
         opacity: 0.27,
         depthWrite: false,
@@ -29,7 +29,7 @@ export class Atmosphere {
       const fog = new T.Mesh(
         new T.SphereGeometry(1, 12, 8),
         new T.MeshBasicMaterial({
-          color: 0x778b9a,
+          color: room === 8 ? 0x98704d : room >= 9 ? 0x718b7e : 0x778b9a,
           transparent: true,
           opacity: 0.025,
           depthWrite: false,
