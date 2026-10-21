@@ -364,7 +364,11 @@ export class Combat {
       if (this.aiState === "patrol") {
         target = this.patrolOrigin
           .clone()
-          .add(new T.Vector3(this.patrolSide * 2.4, 0, 0));
+          .add(
+            this.kind === "shade"
+              ? new T.Vector3(0, 0, this.patrolSide * 2.4)
+              : new T.Vector3(this.patrolSide * 2.4, 0, 0),
+          );
         if (enemy.position.distanceTo(target) < 0.5) this.patrolSide *= -1;
       } else if (this.aiState === "investigate" && !seen) {
         if (enemy.position.distanceTo(target) < 0.6) this.searchTime -= dt;

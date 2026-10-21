@@ -19,6 +19,20 @@ it("las tres épocas conservan enemigos en puntos transitables", () => {
     world.dispose();
   }
 });
+it("la sombra vigila el centro de la mansión y detecta al jugador en la galería", () => {
+  const world = new World(0, [], [], []);
+  const p = character(),
+    e = character(true),
+    c = new Combat(0),
+    s = fresh();
+  const [x, z] = enemySpawn(world.obstacles);
+  p.position.set(0, 0, -0.4);
+  e.position.set(x, 0, z);
+  for (let i = 0; i < 50 && c.aiState === "patrol"; i++)
+    c.update(0.1, s, p, e, world.obstacles, false, noop, noop);
+  expect(c.aiState).not.toBe("patrol");
+  world.dispose();
+});
 it("campo visual y obstáculos limitan la detección; un ruido provoca investigación", () => {
   const p = character(),
     e = character(true),

@@ -12,9 +12,10 @@
 | Prueba | Resultado |
 | --- | --- |
 | `npm run format:check` | Pasa |
-| `npm test` | 80 pruebas en 18 archivos pasan |
+| `npm test` | 81 pruebas en 18 archivos pasan |
 | `npm run build` | TypeScript y Vite pasan |
 | `npm run test:browser` | Campaña completa, guardado/carga, puzles, muerte y opciones pasan; sin errores JavaScript |
+| `SANITY_HARDWARE=1 npm run test:phase1` | Animación, cámara, detección, defensa, combate, controles y mando simulado pasan |
 | `node scripts/browser-historical.mjs` | Portales, artefactos, elección y recarga de las tres épocas pasan |
 | `node scripts/browser-phase2-combat.mjs` | Tres ventanas del guardián, defensa y golpes fuertes pasan |
 | `node scripts/browser-phase7.mjs` | Ataque anticipado, impacto, audio y volumen en las cuatro salas representativas pasan |
@@ -31,5 +32,6 @@ Los informes registran geometrías, texturas y heap al cierre de cada muestra; n
 
 - La patrulla usa puntos locales y evasión lateral simple; en muebles complejos puede detenerse antes de encontrar una ruta alternativa. No hay navegación por malla.
 - Las señales direccionales usan paneo estéreo y no oclusión acústica por paredes.
+- El mando se verificó mediante Gamepad API simulada; queda pendiente una sesión con mando físico.
 - Las mediciones se hicieron en Chrome de escritorio. Electron comparte Web Audio y la compilación web, pero no se ejecutó una prueba específica del empaquetado Electron.
 - Las muestras de rendimiento duran entre dos y seis segundos. Falta una sesión prolongada de combate y exploración para evaluar memoria y FPS sostenidos durante horas.
