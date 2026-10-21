@@ -176,7 +176,7 @@ function loadRoom() {
   corpseTime = deathTime = 0;
   combat = new Combat(state.room);
   terror = new TerrorDirector(world);
-  sanity = new Sanity(world);
+  sanity = new Sanity(world, state.elapsed);
   if (settings.quality === 1) simplifyLowMaterials(world.scene);
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
