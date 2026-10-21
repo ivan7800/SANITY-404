@@ -15,8 +15,42 @@ export interface SanityEvent {
   text: string;
   read?: number;
   discovery?: string;
+  item?: string;
+  priority?: number;
 }
 export const sanityEvents: SanityEvent[] = [
+  {
+    id: "roman-ritual",
+    rooms: [8],
+    threshold: 85,
+    read: 8,
+    priority: 5,
+    text: "La inscripción del altar repite el signo de la tablilla de Lucius.",
+  },
+  {
+    id: "abbey-bell",
+    rooms: [9],
+    threshold: 85,
+    read: 9,
+    priority: 5,
+    text: "La campana suena una vez. En el registro falta otro nombre.",
+  },
+  {
+    id: "scriptorium-margin",
+    rooms: [10],
+    threshold: 80,
+    read: 10,
+    priority: 5,
+    text: "Un margen del códice revela el mismo sello que vio Lucius.",
+  },
+  {
+    id: "mansion-reflection",
+    rooms: [6],
+    threshold: 75,
+    discovery: "adrien",
+    priority: 5,
+    text: "En el vidrio, Adrien señala la luz de la capilla.",
+  },
   {
     id: "roman-witness",
     rooms: [8],
@@ -131,9 +165,49 @@ export function eligibleSanityEvents(state: State) {
       event.rooms.includes(state.room) &&
       state.sanity <= event.threshold &&
       (event.read === undefined || state.read.includes(String(event.read))) &&
+      (event.item === undefined || state.items.includes(event.item)) &&
       (event.discovery === undefined ||
         state.phase2.discoveries.includes(event.discovery)),
   );
+}
+
+/** Stable event order, with room entry grace, global spacing and per-cue cooldown. */
+export class PsychologicalDirector {
+  private nextAt: number;
+  private last = new Map<string, number>();
+  private recent: string[] = [];
+  constructor(entryTime = 0) {
+    this.nextAt = entryTime + 8;
+  }
+  choose(state: State, enabled = true): SanityEvent | undefined {
+    if (!enabled || state.elapsed < this.nextAt) return;
+    const eligible = eligibleSanityEvents(state)
+      .filter(
+        (event) => state.elapsed - (this.last.get(event.id) ?? -Infinity) >= 48,
+      )
+      .sort(
+        (a, b) =>
+          (b.priority ?? 0) - (a.priority ?? 0) ||
+          (this.last.get(a.id) ?? -Infinity) -
+            (this.last.get(b.id) ?? -Infinity) ||
+          a.id.localeCompare(b.id),
+      );
+    const event = eligible.find(
+      (candidate) =>
+        !this.recent.includes(candidate.id) ||
+        state.elapsed - (this.last.get(candidate.id) ?? -Infinity) >= 96,
+    );
+    // Recheck after a short interval when progress or sanity has not unlocked a cue.
+    if (!event) {
+      this.nextAt = state.elapsed + 5;
+      return;
+    }
+    this.last.set(event.id, state.elapsed);
+    this.recent.push(event.id);
+    if (this.recent.length > 2) this.recent.shift();
+    this.nextAt = state.elapsed + (state.sanity < 40 ? 12 : 16);
+    return event;
+  }
 }
 
 /** Events change only perception. None alters collisions, doors or saved progress. */
@@ -141,7 +215,7 @@ export class Sanity {
   apparition: T.Group;
   activeId = "";
   eventCount = 0;
-  private nextEvent = 8;
+  private director: PsychologicalDirector;
   private until = 0;
   private book: T.Mesh;
   private falseDoor: T.Group;
@@ -152,7 +226,12 @@ export class Sanity {
   private alteredPortraitColor = new T.Color(0x8b6271);
   private ring: T.Object3D | undefined;
   private baseFog = 0;
-  constructor(world: World) {
+  private initialLights: number[];
+  private eraGlyph?: T.Mesh;
+  private glyphIntensity = 0;
+  constructor(world: World, entryTime = 0) {
+    this.director = new PsychologicalDirector(entryTime);
+    this.initialLights = world.lights.map((light) => light.intensity);
     this.apparition = character(true);
     this.apparition.visible = false;
     world.scene.add(this.apparition);
@@ -227,6 +306,13 @@ export class Sanity {
         (this.portraits[0].material as T.MeshStandardMaterial).color,
       );
     this.ring = world.scene.getObjectByName("threshold-ring");
+    this.eraGlyph = world.scene.getObjectByName(
+      world.room === 8 ? "roman-ritual-sigil" : "abbey-codex-glyph",
+    ) as T.Mesh | undefined;
+    if (this.eraGlyph)
+      this.glyphIntensity = (
+        this.eraGlyph.material as T.MeshStandardMaterial
+      ).emissiveIntensity;
     this.baseFog = (world.scene.fog as T.FogExp2).density;
   }
   update(
@@ -237,32 +323,18 @@ export class Sanity {
     sound: (event: string) => void,
   ) {
     const intensity = 1 - state.sanity / 100;
-    if (state.elapsed >= this.nextEvent) {
-      const seed = Math.abs(
-        Math.sin(state.elapsed * 12.9898 + state.room * 78.233),
-      );
-      this.nextEvent = state.elapsed + 10 + seed * 7;
-      const eligible = eligibleSanityEvents(state).filter(
-        (event) => event.id !== this.activeId,
-      );
-      if (
-        !options.reduced &&
-        eligible.length &&
-        seed < 0.32 + intensity * 0.63
-      ) {
-        const event = eligible[Math.floor(seed * 1000) % eligible.length];
-        this.activeId = event.id;
-        this.until = state.elapsed + 2.4;
-        this.eventCount++;
-        notify(event.text);
-        if (!options.reduceAudio) sound(event.id);
-      }
+    const event = this.director.choose(state, !options.reduced);
+    if (event) {
+      this.activeId = event.id;
+      this.until = state.elapsed + 3.2;
+      this.eventCount++;
+      notify(event.text);
+      if (!options.reduceAudio) sound(event.id);
     }
     const active =
       !options.reduced && state.elapsed < this.until ? this.activeId : "";
     world.lights.forEach((light, i) => {
-      const base = Number(light.userData.base ?? light.intensity);
-      light.userData.base = base;
+      const base = this.initialLights[i];
       const wave =
         options.reduceFlashes || options.reduced
           ? 0
@@ -273,6 +345,14 @@ export class Sanity {
           : 0;
       light.intensity = base * (1 + wave + breathing);
     });
+    if (this.eraGlyph)
+      (this.eraGlyph.material as T.MeshStandardMaterial).emissiveIntensity =
+        this.glyphIntensity +
+        (active === "roman-ritual" || active === "scriptorium-margin"
+          ? options.reduceFlashes
+            ? 0.12
+            : 0.25 + Math.sin(state.elapsed * 1.2) * 0.08
+          : 0);
     this.apparition.visible = [
       "glass-double",
       "silent-choir",
@@ -281,6 +361,7 @@ export class Sanity {
       "abbey-visitor",
       "ink-apparition",
       "mansion-echo",
+      "mansion-reflection",
     ].includes(active);
     if (this.apparition.visible)
       this.apparition.position.set(
@@ -292,7 +373,11 @@ export class Sanity {
         0,
         T.MathUtils.clamp(state.z - 2.8, -6.5, 6.5),
       );
-    this.book.visible = ["hushed-index", "levitating-book"].includes(active);
+    this.book.visible = [
+      "hushed-index",
+      "levitating-book",
+      "scriptorium-margin",
+    ].includes(active);
     if (this.book.visible) {
       this.book.position.set(
         -3,
@@ -318,9 +403,11 @@ export class Sanity {
         active === "lengthened-aisle" && !options.reduceDistortion ? 1.15 : 1,
       );
     }
-    this.shadow.visible = ["second-footsteps", "shadow-without-body"].includes(
-      active,
-    );
+    this.shadow.visible = [
+      "second-footsteps",
+      "shadow-without-body",
+      "abbey-bell",
+    ].includes(active);
     if (this.shadow.visible)
       this.shadow.position.set(
         T.MathUtils.clamp(state.x + Math.sin(state.elapsed * 2) * 1.5, -6, 6),

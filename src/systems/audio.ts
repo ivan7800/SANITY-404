@@ -201,7 +201,19 @@ export class Audio {
       this.tone(frequency * 1.48, 0.34, "sine");
   }
   sanityEvent(id: string) {
-    this.cue(id.includes("door") || id.includes("aisle") ? "door" : "whisper");
+    if (id === "abbey-bell") {
+      this.tone(196, 1.1, "sine");
+      this.tone(294, 0.8, "sine");
+    } else if (id === "roman-ritual") {
+      this.tone(110, 0.9, "triangle");
+      this.tone(165, 0.65, "sine");
+    } else if (id === "scriptorium-margin") {
+      this.tone(245, 0.5, "triangle");
+    } else {
+      this.cue(
+        id.includes("door") || id.includes("aisle") ? "door" : "whisper",
+      );
+    }
   }
   setVolume(v: number) {
     this.volume = v;

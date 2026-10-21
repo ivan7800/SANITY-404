@@ -106,6 +106,7 @@ export function decorateRomanSanctuary(world: World) {
     );
     sigil.rotation.x = -Math.PI / 2;
     sigil.position.set(0, 0.04, -2.25);
+    sigil.name = "roman-ritual-sigil";
     world.scene.add(sigil);
   }
   const flameGeometry = new T.ConeGeometry(0.12, 0.33, 7);

@@ -126,6 +126,7 @@ export function decorateMedievalAbbey(world: World) {
       }),
     );
     glyph.position.set(0, 2.3, -7.38);
+    glyph.name = "abbey-codex-glyph";
     world.scene.add(glyph);
     world.lamp(-4.8, 2.75, -4, 0xffae74, 8);
     world.lamp(4.8, 2.75, -4, 0xffae74, 8);
