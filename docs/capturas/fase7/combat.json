@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-21T16:22:01.332Z",
+  "url": "http://127.0.0.1:5173/",
+  "runs": 3,
+  "frames": 360,
+  "viewport": "1280x720",
+  "quality": "Baja",
+  "scene": "Enemy attacking; guard held; character at (0,0)",
+  "results": [
+    {
+      "room": 0,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 100,
+      "frames": 360,
+      "fpsMean": 58.223221361452985,
+      "frameMs": {
+        "mean": 17.17527777777778,
+        "median": 16.699999999999818,
+        "p95": 16.800000000000182,
+        "p99": 33.30000000000109,
+        "max": 33.399999999999636
+      },
+      "draw": {
+        "calls": 92,
+        "triangles": 66546
+      },
+      "memory": {
+        "geometries": 104,
+        "textures": 14
+      },
+      "heapAfterGc": 16080602,
+      "errors": []
+    },
+    {
+      "room": 0,
+      "run": 2,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 100,
+      "frames": 360,
+      "fpsMean": 59.50609937518595,
+      "frameMs": {
+        "mean": 16.805000000000003,
+        "median": 16.699999999999818,
+        "p95": 16.800000000000182,
+        "p99": 16.80000000000109,
+        "max": 33.399999999999636
+      },
+      "draw": {
+        "calls": 92,
+        "triangles": 66546
+      },
+      "memory": {
+        "geometries": 104,
+        "textures": 14
+      },
+      "heapAfterGc": 16075210,
+      "errors": []
+    },
+    {
+      "room": 0,
+      "run": 3,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 100,
+      "frames": 360,
+      "fpsMean": 60.00300015000751,
+      "frameMs": {
+        "mean": 16.66583333333333,
+        "median": 16.699999999999818,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182,
+        "max": 16.80000000000109
+      },
+      "draw": {
+        "calls": 92,
+        "triangles": 66546
+      },
+      "memory": {
+        "geometries": 104,
+        "textures": 14
+      },
+      "heapAfterGc": 16071434,
+      "errors": []
+    }
+  ]
+}

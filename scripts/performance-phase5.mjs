@@ -11,10 +11,26 @@ const frames = Number(
   process.argv.find((a) => a.startsWith("--frames="))?.slice(9) || 240,
 );
 const combat = process.argv.includes("--combat");
+const contactPosition = process.argv
+  .find((a) => a.startsWith("--position="))
+  ?.slice(11)
+  .split(",")
+  .map(Number);
+if (contactPosition)
+  assert.ok(
+    contactPosition.length === 2 && contactPosition.every(Number.isFinite),
+  );
 const output =
   process.env.SANITY_BENCH_OUTPUT ||
   `docs/capturas/fase5/metrics-${combat ? "combat" : "idle"}.json`;
-const rooms = [0, 8, 9, 10];
+const selectedRooms = process.argv.find((a) => a.startsWith("--rooms="));
+const rooms = selectedRooms
+  ? selectedRooms.slice(8).split(",").map(Number)
+  : [0, 8, 9, 10];
+assert.ok(
+  rooms.length > 0 &&
+    rooms.every((room) => Number.isInteger(room) && room >= 0 && room <= 10),
+);
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
   headless: true,
@@ -45,7 +61,7 @@ try {
         if (message.type() === "error") errors.push(message.text());
       });
       await page.addInitScript(
-        ({ roomNumber, combatMode }) => {
+        ({ roomNumber, combatMode, position }) => {
           localStorage.setItem(
             "sanity404-settings",
             JSON.stringify({ quality: 1, volume: 0, cameraMode: "classic" }),
@@ -55,8 +71,8 @@ try {
             JSON.stringify({
               version: 1,
               room: roomNumber,
-              x: 0,
-              z: combatMode ? 0 : 5,
+              x: position?.[0] ?? 0,
+              z: position?.[1] ?? (combatMode ? 0 : 5),
               health: 100,
               sanity: 100,
               items: [],
@@ -69,7 +85,7 @@ try {
             }),
           );
         },
-        { roomNumber: room, combatMode: combat },
+        { roomNumber: room, combatMode: combat, position: contactPosition },
       );
       await page.goto(url);
       await page

@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-21T16:16:42.521Z",
+  "url": "http://127.0.0.1:5173/",
+  "runs": 1,
+  "frames": 120,
+  "viewport": "881x793",
+  "quality": "Baja",
+  "scenario": "x=0, z=0, enemy defeated",
+  "results": [
+    {
+      "room": 0,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 704,
+        "height": 634
+      },
+      "frames": 120,
+      "fpsMean": 59.999999999999986,
+      "frameMs": {
+        "mean": 16.66666666666667,
+        "p95": 16.700000000000728,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "calls": 60,
+        "triangles": 46060
+      },
+      "memory": {
+        "geometries": 60,
+        "textures": 14
+      },
+      "jsHeap": 31782485,
+      "errors": []
+    },
+    {
+      "room": 8,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 704,
+        "height": 634
+      },
+      "frames": 120,
+      "fpsMean": 60.003000150007495,
+      "frameMs": {
+        "mean": 16.665833333333335,
+        "p95": 16.799999999999272,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "calls": 74,
+        "triangles": 24074
+      },
+      "memory": {
+        "geometries": 73,
+        "textures": 14
+      },
+      "jsHeap": 28971665,
+      "errors": []
+    },
+    {
+      "room": 9,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 704,
+        "height": 634
+      },
+      "frames": 120,
+      "fpsMean": 60.003000150007495,
+      "frameMs": {
+        "mean": 16.665833333333335,
+        "p95": 16.700000000000273,
+        "p99": 16.800000000000182
+      },
+      "draw": {
+        "calls": 62,
+        "triangles": 21050
+      },
+      "memory": {
+        "geometries": 62,
+        "textures": 14
+      },
+      "jsHeap": 28782512,
+      "errors": []
+    },
+    {
+      "room": 10,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 704,
+        "height": 634
+      },
+      "frames": 120,
+      "fpsMean": 60.003000150007495,
+      "frameMs": {
+        "mean": 16.665833333333335,
+        "p95": 16.700000000000273,
+        "p99": 16.799999999999727
+      },
+      "draw": {
+        "calls": 72,
+        "triangles": 22910
+      },
+      "memory": {
+        "geometries": 72,
+        "textures": 14
+      },
+      "jsHeap": 29934546,
+      "errors": []
+    }
+  ]
+}

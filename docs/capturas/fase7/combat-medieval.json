@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-21T16:31:28.943Z",
+  "url": "http://127.0.0.1:5173/",
+  "runs": 1,
+  "frames": 240,
+  "viewport": "1280x720",
+  "quality": "Baja",
+  "scene": "Enemy attacking; guard held; character at (0,0)",
+  "results": [
+    {
+      "room": 10,
+      "run": 1,
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "canvas": {
+        "width": 1024,
+        "height": 576
+      },
+      "health": 100,
+      "frames": 240,
+      "fpsMean": 60.00300015000751,
+      "frameMs": {
+        "mean": 16.66583333333333,
+        "median": 16.699999999999818,
+        "p95": 16.799999999999727,
+        "p99": 16.800000000000182,
+        "max": 16.800000000000182
+      },
+      "draw": {
+        "calls": 102,
+        "triangles": 42120
+      },
+      "memory": {
+        "geometries": 101,
+        "textures": 14
+      },
+      "heapAfterGc": 14922140,
+      "errors": []
+    }
+  ]
+}

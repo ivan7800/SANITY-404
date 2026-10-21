@@ -10,11 +10,21 @@ const { url } = JSON.parse(
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
   headless: true,
-  args: [
-    "--no-sandbox",
-    "--use-angle=swiftshader",
-    "--enable-unsafe-swiftshader",
-  ],
+  args:
+    process.env.SANITY_HARDWARE === "1"
+      ? [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--use-gl=angle",
+          "--use-angle=gl",
+          "--ignore-gpu-blocklist",
+          "--enable-gpu",
+        ]
+      : [
+          "--no-sandbox",
+          "--use-angle=swiftshader",
+          "--enable-unsafe-swiftshader",
+        ],
 });
 const page = await browser.newPage({ viewport: { width: 480, height: 320 } }),
   errors = [];

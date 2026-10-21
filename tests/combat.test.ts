@@ -29,6 +29,7 @@ it("el enemigo persigue, daña con recuperación y no atraviesa límites", () =>
     e = character(true),
     c = new Combat(1);
   e.position.set(0, 0, 3);
+  e.lookAt(p.position);
   const noop = () => {};
   c.update(0.1, state, p, e, [], false, noop, noop);
   expect(e.position.z).toBeLessThan(3);

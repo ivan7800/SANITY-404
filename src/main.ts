@@ -26,6 +26,7 @@ import {
   type PuzzleId,
 } from "./systems/phase2";
 import { Audio } from "./systems/audio";
+import { TerrorDirector } from "./systems/terror";
 import { notes, discoveries } from "./world/narrative";
 import { readSave, writeSave } from "./systems/save";
 import { legacy, reconcileLegacy, legacyEnding } from "./systems/legacy";
@@ -76,6 +77,7 @@ let state: State = fresh(),
   corpseTime = 0,
   deathTime = 0,
   combat: Combat,
+  terror: TerrorDirector,
   sanity: Sanity,
   paused = true,
   started = false,
@@ -113,6 +115,7 @@ function resume() {
 function loadRoom() {
   if (!state.phase2.visited.includes(state.room))
     state.phase2.visited.push(state.room);
+  terror?.restore();
   world?.dispose();
   world = new World(
     state.room,
@@ -172,6 +175,7 @@ function loadRoom() {
   world.scene.add(corpse);
   corpseTime = deathTime = 0;
   combat = new Combat(state.room);
+  terror = new TerrorDirector(world);
   sanity = new Sanity(world);
   if (settings.quality === 1) simplifyLowMaterials(world.scene);
   audio.setRoom(state.room);
@@ -694,8 +698,15 @@ function update(dt: number) {
   threat.position.copy(enemy.position).setY(0.035);
   threat.visible =
     enemy.visible && enemy.position.distanceTo(player.position) < 2.8;
+  const tell =
+    combat.windup > 0 ? 1 - combat.windup / combat.windupDuration : 0;
   (threat.material as T.MeshBasicMaterial).opacity =
-    combat.windup > 0 ? 0.3 : 0.09;
+    combat.windup > 0
+      ? settings.reduceFlashes
+        ? 0.42
+        : 0.2 + tell * 0.4
+      : 0.09;
+  threat.scale.setScalar(combat.windup > 0 ? 1 + tell * 0.16 : 1);
   const wasAlive = enemy.visible;
   const lightAttack = input.take("Space"),
     heavyAttack = input.take("KeyJ");
@@ -728,6 +739,7 @@ function update(dt: number) {
   );
   el("hit-feedback").classList.toggle("blocked", combat.guarding);
   audio.ambient(state.elapsed, state.sanity);
+  terror.update(dt, player, enemy, combat, audio, settings, state.elapsed);
   animateCharacter(
     player,
     state.elapsed,
@@ -849,6 +861,7 @@ addEventListener("resize", () => {
 addEventListener("blur", () => {
   if (started && !paused) menu();
 });
+addEventListener("pagehide", () => audio.dispose());
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && started && !paused) menu();
 });
@@ -881,6 +894,12 @@ export function inspect() {
     performance: metrics.snapshot(),
     gpuTime: gpuTimer?.snapshot(),
     sanityEvent: { id: sanity.activeId, count: sanity.eventCount },
+    audio: {
+      activeTones: audio.activeVoices,
+      running: audio.ctx?.state === "running",
+      volume: audio.volume,
+      reduced: audio.reduceAudio,
+    },
     memory: renderer.info.memory,
     textures: textureBudget(),
     playerRig: Boolean(player.userData.rig),
