@@ -8,7 +8,11 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
     roman ? 0xe9b778 : medieval ? 0xa8b8af : 0x91b7ed,
     roman ? 1.3 : medieval ? 1.45 : 1.7,
   );
-  moon.position.set(-7, 5, -1);
+  moon.position.set(
+    roman ? -5 : medieval ? -8 : -7,
+    roman ? 6 : 5,
+    roman ? -5 : -1,
+  );
   scene.add(moon);
   const key = new T.SpotLight(
     roman ? 0xffb76b : medieval ? 0xffc69a : 0xffc58b,
@@ -18,7 +22,7 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
     0.75,
     1.4,
   );
-  key.position.set(0, 4.75, 2);
+  key.position.set(roman ? -2 : medieval ? 1.5 : 0, 4.75, roman ? -1 : 2);
   key.target.position.set(0, 0, -1);
   key.castShadow = p.shadows;
   key.shadow.autoUpdate = false;

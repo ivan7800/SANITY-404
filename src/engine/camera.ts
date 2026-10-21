@@ -111,7 +111,10 @@ export class CinematicCamera {
     else this.target.lerp(desired, 1 - Math.exp(-dt * 7));
     this.initialized = true;
     camera.lookAt(this.corrected ? anchor : this.target);
-    camera.fov = context.mode === "modern" ? 54 : fighting ? 59 : 58;
-    camera.updateProjectionMatrix();
+    const fov = context.mode === "modern" ? 54 : fighting ? 59 : 58;
+    if (camera.fov !== fov) {
+      camera.fov = fov;
+      camera.updateProjectionMatrix();
+    }
   }
 }

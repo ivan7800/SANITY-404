@@ -3,6 +3,7 @@ export class Atmosphere {
   dust: T.Points;
   private mist: T.Mesh[] = [];
   private positions: Float32Array;
+  private uploadTime = 0;
   constructor(scene: T.Scene, count: number, room = 0) {
     this.positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -52,7 +53,13 @@ export class Atmosphere {
       this.positions[i + 1] -= 0.025 * dt;
       if (this.positions[i + 1] < 0.3) this.positions[i + 1] = 4.1;
     }
-    this.dust.geometry.attributes.position.needsUpdate = true;
+    // The slow drift is unchanged visually at 15 Hz, while avoiding a GPU
+    // buffer upload on every display refresh.
+    this.uploadTime += dt;
+    if (this.uploadTime >= 1 / 15) {
+      this.dust.geometry.attributes.position.needsUpdate = true;
+      this.uploadTime = 0;
+    }
   }
   dispose() {
     for (const fog of this.mist) {

@@ -99,8 +99,14 @@ export class World {
     progress: Phase2Progress = newPhase2(),
   ) {
     const scene = this.scene;
-    scene.background = new T.Color("#111817");
-    scene.fog = new T.FogExp2("#17202a", 0.022);
+    const eraAtmosphere =
+      room === 8
+        ? { background: "#1d1a16", fog: "#42382c", density: 0.019 }
+        : room >= 9
+          ? { background: "#111916", fog: "#303d37", density: 0.027 }
+          : { background: "#111817", fog: "#17202a", density: 0.022 };
+    scene.background = new T.Color(eraAtmosphere.background);
+    scene.fog = new T.FogExp2(eraAtmosphere.fog, eraAtmosphere.density);
     scene.add(
       new T.HemisphereLight(
         0xb1c3d4,
