@@ -4,8 +4,47 @@ import { PsychologicalDirector, Sanity } from "../src/systems/sanity";
 import { Audio } from "../src/systems/audio";
 import { fresh, parseSave } from "../src/systems/state";
 import { World } from "../src/world/scene";
+import { character } from "../src/world/character";
 
 describe("Fase 8: director psicológico", () => {
+  it("agrupa la aparición sin perder triángulos ni alterar su silueta", () => {
+    const world = new World(0, [], [], []);
+    const original = character(true);
+    const apparition = new Sanity(world).apparition;
+    const measure = (root: T.Group) => {
+      root.updateMatrixWorld(true);
+      const bounds = new T.Box3();
+      let triangles = 0;
+      let draws = 0;
+      const vertex = new T.Vector3();
+      root.traverse((object) => {
+        if (!(object instanceof T.Mesh) || !object.visible) return;
+        draws++;
+        const position = object.geometry.attributes
+          .position as T.BufferAttribute;
+        triangles += object.geometry.index
+          ? object.geometry.index.count / 3
+          : position.count / 3;
+        for (let i = 0; i < position.count; i++) {
+          vertex
+            .fromBufferAttribute(position, i)
+            .applyMatrix4(object.matrixWorld);
+          bounds.expandByPoint(vertex);
+        }
+      });
+      return { bounds, triangles, draws };
+    };
+    const before = measure(original);
+    const after = measure(apparition);
+    expect(after.triangles).toBe(before.triangles);
+    expect(after.draws).toBeLessThan(before.draws);
+    for (const axis of ["x", "y", "z"] as const) {
+      expect(after.bounds.min[axis]).toBeCloseTo(before.bounds.min[axis], 4);
+      expect(after.bounds.max[axis]).toBeCloseTo(before.bounds.max[axis], 4);
+    }
+    world.dispose();
+  });
+
   it("respeta entrada, sala, época, progreso, prioridad y frecuencia", () => {
     const state = fresh();
     state.room = 8;

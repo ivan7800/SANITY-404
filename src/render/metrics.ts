@@ -26,6 +26,7 @@ export class FrameMetrics {
       frameMedianMs: at(sorted, 0.5),
       frameP95Ms: at(sorted, 0.95),
       renderMedianMs: at(cpu, 0.5),
+      renderP95Ms: at(cpu, 0.95),
       averageFps: mean ? 1000 / mean : 0,
     };
   }

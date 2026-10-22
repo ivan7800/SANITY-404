@@ -1,0 +1,353 @@
+{
+  "date": "2026-10-22T16:56:00.202Z",
+  "url": "http://127.0.0.1:5180/",
+  "requestedSecondsPerScenario": 60,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "1927:psychological",
+  "results": [
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "psychological",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "spikes": [
+        {
+          "atSeconds": 0.18029999999972052,
+          "durationMs": 33.399999999999864
+        },
+        {
+          "atSeconds": 2.9791999999997207,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 3.0624999999997207,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 7.627399999999722,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 9.84309999999972,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 30.38489999999972,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 59.34019999999972,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 59.42339999999972,
+          "durationMs": 33.299999999995634
+        }
+      ],
+      "events": [
+        {
+          "atSeconds": 7.59399999999972,
+          "id": "mansion-echo"
+        }
+      ],
+      "longTasks": [],
+      "telemetry": [
+        {
+          "atSeconds": 5.011799999999721,
+          "frame": {
+            "samples": 309,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 16.799999999999727,
+            "renderMedianMs": 5,
+            "renderP95Ms": 7.900000000372529,
+            "averageFps": 55.530595740857216
+          },
+          "gpu": {
+            "available": true,
+            "samples": 314,
+            "medianMs": 7.287166,
+            "p95Ms": 11.208333
+          },
+          "calls": 86,
+          "heapBytes": 18453972
+        },
+        {
+          "atSeconds": 10.00969999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.799999999999272,
+            "renderMedianMs": 4.899999999906868,
+            "renderP95Ms": 8.199999999720603,
+            "averageFps": 59.429477020602214
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.618166,
+            "p95Ms": 11.376082
+          },
+          "calls": 94,
+          "heapBytes": 16962750
+        },
+        {
+          "atSeconds": 15.007699999999721,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.799999999999272,
+            "renderMedianMs": 4.100000000093132,
+            "renderP95Ms": 7.699999999720603,
+            "averageFps": 59.824713589183695
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 9.898666,
+            "p95Ms": 11.459
+          },
+          "calls": 86,
+          "heapBytes": 28823829
+        },
+        {
+          "atSeconds": 20.00579999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 6.7999999998137355,
+            "averageFps": 60.023409129560534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.93775,
+            "p95Ms": 11.400083
+          },
+          "calls": 86,
+          "heapBytes": 20142683
+        },
+        {
+          "atSeconds": 25.003799999999718,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 6.699999999720603,
+            "averageFps": 60.023409129560534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.4275,
+            "p95Ms": 11.39675
+          },
+          "calls": 86,
+          "heapBytes": 17920265
+        },
+        {
+          "atSeconds": 30.00179999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 6.300000000279397,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.50725,
+            "p95Ms": 11.357833
+          },
+          "calls": 86,
+          "heapBytes": 23417798
+        },
+        {
+          "atSeconds": 35.01649999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.6999999997206032,
+            "renderP95Ms": 6.5,
+            "averageFps": 59.92389665125288
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.783083,
+            "p95Ms": 11.357833
+          },
+          "calls": 86,
+          "heapBytes": 21120028
+        },
+        {
+          "atSeconds": 40.01449999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.6000000000931323,
+            "renderP95Ms": 6.5,
+            "averageFps": 59.92389665125288
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.475666,
+            "p95Ms": 11.39875
+          },
+          "calls": 86,
+          "heapBytes": 26791165
+        },
+        {
+          "atSeconds": 45.012499999999726,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 6.2999999998137355,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.492416,
+            "p95Ms": 11.445083
+          },
+          "calls": 86,
+          "heapBytes": 18650652
+        },
+        {
+          "atSeconds": 50.01049999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.799999999995634,
+            "renderMedianMs": 3.7000000001862645,
+            "renderP95Ms": 6.300000000279397,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.317416,
+            "p95Ms": 11.330333
+          },
+          "calls": 86,
+          "heapBytes": 29723074
+        },
+        {
+          "atSeconds": 55.00849999999972,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.8999999999068677,
+            "renderP95Ms": 6.900000000372529,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.231916,
+            "p95Ms": 11.15
+          },
+          "calls": 86,
+          "heapBytes": 21959446
+        },
+        {
+          "atSeconds": 60.006499999999726,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 4,
+            "renderP95Ms": 7,
+            "averageFps": 59.82471358918367
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.42125,
+            "p95Ms": 11.304833
+          },
+          "calls": 86,
+          "heapBytes": 19581308
+        }
+      ],
+      "inspectionMs": 25.500000006519258,
+      "expectedGameSeconds": 60.00940000000001,
+      "elapsedSeconds": 60.01919999999972,
+      "gameElapsedSeconds": 60.02610000000108,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 1,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 86,
+      "triangles": 49716,
+      "gpuResources": {
+        "geometries": 94,
+        "textures": 14
+      },
+      "gpuTiming": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 7.42125,
+        "p95Ms": 11.304833
+      },
+      "cpuTiming": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999709,
+        "frameP95Ms": 16.700000000004366,
+        "renderMedianMs": 4,
+        "renderP95Ms": 7,
+        "averageFps": 59.82471358918367
+      },
+      "jsHeapBytes": 19581308,
+      "frames": 3594,
+      "averageFps": 59.890617136651656,
+      "minimumObservedFps": 29.94011976047774,
+      "minimumRolling60Fps": 58.08325266214906,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "worstWindow": {
+        "fps": 58.08325266214906,
+        "endFrame": 182,
+        "endSeconds": 3.0987000000000005,
+        "durationMs": 1033.0000000000005
+      },
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}

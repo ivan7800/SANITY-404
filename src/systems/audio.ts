@@ -181,10 +181,10 @@ export class Audio {
   setReduceAudio(value: boolean) {
     this.reduceAudio = value;
   }
-  step(room: number, running: boolean) {
+  step(room: number, running: boolean, onWoodStairs = false) {
     this.tone(
-      room === 6 ? 100 : room === 7 ? 58 : 75,
-      running ? 0.045 : 0.07,
+      onWoodStairs ? 63 : room === 6 ? 100 : room === 7 ? 58 : 75,
+      onWoodStairs ? 0.15 : running ? 0.045 : 0.07,
       "triangle",
     );
   }

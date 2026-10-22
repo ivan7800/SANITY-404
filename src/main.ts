@@ -8,6 +8,7 @@ import { CinematicCamera } from "./engine/camera";
 import { animateCharacter, animateDeath } from "./world/character";
 import { luciusVarro } from "./world/lucius";
 import { isabelleDeMontfort } from "./world/isabelle";
+import { mansionFloorHeight } from "./world/mansion";
 import { createEnemy, enemyKindForRoom } from "./world/enemies";
 import { Input } from "./engine/input";
 import {
@@ -51,6 +52,7 @@ const hud = {
   sptext: el("sptext"),
   sttext: el("sttext"),
   veil: el("veil"),
+  hitFeedback: el("hit-feedback"),
 };
 function setHudText(element: HTMLElement, value: string) {
   if (element.textContent !== value) element.textContent = value;
@@ -151,7 +153,11 @@ function loadRoom() {
       : state.room >= 9
         ? isabelleDeMontfort()
         : character();
-  player.position.set(state.x, 0, state.z);
+  player.position.set(
+    state.x,
+    state.room === 0 ? mansionFloorHeight(state.x, state.z) : 0,
+    state.z,
+  );
   world.scene.add(player);
   enemy = createEnemy(enemyKindForRoom(state.room));
   const [enemyX, enemyZ] = enemySpawn(world.obstacles);
@@ -214,7 +220,7 @@ function loadRoom() {
     0,
     settings.reduced,
     world.obstacles,
-    { mode: settings.cameraMode },
+    { mode: settings.cameraMode, height: player.position.y },
   );
 }
 function begin(s: State) {
@@ -341,6 +347,13 @@ function phase2Puzzle(id: PuzzleId) {
 }
 function interact(o: Interactable) {
   audio.tone(260);
+  if (o.kind === "galleryClue") {
+    panel(
+      '<div class="eyebrow">GALERÍA VEYR · 1927</div><h2>La bóveda de las cenizas</h2><p>Adrien marcó una estrella apagada sobre el lente. Debajo escribió: «Lo que arde no desaparece. Deja una palabra en la caja astronómica».</p><p>La carta del vestíbulo y este mapa apuntan al mismo recuerdo.</p><button id="close">Volver al rellano</button>',
+    );
+    button("close", resume);
+    return;
+  }
   if (o.kind === "memoryChoice") {
     const chosen = memoryConsequence(state);
     if (chosen) {
@@ -704,15 +717,23 @@ function update(dt: number) {
   const p = move(state.x, state.z, dx, dz, world.obstacles);
   state.x = p.x;
   state.z = p.z;
-  player.position.set(p.x, 0, p.z);
+  player.position.set(
+    p.x,
+    state.room === 0 ? mansionFloorHeight(p.x, p.z) : 0,
+    p.z,
+  );
   if (len > 0.1) {
     player.rotation.y = Math.atan2(dx, dz);
     if (state.elapsed - audio.lastStep > 0.43) {
-      audio.step(state.room, c.run);
+      audio.step(
+        state.room,
+        c.run,
+        state.room === 0 && player.position.y > 0.05,
+      );
       audio.lastStep = state.elapsed;
     }
   }
-  contact[0].position.copy(player.position).setY(0.025);
+  contact[0].position.copy(player.position).setY(player.position.y + 0.025);
   contact[1].position.copy(enemy.position).setY(0.025);
   threat.position.copy(enemy.position).setY(0.035);
   threat.visible =
@@ -753,10 +774,12 @@ function update(dt: number) {
     animateDeath(corpse, corpseTime / 0.8);
     world.shadowBudget.mark(corpseTime < 1);
   }
-  el("hit-feedback").style.opacity = String(
-    combat.hurt > 0 ? (combat.guarding ? 0.18 : 0.36) : 0,
+  setHudStyle(
+    hud.hitFeedback,
+    "opacity",
+    String(combat.hurt > 0 ? (combat.guarding ? 0.18 : 0.36) : 0),
   );
-  el("hit-feedback").classList.toggle("blocked", combat.guarding);
+  hud.hitFeedback.classList.toggle("blocked", combat.guarding);
   audio.ambient(state.elapsed, state.sanity);
   terror.update(dt, player, enemy, combat, audio, settings, state.elapsed);
   animateCharacter(
@@ -795,13 +818,19 @@ function update(dt: number) {
     world.obstacles,
     {
       mode: settings.cameraMode,
+      height: player.position.y,
       enemy: enemy.position,
       combat: enemy.visible && enemy.position.distanceTo(player.position) < 2.8,
     },
   );
-  near = world.nearest(state.x, state.z);
+  near = world.nearest(state.x, state.z, 1.9, player.position.y);
   world.highlight.visible = Boolean(near);
-  if (near) world.highlight.position.set(near.x, 0.075, near.z);
+  if (near)
+    world.highlight.position.set(
+      near.x,
+      near.kind === "galleryClue" ? 2.715 : 0.075,
+      near.z,
+    );
   world.atmosphere.update(dt, state.elapsed, settings.reduced);
   const prompt = el("prompt");
   const promptText = near ? "E / A · " + near.name : "";
@@ -889,6 +918,19 @@ addEventListener("blur", () => {
   if (started && !paused) menu();
 });
 addEventListener("pagehide", () => audio.dispose());
+renderer.domElement.addEventListener("webglcontextlost", () => {
+  gpuTimer?.contextLost();
+  if (started)
+    panel(
+      "<h2>Gráficos interrumpidos</h2><p>Esperando a que se recupere la GPU.</p>",
+    );
+});
+renderer.domElement.addEventListener("webglcontextrestored", () => {
+  gpuTimer?.contextRestored();
+  applyQuality(renderer, settings.quality);
+  world.shadowLight.shadow.needsUpdate = true;
+  if (started) menu();
+});
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && started && !paused) menu();
 });
@@ -930,6 +972,7 @@ export function inspect() {
     memory: renderer.info.memory,
     textures: textureBudget(),
     playerRig: Boolean(player.userData.rig),
+    playerY: player.position.y,
     limbPose: player.userData.rig?.leftLeg.rotation.x,
     enemy: { position: enemy.position.toArray(), visible: enemy.visible },
     draw: renderer.info.render,
@@ -943,6 +986,40 @@ export function inspect() {
 }
 // Read-only browser test observer. Vite removes this branch from production.
 if (import.meta.env.DEV) {
+  // The benchmark reads this every display frame. Keep it allocation-free so
+  // measurement cannot trigger the cloning and sorting in inspect().
+  const benchmarkState = {
+    paused: true,
+    room: 0,
+    x: 0,
+    z: 0,
+    health: 0,
+    elapsed: 0,
+    enemyX: 0,
+    enemyZ: 0,
+    enemyVisible: false,
+    aiState: "",
+    eventCount: 0,
+    eventId: "",
+  };
+  Object.defineProperty(window, "sanityBenchmarkState", {
+    value: () => {
+      benchmarkState.paused = paused;
+      benchmarkState.room = state.room;
+      benchmarkState.x = state.x;
+      benchmarkState.z = state.z;
+      benchmarkState.health = state.health;
+      benchmarkState.elapsed = state.elapsed;
+      benchmarkState.enemyX = enemy.position.x;
+      benchmarkState.enemyZ = enemy.position.z;
+      benchmarkState.enemyVisible = enemy.visible;
+      benchmarkState.aiState = combat.aiState;
+      benchmarkState.eventCount = sanity.eventCount;
+      benchmarkState.eventId = sanity.activeId;
+      return benchmarkState;
+    },
+    configurable: true,
+  });
   Object.defineProperty(window, "sanityInspect", {
     value: inspect,
     configurable: true,

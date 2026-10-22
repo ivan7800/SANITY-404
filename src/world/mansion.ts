@@ -4,6 +4,11 @@ import { portrait } from "../render/portrait";
 import { pbr } from "../render/materials";
 import { furnishings } from "./furnishings";
 import type { Obstacle } from "../systems/state";
+/** The stair and landing share a height field, so old saves need no Y value. */
+export function mansionFloorHeight(x: number, z: number) {
+  if (x < 3.72 || x > 6.28 || z > -1.55 || z < -6.48) return 0;
+  return z <= -5.11 ? 2.64 : ((-z - 1.55) / 3.56) * 2.64;
+}
 export function mansion(obstacles: Obstacle[]) {
   const group = new T.Group();
   group.name = "Vestíbulo Veyr · arquitectura original";
@@ -87,20 +92,68 @@ export function mansion(obstacles: Obstacle[]) {
     );
     stone.rotation.z = a - Math.PI / 2;
   }
-  // Grand staircase in the eastern alcove; the volume is solid and cannot be walked through.
-  for (let i = 0; i < 11; i++)
-    box(5, 0.12 * (i + 1), -1.7 - i * 0.33, 2.6, 0.24 * (i + 1), 0.35, wood);
-  obstacles.push({ x: 5, z: -3.35, w: 2.7, d: 3.9 });
-  for (const x of [3.55, 6.45])
-    for (let i = 0; i < 12; i++) {
-      const z = -1.55 - i * 0.33;
-      box(x, 0.8 + i * 0.12, z, 0.075, 1.2, 0.075, trim);
-    }
-  for (const x of [3.55, 6.45]) {
-    const rail = box(x, 2, -3.35, 0.12, 0.12, 4.2, wood);
-    rail.rotation.x = -0.35;
+  // A walkable grand stair rises into the north gallery. The stone stringers,
+  // carved risers and individual treads keep the sixth-generation silhouette.
+  for (let i = 0; i < 12; i++) {
+    const z = -1.72 - i * 0.31;
+    const h = 0.22 * (i + 1);
+    box(5, h / 2, z, 2.55, h, 0.34, wood);
+    box(5, h + 0.025, z, 2.62, 0.05, 0.34, marble);
+    box(5, h * 0.58, z + 0.18, 2.35, 0.065, 0.035, wornGold);
   }
-  box(5, 2.7, -5.8, 3.6, 0.2, 1.2, wood);
+  box(5, 1.32, -5.83, 2.66, 2.64, 1.42, wood);
+  box(5, 2.67, -5.83, 2.7, 0.055, 1.43, marble);
+  for (const x of [3.51, 6.49]) {
+    obstacles.push({ x, z: -3.96, w: 0.16, d: 5.25, height: 3.8 });
+    for (let i = 0; i < 12; i++) {
+      const z = -1.6 - i * 0.31;
+      const h = 0.22 * i;
+      box(x, h + 0.74, z, 0.1, 1.2, 0.1, wood);
+      mesh(new T.SphereGeometry(0.095, 8, 6), trim, x, h + 1.39, z);
+    }
+    const rail = box(x, 1.93, -3.35, 0.15, 0.13, 4.1, wood);
+    rail.rotation.x = 0.38;
+    box(x, 3.59, -5.83, 0.17, 0.14, 1.48, wood);
+  }
+  obstacles.push({ x: 5, z: -6.66, w: 2.95, d: 0.16, height: 3.7 });
+  for (let x = 3.72; x <= 6.28; x += 0.32) {
+    box(x, 3.2, -6.58, 0.085, 1.04, 0.085, wood);
+    mesh(new T.SphereGeometry(0.07, 8, 6), trim, x, 3.73, -6.58);
+  }
+  box(5, 3.75, -6.58, 3.05, 0.13, 0.16, wood);
+  // The landing has an authored focal point: a framed astronomical chart,
+  // layered glass sectors and brass calibration marks above a reading desk.
+  const chartX = 4.35;
+  box(chartX, 3.56, -7.54, 2.25, 1.52, 0.14, wood);
+  box(chartX, 3.56, -7.44, 1.94, 1.25, 0.06, black);
+  const chart = new T.MeshStandardMaterial({
+    color: 0x304454,
+    emissive: 0x172b35,
+    emissiveIntensity: 0.34,
+    roughness: 0.7,
+  });
+  box(chartX, 3.56, -7.395, 1.68, 1.02, 0.025, chart);
+  for (let i = 0; i < 16; i++) {
+    const a = (i / 16) * Math.PI * 2;
+    mesh(
+      new T.SphereGeometry(i % 4 === 0 ? 0.04 : 0.022, 6, 4),
+      i % 4 === 0 ? trim : wornGold,
+      chartX + Math.cos(a) * 0.62,
+      3.56 + Math.sin(a) * 0.4,
+      -7.35,
+    );
+  }
+  const dial = mesh(
+    new T.TorusGeometry(0.43, 0.015, 6, 32),
+    trim,
+    chartX,
+    3.56,
+    -7.34,
+  );
+  dial.scale.y = 0.78;
+  box(chartX, 2.94, -6.12, 1.35, 0.08, 0.48, wood);
+  for (const x of [chartX - 0.53, chartX + 0.53])
+    box(x, 2.78, -6.12, 0.075, 0.34, 0.37, trim);
   // Coffered ceiling beams stay high enough to preserve the authored camera views.
   for (const x of [-5, 0, 5]) box(x, 4.98, 0, 0.25, 0.18, 16, wood);
   for (const z of [-5, 0, 5]) box(0, 4.98, z, 16, 0.18, 0.25, wood);
@@ -177,24 +230,39 @@ export function mansion(obstacles: Obstacle[]) {
   for (const object of [...furnishings().children]) group.add(object);
   // Batch static geometry by material, keeping the character and interactables independent.
   group.updateMatrixWorld(true);
-  const batches = new Map<T.Material, T.BufferGeometry[]>();
+  const batches = new Map<T.Material, Map<string, T.BufferGeometry[]>>();
   for (const child of [...group.children])
     if (child instanceof T.Mesh) {
       const g = child.geometry.clone().applyMatrix4(child.matrixWorld);
-      const entries = batches.get(child.material) ?? [];
+      const signature = `${g.index ? "indexed" : "plain"}:${Object.entries(
+        g.attributes,
+      )
+        .map(
+          ([name, attribute]) =>
+            `${name}-${(attribute as T.BufferAttribute).itemSize}`,
+        )
+        .sort()
+        .join(",")}`;
+      const byShape =
+        batches.get(child.material) ?? new Map<string, T.BufferGeometry[]>();
+      const entries = byShape.get(signature) ?? [];
       entries.push(g);
-      batches.set(child.material, entries);
+      byShape.set(signature, entries);
+      batches.set(child.material, byShape);
       child.geometry.dispose();
       group.remove(child);
     }
-  for (const [material, geometries] of batches) {
-    const g = mergeGeometries(geometries, false);
-    for (const part of geometries) part.dispose();
-    if (g) {
-      const m = new T.Mesh(g, material);
-      m.receiveShadow = true;
-      m.castShadow = true;
-      group.add(m);
+  for (const [material, byShape] of batches) {
+    for (const geometries of byShape.values()) {
+      const merged = mergeGeometries(geometries, false);
+      const output = merged ? [merged] : geometries;
+      if (merged) for (const part of geometries) part.dispose();
+      for (const geometry of output) {
+        const m = new T.Mesh(geometry, material);
+        m.receiveShadow = true;
+        m.castShadow = true;
+        group.add(m);
+      }
     }
   }
   return group;

@@ -8,8 +8,9 @@
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
     "preview": "vite preview --host 0.0.0.0",
-    "test:browser": "node scripts/browser-smoke.mjs && node scripts/browser-systems.mjs",
+    "test:browser": "node scripts/browser-smoke.mjs && node scripts/browser-systems.mjs && node scripts/browser-phase10.mjs",
     "benchmark:phase9": "node scripts/performance-phase9.mjs",
+    "benchmark:phase10": "node scripts/performance-phase10.mjs",
     "format:check": "prettier --check src tests scripts index.html package.json tsconfig.json vite.config.ts",
     "test:launcher": "node scripts/test-launcher.mjs",
     "test:phase1": "node scripts/browser-phase1.mjs && node scripts/browser-gamepad.mjs"

@@ -3,6 +3,7 @@ import type { Obstacle } from "../systems/state";
 export type CameraMode = "classic" | "modern";
 export interface CameraContext {
   mode?: CameraMode;
+  height?: number;
   enemy?: T.Vector3;
   combat?: boolean;
 }
@@ -25,8 +26,15 @@ export class CinematicCamera {
     context: CameraContext = {},
   ) {
     let eye: T.Vector3;
+    const height = room === 0 ? (context.height ?? 0) : 0;
     if (room === 0) {
-      if (z > 1) {
+      if (height > 0.15) {
+        this.zone = z < -5.1 ? "rellano superior" : "escalera Veyr";
+        eye =
+          z < -5.1
+            ? new T.Vector3(5.45, 4.25, -0.35)
+            : new T.Vector3(5.45, 3.65, 0.1);
+      } else if (z > 1) {
         this.zone = "entrada";
         eye = new T.Vector3(6.8, 2.35, 7.25);
       } else if (z > -3.8) {
@@ -54,7 +62,7 @@ export class CinematicCamera {
     if (context.mode === "modern") {
       eye.set(
         T.MathUtils.clamp(x + 2.1, -7.2, 7.2),
-        2.05,
+        height + 2.05,
         T.MathUtils.clamp(z + 3.8, -7.2, 7.2),
       );
     }
@@ -64,7 +72,7 @@ export class CinematicCamera {
       eye.lerp(
         new T.Vector3(
           T.MathUtils.clamp(x + 3.2, -7.2, 7.2),
-          2.15,
+          height + 2.15,
           T.MathUtils.clamp(z + 3.5, -7.2, 7.2),
         ),
         0.45,
@@ -78,7 +86,7 @@ export class CinematicCamera {
       eye.z = Math.min(5.7, z + 1.2);
       this.zone = "entrada histórica";
     }
-    const anchor = new T.Vector3(x, 1.25, z),
+    const anchor = new T.Vector3(x, height + 1.25, z),
       hit = new T.Vector3();
     const resolve = (position: T.Vector3) => {
       const direction = position.clone().sub(anchor),

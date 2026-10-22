@@ -69,7 +69,8 @@ export interface Interactable {
     | "romanPuzzle"
     | "medievalPuzzle"
     | "legacy"
-    | "memoryChoice";
+    | "memoryChoice"
+    | "galleryClue";
   value?: string;
   target?: number;
   rotation?: number;
@@ -507,7 +508,7 @@ export class World {
         0x79b89d,
       );
     }
-    if (room === 0)
+    if (room === 0) {
       this.add(
         {
           id: "mansion-puzzle",
@@ -519,6 +520,17 @@ export class World {
         },
         0xa38d5e,
       );
+      this.add(
+        {
+          id: "gallery-chart",
+          name: "Examinar carta astral del rellano",
+          x: 4.35,
+          z: -6.1,
+          kind: "galleryClue",
+        },
+        0xb6a073,
+      );
+    }
     if (room >= 1 && room <= 3)
       this.add(
         {
@@ -847,16 +859,18 @@ export class World {
   }
   add(o: Interactable, color: number) {
     const m = prop(o.kind, o.id, color);
-    m.position.set(o.x, 0, o.z);
+    m.position.set(o.x, o.kind === "galleryClue" ? 2.64 : 0, o.z);
     if (o.rotation) m.rotation.y = o.rotation;
     this.scene.add(m);
     o.mesh = m;
     this.objects.push(o);
   }
-  nearest(x: number, z: number, radius = 1.9) {
+  nearest(x: number, z: number, radius = 1.9, y = 0) {
     let nearest: Interactable | undefined;
     let best = radius * radius;
     for (const object of this.objects) {
+      if (this.room === 0 && (object.kind === "galleryClue") !== y > 1.4)
+        continue;
       const dx = object.x - x;
       const dz = object.z - z;
       const distance = dx * dx + dz * dz;

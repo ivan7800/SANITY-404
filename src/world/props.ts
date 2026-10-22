@@ -28,6 +28,29 @@ export function prop(kind: string, id: string, color: number) {
     g.add(o);
     return o;
   };
+  if (kind === "galleryClue") {
+    box(0, 0.35, 0, 0.72, 0.09, 0.46, wood);
+    box(0, 0.42, 0, 0.59, 0.025, 0.36, brass);
+    const lens = new T.Mesh(new T.TorusGeometry(0.22, 0.03, 8, 24), brass);
+    lens.rotation.x = 0.42;
+    lens.position.y = 0.67;
+    g.add(lens);
+    const glass = new T.Mesh(
+      new T.CircleGeometry(0.18, 24),
+      new T.MeshStandardMaterial({
+        color: 0x789a98,
+        emissive: 0x173c42,
+        transparent: true,
+        opacity: 0.72,
+        side: T.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    glass.rotation.x = 0.42;
+    glass.position.y = 0.67;
+    g.add(glass);
+    return g;
+  }
   if (kind === "door") {
     box(0, 1.4, 0, 1.9, 2.8, 0.22, wood);
     for (const x of [-0.48, 0.48])
