@@ -48,6 +48,16 @@ Se intentó crear un commit local después de preparar únicamente los siete arc
 
 El inventario completo está en [SKILLS-INVENTARIO.md](SKILLS-INVENTARIO.md). Se leyeron y aplicaron `ecc:change-impact`, `ecc:frontend-design-direction` y `ecc:browser-qa`; se consultó la Skill local `reverse-engineer-anything`. `mcp__rea__binary_session({})` respondió con sesión cerrada y catálogo de proveedores, lo que confirma la conexión real con Codex. La documentación oficial de la Skill indica que REA se omite para analizar un repositorio ordinario con código fuente completo; no se analizó un binario ni se instaló otro motor. No hay bloqueo de REA para esta tarea.
 
+## Reanudación: evidencia del 22 de octubre de 2026
+
+- La ejecución [39830075172](https://github.com/ivan7800/SANITY-404/actions/runs/39830075172) acabó con `verify` aprobado y `browser` cancelado durante `npx playwright install --with-deps chromium`. El registro termina con «The operation was canceled» tras descargar Chromium; Vite y la suite histórica no llegaron a ejecutarse. Este resultado no confirma ni refuta la corrección del portal.
+- La reejecución del trabajo cancelado desde el conector de GitHub fue rechazada por la revisión automática de aprobación de esta sesión. No se modificó la ejecución remota ni la PR #14.
+- El juego se cargó en Chrome DevTools y se observó una escena jugable de 1927 con personaje, enemigo, mobiliario y HUD. Esa observación quedó en la sesión del navegador, sin una captura nueva persistida del acceso romano. El clic directo del navegador MCP fue rechazado y el Playwright local volvió a fallar al lanzar Chrome con `crashpad ... setsockopt: Operation not permitted` y `SIGTRAP`. La inspección visual del portal y del rellano sigue **pendiente**.
+- Se amplió `scripts/browser-historical.mjs` para comprobar también el aviso de la carta astral en el rellano y guardar capturas del portal, del rellano y del estado de fallo. `.github/workflows/verify-pr.yml` conserva esas capturas, errores de consola y el log de Vite como artefacto incluso si falla la suite; el tiempo máximo del trabajo sube a veinte minutos. La ejecución de Actions sobre estos cambios sigue pendiente.
+- `lspci` identifica Intel HD Graphics 620, pero `/dev/dri` no está expuesto y `glxinfo` no puede abrir `:0` desde este proceso. No hay medición física nueva; sigue pendiente la pasada de sesenta segundos de combate 1927 con identificador WebGL físico y peor ventana de 60 intervalos por encima de 45 FPS.
+
+**Puerta de cierre:** mantener la PR como borrador. Para cerrar Fase 10B faltan la ejecución aprobada de `browser`, las dos capturas nuevas revisadas y la medición física posterior al cambio del portal.
+
 ## Reproducción pendiente
 
 En una sesión de Chrome que pueda arrancar, iniciar Vite en `127.0.0.1:5173` y ejecutar `node scripts/browser-historical.mjs`. En 1927, comenzar una partida y caminar al ala oriental hasta `(6.2, 3)`: el aviso debe mostrar la grieta romana desde el suelo; al interactuar debe cargar el santuario de 189. Subir después la escalera hasta el rellano: allí debe mostrarse la carta astral. Capturar ambos estados y revisar el marco de piedra. Para rendimiento, repetir el comando de `FASE10.md` con `--headed --hardware`, comprobar el identificador WebGL físico y comparar la peor ventana de 60 intervalos con el umbral de 45 FPS.

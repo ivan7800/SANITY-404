@@ -19,7 +19,7 @@ jobs:
       - run: npm run build
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,4 +40,14 @@ jobs:
       - name: Browser QA of all three eras
         env:
           SANITY_TEST_URL: http://127.0.0.1:5173
+          SANITY_ARTIFACT_DIR: browser-artifacts
         run: node scripts/browser-historical.mjs
+      - name: Preserve browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-browser-evidence
+          path: |
+            browser-artifacts/
+            /tmp/sanity-vite.log
+          if-no-files-found: warn

@@ -1,6 +1,7 @@
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 const bundledChrome = chromium.executablePath();
 
@@ -28,6 +29,14 @@ const browser = await chromium.launch({
 const page = await browser.newPage({ viewport: { width: 960, height: 640 } });
 const faults = [];
 page.on("pageerror", (error) => faults.push(error.message));
+page.on("console", (message) => {
+  if (message.type() === "error") faults.push(message.text());
+});
+const artifactDir = process.env.SANITY_ARTIFACT_DIR;
+if (artifactDir) mkdirSync(artifactDir, { recursive: true });
+async function capture(name) {
+  if (artifactDir) await page.screenshot({ path: join(artifactDir, name) });
+}
 const url = process.env.SANITY_TEST_URL || "http://127.0.0.1:5173/";
 const inspect = () => page.evaluate(() => window.sanityInspect());
 const fresh = {
@@ -120,9 +129,18 @@ try {
     phase2: { ...fresh.phase2, visited: [0] },
   });
   assert.match(await page.locator("#prompt").innerText(), /grieta romana/);
+  await capture("portal-romano.png");
   await page.keyboard.press("e");
   await page.waitForFunction(() => window.sanityInspect().state.room === 8);
   await checkRoom(8, "Santuario de los nombres", /LUCIUS/);
+  await seed({
+    room: 0,
+    x: 5.8,
+    z: -6,
+    phase2: { ...fresh.phase2, visited: [0] },
+  });
+  assert.match(await page.locator("#prompt").innerText(), /carta astral/);
+  await capture("rellano-astral.png");
   await seed({
     room: 8,
     x: -2.9,
@@ -185,6 +203,18 @@ try {
   assert.ok((await inspect()).state.items.includes("Códice de Montfort"));
   assert.deepEqual(faults, []);
   console.log("PASS historical portals, puzzles, artifacts, save and choice");
+} catch (error) {
+  await capture("fallo-historico.png").catch(() => {});
+  throw error;
 } finally {
+  if (artifactDir)
+    writeFileSync(
+      join(artifactDir, "diagnostico.json"),
+      JSON.stringify(
+        { url, faults, browserVersion: browser.version() },
+        null,
+        2,
+      ),
+    );
   await browser.close();
 }
