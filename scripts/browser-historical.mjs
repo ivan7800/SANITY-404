@@ -115,8 +115,8 @@ try {
 
   await seed({
     room: 0,
-    x: 5.8,
-    z: -6,
+    x: 6.2,
+    z: 3,
     phase2: { ...fresh.phase2, visited: [0] },
   });
   assert.match(await page.locator("#prompt").innerText(), /grieta romana/);

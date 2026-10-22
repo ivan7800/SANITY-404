@@ -154,6 +154,18 @@ export function mansion(obstacles: Obstacle[]) {
   box(chartX, 2.94, -6.12, 1.35, 0.08, 0.48, wood);
   for (const x of [chartX - 0.53, chartX + 0.53])
     box(x, 2.78, -6.12, 0.075, 0.34, 0.37, trim);
+  // The Roman fissure opens in a ground-floor bay, clear of the stair. The
+  // carved stone surround stands in front of the east pilaster so it reads
+  // from the room rather than disappearing behind that structural column.
+  for (const z of [2.02, 3.98]) {
+    box(6.48, 1.35, z, 0.22, 2.7, 0.26, marble);
+    box(6.4, 0.24, z, 0.38, 0.48, 0.36, plaster);
+    box(6.4, 2.66, z, 0.35, 0.16, 0.38, trim);
+  }
+  box(6.48, 2.82, 3, 0.25, 0.18, 2.1, marble);
+  box(6.42, 3.04, 3, 0.2, 0.3, 0.55, plaster);
+  for (const z of [2.38, 2.69, 3, 3.31, 3.62])
+    box(6.39, 0.06, z, 0.82, 0.11, 0.025, wornGold);
   // Coffered ceiling beams stay high enough to preserve the authored camera views.
   for (const x of [-5, 0, 5]) box(x, 4.98, 0, 0.25, 0.18, 16, wood);
   for (const z of [-5, 0, 5]) box(0, 4.98, z, 16, 0.18, 0.25, wood);

@@ -347,10 +347,11 @@ export class World {
         {
           id: "roman-portal",
           name: "Atravesar la grieta romana · año 189",
-          x: 5.8,
-          z: -5.2,
+          x: 6.2,
+          z: 3,
           kind: "door",
           target: 8,
+          rotation: Math.PI / 2,
         },
         0x9b8050,
       );
