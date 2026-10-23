@@ -83,7 +83,7 @@ it("encuadra el acceso romano y separa la carta de la silueta de Élise", () => 
   expect(director.zone).toBe("rellano superior");
   expect(director.corrected).toBe(false);
   camera.updateMatrixWorld();
-  const chart = new T.Vector3(4.35, 3.56, -7.34).project(camera);
+  const chart = new T.Vector3(3.98, 3.56, -5.55).project(camera);
   const elise = new T.Vector3(5.8, 3.89, -6).project(camera);
   expect(Math.abs(chart.x)).toBeLessThan(0.75);
   expect(Math.abs(chart.y)).toBeLessThan(0.7);

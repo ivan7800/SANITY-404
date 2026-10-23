@@ -129,52 +129,62 @@ export function mansion(obstacles: Obstacle[]) {
     mesh(new T.SphereGeometry(0.07, 8, 6), trim, x, 3.73, -6.58);
   }
   box(5, 3.75, -6.58, 3.05, 0.13, 0.16, wood);
-  // The landing has an authored focal point: a framed astronomical chart,
-  // layered glass sectors and brass calibration marks above a reading desk.
-  const chartX = 4.35;
-  box(chartX, 3.56, -7.54, 2.5, 1.76, 0.14, wood);
-  box(chartX, 3.56, -7.44, 2.18, 1.48, 0.06, wornGold);
+  // The chart is mounted on the inside face of the side balustrade. The
+  // previous north-wall mount put the rear balusters across its drawing.
+  const chartX = 3.78;
+  const chartZ = -5.55;
+  const chartPanel = (
+    x: number,
+    y: number,
+    u: number,
+    thickness: number,
+    height: number,
+    width: number,
+    material: T.Material,
+  ) => box(x, y, chartZ + u, thickness, height, width, material);
+  chartPanel(chartX, 3.56, 0, 0.14, 1.76, 2.5, wood);
+  chartPanel(chartX + 0.11, 3.56, 0, 0.06, 1.48, 2.18, wornGold);
   const chart = new T.MeshStandardMaterial({
     color: 0x677e84,
     emissive: 0x365662,
     emissiveIntensity: 0.56,
     roughness: 0.7,
   });
-  box(chartX, 3.56, -7.395, 1.91, 1.27, 0.025, chart);
+  chartPanel(chartX + 0.165, 3.56, 0, 0.025, 1.27, 1.91, chart);
   for (let i = 0; i < 16; i++) {
     const a = (i / 16) * Math.PI * 2;
     mesh(
       new T.SphereGeometry(i % 4 === 0 ? 0.04 : 0.022, 6, 4),
       i % 4 === 0 ? trim : wornGold,
-      chartX + Math.cos(a) * 0.76,
+      chartX + 0.19,
       3.56 + Math.sin(a) * 0.48,
-      -7.35,
+      chartZ + Math.cos(a) * 0.76,
     );
   }
   const dial = mesh(
     new T.TorusGeometry(0.52, 0.018, 6, 32),
     trim,
-    chartX,
+    chartX + 0.2,
     3.56,
-    -7.34,
+    chartZ,
   );
+  dial.rotation.y = Math.PI / 2;
   dial.scale.y = 0.78;
   for (let i = 0; i < 8; i++) {
     const a = (i / 8) * Math.PI * 2;
     const mark = box(
-      chartX + Math.cos(a) * 0.36,
+      chartX + 0.225,
       3.56 + Math.sin(a) * 0.29,
-      -7.313,
-      0.26,
-      0.022,
+      chartZ + Math.cos(a) * 0.36,
       0.018,
+      0.022,
+      0.26,
       i % 2 ? trim : wornGold,
     );
-    mark.rotation.z = a;
+    mark.rotation.x = a;
   }
-  box(chartX, 2.94, -6.12, 1.35, 0.08, 0.48, wood);
-  for (const x of [chartX - 0.53, chartX + 0.53])
-    box(x, 2.78, -6.12, 0.075, 0.34, 0.37, trim);
+  box(4.35, 2.94, -6.12, 1.35, 0.08, 0.48, wood);
+  for (const x of [3.82, 4.88]) box(x, 2.78, -6.12, 0.075, 0.34, 0.37, trim);
   // The Roman fissure opens in a ground-floor bay, clear of the stair. The
   // carved stone surround stands in front of the east pilaster so it reads
   // from the room rather than disappearing behind that structural column.
