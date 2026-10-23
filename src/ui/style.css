@@ -68,6 +68,15 @@ header {
 .chapter {
   text-align: right;
 }
+.objective {
+  max-width: 360px;
+  margin-top: 8px;
+  color: #e2d0a4;
+  font:
+    12px/1.4 system-ui,
+    sans-serif;
+  text-shadow: 0 1px 3px #000;
+}
 .eyebrow {
   font:
     10px/1.6 system-ui,

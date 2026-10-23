@@ -41,6 +41,10 @@ export function furnishings() {
   for (const side of [-1, 1])
     for (let z = -6; z <= 6; z += 2) {
       for (const edge of [-1, 1]) {
+        // The two inner folds of the east bay hid the Roman doorway. The
+        // outer folds remain as tied-back drapes on either side of the arch.
+        if (side === 1 && ((z === 2 && edge === 1) || (z === 4 && edge === -1)))
+          continue;
         const vertices: number[] = [],
           uv: number[] = [],
           indices: number[] = [];

@@ -1,4 +1,5 @@
 import * as T from "three";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import type { State } from "./state";
 import { character, type World } from "../world/scene";
 
@@ -233,6 +234,45 @@ export class Sanity {
     this.director = new PsychologicalDirector(entryTime);
     this.initialLights = world.lights.map((light) => light.intensity);
     this.apparition = character(true);
+    // The hallucination keeps one pose. Bake joint transforms once and merge
+    // meshes that share a material; its silhouette and surface stay identical.
+    const materials = new Map<T.Material, T.Mesh[]>();
+    this.apparition.updateMatrixWorld(true);
+    this.apparition.traverse((object) => {
+      if (!(object instanceof T.Mesh) || !object.visible) return;
+      const material = object.material as T.Material;
+      const meshes = materials.get(material) ?? [];
+      meshes.push(object);
+      materials.set(material, meshes);
+    });
+    const baked = new T.Group();
+    baked.name = this.apparition.name;
+    for (const [material, meshes] of materials) {
+      const parts = meshes.map((mesh) =>
+        mesh.geometry.clone().applyMatrix4(mesh.matrixWorld),
+      );
+      const geometry = mergeGeometries(parts);
+      if (geometry) {
+        for (const part of parts) part.dispose();
+        const mesh = new T.Mesh(geometry, material);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        baked.add(mesh);
+      } else {
+        for (const part of parts) {
+          const mesh = new T.Mesh(part, material);
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          baked.add(mesh);
+        }
+      }
+    }
+    const oldGeometries = new Set<T.BufferGeometry>();
+    this.apparition.traverse((object) => {
+      if (object instanceof T.Mesh) oldGeometries.add(object.geometry);
+    });
+    for (const geometry of oldGeometries) geometry.dispose();
+    this.apparition = baked;
     this.apparition.visible = false;
     world.scene.add(this.apparition);
     this.book = new T.Mesh(
@@ -333,7 +373,8 @@ export class Sanity {
     }
     const active =
       !options.reduced && state.elapsed < this.until ? this.activeId : "";
-    world.lights.forEach((light, i) => {
+    for (let i = 0; i < world.lights.length; i++) {
+      const light = world.lights[i];
       const base = this.initialLights[i];
       const wave =
         options.reduceFlashes || options.reduced
@@ -344,7 +385,7 @@ export class Sanity {
           ? Math.sin(state.elapsed * 2.2) * 0.13
           : 0;
       light.intensity = base * (1 + wave + breathing);
-    });
+    }
     if (this.eraGlyph)
       (this.eraGlyph.material as T.MeshStandardMaterial).emissiveIntensity =
         this.glyphIntensity +
@@ -353,16 +394,15 @@ export class Sanity {
             ? 0.12
             : 0.25 + Math.sin(state.elapsed * 1.2) * 0.08
           : 0);
-    this.apparition.visible = [
-      "glass-double",
-      "silent-choir",
-      "unknown-penitent",
-      "roman-witness",
-      "abbey-visitor",
-      "ink-apparition",
-      "mansion-echo",
-      "mansion-reflection",
-    ].includes(active);
+    this.apparition.visible =
+      active === "glass-double" ||
+      active === "silent-choir" ||
+      active === "unknown-penitent" ||
+      active === "roman-witness" ||
+      active === "abbey-visitor" ||
+      active === "ink-apparition" ||
+      active === "mansion-echo" ||
+      active === "mansion-reflection";
     if (this.apparition.visible)
       this.apparition.position.set(
         T.MathUtils.clamp(
@@ -373,11 +413,10 @@ export class Sanity {
         0,
         T.MathUtils.clamp(state.z - 2.8, -6.5, 6.5),
       );
-    this.book.visible = [
-      "hushed-index",
-      "levitating-book",
-      "scriptorium-margin",
-    ].includes(active);
+    this.book.visible =
+      active === "hushed-index" ||
+      active === "levitating-book" ||
+      active === "scriptorium-margin";
     if (this.book.visible) {
       this.book.position.set(
         -3,
@@ -386,11 +425,10 @@ export class Sanity {
       );
       this.book.rotation.y = state.elapsed * 0.7;
     }
-    this.falseDoor.visible = [
-      "missing-door",
-      "lengthened-aisle",
-      "roman-false-exit",
-    ].includes(active);
+    this.falseDoor.visible =
+      active === "missing-door" ||
+      active === "lengthened-aisle" ||
+      active === "roman-false-exit";
     if (this.falseDoor.visible) {
       this.falseDoor.position.set(
         0,
@@ -403,11 +441,10 @@ export class Sanity {
         active === "lengthened-aisle" && !options.reduceDistortion ? 1.15 : 1,
       );
     }
-    this.shadow.visible = [
-      "second-footsteps",
-      "shadow-without-body",
-      "abbey-bell",
-    ].includes(active);
+    this.shadow.visible =
+      active === "second-footsteps" ||
+      active === "shadow-without-body" ||
+      active === "abbey-bell";
     if (this.shadow.visible)
       this.shadow.position.set(
         T.MathUtils.clamp(state.x + Math.sin(state.elapsed * 2) * 1.5, -6, 6),

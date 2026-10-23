@@ -11,7 +11,7 @@ export class GpuTimer {
   }
   begin() {
     const { gl, ext } = this;
-    if (!ext) return;
+    if (!ext || gl.isContextLost()) return;
     while (this.pending.length) {
       const oldest = this.pending[0];
       if (!gl.getQueryParameter(oldest, gl.QUERY_RESULT_AVAILABLE)) break;
@@ -29,13 +29,22 @@ export class GpuTimer {
     this.active = query;
   }
   end() {
-    if (!this.active || !this.ext) return;
+    if (!this.active || !this.ext || this.gl.isContextLost()) return;
     this.gl.endQuery(this.ext.TIME_ELAPSED_EXT);
     this.pending.push(this.active);
     this.active = null;
   }
   reset() {
     this.times = [];
+  }
+  contextLost() {
+    this.active = null;
+    this.pending = [];
+    this.ext = null;
+    this.reset();
+  }
+  contextRestored() {
+    this.ext = this.gl.getExtension("EXT_disjoint_timer_query_webgl2");
   }
   snapshot() {
     const sorted = [...this.times].sort((a, b) => a - b);

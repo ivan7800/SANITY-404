@@ -8,6 +8,7 @@ import { CinematicCamera } from "./engine/camera";
 import { animateCharacter, animateDeath } from "./world/character";
 import { luciusVarro } from "./world/lucius";
 import { isabelleDeMontfort } from "./world/isabelle";
+import { mansionFloorHeight } from "./world/mansion";
 import { createEnemy, enemyKindForRoom } from "./world/enemies";
 import { Input } from "./engine/input";
 import {
@@ -38,10 +39,16 @@ import {
 import { Combat } from "./systems/combat";
 import { Sanity } from "./systems/sanity";
 import { drinkTonic } from "./systems/inventory";
+import {
+  chapters,
+  completeChapter,
+  romanObjective,
+  visitChapter,
+} from "./systems/campaign";
 import { readSettings } from "./systems/config";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
 const el = (id: string) => document.getElementById(id)!;
 const hud = {
   health: el("health"),
@@ -51,6 +58,7 @@ const hud = {
   sptext: el("sptext"),
   sttext: el("sttext"),
   veil: el("veil"),
+  hitFeedback: el("hit-feedback"),
 };
 function setHudText(element: HTMLElement, value: string) {
   if (element.textContent !== value) element.textContent = value;
@@ -134,6 +142,8 @@ function resume() {
 function loadRoom() {
   if (!state.phase2.visited.includes(state.room))
     state.phase2.visited.push(state.room);
+  if (state.room === 8) visitChapter(state.campaign, "roman-189");
+  if (state.room >= 9) visitChapter(state.campaign, "abbey-1348");
   terror?.restore();
   world?.dispose();
   world = new World(
@@ -151,7 +161,11 @@ function loadRoom() {
       : state.room >= 9
         ? isabelleDeMontfort()
         : character();
-  player.position.set(state.x, 0, state.z);
+  player.position.set(
+    state.x,
+    state.room === 0 ? mansionFloorHeight(state.x, state.z) : 0,
+    state.z,
+  );
   world.scene.add(player);
   enemy = createEnemy(enemyKindForRoom(state.room));
   const [enemyX, enemyZ] = enemySpawn(world.obstacles);
@@ -206,6 +220,7 @@ function loadRoom() {
         ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
         : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
+  el("objective").textContent = state.room === 8 ? romanObjective(state) : "";
   cinematic.update(
     camera,
     state.x,
@@ -214,7 +229,7 @@ function loadRoom() {
     0,
     settings.reduced,
     world.obstacles,
-    { mode: settings.cameraMode },
+    { mode: settings.cameraMode, height: player.position.y },
   );
 }
 function begin(s: State) {
@@ -231,7 +246,7 @@ function begin(s: State) {
 
 function menu() {
   panel(
-    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Once lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña de horror cósmico · auriculares recomendados<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
+    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Once lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña histórica en desarrollo · piloto romano accesible desde el vestíbulo<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
   );
   button("new", () => {
     if (started) {
@@ -293,7 +308,14 @@ function options() {
 }
 function inventory() {
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Doce capítulos conectados en diseño; ${state.campaign.completed.length} concluidos en esta partida. ${state.room === 8 ? romanObjective(state) : "El santuario romano se alcanza desde el vestíbulo."}</p><p>${
+      chapters
+        .filter((chapter) => state.campaign.completed.includes(chapter.id))
+        .map(
+          (chapter) => `${chapter.year} · ${chapter.hero} · ${chapter.place}`,
+        )
+        .join("<br>") || "Aún no has concluido un capítulo."
+    }</p><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
   );
   button("close", resume);
   button("heal", () => {
@@ -341,6 +363,13 @@ function phase2Puzzle(id: PuzzleId) {
 }
 function interact(o: Interactable) {
   audio.tone(260);
+  if (o.kind === "galleryClue") {
+    panel(
+      '<div class="eyebrow">GALERÍA VEYR · 1927</div><h2>La bóveda de las cenizas</h2><p>Adrien marcó una estrella apagada sobre el lente. Debajo escribió: «Lo que arde no desaparece. Deja una palabra en la caja astronómica».</p><p>La carta del vestíbulo y este mapa apuntan al mismo recuerdo.</p><button id="close">Volver al rellano</button>',
+    );
+    button("close", resume);
+    return;
+  }
   if (o.kind === "memoryChoice") {
     const chosen = memoryConsequence(state);
     if (chosen) {
@@ -497,7 +526,20 @@ function interact(o: Interactable) {
     panel(
       `<div class="eyebrow">DOCUMENTO ${state.room + 1} / ${notes.length}</div><h2>${notes[state.room][0]}</h2><p>${notes[state.room][1]}</p><button id="close">Guardar en el diario</button>`,
     );
-    button("close", resume);
+    button("close", () => {
+      resume();
+      if (
+        state.room === 8 &&
+        !state.campaign.witnessed.includes("roman-formation")
+      ) {
+        state.campaign.witnessed.push("roman-formation");
+        state.sanity = clamp(state.sanity - 8);
+        toast(
+          "Una formación de soldados cruza el santuario sin dejar huellas. Pierdes 8 de cordura.",
+        );
+        audio.tone(75, 0.8, "sawtooth");
+      }
+    });
   }
   if (o.kind === "save") {
     toast(
@@ -520,6 +562,28 @@ function interact(o: Interactable) {
     const phase2Lock = phase2DoorLocked(o.id, state.phase2);
     if (phase2Lock) {
       toast(phase2Lock);
+      return;
+    }
+    if (
+      o.id === "roman-return" &&
+      !state.campaign.completed.includes("roman-189")
+    ) {
+      if (romanObjective(state).startsWith("Regresa")) {
+        completeChapter(state.campaign, "roman-189");
+        writeSave(state);
+        panel(
+          '<div class="eyebrow">ROMA · 189 D. C. · CAPÍTULO CONCLUIDO</div><h2>El primer testigo</h2><p>Lucius deja la tablilla bajo la piedra. El nombre de Élise, aún imposible, permanece grabado junto al suyo. La formación sin rostro se disuelve cuando él cruza el arco. Su prueba espera ahora a quien pueda leerla en 1927.</p><p>La tablilla y el signo quedan conservados en esta partida.</p><button id="close">Regresar a la mansión</button>',
+        );
+        button("close", () => {
+          state.room = 0;
+          state.x = 0;
+          state.z = -4.2;
+          loadRoom();
+          writeSave(state);
+          resume();
+          toast("1927 · La tablilla ha sobrevivido al Intervalo.");
+        });
+      } else toast(romanObjective(state));
       return;
     }
     if (
@@ -655,6 +719,11 @@ function interact(o: Interactable) {
 }
 function update(dt: number) {
   const c = input.poll();
+  if (state.room === 8) {
+    const objective = romanObjective(state);
+    if (el("objective").textContent !== objective)
+      el("objective").textContent = objective;
+  }
   if (input.take("Escape")) {
     menu();
     return;
@@ -704,15 +773,23 @@ function update(dt: number) {
   const p = move(state.x, state.z, dx, dz, world.obstacles);
   state.x = p.x;
   state.z = p.z;
-  player.position.set(p.x, 0, p.z);
+  player.position.set(
+    p.x,
+    state.room === 0 ? mansionFloorHeight(p.x, p.z) : 0,
+    p.z,
+  );
   if (len > 0.1) {
     player.rotation.y = Math.atan2(dx, dz);
     if (state.elapsed - audio.lastStep > 0.43) {
-      audio.step(state.room, c.run);
+      audio.step(
+        state.room,
+        c.run,
+        state.room === 0 && player.position.y > 0.05,
+      );
       audio.lastStep = state.elapsed;
     }
   }
-  contact[0].position.copy(player.position).setY(0.025);
+  contact[0].position.copy(player.position).setY(player.position.y + 0.025);
   contact[1].position.copy(enemy.position).setY(0.025);
   threat.position.copy(enemy.position).setY(0.035);
   threat.visible =
@@ -753,10 +830,12 @@ function update(dt: number) {
     animateDeath(corpse, corpseTime / 0.8);
     world.shadowBudget.mark(corpseTime < 1);
   }
-  el("hit-feedback").style.opacity = String(
-    combat.hurt > 0 ? (combat.guarding ? 0.18 : 0.36) : 0,
+  setHudStyle(
+    hud.hitFeedback,
+    "opacity",
+    String(combat.hurt > 0 ? (combat.guarding ? 0.18 : 0.36) : 0),
   );
-  el("hit-feedback").classList.toggle("blocked", combat.guarding);
+  hud.hitFeedback.classList.toggle("blocked", combat.guarding);
   audio.ambient(state.elapsed, state.sanity);
   terror.update(dt, player, enemy, combat, audio, settings, state.elapsed);
   animateCharacter(
@@ -795,13 +874,19 @@ function update(dt: number) {
     world.obstacles,
     {
       mode: settings.cameraMode,
+      height: player.position.y,
       enemy: enemy.position,
       combat: enemy.visible && enemy.position.distanceTo(player.position) < 2.8,
     },
   );
-  near = world.nearest(state.x, state.z);
+  near = world.nearest(state.x, state.z, 1.9, player.position.y);
   world.highlight.visible = Boolean(near);
-  if (near) world.highlight.position.set(near.x, 0.075, near.z);
+  if (near)
+    world.highlight.position.set(
+      near.x,
+      near.kind === "galleryClue" ? 2.715 : 0.075,
+      near.z,
+    );
   world.atmosphere.update(dt, state.elapsed, settings.reduced);
   const prompt = el("prompt");
   const promptText = near ? "E / A · " + near.name : "";
@@ -889,6 +974,19 @@ addEventListener("blur", () => {
   if (started && !paused) menu();
 });
 addEventListener("pagehide", () => audio.dispose());
+renderer.domElement.addEventListener("webglcontextlost", () => {
+  gpuTimer?.contextLost();
+  if (started)
+    panel(
+      "<h2>Gráficos interrumpidos</h2><p>Esperando a que se recupere la GPU.</p>",
+    );
+});
+renderer.domElement.addEventListener("webglcontextrestored", () => {
+  gpuTimer?.contextRestored();
+  applyQuality(renderer, settings.quality);
+  world.shadowLight.shadow.needsUpdate = true;
+  if (started) menu();
+});
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && started && !paused) menu();
 });
@@ -930,6 +1028,7 @@ export function inspect() {
     memory: renderer.info.memory,
     textures: textureBudget(),
     playerRig: Boolean(player.userData.rig),
+    playerY: player.position.y,
     limbPose: player.userData.rig?.leftLeg.rotation.x,
     enemy: { position: enemy.position.toArray(), visible: enemy.visible },
     draw: renderer.info.render,
@@ -943,6 +1042,40 @@ export function inspect() {
 }
 // Read-only browser test observer. Vite removes this branch from production.
 if (import.meta.env.DEV) {
+  // The benchmark reads this every display frame. Keep it allocation-free so
+  // measurement cannot trigger the cloning and sorting in inspect().
+  const benchmarkState = {
+    paused: true,
+    room: 0,
+    x: 0,
+    z: 0,
+    health: 0,
+    elapsed: 0,
+    enemyX: 0,
+    enemyZ: 0,
+    enemyVisible: false,
+    aiState: "",
+    eventCount: 0,
+    eventId: "",
+  };
+  Object.defineProperty(window, "sanityBenchmarkState", {
+    value: () => {
+      benchmarkState.paused = paused;
+      benchmarkState.room = state.room;
+      benchmarkState.x = state.x;
+      benchmarkState.z = state.z;
+      benchmarkState.health = state.health;
+      benchmarkState.elapsed = state.elapsed;
+      benchmarkState.enemyX = enemy.position.x;
+      benchmarkState.enemyZ = enemy.position.z;
+      benchmarkState.enemyVisible = enemy.visible;
+      benchmarkState.aiState = combat.aiState;
+      benchmarkState.eventCount = sanity.eventCount;
+      benchmarkState.eventId = sanity.activeId;
+      return benchmarkState;
+    },
+    configurable: true,
+  });
   Object.defineProperty(window, "sanityInspect", {
     value: inspect,
     configurable: true,

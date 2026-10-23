@@ -69,7 +69,8 @@ export interface Interactable {
     | "romanPuzzle"
     | "medievalPuzzle"
     | "legacy"
-    | "memoryChoice";
+    | "memoryChoice"
+    | "galleryClue";
   value?: string;
   target?: number;
   rotation?: number;
@@ -190,11 +191,14 @@ export class World {
     );
     for (const x of [-6.8, 6.8])
       for (const z of [-5, 3]) {
-        this.box(x, 1.6, z, 0.4, 3.2, 0.4, 0x666654);
+        // The east pier at z=3 stood directly in front of the Roman threshold.
+        // Keep its structural rhythm by moving this one pier behind the bay.
+        const pierZ = room === 0 && x > 0 && z === 3 ? 0.7 : z;
+        this.box(x, 1.6, pierZ, 0.4, 3.2, 0.4, 0x666654);
         this.lamp(
           x,
           3.1,
-          z,
+          pierZ,
           0xffbd80,
           7,
           quality !== 1 || (room !== 3 && room !== 6 && z < 0),
@@ -346,10 +350,11 @@ export class World {
         {
           id: "roman-portal",
           name: "Atravesar la grieta romana · año 189",
-          x: 5.8,
-          z: -5.2,
+          x: 6.2,
+          z: 3,
           kind: "door",
           target: 8,
+          rotation: Math.PI / 2,
         },
         0x9b8050,
       );
@@ -507,7 +512,7 @@ export class World {
         0x79b89d,
       );
     }
-    if (room === 0)
+    if (room === 0) {
       this.add(
         {
           id: "mansion-puzzle",
@@ -519,6 +524,17 @@ export class World {
         },
         0xa38d5e,
       );
+      this.add(
+        {
+          id: "gallery-chart",
+          name: "Examinar carta astral del rellano",
+          x: 4.35,
+          z: -6.1,
+          kind: "galleryClue",
+        },
+        0xb6a073,
+      );
+    }
     if (room >= 1 && room <= 3)
       this.add(
         {
@@ -847,16 +863,18 @@ export class World {
   }
   add(o: Interactable, color: number) {
     const m = prop(o.kind, o.id, color);
-    m.position.set(o.x, 0, o.z);
+    m.position.set(o.x, o.kind === "galleryClue" ? 2.64 : 0, o.z);
     if (o.rotation) m.rotation.y = o.rotation;
     this.scene.add(m);
     o.mesh = m;
     this.objects.push(o);
   }
-  nearest(x: number, z: number, radius = 1.9) {
+  nearest(x: number, z: number, radius = 1.9, y = 0) {
     let nearest: Interactable | undefined;
     let best = radius * radius;
     for (const object of this.objects) {
+      if (this.room === 0 && (object.kind === "galleryClue") !== y > 1.4)
+        continue;
       const dx = object.x - x;
       const dz = object.z - z;
       const distance = dx * dx + dz * dz;

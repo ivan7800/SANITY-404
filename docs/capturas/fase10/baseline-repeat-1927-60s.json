@@ -1,0 +1,387 @@
+{
+  "date": "2026-10-22T16:57:38.423Z",
+  "url": "http://127.0.0.1:5180/",
+  "requestedSecondsPerScenario": 60,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "1927:psychological",
+  "results": [
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "psychological",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "spikes": [
+        {
+          "atSeconds": 2.9754999999998137,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 8.173399999999814,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 12.305099999999813,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 21.967899999999812,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 25.583199999999817,
+          "durationMs": 33.30000000000291
+        },
+        {
+          "atSeconds": 27.715699999999813,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 29.66489999999981,
+          "durationMs": 33.39999999999782
+        },
+        {
+          "atSeconds": 29.764799999999813,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 30.297899999999814,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 30.347999999999814,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 30.514499999999813,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 59.419699999999814,
+          "durationMs": 33.30000000000291
+        },
+        {
+          "atSeconds": 59.90289999999981,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 59.95279999999981,
+          "durationMs": 33.30000000000291
+        },
+        {
+          "atSeconds": 60.01939999999981,
+          "durationMs": 33.299999999995634
+        }
+      ],
+      "events": [
+        {
+          "atSeconds": 7.606999999999815,
+          "id": "mansion-echo"
+        }
+      ],
+      "longTasks": [],
+      "telemetry": [
+        {
+          "atSeconds": 5.0079999999998135,
+          "frame": {
+            "samples": 312,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 16.799999999999727,
+            "renderMedianMs": 4.399999999906868,
+            "renderP95Ms": 9,
+            "averageFps": 56.06972773834128
+          },
+          "gpu": {
+            "available": true,
+            "samples": 322,
+            "medianMs": 7.46225,
+            "p95Ms": 11.435833
+          },
+          "calls": 86,
+          "heapBytes": 18226787
+        },
+        {
+          "atSeconds": 10.005999999999814,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 4.300000000279397,
+            "renderP95Ms": 8.899999999906868,
+            "averageFps": 59.82471358918368
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.9145,
+            "p95Ms": 11.476083
+          },
+          "calls": 109,
+          "heapBytes": 18774287
+        },
+        {
+          "atSeconds": 15.003999999999815,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 4.199999999720603,
+            "renderP95Ms": 7.600000000093132,
+            "averageFps": 59.82411709573853
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.786083,
+            "p95Ms": 11.521083
+          },
+          "calls": 86,
+          "heapBytes": 30854437
+        },
+        {
+          "atSeconds": 20.001999999999814,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.8999999999068677,
+            "renderP95Ms": 6.899999999906868,
+            "averageFps": 59.92389665125291
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.462916,
+            "p95Ms": 11.50175
+          },
+          "calls": 86,
+          "heapBytes": 28967383
+        },
+        {
+          "atSeconds": 25.00009999999981,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.8000000002793968,
+            "renderP95Ms": 6.600000000093132,
+            "averageFps": 59.92389665125291
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.994749,
+            "p95Ms": 11.493083
+          },
+          "calls": 86,
+          "heapBytes": 26723903
+        },
+        {
+          "atSeconds": 30.014699999999817,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 4,
+            "renderP95Ms": 7,
+            "averageFps": 59.527352818620145
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 8.430499,
+            "p95Ms": 11.4715
+          },
+          "calls": 86,
+          "heapBytes": 24226497
+        },
+        {
+          "atSeconds": 35.012799999999814,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.799999999995634,
+            "renderMedianMs": 3.7999999998137355,
+            "renderP95Ms": 7.699999999720603,
+            "averageFps": 59.331335845026544
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 9.89325,
+            "p95Ms": 11.49625
+          },
+          "calls": 86,
+          "heapBytes": 24891770
+        },
+        {
+          "atSeconds": 40.010699999999815,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 7.2999999998137355,
+            "averageFps": 59.725858310355456
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.610333,
+            "p95Ms": 11.438083
+          },
+          "calls": 86,
+          "heapBytes": 22524362
+        },
+        {
+          "atSeconds": 45.008799999999816,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.300000000745058,
+            "renderP95Ms": 6.599999999627471,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.7955,
+            "p95Ms": 11.381916
+          },
+          "calls": 86,
+          "heapBytes": 20139152
+        },
+        {
+          "atSeconds": 50.00669999999982,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 6.6000000005587935,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.56475,
+            "p95Ms": 11.37575
+          },
+          "calls": 86,
+          "heapBytes": 25425739
+        },
+        {
+          "atSeconds": 55.00479999999981,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.7000000001862645,
+            "renderP95Ms": 7,
+            "averageFps": 60.024009603841534
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.366666,
+            "p95Ms": 11.32
+          },
+          "calls": 86,
+          "heapBytes": 23029102
+        },
+        {
+          "atSeconds": 60.01939999999981,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999709,
+            "frameP95Ms": 16.700000000004366,
+            "renderMedianMs": 3.800000000745058,
+            "renderP95Ms": 7.2999999998137355,
+            "averageFps": 59.62673662870432
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 7.40925,
+            "p95Ms": 11.30625
+          },
+          "calls": 86,
+          "heapBytes": 20446913
+        }
+      ],
+      "inspectionMs": 28.399999996181577,
+      "expectedGameSeconds": 60.0261,
+      "elapsedSeconds": 60.03519999999972,
+      "gameElapsedSeconds": 60.04270000000114,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 1,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 86,
+      "triangles": 49716,
+      "gpuResources": {
+        "geometries": 109,
+        "textures": 14
+      },
+      "gpuTiming": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 7.40925,
+        "p95Ms": 11.30625
+      },
+      "cpuTiming": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999709,
+        "frameP95Ms": 16.700000000004366,
+        "renderMedianMs": 3.800000000745058,
+        "renderP95Ms": 7.2999999998137355,
+        "averageFps": 59.62673662870432
+      },
+      "jsHeapBytes": 20446913,
+      "frames": 3588,
+      "averageFps": 59.773998310737866,
+      "minimumObservedFps": 29.94011976047774,
+      "minimumRolling60Fps": 55.40166204986149,
+      "frameP50Ms": 16.69999999999709,
+      "frameP95Ms": 16.700000000004366,
+      "frameP99Ms": 16.80000000000291,
+      "worstWindow": {
+        "fps": 55.40166204986149,
+        "startFrame": 1763,
+        "endFrame": 1822,
+        "startSeconds": 29.4716,
+        "endSeconds": 30.554599999999997,
+        "durationMs": 1083,
+        "missedVsyncs": 5,
+        "largestIntervalMs": 33.400000000001455
+      },
+      "performancePass": true,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}
