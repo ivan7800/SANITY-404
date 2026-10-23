@@ -1,6 +1,7 @@
 import { newPhase2, validPhase2, type Phase2Progress } from "./phase2";
+import { newCampaign, validCampaign, type CampaignProgress } from "./campaign";
 export interface State {
-  version: 1;
+  version: 2;
   room: number;
   x: number;
   z: number;
@@ -14,9 +15,10 @@ export interface State {
   elapsed: number;
   ended: boolean;
   phase2: Phase2Progress;
+  campaign: CampaignProgress;
 }
 export const fresh = (): State => ({
-  version: 1,
+  version: 2,
   room: 0,
   x: 0,
   z: 5,
@@ -30,6 +32,7 @@ export const fresh = (): State => ({
   elapsed: 0,
   ended: false,
   phase2: newPhase2(),
+  campaign: newCampaign(),
 });
 export const clamp = (n: number, min = 0, max = 100) =>
   Math.max(min, Math.min(max, n));
@@ -70,7 +73,7 @@ export function parseSave(raw: string): State | null {
   try {
     const s = JSON.parse(raw);
     if (
-      s.version !== 1 ||
+      (s.version !== 1 && s.version !== 2) ||
       !Number.isInteger(s.room) ||
       s.room < 0 ||
       s.room > 10 ||
@@ -137,6 +140,14 @@ export function parseSave(raw: string): State | null {
       s.phase2 = newPhase2();
       if (!s.phase2.visited.includes(s.room)) s.phase2.visited.push(s.room);
     } else if (!validPhase2(s.phase2)) return null;
+    if (s.version === 1) {
+      s.campaign = newCampaign();
+      if (s.room === 8 || s.phase2.visited.includes(8))
+        s.campaign.visited.push("roman-189");
+      if (s.room >= 9 || s.phase2.visited.some((room: number) => room >= 9))
+        s.campaign.visited.push("abbey-1348");
+      s.version = 2;
+    } else if (!validCampaign(s.campaign)) return null;
     return s;
   } catch {
     return null;

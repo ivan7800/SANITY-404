@@ -1,6 +1,6 @@
 # Fase 10C · acceso romano y rellano astral
 
-Estado al 23 de octubre de 2026: corrección funcional y visual de los dos encuadres revisada con capturas de Chrome en CI. Sigue pendiente la medición en Intel HD Graphics 620 física. La PR #14 permanece abierta como borrador y no se ha fusionado.
+Estado al 23 de octubre de 2026: corrección funcional y visual de los dos encuadres revisada con capturas de Chrome en CI. La medición posterior de combate en Intel HD Graphics 620 física superó el umbral. La PR #14 permanece abierta como borrador y no se ha fusionado.
 
 ## Causa visual y cambio realizado
 
@@ -37,4 +37,19 @@ La mejora es de legibilidad y composición de estas zonas. La iluminación sigue
 
 ## Puertas aún abiertas
 
-`lspci` identifica la Intel HD Graphics 620 (`8086:5916`), pero en este proceso no existe `/dev/dri` y `glxinfo -B` no puede abrir `:0`. CI no mide la GPU física. En Linux Mint con acceso X11 y `/dev/dri`, iniciar Vite en el puerto 5190 y ejecutar `node scripts/performance-phase10.mjs --url=http://127.0.0.1:5190/ --seconds=60 --headed --hardware --only=1927:combat --output=docs/capturas/fase10c/hardware-combat-1927-nueva.json`. Aceptar sólo `gpuType: physical`, `scenarioValid: true`, `performancePass: true`, sin errores y peor ventana de 60 intervalos superior a 45 FPS. La medición anterior de Fase 10 no certifica este incremento.
+La pasada física de combate posterior al cambio está conservada abajo. Faltan pasadas posteriores equivalentes de exploración y eventos psicológicos. CI no mide la GPU física.
+
+## Evidencia física de rendimiento · 23 de octubre de 2026
+
+El [JSON íntegro de combate 1927](capturas/fase10c/hardware-combat-1927-nueva.json) tiene SHA-256 `155ca92e0a5b4772f1ef87f272b49d48e83ff414969cfd6a4599b8cbe65e40cf`. Declara Chrome 156 visible, WebGL `ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)`, proveedor Intel desenmascarado y `gpuType: physical`; ventana 1280 × 720, resolución interna 1024 × 576 y perfil 0,8. La muestra duró 60,0134 s y registró 3490 fotogramas. Media 58,15998 FPS; peor ventana de 60 intervalos 53,74899 FPS, por encima de 45. El mínimo de un intervalo aislado fue 20 FPS, por lo que la cifra de ventana no debe describirse como FPS mínimo instantáneo.
+
+La validez del escenario está respaldada por `scenarioValid: true`, `invalidReasons: []`, `pausedFrames: 0`, `enemyVisibleRatio: 1`, `combatEngagedRatio: 1`, `roomAtEnd: 0`, `pausedAtEnd: false` y `errors: []`. `performancePass: true`; temporización GPU disponible con 600 muestras, mediana 8,13 ms y p95 11,97 ms. Hubo 111 intervalos marcados como picos y una tarea larga de 51 ms. Esta evidencia acredita el escenario de combate medido en ese equipo y versión, no el rendimiento de capítulos futuros.
+
+## Continuación local · 23 de octubre de 2026
+
+- Git: `HEAD` y la rama `fase10/remaster-gamecube-2002` siguen en `233f0b5`. `git fsck --no-reflogs --connectivity-only` terminó correctamente; comunicó cuatro commits colgantes, sin fallos de conectividad. Se conservaron la edición pendiente de `FASE10B-AUDITORIA.md` y las cuatro entradas locales sin seguimiento (`e10): remaster visual GameCube 2002 y optimizacion"`, `fase8-worktree/`, `fase9-delivery.bundle`, `phase9-performance.json`). No se modificaron `main` ni la PR #14.
+- Pruebas locales: `npm ci --offline --ignore-scripts`, `npm test` (42 archivos, 185 pruebas), `npm run format:check` y `npm run build` terminaron correctamente. El total local de pruebas incluye `fase8-worktree/` y no debe confundirse con el total de CI de la PR.
+- REA MCP: `binary_session` confirmó paquete y servidor `rea-agents` **6.5.0**, protocolo `2025-06-18` y alineación correcta. `analyze_javascript_application` analizó de forma estática `dist/assets/index-DYc3zivk.js`: 635220 bytes, un JavaScript parseado, cero errores de parseo. Evidencia original `ev_c6c2321b5511faeb875f2ec3308d7a5a612dfcf35d55aa3b14d1332bed57b339`. La selección dejó otro archivo fuera y el límite de 10000 nodos hizo parcial el grafo; no acredita ejecución ni renderizado.
+- Gráficos: `DISPLAY=:0` y `XDG_SESSION_TYPE=x11`, pero `glxinfo -B` respondió «unable to open display :0» y `/dev/dri` no existe. `lspci` sí detectó la Intel HD Graphics 620 (`8086:5916`). Por ello no se obtuvo una muestra física válida ni se abrió la puerta de rendimiento para comenzar el piloto de campaña. El comando y los criterios de aceptación figuran en «Puertas aún abiertas».
+
+Se aplicaron `ecc:change-impact` para conservar los límites de Git y guardado, `ecc:benchmark-optimization-loop` para exigir línea base física antes de optimizar o ampliar contenido, `ecc:browser-qa` para separar pruebas unitarias de recorrido visual y `ecc:frontend-design-direction` para mantener la revisión renderizada como puerta del capítulo piloto. La próxima implementación seguirá [CAMPANA-12.md](CAMPANA-12.md): un capítulo completo y funcional antes de crear otros; ninguna entrada vacía se presentará como jugable.

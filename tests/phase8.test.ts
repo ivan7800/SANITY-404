@@ -163,9 +163,11 @@ describe("Fase 8: director psicológico", () => {
 
   it("mantiene guardados versión 1 y opciones reducidas sin acontecimientos", () => {
     const legacy = fresh();
+    (legacy as { version: number }).version = 1;
     delete (legacy as Partial<typeof legacy>).phase2;
+    delete (legacy as Partial<typeof legacy>).campaign;
     const restored = parseSave(JSON.stringify(legacy));
-    expect(restored?.version).toBe(1);
+    expect(restored?.version).toBe(2);
     const state = restored!;
     state.room = 8;
     state.sanity = 20;

@@ -39,10 +39,16 @@ import {
 import { Combat } from "./systems/combat";
 import { Sanity } from "./systems/sanity";
 import { drinkTonic } from "./systems/inventory";
+import {
+  chapters,
+  completeChapter,
+  romanObjective,
+  visitChapter,
+} from "./systems/campaign";
 import { readSettings } from "./systems/config";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
 const el = (id: string) => document.getElementById(id)!;
 const hud = {
   health: el("health"),
@@ -136,6 +142,8 @@ function resume() {
 function loadRoom() {
   if (!state.phase2.visited.includes(state.room))
     state.phase2.visited.push(state.room);
+  if (state.room === 8) visitChapter(state.campaign, "roman-189");
+  if (state.room >= 9) visitChapter(state.campaign, "abbey-1348");
   terror?.restore();
   world?.dispose();
   world = new World(
@@ -212,6 +220,7 @@ function loadRoom() {
         ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
         : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
+  el("objective").textContent = state.room === 8 ? romanObjective(state) : "";
   cinematic.update(
     camera,
     state.x,
@@ -237,7 +246,7 @@ function begin(s: State) {
 
 function menu() {
   panel(
-    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Once lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña de horror cósmico · auriculares recomendados<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
+    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Once lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña histórica en desarrollo · piloto romano accesible desde el vestíbulo<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
   );
   button("new", () => {
     if (started) {
@@ -299,7 +308,14 @@ function options() {
 }
 function inventory() {
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Doce capítulos conectados en diseño; ${state.campaign.completed.length} concluidos en esta partida. ${state.room === 8 ? romanObjective(state) : "El santuario romano se alcanza desde el vestíbulo."}</p><p>${
+      chapters
+        .filter((chapter) => state.campaign.completed.includes(chapter.id))
+        .map(
+          (chapter) => `${chapter.year} · ${chapter.hero} · ${chapter.place}`,
+        )
+        .join("<br>") || "Aún no has concluido un capítulo."
+    }</p><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
   );
   button("close", resume);
   button("heal", () => {
@@ -510,7 +526,20 @@ function interact(o: Interactable) {
     panel(
       `<div class="eyebrow">DOCUMENTO ${state.room + 1} / ${notes.length}</div><h2>${notes[state.room][0]}</h2><p>${notes[state.room][1]}</p><button id="close">Guardar en el diario</button>`,
     );
-    button("close", resume);
+    button("close", () => {
+      resume();
+      if (
+        state.room === 8 &&
+        !state.campaign.witnessed.includes("roman-formation")
+      ) {
+        state.campaign.witnessed.push("roman-formation");
+        state.sanity = clamp(state.sanity - 8);
+        toast(
+          "Una formación de soldados cruza el santuario sin dejar huellas. Pierdes 8 de cordura.",
+        );
+        audio.tone(75, 0.8, "sawtooth");
+      }
+    });
   }
   if (o.kind === "save") {
     toast(
@@ -533,6 +562,28 @@ function interact(o: Interactable) {
     const phase2Lock = phase2DoorLocked(o.id, state.phase2);
     if (phase2Lock) {
       toast(phase2Lock);
+      return;
+    }
+    if (
+      o.id === "roman-return" &&
+      !state.campaign.completed.includes("roman-189")
+    ) {
+      if (romanObjective(state).startsWith("Regresa")) {
+        completeChapter(state.campaign, "roman-189");
+        writeSave(state);
+        panel(
+          '<div class="eyebrow">ROMA · 189 D. C. · CAPÍTULO CONCLUIDO</div><h2>El primer testigo</h2><p>Lucius deja la tablilla bajo la piedra. El nombre de Élise, aún imposible, permanece grabado junto al suyo. La formación sin rostro se disuelve cuando él cruza el arco. Su prueba espera ahora a quien pueda leerla en 1927.</p><p>La tablilla y el signo quedan conservados en esta partida.</p><button id="close">Regresar a la mansión</button>',
+        );
+        button("close", () => {
+          state.room = 0;
+          state.x = 0;
+          state.z = -4.2;
+          loadRoom();
+          writeSave(state);
+          resume();
+          toast("1927 · La tablilla ha sobrevivido al Intervalo.");
+        });
+      } else toast(romanObjective(state));
       return;
     }
     if (
@@ -668,6 +719,11 @@ function interact(o: Interactable) {
 }
 function update(dt: number) {
   const c = input.poll();
+  if (state.room === 8) {
+    const objective = romanObjective(state);
+    if (el("objective").textContent !== objective)
+      el("objective").textContent = objective;
+  }
   if (input.take("Escape")) {
     menu();
     return;
