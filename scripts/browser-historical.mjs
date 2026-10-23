@@ -129,6 +129,9 @@ try {
     phase2: { ...fresh.phase2, visited: [0] },
   });
   assert.match(await page.locator("#prompt").innerText(), /grieta romana/);
+  current = await inspect();
+  assert.equal(current.cinematicZone, "umbral romano");
+  assert.equal(current.cameraCorrected, false);
   await capture("portal-romano.png");
   await page.keyboard.press("e");
   await page.waitForFunction(() => window.sanityInspect().state.room === 8);
@@ -140,6 +143,9 @@ try {
     phase2: { ...fresh.phase2, visited: [0] },
   });
   assert.match(await page.locator("#prompt").innerText(), /carta astral/);
+  current = await inspect();
+  assert.equal(current.cinematicZone, "rellano superior");
+  assert.equal(current.cameraCorrected, false);
   await capture("rellano-astral.png");
   await seed({
     room: 8,

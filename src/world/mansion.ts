@@ -57,17 +57,25 @@ export function mansion(obstacles: Obstacle[]) {
     box(side * 7.64, 1.65, 0, 0.22, 0.12, 15.5, trim);
     box(side * 7.62, 4.65, 0, 0.32, 0.2, 15.5, trim);
     for (let z = -6; z <= 6; z += 2) {
+      const romanBay = side === 1 && (z === 2 || z === 4);
       box(side * 7.58, 0.92, z, 0.18, 1.35, 1.65, wood);
       box(side * 7.44, 0.92, z - 0.73, 0.04, 1.14, 0.035, trim);
       box(side * 7.44, 0.92, z + 0.73, 0.04, 1.14, 0.035, trim);
-      box(side * 7.6, 3.15, z, 0.15, 2.5, 1.45, black);
-      box(side * 7.48, 3.15, z, 0.045, 2.25, 1.2, glass);
-      // Uneven damp marks sit behind the mullions rather than across the view.
-      box(side * 7.425, 1.04, z, 0.035, 0.84, 1.38, damp);
-      box(side * 7.398, 0.63, z - 0.33, 0.018, 0.31, 0.28, soot);
-      box(side * 7.398, 0.73, z + 0.38, 0.018, 0.46, 0.16, soot);
-      box(side * 7.4, 3.15, z, 0.08, 2.3, 0.06, trim);
-      box(side * 7.4, 3.15, z, 0.08, 0.07, 1.3, trim);
+      if (romanBay) {
+        // Two former window bays form one stone alcove behind the fissure.
+        box(side * 7.48, 3.15, z, 0.15, 2.5, 1.45, soot);
+        box(side * 7.35, 3.15, z, 0.08, 2.26, 1.24, marble);
+        box(side * 7.3, 3.15, z, 0.025, 2.1, 1.08, damp);
+      } else {
+        box(side * 7.6, 3.15, z, 0.15, 2.5, 1.45, black);
+        box(side * 7.48, 3.15, z, 0.045, 2.25, 1.2, glass);
+        // Uneven damp marks sit behind the mullions rather than across the view.
+        box(side * 7.425, 1.04, z, 0.035, 0.84, 1.38, damp);
+        box(side * 7.398, 0.63, z - 0.33, 0.018, 0.31, 0.28, soot);
+        box(side * 7.398, 0.73, z + 0.38, 0.018, 0.46, 0.16, soot);
+        box(side * 7.4, 3.15, z, 0.08, 2.3, 0.06, trim);
+        box(side * 7.4, 3.15, z, 0.08, 0.07, 1.3, trim);
+      }
       for (const e of [-1, 1])
         box(side * 7.39, 3.15 + e * 1.18, z, 0.12, 0.1, 1.5, marble);
       box(side * 7.35, 2.45, z + 1, 0.3, 4.6, 0.22, wood);
@@ -124,33 +132,46 @@ export function mansion(obstacles: Obstacle[]) {
   // The landing has an authored focal point: a framed astronomical chart,
   // layered glass sectors and brass calibration marks above a reading desk.
   const chartX = 4.35;
-  box(chartX, 3.56, -7.54, 2.25, 1.52, 0.14, wood);
-  box(chartX, 3.56, -7.44, 1.94, 1.25, 0.06, black);
+  box(chartX, 3.56, -7.54, 2.5, 1.76, 0.14, wood);
+  box(chartX, 3.56, -7.44, 2.18, 1.48, 0.06, wornGold);
   const chart = new T.MeshStandardMaterial({
-    color: 0x304454,
-    emissive: 0x172b35,
-    emissiveIntensity: 0.34,
+    color: 0x485e6a,
+    emissive: 0x244153,
+    emissiveIntensity: 0.48,
     roughness: 0.7,
   });
-  box(chartX, 3.56, -7.395, 1.68, 1.02, 0.025, chart);
+  box(chartX, 3.56, -7.395, 1.91, 1.27, 0.025, chart);
   for (let i = 0; i < 16; i++) {
     const a = (i / 16) * Math.PI * 2;
     mesh(
       new T.SphereGeometry(i % 4 === 0 ? 0.04 : 0.022, 6, 4),
       i % 4 === 0 ? trim : wornGold,
-      chartX + Math.cos(a) * 0.62,
-      3.56 + Math.sin(a) * 0.4,
+      chartX + Math.cos(a) * 0.76,
+      3.56 + Math.sin(a) * 0.48,
       -7.35,
     );
   }
   const dial = mesh(
-    new T.TorusGeometry(0.43, 0.015, 6, 32),
+    new T.TorusGeometry(0.52, 0.018, 6, 32),
     trim,
     chartX,
     3.56,
     -7.34,
   );
   dial.scale.y = 0.78;
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const mark = box(
+      chartX + Math.cos(a) * 0.36,
+      3.56 + Math.sin(a) * 0.29,
+      -7.313,
+      0.26,
+      0.022,
+      0.018,
+      i % 2 ? trim : wornGold,
+    );
+    mark.rotation.z = a;
+  }
   box(chartX, 2.94, -6.12, 1.35, 0.08, 0.48, wood);
   for (const x of [chartX - 0.53, chartX + 0.53])
     box(x, 2.78, -6.12, 0.075, 0.34, 0.37, trim);

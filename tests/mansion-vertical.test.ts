@@ -48,6 +48,8 @@ it("separa la pista del rellano de los objetos de la planta baja", () => {
   const portal = world.objects.find((object) => object.id === "roman-portal")!;
   expect(mansionFloorHeight(portal.x, portal.z)).toBe(0);
   expect(blocked(portal.x, portal.z, world.obstacles)).toBe(false);
+  expect(blocked(6.8, 3, world.obstacles, 0.2)).toBe(false);
+  expect(blocked(6.8, 0.7, world.obstacles, 0.2)).toBe(true);
   expect(world.nearest(portal.x, portal.z, 1.9, 0)?.id).toBe("roman-portal");
   const camera = new T.PerspectiveCamera();
   const director = new CinematicCamera();
@@ -57,6 +59,35 @@ it("separa la pista del rellano de los objetos de la planta baja", () => {
   });
   expect(director.zone).toBe("rellano superior");
   expect(director.corrected).toBe(false);
+  world.dispose();
+});
+
+it("encuadra el acceso romano y separa la carta de la silueta de Élise", () => {
+  const world = new World(0, [], [], []);
+  const camera = new T.PerspectiveCamera(58, 960 / 640);
+  const director = new CinematicCamera();
+  director.update(camera, 6.2, 3, 0, 0, false, world.obstacles, {
+    mode: "classic",
+  });
+  expect(director.zone).toBe("umbral romano");
+  expect(director.corrected).toBe(false);
+  camera.updateMatrixWorld();
+  const gate = new T.Vector3(6.2, 1.4, 3).project(camera);
+  expect(Math.abs(gate.x)).toBeLessThan(0.65);
+  expect(Math.abs(gate.y)).toBeLessThan(0.7);
+
+  director.update(camera, 5.8, -6, 0, 0, false, world.obstacles, {
+    mode: "classic",
+    height: 2.64,
+  });
+  expect(director.zone).toBe("rellano superior");
+  expect(director.corrected).toBe(false);
+  camera.updateMatrixWorld();
+  const chart = new T.Vector3(4.35, 3.56, -7.34).project(camera);
+  const elise = new T.Vector3(5.8, 3.89, -6).project(camera);
+  expect(Math.abs(chart.x)).toBeLessThan(0.75);
+  expect(Math.abs(chart.y)).toBeLessThan(0.7);
+  expect(Math.abs(chart.x - elise.x)).toBeGreaterThan(0.18);
   world.dispose();
 });
 

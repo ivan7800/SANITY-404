@@ -191,11 +191,14 @@ export class World {
     );
     for (const x of [-6.8, 6.8])
       for (const z of [-5, 3]) {
-        this.box(x, 1.6, z, 0.4, 3.2, 0.4, 0x666654);
+        // The east pier at z=3 stood directly in front of the Roman threshold.
+        // Keep its structural rhythm by moving this one pier behind the bay.
+        const pierZ = room === 0 && x > 0 && z === 3 ? 0.7 : z;
+        this.box(x, 1.6, pierZ, 0.4, 3.2, 0.4, 0x666654);
         this.lamp(
           x,
           3.1,
-          z,
+          pierZ,
           0xffbd80,
           7,
           quality !== 1 || (room !== 3 && room !== 6 && z < 0),
