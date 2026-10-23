@@ -66,7 +66,7 @@ it("encuadra el acceso romano y separa la carta de la silueta de Élise", () => 
   const world = new World(0, [], [], []);
   const camera = new T.PerspectiveCamera(58, 960 / 640);
   const director = new CinematicCamera();
-  director.update(camera, 6.2, 3, 0, 0, false, world.obstacles, {
+  director.update(camera, 5.05, 3, 0, 0, false, world.obstacles, {
     mode: "classic",
   });
   expect(director.zone).toBe("umbral romano");

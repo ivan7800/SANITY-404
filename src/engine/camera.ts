@@ -32,9 +32,9 @@ export class CinematicCamera {
         this.zone = z < -5.1 ? "rellano superior" : "escalera Veyr";
         eye =
           z < -5.1
-            ? new T.Vector3(6.05, 4.35, -3.1)
+            ? new T.Vector3(4.2, 4.65, -4.65)
             : new T.Vector3(5.45, 3.65, 0.1);
-      } else if (x > 5.2 && z > 1.6 && z < 4.6) {
+      } else if (x > 4.8 && z > 1.6 && z < 4.6) {
         this.zone = "umbral romano";
         eye = new T.Vector3(3.55, 2.65, 5.75);
       } else if (z > 1) {
@@ -118,7 +118,7 @@ export class CinematicCamera {
     this.corrected = resolve(camera.position) || this.corrected;
     const desired = anchor.clone();
     if (this.zone === "rellano superior" && context.mode !== "modern")
-      desired.set(4.8, height + 1.05, -6.9);
+      desired.set(4.75, height + 1.05, -6.85);
     if (this.zone === "umbral romano" && context.mode !== "modern")
       desired.set(6.55, 1.5, 3);
     if (fighting) desired.lerp(context.enemy!.clone().setY(1.1), 0.35);

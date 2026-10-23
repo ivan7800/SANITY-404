@@ -135,9 +135,9 @@ export function mansion(obstacles: Obstacle[]) {
   box(chartX, 3.56, -7.54, 2.5, 1.76, 0.14, wood);
   box(chartX, 3.56, -7.44, 2.18, 1.48, 0.06, wornGold);
   const chart = new T.MeshStandardMaterial({
-    color: 0x485e6a,
-    emissive: 0x244153,
-    emissiveIntensity: 0.48,
+    color: 0x677e84,
+    emissive: 0x365662,
+    emissiveIntensity: 0.56,
     roughness: 0.7,
   });
   box(chartX, 3.56, -7.395, 1.91, 1.27, 0.025, chart);

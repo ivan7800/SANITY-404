@@ -124,7 +124,7 @@ try {
 
   await seed({
     room: 0,
-    x: 6.2,
+    x: 5.05,
     z: 3,
     phase2: { ...fresh.phase2, visited: [0] },
   });
