@@ -1914,6 +1914,12 @@ function update(dt: number) {
       enemy: enemy.position,
       enemyKind: combat.kind,
       combat: enemy.visible && enemy.position.distanceTo(player.position) < 2.8,
+      threat:
+        enemy.visible &&
+        state.room === 0 &&
+        state.floor === 1 &&
+        ["guest", "widow", "wrongReflection"].includes(combat.kind) &&
+        enemy.position.distanceTo(player.position) < 5,
       focus: inspectionFocus,
     },
   );
@@ -1957,6 +1963,7 @@ function update(dt: number) {
     settings,
     state.elapsed,
     state.sanity,
+    !state.defeated.includes("mansion-widow"),
   );
 }
 let last = performance.now();
@@ -2202,6 +2209,25 @@ if (import.meta.env.DEV) {
   });
   Object.defineProperty(window, "sanityInspect", {
     value: inspect,
+    configurable: true,
+  });
+  Object.defineProperty(window, "sanityRoomAudit", {
+    value: () => ({
+      interactables: world.objects.map(
+        ({ id, name, kind, target, x, z, level }) => ({
+          id,
+          name,
+          kind,
+          target,
+          x,
+          z,
+          level,
+        }),
+      ),
+      obstacles: world.obstacles.length,
+      upperObstacles: world.upperObstacles.length,
+      lights: world.lights.length,
+    }),
     configurable: true,
   });
 

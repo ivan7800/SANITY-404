@@ -103,6 +103,9 @@ export class Combat {
   private attacks = 0;
   private longAttack = false;
   private reflectionStep = 0;
+  private guestUnseen = 0;
+  private guestPose = 0;
+  private guestPoseStep = 0;
   private crawlerJink = 0;
   enemyHurt = 0;
   impact = 0;
@@ -208,6 +211,7 @@ export class Combat {
     this.attackCooldown = Math.max(0, this.attackCooldown - dt);
     this.enemyCooldown -= dt;
     this.animation = Math.max(0, this.animation - dt);
+    this.separateReflection(player, enemy, obstacles);
     if (
       (attack || heavy) &&
       !guard &&
@@ -378,6 +382,54 @@ export class Combat {
       onMessage,
       observed,
     );
+    this.separateReflection(player, enemy, obstacles);
+  }
+  /** Keep the double visible beside Élise without changing attack reach or sanity. */
+  private separateReflection(
+    player: T.Group,
+    enemy: T.Group,
+    obstacles: Obstacle[],
+  ) {
+    if (
+      this.kind !== "wrongReflection" ||
+      !enemy.visible ||
+      Math.abs(enemy.position.y - player.position.y) > 0.8
+    )
+      return;
+    const dx = enemy.position.x - player.position.x;
+    const dz = enemy.position.z - player.position.z;
+    const distance = Math.hypot(dx, dz);
+    const minimum = 1.35;
+    if (distance >= minimum) return;
+    const bearing =
+      distance > 0.001 ? Math.atan2(dz, dx) : player.rotation.y + Math.PI / 2;
+    for (const offset of [
+      0,
+      Math.PI / 4,
+      -Math.PI / 4,
+      Math.PI / 2,
+      -Math.PI / 2,
+      (3 * Math.PI) / 4,
+      (-3 * Math.PI) / 4,
+      Math.PI,
+    ]) {
+      const angle = bearing + offset;
+      const x = player.position.x + Math.cos(angle) * minimum;
+      const z = player.position.z + Math.sin(angle) * minimum;
+      if (
+        blocked(x, z, obstacles) ||
+        (enemy.position.y > 1 && !upperWalkable(x, z)) ||
+        !strikeClear(
+          enemy.position,
+          new T.Vector3(x, enemy.position.y, z),
+          obstacles,
+        )
+      )
+        continue;
+      enemy.position.set(x, enemy.position.y, z);
+      enemy.lookAt(player.position);
+      return;
+    }
   }
   private updateEnemyAI(
     dt: number,
@@ -399,6 +451,9 @@ export class Combat {
       "nameRoot",
     ].includes(this.kind);
     if (this.kind === "guest" && observed && dist > 1) {
+      // Hold the pose for the whole look. Small changes accumulate only while
+      // the player has genuinely lost sight of the Guest.
+      this.guestUnseen = 0;
       this.aiState = "patrol";
       this.windup = 0;
       animateCharacter(
@@ -418,24 +473,40 @@ export class Combat {
         "frozen",
         this.phase,
         0,
-        gazeToPlayer(enemy, player),
+        this.guestPose,
         state.sanity,
       );
       return;
     }
+    if (this.kind === "guest" && !observed) {
+      this.guestUnseen += dt;
+      if (this.guestUnseen >= 0.8) {
+        this.guestUnseen = 0;
+        this.guestPoseStep++;
+        this.guestPose = [0, 0.18, -0.12, 0.32, -0.24][this.guestPoseStep % 5];
+      }
+    }
     if (this.kind === "wrongReflection") {
       this.reflectionStep += dt;
-      if (this.reflectionStep > 3.5 && dist > 2.2 && this.windup <= 0) {
+      const interval = state.sanity < 30 ? 3.2 : 5.2;
+      if (this.reflectionStep > interval && dist > 2.8 && this.windup <= 0) {
         this.reflectionStep = 0;
-        const x = player.position.x - Math.sin(player.rotation.y) * 1.7;
-        const z = player.position.z - Math.cos(player.rotation.y) * 1.7;
+        const x =
+          player.position.x -
+          Math.sin(player.rotation.y) * 2.5 +
+          Math.cos(player.rotation.y) * 1.1;
+        const z =
+          player.position.z -
+          Math.cos(player.rotation.y) * 2.5 -
+          Math.sin(player.rotation.y) * 1.1;
         if (
           (!player.position.y || upperWalkable(x, z)) &&
           !blocked(x, z, obstacles)
         ) {
           enemy.position.set(x, player.position.y, z);
           enemy.lookAt(player.position);
-          this.enemyCooldown = Math.max(this.enemyCooldown, 0.8);
+          // The apparition can be examined or escaped before it can strike.
+          this.enemyCooldown = Math.max(this.enemyCooldown, 1.6);
           onSound(207, 0.38);
           onMessage("Tu reflejo aparece donde acabas de dejar de mirar.");
         }

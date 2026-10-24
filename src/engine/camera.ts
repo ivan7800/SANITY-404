@@ -8,6 +8,7 @@ export interface CameraContext {
   combat?: boolean;
   enemyKind?: string;
   focus?: T.Vector3;
+  threat?: boolean;
 }
 /** World-aligned controls are independent of the authored camera cuts. */
 export class CinematicCamera {
@@ -37,7 +38,7 @@ export class CinematicCamera {
         // rooms from inside, and keep the gallery camera behind its door line.
         eye =
           z <= -5.1
-            ? new T.Vector3(T.MathUtils.clamp(x + 2, -5.5, 0.35), 4.5, -7.1)
+            ? new T.Vector3(T.MathUtils.clamp(x + 3.5, -5.5, 0.35), 4.5, -7.1)
             : new T.Vector3(
                 x < -3.4
                   ? T.MathUtils.clamp(x + 1.1, -5.5, -3.9)
@@ -95,6 +96,8 @@ export class CinematicCamera {
         // The generic combat pull crosses the upper rooms' walls and can put
         // the boss directly between the lens and its attack warning.
         if (context.enemyKind === "nameRoot") eye.set(-0.9, 3.95, -6.4);
+        else if (context.enemyKind === "wrongReflection")
+          eye.set(0.15, 4.55, -4.35);
         else eye.set(x < -3.4 ? -5.9 : -2.55, 4.75, -4.55);
       } else {
         // Keep both actors in the frame without crossing the established camera side.
@@ -169,6 +172,8 @@ export class CinematicCamera {
           ),
         0.35,
       );
+    else if (context.threat && context.enemy && !context.focus)
+      desired.lerp(context.enemy.clone().add(new T.Vector3(0, 1.1, 0)), 0.18);
     else if (context.focus && context.focus.distanceTo(anchor) < 2.8)
       desired.lerp(context.focus, 0.42);
     if (!this.initialized || dt === 0 || reduced) this.target.copy(desired);
@@ -178,13 +183,15 @@ export class CinematicCamera {
     const fov =
       fighting && context.enemyKind === "nameRoot"
         ? 68
-        : context.mode === "modern"
-          ? 54
-          : room === 0 && height > 2.3 && x < 1
-            ? 63
-            : fighting || context.focus
-              ? 59
-              : 58;
+        : fighting && context.enemyKind === "wrongReflection"
+          ? 72
+          : context.mode === "modern"
+            ? 54
+            : room === 0 && height > 2.3 && x < 1
+              ? 63
+              : fighting || context.focus
+                ? 59
+                : 58;
     if (camera.fov !== fov) {
       camera.fov = fov;
       camera.updateProjectionMatrix();
