@@ -98,7 +98,7 @@ import {
 import { readSettings } from "./systems/config";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div><div class="help-compact">WASD · MOVER &nbsp; E · INTERACTUAR<br>ESPACIO · ATACAR &nbsp; J · FUERTE<br>V · ESQUIVAR &nbsp; F · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
 const el = (id: string) => document.getElementById(id)!;
 const hud = {
   health: el("health"),
@@ -179,6 +179,14 @@ applyQuality(renderer, settings.quality);
 function toast(text: string) {
   el("toast").textContent = text;
   toastTime = 5;
+}
+function autoSave() {
+  if (!writeSave(state))
+    queueMicrotask(() =>
+      toast(
+        "No se ha guardado el progreso. Libera almacenamiento o sal del modo privado.",
+      ),
+    );
 }
 function panel(html: string) {
   paused = true;
@@ -416,7 +424,7 @@ function begin(s: State) {
 
 function menu() {
   panel(
-    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Once lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña histórica en desarrollo · piloto romano accesible desde el vestíbulo<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
+    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Veintinueve lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña histórica · acceso a otras épocas desde el vestíbulo<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
   );
   button("new", () => {
     if (started) {
@@ -971,7 +979,7 @@ function interact(o: Interactable) {
     for (const choice of ["Ada", "Bran"] as const)
       button("hospital-" + choice.toLowerCase(), () => {
         if (keepHospitalTestimony(state, choice)) {
-          writeSave(state);
+          autoSave();
           toast(`El testimonio de ${choice} queda a salvo.`);
         }
         resume();
@@ -985,7 +993,7 @@ function interact(o: Interactable) {
     const evidence = chapter.evidence[index];
     if (inspectLateEvidence(state, chapter, index)) {
       state.sanity = clamp(state.sanity - 2);
-      writeSave(state);
+      autoSave();
       audio.tone(185 - index * 35, 0.28, "triangle");
     }
     panel(
@@ -1027,7 +1035,7 @@ function interact(o: Interactable) {
                   ? "El mecanismo ya está resuelto."
                   : `Resuelto: ${chapter.solution}`,
         );
-        if (result !== "locked" && result !== "already") writeSave(state);
+        if (result !== "locked" && result !== "already") autoSave();
       }),
     );
     button("close", resume);
@@ -1156,7 +1164,7 @@ function interact(o: Interactable) {
       button("close", resume);
     }
     if (lateItem && o.id === `${lateItem.id}-artifact`) {
-      writeSave(state);
+      autoSave();
       panel(
         `<div class="eyebrow">${lateItem.year} · EPÍLOGO</div><h2>${lateItem.artifact}</h2><p>${lateItem.epilogue}</p><button id="close">Continuar</button>`,
       );
@@ -1225,7 +1233,7 @@ function interact(o: Interactable) {
         return;
       }
       completeChapter(state.campaign, lateDoor.id);
-      writeSave(state);
+      autoSave();
       panel(
         `<div class="eyebrow">${lateDoor.year} · CAPÍTULO CONCLUIDO</div><h2>${lateDoor.place}</h2><p>${lateDoor.epilogue} La prueba queda en el inventario para la siguiente época.</p><button id="close">Regresar a 1927</button>`,
       );
@@ -1234,7 +1242,7 @@ function interact(o: Interactable) {
         state.x = 0;
         state.z = 4.4;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1255,7 +1263,7 @@ function interact(o: Interactable) {
         return;
       }
       completeChapter(state.campaign, "hospital-1217");
-      writeSave(state);
+      autoSave();
       const witness = state.items.includes("Testimonio de Ada")
         ? "Ada"
         : "Bran";
@@ -1267,7 +1275,7 @@ function interact(o: Interactable) {
         state.x = 2.6;
         state.z = -3.3;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1285,7 +1293,7 @@ function interact(o: Interactable) {
         return;
       }
       completeChapter(state.campaign, "quarry-1092");
-      writeSave(state);
+      autoSave();
       panel(
         '<div class="eyebrow">ALPES · 1092 · RECORRIDO CONCLUIDO</div><h2>La forma del umbral</h2><p>Idris abandona la cantera con un plano que la piedra no puede alterar. El arco auténtico queda de pie para quien llegue después.</p><button id="close">Regresar a 1927</button>',
       );
@@ -1294,7 +1302,7 @@ function interact(o: Interactable) {
         state.x = -6.2;
         state.z = 0;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1312,7 +1320,7 @@ function interact(o: Interactable) {
         return;
       }
       completeChapter(state.campaign, "stars-783");
-      writeSave(state);
+      autoSave();
       panel(
         '<div class="eyebrow">MONTAÑA · 783 · RECORRIDO CONCLUIDO</div><h2>Una posición imposible</h2><p>Samira deja el disco oculto. La marca señala el mismo umbral que Lucius vio en piedra, Aurelia conservó en un molde y Maeve encontró entre los nombres perdidos.</p><button id="close">Regresar a 1927</button>',
       );
@@ -1321,7 +1329,7 @@ function interact(o: Interactable) {
         state.x = -6.2;
         state.z = -2.5;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1339,7 +1347,7 @@ function interact(o: Interactable) {
         return;
       }
       completeChapter(state.campaign, "coast-537");
-      writeSave(state);
+      autoSave();
       panel(
         '<div class="eyebrow">COSTA · 537 · RECORRIDO CONCLUIDO</div><h2>La lista que llegó a tierra</h2><p>Maeve sale antes de que el depósito se llene. Su lista conserva nombres que el Intervalo quiso borrar y queda junto a las pruebas de Lucius y Aurelia.</p><button id="close">Regresar a 1927</button>',
       );
@@ -1348,7 +1356,7 @@ function interact(o: Interactable) {
         state.x = -6.2;
         state.z = 2.5;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1359,7 +1367,7 @@ function interact(o: Interactable) {
       abbeyObjective(state).startsWith("Regresa")
     ) {
       completeChapter(state.campaign, "abbey-1348");
-      writeSave(state);
+      autoSave();
       panel(
         '<div class="eyebrow">FRANCIA · 1348 · RECORRIDO CONCLUIDO</div><h2>El nombre que sobrevivió</h2><p>Isabelle oculta el códice entre los muros del claustro. Siglos después, Élise encontrará su lectura junto a la tablilla de Lucius y el molde de Aurelia.</p><button id="close">Regresar a 1927</button>',
       );
@@ -1368,7 +1376,7 @@ function interact(o: Interactable) {
         state.x = -5.2;
         state.z = -4.2;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1391,7 +1399,7 @@ function interact(o: Interactable) {
         return;
       }
       completeChapter(state.campaign, "mosaic-312");
-      writeSave(state);
+      autoSave();
       panel(
         '<div class="eyebrow">ROMA · 312 · RECORRIDO CONCLUIDO</div><h2>El segundo testigo</h2><p>Aurelia deja el molde en un muro que siglos después formará parte de la casa Veyr. La tablilla de Lucius y su mosaico muestran ahora el mismo rostro ausente.</p><button id="close">Regresar a 1927</button>',
       );
@@ -1400,7 +1408,7 @@ function interact(o: Interactable) {
         state.x = 6.2;
         state.z = -0.6;
         loadRoom();
-        writeSave(state);
+        autoSave();
         resume();
       });
       return;
@@ -1416,7 +1424,7 @@ function interact(o: Interactable) {
     ) {
       if (romanObjective(state).startsWith("Regresa")) {
         completeChapter(state.campaign, "roman-189");
-        writeSave(state);
+        autoSave();
         panel(
           '<div class="eyebrow">ROMA · 189 D. C. · CAPÍTULO CONCLUIDO</div><h2>El primer testigo</h2><p>Lucius deja la tablilla bajo la piedra. El nombre de Élise, aún imposible, permanece grabado junto al suyo. La formación sin rostro se disuelve cuando él cruza el arco. Su prueba espera ahora a quien pueda leerla en 1927.</p><p>La tablilla y el signo quedan conservados en esta partida.</p><button id="close">Regresar a la mansión</button>',
         );
@@ -1425,7 +1433,7 @@ function interact(o: Interactable) {
           state.x = 0;
           state.z = -4.2;
           loadRoom();
-          writeSave(state);
+          autoSave();
           resume();
           toast("1927 · La tablilla ha sobrevivido al Intervalo.");
         });
@@ -1768,7 +1776,9 @@ function update(dt: number) {
       audio.lastStep = state.elapsed;
     }
   }
+  const threatStart = performance.now();
   syncMansionThreat();
+  aiCostFrame += performance.now() - threatStart;
   contact[0].position.copy(player.position).setY(player.position.y + 0.025);
   contact[1].position.copy(enemy.position).setY(enemy.position.y + 0.025);
   contact[1].visible = enemy.visible;
@@ -1787,6 +1797,7 @@ function update(dt: number) {
   const wasAlive = enemy.visible;
   const lightAttack = input.take("Space"),
     heavyAttack = input.take("KeyJ");
+  const combatStart = performance.now();
   combat.update(
     dt,
     state,
@@ -1812,6 +1823,7 @@ function update(dt: number) {
           enemy.position.z,
         ),
   );
+  aiCostFrame += performance.now() - combatStart;
   if (wasAlive && !enemy.visible) {
     corpse.position.copy(enemy.position);
     corpse.rotation.copy(enemy.rotation);
@@ -1902,6 +1914,12 @@ function update(dt: number) {
       enemy: enemy.position,
       enemyKind: combat.kind,
       combat: enemy.visible && enemy.position.distanceTo(player.position) < 2.8,
+      threat:
+        enemy.visible &&
+        state.room === 0 &&
+        state.floor === 1 &&
+        ["guest", "widow", "wrongReflection"].includes(combat.kind) &&
+        enemy.position.distanceTo(player.position) < 5,
       focus: inspectionFocus,
     },
   );
@@ -1945,15 +1963,19 @@ function update(dt: number) {
     settings,
     state.elapsed,
     state.sanity,
+    !state.defeated.includes("mansion-widow"),
   );
 }
 let last = performance.now();
 let nextMenuMove = 0;
+let aiCostFrame = 0;
 function frame(now: number) {
   requestAnimationFrame(frame);
   const interval = now - last;
   const dt = Math.min(interval / 1000, 0.2);
   last = now;
+  aiCostFrame = 0;
+  const updateStart = performance.now();
   if (started && !paused) {
     const steps = Math.max(1, Math.ceil(dt / 0.025));
     for (let i = 0; i < steps && !paused; i++) update(dt / steps);
@@ -1994,7 +2016,13 @@ function frame(now: number) {
     gpuTimer?.begin();
     renderer.render(world.scene, camera);
     gpuTimer?.end();
-    if (started && !paused) metrics.record(interval, performance.now() - start);
+    if (started && !paused)
+      metrics.record(
+        interval,
+        performance.now() - start,
+        start - updateStart,
+        aiCostFrame,
+      );
   }
 }
 loadRoom();
@@ -2025,6 +2053,74 @@ renderer.domElement.addEventListener("webglcontextrestored", () => {
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && started && !paused) menu();
 });
+function sceneProfile() {
+  const geometries = new Set<T.BufferGeometry>();
+  const materials = new Set<T.Material>();
+  const textures = new Set<T.Texture>();
+  const lights = { hemisphere: 0, directional: 0, spot: 0, point: 0 };
+  let meshes = 0;
+  let visibleMeshes = 0;
+  let transparentMeshes = 0;
+  let shadowCastingLights = 0;
+  let shadowCastingMeshes = 0;
+  let particles = 0;
+  let mistMeshes = 0;
+  world.scene.traverse((object) => {
+    if (object instanceof T.HemisphereLight) lights.hemisphere++;
+    if (object instanceof T.DirectionalLight) lights.directional++;
+    if (object instanceof T.SpotLight) lights.spot++;
+    if (object instanceof T.PointLight) lights.point++;
+    if (
+      (object instanceof T.DirectionalLight ||
+        object instanceof T.SpotLight ||
+        object instanceof T.PointLight) &&
+      object.castShadow
+    )
+      shadowCastingLights++;
+    if (object instanceof T.Mesh || object instanceof T.Points) {
+      geometries.add(object.geometry);
+      for (const material of Array.isArray(object.material)
+        ? object.material
+        : [object.material]) {
+        materials.add(material);
+        if (material.transparent && object instanceof T.Mesh)
+          transparentMeshes++;
+      }
+    }
+    if (object instanceof T.Mesh) {
+      meshes++;
+      if (object.castShadow) shadowCastingMeshes++;
+      if (object.name === "Bruma localizada junto a los muros") mistMeshes++;
+    }
+    if (object instanceof T.Points)
+      particles += object.geometry.attributes.position?.count ?? 0;
+  });
+  world.scene.traverseVisible((object) => {
+    if (object instanceof T.Mesh) visibleMeshes++;
+  });
+  for (const material of materials)
+    if (material instanceof T.MeshStandardMaterial)
+      for (const texture of [
+        material.map,
+        material.roughnessMap,
+        material.normalMap,
+        material.emissiveMap,
+      ])
+        if (texture) textures.add(texture);
+  return {
+    meshes,
+    visibleMeshes,
+    geometries: geometries.size,
+    materials: materials.size,
+    textures: textures.size,
+    transparentMeshes,
+    shadowCastingMeshes,
+    shadowCastingLights,
+    lights,
+    particles,
+    mistMeshes,
+  };
+}
 export function inspect() {
   return {
     state: structuredClone(state),
@@ -2115,12 +2211,35 @@ if (import.meta.env.DEV) {
     value: inspect,
     configurable: true,
   });
+  Object.defineProperty(window, "sanityRoomAudit", {
+    value: () => ({
+      interactables: world.objects.map(
+        ({ id, name, kind, target, x, z, level }) => ({
+          id,
+          name,
+          kind,
+          target,
+          x,
+          z,
+          level,
+        }),
+      ),
+      obstacles: world.obstacles.length,
+      upperObstacles: world.upperObstacles.length,
+      lights: world.lights.length,
+    }),
+    configurable: true,
+  });
 
   Object.defineProperty(window, "sanityResetMetrics", {
     value: () => {
       metrics.clear();
       gpuTimer?.reset();
     },
+    configurable: true,
+  });
+  Object.defineProperty(window, "sanitySceneProfile", {
+    value: sceneProfile,
     configurable: true,
   });
 }

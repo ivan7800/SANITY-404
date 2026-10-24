@@ -1,0 +1,31 @@
+{
+  "browser": "Chromium conectado por DevTools, ANGLE Intel HD Graphics 620",
+  "reflection": {
+    "seed": { "room": 0, "floor": 1, "x": -2.35, "z": -2.25, "sanity": 20 },
+    "observedHorizontalDistance": 1.35,
+    "health": 100,
+    "cameraCorrected": false,
+    "screenshot": "reflejo-separado-fase19_1.jpg"
+  },
+  "widowAudio": {
+    "seed": { "room": 0, "floor": 0, "x": 5, "z": -3.5, "defeated": ["enemy0"] },
+    "volume": 0.35,
+    "contextRunning": true,
+    "activeTonesAt280ms": 1,
+    "activeTonesAfter2100ms": 0,
+    "consoleErrors": 0,
+    "humanListening": false
+  },
+  "webglContext": {
+    "extensionAvailable": true,
+    "pausedAfterLoss": true,
+    "interruptionHeadingVisible": true,
+    "returnButtonAfterRestore": true,
+    "resumedAfterReturn": true
+  },
+  "playwrightLaunch": {
+    "minimalAboutBlank": "failed before page load: crashpad setsockopt EPERM",
+    "browserPhase10": "same failure before page load",
+    "isolationRelaxed": false
+  }
+}

@@ -142,8 +142,8 @@ export class Audio {
       stereo.disconnect();
     };
   }
-  /** A layered, spatial lament with a rising formant and a breath tail. */
-  lament(pan: number) {
+  /** A layered lament. Distance attenuates the source before it reaches the stair. */
+  lament(pan: number, distance = 0) {
     if (
       !this.ctx ||
       !this.gain ||
@@ -151,7 +151,7 @@ export class Audio {
       this.activeTones > 9 ||
       this.reduceAudio
     )
-      return;
+      return false;
     this.activeTones++;
     const now = this.ctx.currentTime;
     const stereo = this.ctx.createStereoPanner();
@@ -169,7 +169,10 @@ export class Audio {
       voice.frequency.linearRampToValueAtTime(frequency * 1.24, now + 0.65);
       voice.frequency.linearRampToValueAtTime(frequency * 0.73, now + 1.5);
       envelope.gain.setValueAtTime(0.001, now);
-      envelope.gain.linearRampToValueAtTime(level, now + 0.23);
+      envelope.gain.linearRampToValueAtTime(
+        level / (1 + Math.max(0, distance) * 0.38),
+        now + 0.23,
+      );
       envelope.gain.exponentialRampToValueAtTime(0.001, now + 1.55);
       voice.connect(envelope);
       envelope.connect(stereo);
@@ -184,6 +187,7 @@ export class Audio {
         }
       };
     }
+    return true;
   }
   silence(time: number, seconds: number) {
     this.silenceUntil = Math.max(this.silenceUntil, time + seconds);

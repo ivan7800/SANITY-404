@@ -1,0 +1,2038 @@
+[
+  {
+    "room": 0,
+    "title": "Mansión Veyr",
+    "paused": false,
+    "actualRoom": 0,
+    "zone": "entrada",
+    "camera": [
+      6.800000000000001,
+      2.35,
+      7.25
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 24,
+      "calls": 131,
+      "triangles": 61956,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "shade",
+    "interactables": [
+      {
+        "id": "save0",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note0",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "key",
+        "name": "Recoger llave de latón",
+        "kind": "item",
+        "x": -4,
+        "z": -0.5
+      },
+      {
+        "id": "tonic0",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Biblioteca prohibida",
+        "kind": "door",
+        "target": 1,
+        "x": 0,
+        "z": -7
+      },
+      {
+        "id": "upper-save",
+        "name": "Escritorio del rellano · guardar",
+        "kind": "save",
+        "x": 2,
+        "z": -5.8,
+        "level": 1
+      },
+      {
+        "id": "upper-portraits",
+        "name": "Recoger el folio de los huéspedes",
+        "kind": "item",
+        "x": -5.9,
+        "z": -2.5,
+        "level": 1
+      },
+      {
+        "id": "upper-observatory",
+        "name": "Recoger la carta de la raíz",
+        "kind": "item",
+        "x": -0.2,
+        "z": -2.2,
+        "level": 1
+      },
+      {
+        "id": "roman-portal",
+        "name": "Atravesar la grieta romana · año 189",
+        "kind": "door",
+        "target": 8,
+        "x": 6.2,
+        "z": 3
+      },
+      {
+        "id": "medieval-portal",
+        "name": "Cruzar el recuerdo de 1348",
+        "kind": "door",
+        "target": 9,
+        "x": -5.8,
+        "z": -5.2
+      },
+      {
+        "id": "legacy-desk",
+        "name": "Reconstruir la memoria de las tres épocas",
+        "kind": "legacy",
+        "x": -2.5,
+        "z": -4.7
+      },
+      {
+        "id": "ritual-table",
+        "name": "Leer la mesa de los tres signos",
+        "kind": "ritual",
+        "x": 0,
+        "z": 2.7
+      },
+      {
+        "id": "mansion-puzzle",
+        "name": "Examinar caja astronómica",
+        "kind": "seal",
+        "target": 0,
+        "x": 3,
+        "z": 4
+      },
+      {
+        "id": "gallery-chart",
+        "name": "Examinar carta astral del rellano",
+        "kind": "galleryClue",
+        "x": 4.35,
+        "z": -6.1
+      }
+    ],
+    "obstacles": 13,
+    "lights": 2
+  },
+  {
+    "room": 1,
+    "title": "Biblioteca prohibida",
+    "paused": false,
+    "actualRoom": 1,
+    "zone": "mesa de investigación",
+    "camera": [
+      4.7,
+      2.2,
+      6.4
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 17,
+      "calls": 61,
+      "triangles": 22956,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "shade",
+    "interactables": [
+      {
+        "id": "save1",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note1",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "tonic1",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "back",
+        "name": "Volver · Mansión Veyr",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 7
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Cripta de los nombres",
+        "kind": "door",
+        "target": 2,
+        "x": 0,
+        "z": -7
+      },
+      {
+        "id": "seal1",
+        "name": "Examinar mecanismo del sello",
+        "kind": "seal",
+        "target": 0,
+        "x": 0,
+        "z": -4.5
+      },
+      {
+        "id": "manuscripts",
+        "name": "Clasificar manuscritos",
+        "kind": "phase2Puzzle",
+        "x": 2.4,
+        "z": -1
+      },
+      {
+        "id": "archive-door",
+        "name": "Puerta secreta · archivo familiar",
+        "kind": "door",
+        "target": 5,
+        "x": 6.7,
+        "z": 0
+      },
+      {
+        "id": "library-shortcut",
+        "name": "Atajo · capilla",
+        "kind": "door",
+        "target": 3,
+        "x": -6.7,
+        "z": -5.3
+      }
+    ],
+    "obstacles": 12,
+    "lights": 3
+  },
+  {
+    "room": 2,
+    "title": "Cripta de los nombres",
+    "paused": false,
+    "actualRoom": 2,
+    "zone": "seguimiento",
+    "camera": [
+      4,
+      2.15,
+      7.2
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 53,
+      "triangles": 21856,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "shade",
+    "interactables": [
+      {
+        "id": "save2",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note2",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "tonic2",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "back",
+        "name": "Volver · Biblioteca prohibida",
+        "kind": "door",
+        "target": 1,
+        "x": 0,
+        "z": 7
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Capilla del silencio",
+        "kind": "door",
+        "target": 3,
+        "x": 0,
+        "z": -7
+      },
+      {
+        "id": "seal2",
+        "name": "Examinar mecanismo del sello",
+        "kind": "seal",
+        "target": 1,
+        "x": 0,
+        "z": -4.5
+      }
+    ],
+    "obstacles": 12,
+    "lights": 2
+  },
+  {
+    "room": 3,
+    "title": "Capilla del silencio",
+    "paused": false,
+    "actualRoom": 3,
+    "zone": "mesa de investigación",
+    "camera": [
+      4.7,
+      2.2,
+      6.4
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 17,
+      "calls": 58,
+      "triangles": 22352,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "ritual",
+    "interactables": [
+      {
+        "id": "save3",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note3",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "tonic3",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "back",
+        "name": "Volver · Cripta de los nombres",
+        "kind": "door",
+        "target": 2,
+        "x": 0,
+        "z": 7
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Ruinas del intervalo",
+        "kind": "door",
+        "target": 4,
+        "x": 0,
+        "z": -7
+      },
+      {
+        "id": "seal3",
+        "name": "Examinar mecanismo del sello",
+        "kind": "seal",
+        "target": 2,
+        "x": 0,
+        "z": -4.5
+      },
+      {
+        "id": "chapel-side",
+        "name": "Galería cubierta · invernadero",
+        "kind": "door",
+        "target": 6,
+        "x": -6.7,
+        "z": 0
+      },
+      {
+        "id": "astronomy",
+        "name": "Alinear la bóveda astronómica",
+        "kind": "phase2Puzzle",
+        "x": -2.1,
+        "z": -3.5
+      },
+      {
+        "id": "basement-door",
+        "name": "Escalera de piedra · sótanos",
+        "kind": "door",
+        "target": 7,
+        "x": 6.7,
+        "z": 0
+      },
+      {
+        "id": "chapel-shortcut",
+        "name": "Atajo · biblioteca",
+        "kind": "door",
+        "target": 1,
+        "x": -6.7,
+        "z": -5.3
+      }
+    ],
+    "obstacles": 21,
+    "lights": 1
+  },
+  {
+    "room": 4,
+    "title": "Ruinas del intervalo",
+    "paused": false,
+    "actualRoom": 4,
+    "zone": "seguimiento",
+    "camera": [
+      4,
+      2.15,
+      7.2
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 53,
+      "triangles": 22288,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "shade",
+    "interactables": [
+      {
+        "id": "save4",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note4",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "back",
+        "name": "Volver · Capilla del silencio",
+        "kind": "door",
+        "target": 3,
+        "x": 0,
+        "z": 7
+      },
+      {
+        "id": "end",
+        "name": "Cerrar el intervalo",
+        "kind": "end",
+        "x": 0,
+        "z": -3
+      }
+    ],
+    "obstacles": 16,
+    "lights": 3
+  },
+  {
+    "room": 5,
+    "title": "Archivo familiar",
+    "paused": false,
+    "actualRoom": 5,
+    "zone": "mesa de investigación",
+    "camera": [
+      4.7,
+      2.2,
+      6.4
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 17,
+      "calls": 58,
+      "triangles": 23912,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "stalker",
+    "interactables": [
+      {
+        "id": "save5",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note5",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "tonic5",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "archive-back",
+        "name": "Volver · biblioteca",
+        "kind": "door",
+        "target": 1,
+        "x": -6.7,
+        "z": 0
+      },
+      {
+        "id": "genealogy",
+        "name": "Ordenar el árbol genealógico",
+        "kind": "phase2Puzzle",
+        "x": 0,
+        "z": -3
+      },
+      {
+        "id": "greenhouse-door",
+        "name": "Puerta de hierro · invernadero",
+        "kind": "door",
+        "target": 6,
+        "x": 6.7,
+        "z": 0
+      },
+      {
+        "id": "society",
+        "name": "Investigar el libro de socios",
+        "kind": "discovery",
+        "x": 3,
+        "z": 4
+      }
+    ],
+    "obstacles": 16,
+    "lights": 3
+  },
+  {
+    "room": 6,
+    "title": "Invernadero de vidrio negro",
+    "paused": false,
+    "actualRoom": 6,
+    "zone": "mesa de investigación",
+    "camera": [
+      4.1,
+      2.2,
+      6.4
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 61,
+      "triangles": 26888,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "stalker",
+    "interactables": [
+      {
+        "id": "save6",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note6",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "tonic6",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "greenhouse-back",
+        "name": "Volver · archivo",
+        "kind": "door",
+        "target": 5,
+        "x": -6.7,
+        "z": 0
+      },
+      {
+        "id": "greenhouse-chapel",
+        "name": "Galería cubierta · capilla",
+        "kind": "door",
+        "target": 3,
+        "x": 6.7,
+        "z": 0
+      },
+      {
+        "id": "adrien",
+        "name": "Examinar el cuaderno mojado",
+        "kind": "discovery",
+        "x": 3,
+        "z": 4
+      }
+    ],
+    "obstacles": 14,
+    "lights": 1
+  },
+  {
+    "room": 7,
+    "title": "Sótanos de la vigilia",
+    "paused": false,
+    "actualRoom": 7,
+    "zone": "mesa de investigación",
+    "camera": [
+      4.7,
+      2.2,
+      6.4
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 17,
+      "calls": 58,
+      "triangles": 23324,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "guardian",
+    "interactables": [
+      {
+        "id": "save7",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note7",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "tonic7",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "basement-back",
+        "name": "Subir · capilla",
+        "kind": "door",
+        "target": 3,
+        "x": -6.7,
+        "z": 0
+      },
+      {
+        "id": "basement",
+        "name": "Cerrar las tres mordazas",
+        "kind": "phase2Puzzle",
+        "x": 0,
+        "z": -4.3
+      },
+      {
+        "id": "phase2-end",
+        "name": "Atravesar el umbral de Adrien",
+        "kind": "phase2End",
+        "x": 0,
+        "z": -6.2
+      },
+      {
+        "id": "guardian",
+        "name": "Leer la placa del guardián",
+        "kind": "discovery",
+        "x": 3,
+        "z": 4
+      }
+    ],
+    "obstacles": 20,
+    "lights": 3
+  },
+  {
+    "room": 8,
+    "title": "Santuario de los nombres",
+    "paused": false,
+    "actualRoom": 8,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 72,
+      "triangles": 23010,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "centurion",
+    "interactables": [
+      {
+        "id": "save8",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note8",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "roman-echo-ash",
+        "name": "Testimonio de la ceniza",
+        "kind": "romanEcho",
+        "x": -4.15,
+        "z": 3.45
+      },
+      {
+        "id": "roman-echo-tide",
+        "name": "Testimonio de la marea",
+        "kind": "romanEcho",
+        "x": 4.15,
+        "z": 3.45
+      },
+      {
+        "id": "roman-echo-threshold",
+        "name": "Testimonio del umbral",
+        "kind": "romanEcho",
+        "x": 0,
+        "z": 1.35
+      },
+      {
+        "id": "roman-inscription",
+        "name": "Descifrar la inscripción del altar",
+        "kind": "romanPuzzle",
+        "x": -2.9,
+        "z": -4.25
+      },
+      {
+        "id": "roman-return",
+        "name": "Regresar a la mansión · año 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "roman-tablet",
+        "name": "Recoger tablilla del intervalo",
+        "kind": "item",
+        "x": 0,
+        "z": -4.1
+      }
+    ],
+    "obstacles": 27,
+    "lights": 4
+  },
+  {
+    "room": 9,
+    "title": "Claustro de la ceniza",
+    "paused": false,
+    "actualRoom": 9,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 66,
+      "triangles": 21426,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "plagueScribe",
+    "interactables": [
+      {
+        "id": "save9",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note9",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "medieval-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "medieval-scriptorium",
+        "name": "Entrar al scriptorium",
+        "kind": "door",
+        "target": 10,
+        "x": 0,
+        "z": -6.1
+      }
+    ],
+    "obstacles": 21,
+    "lights": 4
+  },
+  {
+    "room": 10,
+    "title": "Scriptorium del silencio",
+    "paused": false,
+    "actualRoom": 10,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 64,
+      "triangles": 21498,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "plagueScribe",
+    "interactables": [
+      {
+        "id": "save10",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note10",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "medieval-back",
+        "name": "Volver al claustro",
+        "kind": "door",
+        "target": 9,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "medieval-manuscript",
+        "name": "Descifrar el códice sellado",
+        "kind": "medievalPuzzle",
+        "x": -2.9,
+        "z": -4.7
+      },
+      {
+        "id": "medieval-codex",
+        "name": "Recuperar el códice de Montfort",
+        "kind": "item",
+        "x": 0,
+        "z": -4.1
+      }
+    ],
+    "obstacles": 27,
+    "lights": 4
+  },
+  {
+    "room": 11,
+    "title": "Taller de los rostros",
+    "paused": false,
+    "actualRoom": 11,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 63,
+      "triangles": 21554,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "mosaic",
+    "interactables": [
+      {
+        "id": "save11",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note11",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "mosaic-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "mosaic-kiln",
+        "name": "Entrar al horno de las teselas",
+        "kind": "door",
+        "target": 12,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "mosaic-pigment",
+        "name": "Recoger pigmento de cinabrio",
+        "kind": "item",
+        "x": -4.4,
+        "z": 1.6
+      }
+    ],
+    "obstacles": 18,
+    "lights": 3
+  },
+  {
+    "room": 12,
+    "title": "Horno de las teselas",
+    "paused": false,
+    "actualRoom": 12,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 58,
+      "triangles": 21378,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "mosaic",
+    "interactables": [
+      {
+        "id": "save12",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note12",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "mosaic-back",
+        "name": "Volver a la galería",
+        "kind": "door",
+        "target": 11,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "mosaic-pattern",
+        "name": "Recomponer el rostro en las teselas",
+        "kind": "mosaicPuzzle",
+        "x": -3.5,
+        "z": -4.4
+      },
+      {
+        "id": "mosaic-mold",
+        "name": "Recuperar el molde auténtico",
+        "kind": "item",
+        "x": 0,
+        "z": -4.2
+      }
+    ],
+    "obstacles": 19,
+    "lights": 3
+  },
+  {
+    "room": 13,
+    "title": "Muelle de los nombres",
+    "paused": false,
+    "actualRoom": 13,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 61,
+      "triangles": 21078,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "drowned",
+    "interactables": [
+      {
+        "id": "save13",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note13",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "coast-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "coast-vault",
+        "name": "Entrar en el depósito de embarque",
+        "kind": "door",
+        "target": 14,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "coast-tides",
+        "name": "Recoger tabla de mareas",
+        "kind": "item",
+        "x": -3.5,
+        "z": 2
+      }
+    ],
+    "obstacles": 18,
+    "lights": 3
+  },
+  {
+    "room": 14,
+    "title": "Archivo de la marea",
+    "paused": false,
+    "actualRoom": 14,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 55,
+      "triangles": 21106,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "drowned",
+    "interactables": [
+      {
+        "id": "save14",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note14",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "coast-back",
+        "name": "Volver al muelle",
+        "kind": "door",
+        "target": 13,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "coast-ledger",
+        "name": "Cruzar fechas y mareas",
+        "kind": "coastLedger",
+        "x": -2.7,
+        "z": -3.8
+      },
+      {
+        "id": "coast-list",
+        "name": "Conservar la lista de pasajeros",
+        "kind": "item",
+        "x": 0,
+        "z": -4.05
+      }
+    ],
+    "obstacles": 23,
+    "lights": 3
+  },
+  {
+    "room": 15,
+    "title": "Terraza del astro ausente",
+    "paused": false,
+    "actualRoom": 15,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 62,
+      "triangles": 20598,
+      "points": 80,
+      "lines": 0
+    },
+    "enemy": "blindWatcher",
+    "interactables": [
+      {
+        "id": "save15",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note15",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "stars-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "stars-dome",
+        "name": "Entrar en la cúpula",
+        "kind": "door",
+        "target": 16,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "stars-chart",
+        "name": "Recoger la carta astral",
+        "kind": "item",
+        "x": -3.4,
+        "z": 1.7
+      }
+    ],
+    "obstacles": 18,
+    "lights": 3
+  },
+  {
+    "room": 16,
+    "title": "Cúpula de las tres horas",
+    "paused": false,
+    "actualRoom": 16,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 56,
+      "triangles": 21254,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "blindWatcher",
+    "interactables": [
+      {
+        "id": "save16",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note16",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "stars-back",
+        "name": "Volver a la terraza",
+        "kind": "door",
+        "target": 15,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "stars-wheel",
+        "name": "Alinear el astrolabio",
+        "kind": "starAlignment",
+        "x": -2.7,
+        "z": -4.4
+      },
+      {
+        "id": "stars-disc",
+        "name": "Conservar el disco estelar",
+        "kind": "item",
+        "x": 0,
+        "z": -4
+      }
+    ],
+    "obstacles": 17,
+    "lights": 3
+  },
+  {
+    "room": 17,
+    "title": "Cantera de los nombres",
+    "paused": false,
+    "actualRoom": 17,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 61,
+      "triangles": 21158,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "stoneworker",
+    "interactables": [
+      {
+        "id": "save17",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note17",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "quarry-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "quarry-chamber",
+        "name": "Entrar en la cámara del arco",
+        "kind": "door",
+        "target": 18,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "quarry-wedge",
+        "name": "Recoger la cuña marcada",
+        "kind": "item",
+        "x": -3.4,
+        "z": 1.8
+      }
+    ],
+    "obstacles": 22,
+    "lights": 3
+  },
+  {
+    "room": 18,
+    "title": "Cámara del arco",
+    "paused": false,
+    "actualRoom": 18,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 54,
+      "triangles": 20190,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "stoneworker",
+    "interactables": [
+      {
+        "id": "save18",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note18",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "quarry-back",
+        "name": "Volver a la cantera",
+        "kind": "door",
+        "target": 17,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "quarry-assembly",
+        "name": "Ensamblar el arco de piedra",
+        "kind": "quarryArch",
+        "x": -2.8,
+        "z": -4.4
+      },
+      {
+        "id": "quarry-plan",
+        "name": "Conservar el plano del umbral",
+        "kind": "item",
+        "x": 0,
+        "z": -4.05
+      }
+    ],
+    "obstacles": 18,
+    "lights": 3
+  },
+  {
+    "room": 19,
+    "title": "Hospital del camino",
+    "paused": false,
+    "actualRoom": 19,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 17,
+      "calls": 57,
+      "triangles": 20380,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "wardKeeper",
+    "interactables": [
+      {
+        "id": "save19",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note19",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "hospital-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "hospital-ward",
+        "name": "Entrar en la enfermería",
+        "kind": "door",
+        "target": 20,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "hospital-rowan",
+        "name": "Recoger hierbas de serbal",
+        "kind": "item",
+        "x": -2.3,
+        "z": 1.6
+      }
+    ],
+    "obstacles": 15,
+    "lights": 3
+  },
+  {
+    "room": 20,
+    "title": "Enfermería de los nombres",
+    "paused": false,
+    "actualRoom": 20,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 51,
+      "triangles": 20192,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "wardKeeper",
+    "interactables": [
+      {
+        "id": "save20",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note20",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "hospital-back",
+        "name": "Volver a la sala de camino",
+        "kind": "door",
+        "target": 19,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "hospital-remedy",
+        "name": "Comparar remedios e historiales",
+        "kind": "hospitalRemedy",
+        "x": -2.4,
+        "z": -2.2
+      },
+      {
+        "id": "hospital-record",
+        "name": "Salvar el cuaderno de Oona",
+        "kind": "item",
+        "x": 0,
+        "z": -4.1
+      },
+      {
+        "id": "hospital-testimony",
+        "name": "Conservar un testimonio",
+        "kind": "hospitalChoice",
+        "x": 2.2,
+        "z": -2.2
+      }
+    ],
+    "obstacles": 15,
+    "lights": 3
+  },
+  {
+    "room": 21,
+    "title": "Imprenta de frontera",
+    "paused": false,
+    "actualRoom": 21,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 53,
+      "triangles": 20194,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "typesetter",
+    "interactables": [
+      {
+        "id": "save21",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note21",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "press-1491-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "press-1491-inner",
+        "name": "Entrar en Sala de las planchas",
+        "kind": "door",
+        "target": 22,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "press-1491-clue",
+        "name": "Recoger Prueba de impresión",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6
+      }
+    ],
+    "obstacles": 14,
+    "lights": 3
+  },
+  {
+    "room": 22,
+    "title": "Sala de las planchas",
+    "paused": false,
+    "actualRoom": 22,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 14,
+      "calls": 54,
+      "triangles": 20162,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "typesetter",
+    "interactables": [
+      {
+        "id": "save22",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note22",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "press-1491-back",
+        "name": "Volver a Imprenta de frontera",
+        "kind": "door",
+        "target": 21,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "press-1491-evidence-0",
+        "name": "Inspeccionar Marca de la matriz",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15
+      },
+      {
+        "id": "press-1491-evidence-1",
+        "name": "Inspeccionar Titular adelantado",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15
+      },
+      {
+        "id": "press-1491-puzzle",
+        "name": "Ordena las planchas y bloquea la tirada falsa.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2
+      },
+      {
+        "id": "press-1491-artifact",
+        "name": "Conservar Plancha auténtica",
+        "kind": "item",
+        "x": 2.4,
+        "z": -4.1
+      }
+    ],
+    "obstacles": 14,
+    "lights": 3
+  },
+  {
+    "room": 23,
+    "title": "Casa Veyr de 1610",
+    "paused": false,
+    "actualRoom": 23,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 7,
+      "calls": 53,
+      "triangles": 20056,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "portrait",
+    "interactables": [
+      {
+        "id": "save23",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note23",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "veyr-1610-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "veyr-1610-inner",
+        "name": "Entrar en Galería de retratos",
+        "kind": "door",
+        "target": 24,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "veyr-1610-clue",
+        "name": "Recoger Inventario de Inés",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6
+      }
+    ],
+    "obstacles": 9,
+    "lights": 3
+  },
+  {
+    "room": 24,
+    "title": "Galería de retratos",
+    "paused": false,
+    "actualRoom": 24,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 54,
+      "triangles": 20054,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "portrait",
+    "interactables": [
+      {
+        "id": "save24",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note24",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "veyr-1610-back",
+        "name": "Volver a Casa Veyr de 1610",
+        "kind": "door",
+        "target": 23,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "veyr-1610-evidence-0",
+        "name": "Inspeccionar Fecha del inventario",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15
+      },
+      {
+        "id": "veyr-1610-evidence-1",
+        "name": "Inspeccionar Huella tras el retrato",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15
+      },
+      {
+        "id": "veyr-1610-puzzle",
+        "name": "Confronta inventario y genealogía para romper el asiento falso.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2
+      },
+      {
+        "id": "veyr-1610-artifact",
+        "name": "Conservar Acta original de Inés",
+        "kind": "item",
+        "x": 2.4,
+        "z": -4.1
+      }
+    ],
+    "obstacles": 9,
+    "lights": 3
+  },
+  {
+    "room": 25,
+    "title": "Teatro de autómatas",
+    "paused": false,
+    "actualRoom": 25,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 61,
+      "triangles": 22860,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "automaton",
+    "interactables": [
+      {
+        "id": "save25",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note25",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "theatre-1786-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "theatre-1786-inner",
+        "name": "Entrar en Tramoya de las voces",
+        "kind": "door",
+        "target": 26,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "theatre-1786-clue",
+        "name": "Recoger Partitura de poleas",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6
+      }
+    ],
+    "obstacles": 15,
+    "lights": 3
+  },
+  {
+    "room": 26,
+    "title": "Tramoya de las voces",
+    "paused": false,
+    "actualRoom": 26,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 62,
+      "triangles": 22592,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "automaton",
+    "interactables": [
+      {
+        "id": "save26",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note26",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "theatre-1786-back",
+        "name": "Volver a Teatro de autómatas",
+        "kind": "door",
+        "target": 25,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "theatre-1786-evidence-0",
+        "name": "Inspeccionar Polea grave",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15
+      },
+      {
+        "id": "theatre-1786-evidence-1",
+        "name": "Inspeccionar Contrapeso mudo",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15
+      },
+      {
+        "id": "theatre-1786-puzzle",
+        "name": "Alinea los contrapesos según la partitura.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2
+      },
+      {
+        "id": "theatre-1786-artifact",
+        "name": "Conservar Partitura del silencio",
+        "kind": "item",
+        "x": 2.4,
+        "z": -4.1
+      }
+    ],
+    "obstacles": 15,
+    "lights": 3
+  },
+  {
+    "room": 27,
+    "title": "Archivo fotográfico",
+    "paused": false,
+    "actualRoom": 27,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 16,
+      "calls": 60,
+      "triangles": 22552,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "developerShade",
+    "interactables": [
+      {
+        "id": "save27",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note27",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "photo-1899-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "photo-1899-inner",
+        "name": "Entrar en Cuarto de revelado",
+        "kind": "door",
+        "target": 28,
+        "x": 0,
+        "z": -6.1
+      },
+      {
+        "id": "photo-1899-clue",
+        "name": "Recoger Negativo anterior",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6
+      }
+    ],
+    "obstacles": 16,
+    "lights": 3
+  },
+  {
+    "room": 28,
+    "title": "Cuarto de revelado",
+    "paused": false,
+    "actualRoom": 28,
+    "zone": "entrada histórica",
+    "camera": [
+      3.2,
+      2.15,
+      5.7
+    ],
+    "corrected": false,
+    "draw": {
+      "frame": 15,
+      "calls": 61,
+      "triangles": 22624,
+      "points": 32,
+      "lines": 0
+    },
+    "enemy": "developerShade",
+    "interactables": [
+      {
+        "id": "save28",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note28",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5
+      },
+      {
+        "id": "photo-1899-back",
+        "name": "Volver a Archivo fotográfico",
+        "kind": "door",
+        "target": 27,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "photo-1899-evidence-0",
+        "name": "Inspeccionar Bisagras de la placa",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15
+      },
+      {
+        "id": "photo-1899-evidence-1",
+        "name": "Inspeccionar Baño de fijador",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15
+      },
+      {
+        "id": "photo-1899-puzzle",
+        "name": "Superpón los negativos y fija la puerta verdadera.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2
+      },
+      {
+        "id": "photo-1899-artifact",
+        "name": "Conservar Placa de la puerta",
+        "kind": "item",
+        "x": 2.4,
+        "z": -4.1
+      }
+    ],
+    "obstacles": 16,
+    "lights": 3
+  }
+]

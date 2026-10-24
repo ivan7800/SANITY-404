@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-24T07:56:11.399Z",
+  "initial": {
+    "kind": "nameRoot",
+    "health": 100
+  },
+  "phases": [
+    1,
+    2,
+    3
+  ],
+  "attacks": [
+    {
+      "before": 165,
+      "after": 115,
+      "phase": 1,
+      "health": 94
+    },
+    {
+      "before": 115,
+      "after": 65,
+      "phase": 2,
+      "health": 82
+    },
+    {
+      "before": 65,
+      "after": 65,
+      "phase": 2,
+      "health": 70
+    },
+    {
+      "before": 15,
+      "after": 15,
+      "phase": 3,
+      "health": 54
+    }
+  ],
+  "final": {
+    "enemyHealth": -35,
+    "enemyVisible": false,
+    "playerHealth": 54,
+    "defeated": [
+      "mansion-root"
+    ],
+    "paused": false,
+    "phase": 3
+  },
+  "errors": []
+}

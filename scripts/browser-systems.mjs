@@ -41,7 +41,12 @@ async function seed(changes, settings = {}) {
     window.game = { inspect: window.sanityInspect };
   });
   await page.getByRole("button", { name: "Continuar", exact: true }).click();
-  await page.waitForFunction(() => window.game.inspect().draw.frame > 3);
+  await page.waitForFunction((room) => {
+    const current = window.game.inspect();
+    return (
+      !current.paused && current.state.room === room && current.draw.frame > 3
+    );
+  }, changes.room ?? 0);
 }
 async function key(k) {
   const frame = await page.evaluate(() => window.game.inspect().draw.frame);

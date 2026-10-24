@@ -1,0 +1,30 @@
+{
+  "method": "Chrome DevTools, keydown/keyup reales en ventana Intel 1280x720",
+  "route": [
+    "planta 0 x=5 z=-1.5",
+    "subir escaleras planta 1",
+    "galería de retratos x=-4.94 z=-3.07",
+    "observatorio x=-1.39 z=-3.07",
+    "guardar en rellano x=1.94 z=-6.27",
+    "recargar y continuar en misma posición",
+    "volver a planta 0 x=4.96 z=-5.10"
+  ],
+  "saved": {
+    "floor": 1,
+    "x": 1.9411699999999974,
+    "z": -6.267119999999983,
+    "health": 100
+  },
+  "loaded": {
+    "floor": 1,
+    "x": 1.9411699999999974,
+    "z": -6.267119999999983,
+    "health": 100
+  },
+  "descended": {
+    "floor": 0,
+    "x": 4.95518,
+    "z": -5.09748
+  },
+  "enemyDefeatedForRoute": true
+}

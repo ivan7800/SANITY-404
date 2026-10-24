@@ -30,7 +30,7 @@ export const mansionThreats: Record<
   wrongReflection: {
     id: "mansion-reflection",
     title: "El Reflejo Equivocado",
-    spawn: [-1.3, 2.64, -2.1],
+    spawn: [-2.35, 2.64, -2.25],
     cue: 202,
   },
   nameRoot: {

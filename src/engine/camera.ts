@@ -8,6 +8,7 @@ export interface CameraContext {
   combat?: boolean;
   enemyKind?: string;
   focus?: T.Vector3;
+  threat?: boolean;
 }
 /** World-aligned controls are independent of the authored camera cuts. */
 export class CinematicCamera {
@@ -33,13 +34,18 @@ export class CinematicCamera {
       if (height > 2.3 && x < 1) {
         this.zone =
           x < -3.4 ? "sala de retratos superior" : "observatorio superior";
-        eye = new T.Vector3(
-          x < -3.4
-            ? T.MathUtils.clamp(x + 0.9, -5.9, -4)
-            : T.MathUtils.clamp(x + 0.9, -2.8, 0.1),
-          4.5,
-          T.MathUtils.clamp(z + 1.5, -4.8, -1.8),
-        );
+        // The gallery door sits between the old camera and Élise. Approach
+        // rooms from inside, and keep the gallery camera behind its door line.
+        eye =
+          z <= -5.1
+            ? new T.Vector3(T.MathUtils.clamp(x + 3.5, -5.5, 0.35), 4.5, -7.1)
+            : new T.Vector3(
+                x < -3.4
+                  ? T.MathUtils.clamp(x + 1.1, -5.5, -3.9)
+                  : T.MathUtils.clamp(x - 1.3, -2.6, -0.8),
+                4.5,
+                T.MathUtils.clamp(z + 2, -4.6, -1.9),
+              );
       } else if (height > 0.15) {
         this.zone = z < -5.1 ? "rellano superior" : "escalera Veyr";
         eye =
@@ -86,15 +92,24 @@ export class CinematicCamera {
     }
     const fighting = context.combat && context.enemy;
     if (fighting) {
-      // Keep both actors in the frame without crossing the established camera side.
-      eye.lerp(
-        new T.Vector3(
-          T.MathUtils.clamp(x + 3.2, -7.2, 7.2),
-          height + (context.enemyKind === "nameRoot" ? 2.45 : 2.15),
-          T.MathUtils.clamp(z + 3.5, -7.2, 7.2),
-        ),
-        0.45,
-      );
+      if (room === 0 && height > 2.3 && x < 1 && z > -5.1) {
+        // The generic combat pull crosses the upper rooms' walls and can put
+        // the boss directly between the lens and its attack warning.
+        if (context.enemyKind === "nameRoot") eye.set(-0.9, 3.95, -6.4);
+        else if (context.enemyKind === "wrongReflection")
+          eye.set(0.15, 4.55, -4.35);
+        else eye.set(x < -3.4 ? -5.9 : -2.55, 4.75, -4.55);
+      } else {
+        // Keep both actors in the frame without crossing the established camera side.
+        eye.lerp(
+          new T.Vector3(
+            T.MathUtils.clamp(x + 3.2, -7.2, 7.2),
+            height + (context.enemyKind === "nameRoot" ? 2.45 : 2.15),
+            T.MathUtils.clamp(z + 3.5, -7.2, 7.2),
+          ),
+          0.45,
+        );
+      }
     }
     // The historical return portals stand at z=6.1. Their tall meshes are
     // intentionally non-colliding, so the obstacle ray cannot move a camera
@@ -157,6 +172,8 @@ export class CinematicCamera {
           ),
         0.35,
       );
+    else if (context.threat && context.enemy && !context.focus)
+      desired.lerp(context.enemy.clone().add(new T.Vector3(0, 1.1, 0)), 0.18);
     else if (context.focus && context.focus.distanceTo(anchor) < 2.8)
       desired.lerp(context.focus, 0.42);
     if (!this.initialized || dt === 0 || reduced) this.target.copy(desired);
@@ -165,12 +182,16 @@ export class CinematicCamera {
     camera.lookAt(this.corrected ? anchor : this.target);
     const fov =
       fighting && context.enemyKind === "nameRoot"
-        ? 64
-        : context.mode === "modern"
-          ? 54
-          : fighting || context.focus
-            ? 59
-            : 58;
+        ? 68
+        : fighting && context.enemyKind === "wrongReflection"
+          ? 72
+          : context.mode === "modern"
+            ? 54
+            : room === 0 && height > 2.3 && x < 1
+              ? 63
+              : fighting || context.focus
+                ? 59
+                : 58;
     if (camera.fov !== fov) {
       camera.fov = fov;
       camera.updateProjectionMatrix();

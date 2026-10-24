@@ -23,6 +23,7 @@ export class TerrorDirector {
   private nextKnock = 13;
   private knocks = 0;
   private dissonancePlayed = false;
+  private widowPreludePlayed = false;
   private lastKind = "";
   constructor(private world: World) {
     this.initialLights = world.lights.map((light) => light.intensity);
@@ -69,6 +70,7 @@ export class TerrorDirector {
     settings: Settings,
     elapsed: number,
     sanity = 100,
+    widowAvailable = true,
   ) {
     this.time += dt;
     const room = this.world.room;
@@ -83,6 +85,22 @@ export class TerrorDirector {
       -1,
       Math.min(1, (enemy.position.x - player.position.x) / 6),
     );
+    if (
+      !this.widowPreludePlayed &&
+      widowAvailable &&
+      room === 0 &&
+      player.position.x > 3.7 &&
+      player.position.z < -2 &&
+      player.position.y > 0.4
+    ) {
+      const distance = player.position.distanceTo(new T.Vector3(5, 2.64, -5.7));
+      const played = audio.lament(
+        Math.max(-1, Math.min(1, (5 - player.position.x) / 6)),
+        distance,
+      );
+      if (played || audio.reduceAudio) this.widowPreludePlayed = true;
+      if (played) audio.silence(elapsed, 2.8);
+    }
     if (!this.entrancePlayed && this.time > 2.5) {
       this.entrancePlayed = true;
       audio.directional(
@@ -119,7 +137,10 @@ export class TerrorDirector {
       audio.directional(room === 8 ? 70 : room >= 9 ? 100 : 60, pan, 0.7);
       this.pulse = 1.6;
       this.reaction = 1.2;
-      if (kind === "widow") audio.lament(pan);
+      if (kind === "widow" && !this.widowPreludePlayed)
+        this.widowPreludePlayed =
+          audio.lament(pan, enemy.position.distanceTo(player.position)) ||
+          audio.reduceAudio;
     }
     if (
       upper &&

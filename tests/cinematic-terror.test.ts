@@ -27,6 +27,98 @@ it("el Huésped distingue la imagen visible de una pared que lo oculta", () => {
   expect(isThreatOnCamera(camera, guest, [])).toBe(false);
 });
 
+it("el Huésped solo cambia la pose durante una ausencia de mirada", () => {
+  const state = fresh();
+  state.floor = 1;
+  const player = character();
+  player.position.set(0, 2.64, -3);
+  const guest = createEnemy("guest");
+  guest.position.set(0, 2.64, -5.8);
+  const combat = new Combat(0, "guest");
+  const noop = () => {};
+  combat.update(
+    0.81,
+    state,
+    player,
+    guest,
+    [],
+    false,
+    noop,
+    noop,
+    false,
+    false,
+    0,
+    undefined,
+    false,
+  );
+  guest.position.set(0, 2.64, -5.8);
+  combat.update(
+    0.1,
+    state,
+    player,
+    guest,
+    [],
+    false,
+    noop,
+    noop,
+    false,
+    false,
+    0,
+    undefined,
+    true,
+  );
+  const pose = guest.userData.rig.head.rotation.y;
+  expect(pose).toBeCloseTo(0.18);
+  combat.update(
+    1,
+    state,
+    player,
+    guest,
+    [],
+    false,
+    noop,
+    noop,
+    false,
+    false,
+    0,
+    undefined,
+    true,
+  );
+  expect(guest.userData.rig.head.rotation.y).toBeCloseTo(pose);
+  combat.update(
+    0.81,
+    state,
+    player,
+    guest,
+    [],
+    false,
+    noop,
+    noop,
+    false,
+    false,
+    0,
+    undefined,
+    false,
+  );
+  guest.position.set(0, 2.64, -5.8);
+  combat.update(
+    0.1,
+    state,
+    player,
+    guest,
+    [],
+    false,
+    noop,
+    noop,
+    false,
+    false,
+    0,
+    undefined,
+    true,
+  );
+  expect(guest.userData.rig.head.rotation.y).toBeCloseTo(-0.12);
+});
+
 it("cada criatura articula una pieza distintiva y la Raíz cambia de silueta por fase", () => {
   const guest = createEnemy("guest");
   animateEnemyStyle(guest, 1, "guest", "frozen", 1, 0, 0.8);
@@ -122,7 +214,7 @@ it("las puertas superiores y el lamento reaccionan sin bloquear el paso", () => 
   const audio = {
     directional: vi.fn(),
     silence: vi.fn(),
-    lament: vi.fn(),
+    lament: vi.fn(() => true),
   } as unknown as Audio;
   const settings = { reduced: false, reduceFlashes: false } as Settings;
   director.update(0.3, player, enemy, combat, audio, settings, 3);
@@ -135,6 +227,82 @@ it("las puertas superiores y el lamento reaccionan sin bloquear el paso", () => 
   ).toBe(false);
   director.restore();
   expect(door.rotation.y).toBe(-0.8);
+  world.dispose();
+});
+
+it("la Viuda se anuncia con un solo lamento espacial al entrar en la escalera", () => {
+  const world = new World(0, [], [], []);
+  const director = new TerrorDirector(world);
+  const player = character();
+  player.position.set(5, 1.5, -4.2);
+  const widow = createEnemy("widow");
+  widow.position.set(5, 2.64, -5.7);
+  const combat = new Combat(0, "shade");
+  const audio = {
+    directional: vi.fn(),
+    silence: vi.fn(),
+    lament: vi.fn(() => true),
+  } as unknown as Audio;
+  const settings = { reduced: false, reduceFlashes: false } as Settings;
+  director.update(0.1, player, widow, combat, audio, settings, 3);
+  director.update(0.1, player, widow, combat, audio, settings, 3.1);
+  expect(audio.lament).toHaveBeenCalledOnce();
+  expect(
+    (audio.lament as ReturnType<typeof vi.fn>).mock.calls[0][1],
+  ).toBeGreaterThan(1);
+  director.restore();
+  world.dispose();
+});
+
+it("la escalera permanece en silencio si la Viuda fue derrotada", () => {
+  const world = new World(0, [], [], []);
+  const director = new TerrorDirector(world);
+  const player = character();
+  player.position.set(5, 1.5, -4.2);
+  const enemy = createEnemy("shade");
+  enemy.visible = false;
+  const audio = {
+    directional: vi.fn(),
+    silence: vi.fn(),
+    lament: vi.fn(() => true),
+  } as unknown as Audio;
+  director.update(
+    0.1,
+    player,
+    enemy,
+    new Combat(0, "shade"),
+    audio,
+    { reduced: false, reduceFlashes: false } as Settings,
+    3,
+    100,
+    false,
+  );
+  expect(audio.lament).not.toHaveBeenCalled();
+  director.restore();
+  world.dispose();
+});
+
+it("el lamento espera al audio activo al cargar una partida en la escalera", () => {
+  const world = new World(0, [], [], []);
+  const director = new TerrorDirector(world);
+  const player = character();
+  player.position.set(5, 1.5, -4.2);
+  const enemy = createEnemy("shade");
+  enemy.visible = false;
+  const combat = new Combat(0, "shade");
+  const audio = {
+    directional: vi.fn(),
+    silence: vi.fn(),
+    lament: vi.fn().mockReturnValueOnce(false).mockReturnValue(true),
+  } as unknown as Audio;
+  const settings = { reduced: false, reduceFlashes: false } as Settings;
+  director.update(0.1, player, enemy, combat, audio, settings, 1);
+  expect(audio.silence).not.toHaveBeenCalled();
+  director.update(0.1, player, enemy, combat, audio, settings, 1.1);
+  director.update(0.1, player, enemy, combat, audio, settings, 1.2);
+  expect(audio.lament).toHaveBeenCalledTimes(2);
+  expect(audio.silence).toHaveBeenCalledOnce();
+  director.restore();
   world.dispose();
 });
 
@@ -156,7 +324,32 @@ it("la cámara encuadra un encuentro en la planta superior a su altura real", ()
     .project(camera);
   expect(Math.abs(projected.x)).toBeLessThan(0.9);
   expect(Math.abs(projected.y)).toBeLessThan(0.9);
-  expect(camera.fov).toBe(64);
+  expect(director.corrected).toBe(false);
+  expect(camera.position.z).toBeLessThan(-6);
+  expect(camera.fov).toBe(68);
+  world.dispose();
+});
+
+it("el Reflejo conserva espacio lateral y un encuadre defendible", () => {
+  const world = new World(0, [], [], []);
+  const camera = new T.PerspectiveCamera(58, 16 / 9);
+  const director = new CinematicCamera();
+  const enemy = new T.Vector3(-1.3, 2.64, -2.1);
+  director.update(camera, -1.4, -3.8, 0, 0, true, world.upperObstacles, {
+    height: 2.64,
+    enemy,
+    enemyKind: "wrongReflection",
+    combat: true,
+  });
+  const projected = enemy
+    .clone()
+    .add(new T.Vector3(0, 1.1, 0))
+    .project(camera);
+  expect(director.corrected).toBe(false);
+  expect(camera.position.distanceTo(enemy)).toBeGreaterThan(2);
+  expect(Math.abs(projected.x)).toBeLessThan(0.9);
+  expect(Math.abs(projected.y)).toBeLessThan(0.9);
+  expect(camera.fov).toBe(72);
   world.dispose();
 });
 
@@ -171,7 +364,7 @@ it("los golpes espaciales son finitos y la aparición se borra al acercarse", ()
   const audio = {
     directional: vi.fn(),
     silence: vi.fn(),
-    lament: vi.fn(),
+    lament: vi.fn(() => true),
   } as unknown as Audio;
   const settings = { reduced: false, reduceFlashes: true } as Settings;
   director.update(6, player, enemy, combat, audio, settings, 6);

@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-24",
+  "browser": "Chrome DevTools conectado a Intel HD Graphics 620",
+  "input": "Eventos KeyboardEvent enviados a los mismos listeners de teclado del juego; no es un teclado físico",
+  "viewport": [881, 793],
+  "quality": "Baja",
+  "steps": [
+    { "at": "inicio", "x": 5, "z": -1.5, "floor": 0, "health": 100 },
+    { "at": "escalera", "x": 5, "z": -5.14365, "floor": 1, "frames": 81 },
+    { "at": "sala de retratos", "x": -4.94086, "z": -3.07464, "floor": 1, "item": "Folio del rellano" },
+    { "at": "observatorio", "x": -1.38712, "z": -3.07464, "floor": 1, "item": "Carta de la raíz" },
+    { "at": "guardado manual", "x": 1.94144, "z": -5.77356, "floor": 1, "toast": "Memoria conservada. Partida guardada." },
+    { "at": "recarga", "x": 1.94144, "z": -5.77356, "floor": 1, "items": ["Folio del rellano", "Carta de la raíz"] },
+    { "at": "descenso", "x": 4.91009, "z": -5.09883, "floor": 0, "health": 100 }
+  ],
+  "boss": {
+    "start": { "x": -1.3, "z": -2.85, "floor": 1, "health": 100 },
+    "phasesSeen": [1, 2, 3],
+    "effectiveHits": [
+      { "beforeEnemyHealth": 165, "phase": 1, "playerHealth": 70 },
+      { "beforeEnemyHealth": 115, "phase": 1, "playerHealth": 58 },
+      { "beforeEnemyHealth": 65, "phase": 2, "playerHealth": 34 },
+      { "beforeEnemyHealth": 15, "phase": 3, "playerHealth": 18 }
+    ],
+    "finalEnemyHealth": -35,
+    "enemyVisible": false,
+    "defeated": ["mansion-root"],
+    "playerHealth": 18,
+    "paused": false
+  },
+  "consoleErrorsAfterBoss": 0
+}

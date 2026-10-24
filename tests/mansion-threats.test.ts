@@ -9,6 +9,9 @@ import {
 import { fresh, parseSave } from "../src/systems/state";
 import { character } from "../src/world/character";
 import { createEnemy } from "../src/world/enemies";
+import { World } from "../src/world/scene";
+import { upperWalkable } from "../src/world/mansion-navigation";
+import { blocked } from "../src/systems/state";
 
 it("elige enemigos por posición, cordura y pruebas persistentes", () => {
   const state = fresh();
@@ -124,6 +127,7 @@ it("la Viuda baja físicamente y la Raíz cambia de fase según su salud", () =>
 it("el Reflejo reaparece detrás de Élise con una ventana de reacción", () => {
   const state = fresh();
   state.floor = 1;
+  state.sanity = 20;
   const player = character();
   player.position.set(-1.3, 2.64, -3);
   player.rotation.y = 0;
@@ -142,9 +146,81 @@ it("el Reflejo reaparece detrás de Élise con una ventana de reacción", () => 
     () => {},
     (text) => messages.push(text),
   );
-  expect(enemy.position.z).toBeCloseTo(-4.7);
-  expect(combat.enemyCooldown).toBeGreaterThan(0);
+  expect(enemy.position.z).toBeCloseTo(-5.5);
+  expect(combat.enemyCooldown).toBeGreaterThanOrEqual(1.6);
   expect(messages.some((text) => text.includes("reflejo"))).toBe(true);
+});
+
+it("el Reflejo mantiene separación corporal durante persecución y aviso", () => {
+  const state = fresh();
+  state.floor = 1;
+  state.sanity = 70;
+  const player = character();
+  player.position.set(-1.3, 2.64, -3.2);
+  const enemy = createEnemy("wrongReflection");
+  enemy.position.copy(player.position);
+  const combat = new Combat(0, "wrongReflection", "mansion-reflection");
+  combat.enemyCooldown = 5;
+  const obstacle = [
+    { x: 0.05, z: -3.2, w: 0.5, d: 0.5, y: 2.64, height: 2.18 },
+  ];
+  const noop = () => {};
+  combat.update(0.016, state, player, enemy, obstacle, false, noop, noop);
+  expect(
+    Math.hypot(
+      enemy.position.x - player.position.x,
+      enemy.position.z - player.position.z,
+    ),
+  ).toBeGreaterThanOrEqual(1.349);
+  expect(state.sanity).toBeCloseTo(70 - 0.016 * 0.6);
+  expect(state.health).toBe(100);
+  enemy.position.copy(player.position);
+  combat.windup = 0.4;
+  combat.update(0.016, state, player, enemy, obstacle, false, noop, noop);
+  expect(
+    Math.hypot(
+      enemy.position.x - player.position.x,
+      enemy.position.z - player.position.z,
+    ),
+  ).toBeGreaterThanOrEqual(1.349);
+  expect(combat.windup).toBeGreaterThan(0);
+});
+
+it("el Reflejo conserva distancia en las zonas transitables del observatorio", () => {
+  const world = new World(0, [], [], []);
+  const state = fresh();
+  state.floor = 1;
+  state.sanity = 20;
+  const player = character();
+  const enemy = createEnemy("wrongReflection");
+  const combat = new Combat(0, "wrongReflection", "mansion-reflection");
+  const noop = () => {};
+  let checked = 0;
+  for (let x = -3.1; x <= 0.3; x += 0.4)
+    for (let z = -4.4; z <= -1.6; z += 0.4) {
+      if (!upperWalkable(x, z) || blocked(x, z, world.upperObstacles)) continue;
+      player.position.set(x, 2.64, z);
+      enemy.position.copy(player.position);
+      combat.enemyCooldown = 99;
+      combat.windup = 0;
+      combat.update(
+        0.016,
+        state,
+        player,
+        enemy,
+        world.upperObstacles,
+        false,
+        noop,
+        noop,
+      );
+      expect(
+        Math.hypot(enemy.position.x - x, enemy.position.z - z),
+        `posición ${x.toFixed(1)},${z.toFixed(1)}`,
+      ).toBeGreaterThanOrEqual(1.349);
+      checked++;
+    }
+  expect(checked).toBeGreaterThan(30);
+  world.dispose();
 });
 
 it("el Reptante acelera al perder la mirada del jugador", () => {
