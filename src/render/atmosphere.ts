@@ -1,10 +1,12 @@
 import * as T from "three";
+import { lateChapterForRoom } from "../systems/late-chapters";
 export class Atmosphere {
   dust: T.Points;
   private mist: T.Mesh[] = [];
   private positions: Float32Array;
   private uploadTime = 0;
   constructor(scene: T.Scene, count: number, room = 0) {
+    const late = lateChapterForRoom(room);
     this.positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       this.positions[i * 3] = Math.sin(i * 11.13) * 7;
@@ -17,7 +19,21 @@ export class Atmosphere {
       g,
       new T.PointsMaterial({
         size: 0.022,
-        color: room === 8 ? 0xe2ad72 : room >= 9 ? 0xb8c4ad : 0xd0bf91,
+        color: late
+          ? late.colors[1]
+          : room >= 19
+            ? 0xafc5aa
+            : room >= 17
+              ? 0xb3b39c
+              : room >= 15
+                ? 0xb6bbdb
+                : room >= 13
+                  ? 0xa7c2bd
+                  : room === 8 || room >= 11
+                    ? 0xe2ad72
+                    : room >= 9
+                      ? 0xb8c4ad
+                      : 0xd0bf91,
         transparent: true,
         opacity: 0.27,
         depthWrite: false,
@@ -30,7 +46,21 @@ export class Atmosphere {
       const fog = new T.Mesh(
         new T.SphereGeometry(1, 12, 8),
         new T.MeshBasicMaterial({
-          color: room === 8 ? 0x98704d : room >= 9 ? 0x718b7e : 0x778b9a,
+          color: late
+            ? late.colors[0]
+            : room >= 19
+              ? 0x6e9682
+              : room >= 17
+                ? 0x858c78
+                : room >= 15
+                  ? 0x626e99
+                  : room >= 13
+                    ? 0x5b8084
+                    : room === 8 || room >= 11
+                      ? 0x98704d
+                      : room >= 9
+                        ? 0x718b7e
+                        : 0x778b9a,
           transparent: true,
           opacity: 0.025,
           depthWrite: false,

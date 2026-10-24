@@ -5,11 +5,41 @@ import { textureBudget, simplifyLowMaterials } from "./render/materials";
 import { FrameMetrics } from "./render/metrics";
 import { GpuTimer } from "./render/gpu-timer";
 import { CinematicCamera } from "./engine/camera";
-import { animateCharacter, animateDeath } from "./world/character";
+import {
+  animateCharacter,
+  animateDeath,
+  animateRitual,
+} from "./world/character";
+import { RitualVisual } from "./world/ritual-visual";
 import { luciusVarro } from "./world/lucius";
 import { isabelleDeMontfort } from "./world/isabelle";
+import { aurelia } from "./world/aurelia";
+import { maeve } from "./world/maeve";
+import { samira } from "./world/samira";
+import { idris } from "./world/idris";
+import { oona } from "./world/oona";
+import { lateHero } from "./world/late-chapters";
+import {
+  lateChapters,
+  lateChapterForRoom,
+  lateObjective,
+  lateArtifactUnlocked,
+  lateExitUnlocked,
+  inspectLateEvidence,
+  lateEvidenceCount,
+  latePuzzleStage,
+  solveLatePuzzle,
+} from "./systems/late-chapters";
 import { mansionFloorHeight } from "./world/mansion";
-import { createEnemy, enemyKindForRoom } from "./world/enemies";
+import { mansionMove } from "./world/mansion-navigation";
+import { activeMansionEchoes, mansionEchoes } from "./world/mansion-echoes";
+import { createEnemy, enemyKindForRoom, type EnemyKind } from "./world/enemies";
+import {
+  isObserved,
+  isThreatOnCamera,
+  mansionThreatAt,
+  mansionThreats,
+} from "./systems/mansion-threats";
 import { Input } from "./engine/input";
 import {
   World,
@@ -36,19 +66,39 @@ import {
   chooseMemory,
   memoryConsequence,
 } from "./systems/memory-choice";
-import { Combat } from "./systems/combat";
+import { Combat, type TargetZone } from "./systems/combat";
+import {
+  invokeRitual,
+  ritualSigns,
+  rituals,
+  ritualStatus,
+  type RitualSign,
+} from "./systems/ritual";
 import { Sanity } from "./systems/sanity";
 import { drinkTonic } from "./systems/inventory";
 import {
   chapters,
   completeChapter,
   romanObjective,
+  mosaicObjective,
+  abbeyObjective,
+  attemptMosaicPattern,
+  coastObjective,
+  correctCoastLedger,
+  starsObjective,
+  starAlignmentStep,
+  quarryObjective,
+  assembleQuarryArch,
+  hospitalObjective,
+  identifyHospitalRemedy,
+  keepHospitalTestimony,
+  romanEchoes,
   visitChapter,
 } from "./systems/campaign";
 import { readSettings } from "./systems/config";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
-app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
 const el = (id: string) => document.getElementById(id)!;
 const hud = {
   health: el("health"),
@@ -112,6 +162,16 @@ let state: State = fresh(),
   toastTime = 0,
   near: Interactable | undefined,
   settings = readSettings();
+let ritualVisual: RitualVisual | undefined;
+let pendingRitualSound: "veil" | "reading" | undefined;
+const mansionActors = new Map<
+  EnemyKind,
+  { actor: T.Group; corpse: T.Group; combat: Combat }
+>();
+let currentThreatKind: EnemyKind | undefined;
+const targetZones: TargetZone[] = ["torso", "arms", "head"];
+const targetNames = { torso: "TORSO", arms: "BRAZOS", head: "CABEZA" };
+let targetZone: TargetZone = "torso";
 audio.setVolume(settings.volume);
 audio.setReduceAudio(settings.reduceAudio);
 applyQuality(renderer, settings.quality);
@@ -140,10 +200,28 @@ function resume() {
   renderer.domElement.focus();
 }
 function loadRoom() {
+  mansionActors.clear();
+  currentThreatKind = undefined;
   if (!state.phase2.visited.includes(state.room))
     state.phase2.visited.push(state.room);
   if (state.room === 8) visitChapter(state.campaign, "roman-189");
-  if (state.room >= 9) visitChapter(state.campaign, "abbey-1348");
+  if (state.room === 9 || state.room === 10)
+    visitChapter(state.campaign, "abbey-1348");
+  if (state.room === 11 || state.room === 12)
+    visitChapter(state.campaign, "mosaic-312");
+  if (state.room === 13 || state.room === 14)
+    visitChapter(state.campaign, "coast-537");
+  if (state.room === 15 || state.room === 16)
+    visitChapter(state.campaign, "stars-783");
+  if (state.room === 17 || state.room === 18)
+    visitChapter(state.campaign, "quarry-1092");
+  if (state.room === 19 || state.room === 20)
+    visitChapter(state.campaign, "hospital-1217");
+  const late = lateChapterForRoom(state.room);
+  if (late) visitChapter(state.campaign, late.id);
+  ritualVisual?.dispose();
+  ritualVisual = undefined;
+  pendingRitualSound = undefined;
   terror?.restore();
   world?.dispose();
   world = new World(
@@ -154,16 +232,28 @@ function loadRoom() {
     state.collected,
     settings.quality,
     state.phase2,
+    state.campaign,
   );
-  player =
-    state.room === 8
+  player = late
+    ? lateHero(late)
+    : state.room === 8
       ? luciusVarro()
-      : state.room >= 9
-        ? isabelleDeMontfort()
-        : character();
+      : state.room === 17 || state.room === 18
+        ? idris()
+        : state.room === 19 || state.room === 20
+          ? oona()
+          : state.room === 15 || state.room === 16
+            ? samira()
+            : state.room === 13 || state.room === 14
+              ? maeve()
+              : state.room === 11 || state.room === 12
+                ? aurelia()
+                : state.room === 9 || state.room === 10
+                  ? isabelleDeMontfort()
+                  : character();
   player.position.set(
     state.x,
-    state.room === 0 ? mansionFloorHeight(state.x, state.z) : 0,
+    state.room === 0 ? mansionFloorHeight(state.x, state.z, state.floor) : 0,
     state.z,
   );
   world.scene.add(player);
@@ -208,19 +298,50 @@ function loadRoom() {
   world.scene.add(corpse);
   corpseTime = deathTime = 0;
   combat = new Combat(state.room);
+  if (state.room === 0) {
+    mansionActors.set("shade", { actor: enemy, corpse, combat });
+    currentThreatKind = "shade";
+  }
   terror = new TerrorDirector(world);
   sanity = new Sanity(world, state.elapsed);
   if (settings.quality === 1) simplifyLowMaterials(world.scene);
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
-  el("hero-name").textContent =
-    state.room >= 9
-      ? "ISABELLE DE MONTFORT · COPISTA"
-      : state.room === 8
-        ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
-        : "ÉLISE MOREAU · RESTAURADORA";
+  el("hero-name").textContent = late
+    ? late.hero
+    : state.room === 19 || state.room === 20
+      ? "OONA · CURANDERA"
+      : state.room === 17 || state.room === 18
+        ? "IDRIS · CANTERO"
+        : state.room === 15 || state.room === 16
+          ? "SAMIRA · ASTRÓNOMA"
+          : state.room === 13 || state.room === 14
+            ? "MAEVE · ESCRIBA DEL ARCHIVO COSTERO"
+            : state.room === 11 || state.room === 12
+              ? "AURELIA · ARTESANA DEL MOSAICO"
+              : state.room === 9 || state.room === 10
+                ? "ISABELLE DE MONTFORT · COPISTA"
+                : state.room === 8
+                  ? "LUCIUS VARRO · CARTÓGRAFO ROMANO"
+                  : "ÉLISE MOREAU · RESTAURADORA";
   el("sub").textContent = subtitles[state.room];
-  el("objective").textContent = state.room === 8 ? romanObjective(state) : "";
+  el("objective").textContent = late
+    ? lateObjective(state)
+    : state.room === 8
+      ? romanObjective(state)
+      : state.room === 11 || state.room === 12
+        ? mosaicObjective(state)
+        : state.room === 13 || state.room === 14
+          ? coastObjective(state)
+          : state.room === 15 || state.room === 16
+            ? starsObjective(state)
+            : state.room === 17 || state.room === 18
+              ? quarryObjective(state)
+              : state.room === 19 || state.room === 20
+                ? hospitalObjective(state)
+                : state.room === 9 || state.room === 10
+                  ? abbeyObjective(state)
+                  : "";
   cinematic.update(
     camera,
     state.x,
@@ -231,6 +352,55 @@ function loadRoom() {
     world.obstacles,
     { mode: settings.cameraMode, height: player.position.y },
   );
+}
+function syncMansionThreat() {
+  if (state.room !== 0) return;
+  const kind = mansionThreatAt(state);
+  if (kind === currentThreatKind) return;
+  enemy.visible = false;
+  corpse.visible = false;
+  let entry = mansionActors.get(kind);
+  const firstEncounter = !entry;
+  if (!entry) {
+    const spec = mansionThreats[kind as keyof typeof mansionThreats];
+    const actor = createEnemy(kind);
+    actor.position.set(...spec.spawn);
+    if (kind === "wrongReflection" && state.floor === 0)
+      actor.position.set(Math.max(-6.5, state.x - 1.2), 0, state.z - 1.2);
+    const fallen = createEnemy(kind);
+    fallen.visible = false;
+    if (settings.quality === 1) {
+      simplifyLowMaterials(actor);
+      simplifyLowMaterials(fallen);
+    }
+    world.scene.add(actor, fallen);
+    entry = { actor, corpse: fallen, combat: new Combat(0, kind, spec.id) };
+    mansionActors.set(kind, entry);
+  }
+  enemy = entry.actor;
+  corpse = entry.corpse;
+  entry.combat.stamina = combat.stamina;
+  entry.combat.attackCooldown = Math.max(
+    entry.combat.attackCooldown,
+    combat.attackCooldown,
+  );
+  entry.combat.dodge = combat.dodge;
+  entry.combat.hurt = combat.hurt;
+  combat = entry.combat;
+  const spec =
+    kind === "shade"
+      ? { id: "enemy0", title: "La sombra de los retratos", cue: 90 }
+      : mansionThreats[kind as keyof typeof mansionThreats];
+  enemy.visible = !state.defeated.includes(spec.id);
+  currentThreatKind = kind;
+  if (enemy.visible && firstEncounter) {
+    audio.directional(
+      spec.cue,
+      Math.max(-1, Math.min(1, (enemy.position.x - player.position.x) / 5)),
+      0.5,
+    );
+    toast(`${spec.title}: algo se mueve en la mansión.`);
+  }
 }
 function begin(s: State) {
   state = s;
@@ -307,15 +477,41 @@ function options() {
   });
 }
 function inventory() {
+  const inventoryLate = lateChapterForRoom(state.room);
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${state.room === 8 ? "gladius romano" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno"} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Doce capítulos conectados en diseño; ${state.campaign.completed.length} concluidos en esta partida. ${state.room === 8 ? romanObjective(state) : "El santuario romano se alcanza desde el vestíbulo."}</p><p>${
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${inventoryLate?.weapon ?? (state.room === 8 ? "gladius romano" : state.room === 19 || state.room === 20 ? "bastón de curandera" : state.room === 17 || state.room === 18 ? "martillo de cantero" : state.room === 15 || state.room === 16 ? "bastón astrolábico" : state.room === 13 || state.room === 14 ? "cuchillo de escriba" : state.room === 11 || state.room === 12 ? "martillo de teselas" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno")} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Doce capítulos conectados en diseño; ${state.campaign.completed.length} concluidos en esta partida. ${inventoryLate ? lateObjective(state) : state.room === 8 ? romanObjective(state) : state.room === 11 || state.room === 12 ? mosaicObjective(state) : state.room === 13 || state.room === 14 ? coastObjective(state) : state.room === 15 || state.room === 16 ? starsObjective(state) : state.room === 17 || state.room === 18 ? quarryObjective(state) : state.room === 19 || state.room === 20 ? hospitalObjective(state) : state.room === 9 || state.room === 10 ? abbeyObjective(state) : "El santuario romano se alcanza desde el vestíbulo."}</p><p>Testimonios romanos: ${romanEchoes.filter((echo) => state.campaign.witnessed.includes(echo.id)).length}/3. Los tres completan una memoria opcional.</p><p>${
+      romanEchoes
+        .filter((echo) => state.campaign.witnessed.includes(echo.id))
+        .map((echo) => `${echo.title}: ${echo.text}`)
+        .join("<br>") || "Aún no has leído ninguna estela romana."
+    }</p><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
+      activeMansionEchoes(state.items)
+        .map((echo) => `${echo.year} · ${echo.title}: ${echo.text}`)
+        .join("<br>") ||
+      "Las pruebas históricas todavía no han cambiado la casa."
+    }</p></details><details><summary>Pruebas históricas · ${lateChapters.reduce((count, chapter) => count + lateEvidenceCount(state, chapter), 0)}/8</summary><p>${
+      lateChapters
+        .flatMap((chapter) =>
+          chapter.evidence
+            .filter((_, index) =>
+              state.campaign.witnessed.includes(
+                `${chapter.id}-evidence-${index}`,
+              ),
+            )
+            .map(
+              (evidence) =>
+                `${chapter.year} · ${evidence.name}: ${evidence.text}`,
+            ),
+        )
+        .join("<br>") || "Todavía no has examinado pruebas de estas salas."
+    }</p></details><details><summary>Capítulos concluidos · ${state.campaign.completed.length}/12</summary><p>${
       chapters
         .filter((chapter) => state.campaign.completed.includes(chapter.id))
         .map(
           (chapter) => `${chapter.year} · ${chapter.hero} · ${chapter.place}`,
         )
         .join("<br>") || "Aún no has concluido un capítulo."
-    }</p><h2>Documentos</h2>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}`,
+    }</p></details><details><summary>Documentos · ${state.read.length}/${notes.length}</summary>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}</details>`,
   );
   button("close", resume);
   button("heal", () => {
@@ -361,8 +557,82 @@ function phase2Puzzle(id: PuzzleId) {
     });
   button("close", resume);
 }
+function ritualPhrase(id: string, sequence: RitualSign[]) {
+  const ritual = rituals.find((entry) => entry.id === id)!;
+  const status = ritualStatus(state, id);
+  if (status !== "ready") {
+    panel(
+      `<h2>${ritual.title}</h2><p>${status === "locked" ? "Necesitas la tablilla de Lucius y el códice de Isabelle." : status === "complete" ? "La frase ya está grabada en esta partida." : "No queda cordura suficiente para sostener esta frase."}</p><button id="close">Volver</button>`,
+    );
+    button("close", resume);
+    return;
+  }
+  panel(
+    `<div class="eyebrow">MESA DE LOS TRES SIGNOS · ${sequence.length}/3</div><h2>${ritual.title}</h2><p>${ritual.clue}</p><p>Signos elegidos: ${sequence.join(" · ") || "ninguno"}</p><div class="actions">${ritualSigns.map((sign) => `<button id="sign-${sign}">${sign}</button>`).join("")}<button id="close">Retirar las manos</button></div>`,
+  );
+  for (const sign of ritualSigns)
+    button(`sign-${sign}`, () => {
+      const next = [...sequence, sign];
+      if (next.length < 3) {
+        audio.tone(180 + next.length * 70, 0.18, "triangle");
+        ritualPhrase(id, next);
+        return;
+      }
+      const result = invokeRitual(state, id, next);
+      if (result === "cast") {
+        const kind = id as "veil" | "reading";
+        ritualVisual?.dispose();
+        ritualVisual = new RitualVisual(
+          world.scene,
+          state.x,
+          state.z,
+          kind,
+          settings.quality,
+        );
+        pendingRitualSound = kind;
+        panel(
+          `<h2>${ritual.title}</h2><p>${id === "veil" ? "El próximo golpe que alcance a Élise romperá el velo en vez de herirla por completo." : "Una inscripción oculta se ha vuelto visible en los sótanos de Veyr."}</p><button id="close">Continuar</button>`,
+        );
+        button("close", resume);
+      } else {
+        audio.tone(90, 0.35, "sawtooth");
+        panel(
+          `<h2>La frase se deshace</h2><p>El orden no sostiene el recuerdo. Pierdes 3 de cordura.</p><button id="retry">Intentar otra vez</button><button id="close">Volver</button>`,
+        );
+        button("retry", () => ritualPhrase(id, []));
+        button("close", resume);
+      }
+    });
+  button("close", resume);
+}
 function interact(o: Interactable) {
   audio.tone(260);
+  if (o.kind === "ritualSecret") {
+    panel(
+      '<div class="eyebrow">SÓTANO VEYR · NOMBRE RECUPERADO</div><h2>La piedra ya no miente</h2><p>La lectura de Élise revela una inscripción bajo el mortero: «El guardián fue Étienne Veyr. No abrió la puerta: se quedó para impedir que otros fueran borrados».</p><p>El plano de Idris marca esta misma piedra. El códice de Isabelle conserva el nombre.</p><button id="close">Volver</button>',
+    );
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "ritual") {
+    panel(
+      `<div class="eyebrow">VESTÍBULO · MESA DE LOS TRES SIGNOS</div><h2>Magia de testimonio</h2><p>Élise puede ordenar piedra, nombre y pausa. Cada frase exige cordura y deja una consecuencia distinta.</p>${rituals.map((ritual) => `<p><strong>${ritual.title}</strong> · ${ritual.clue}<br>Estado: ${ritualStatus(state, ritual.id) === "complete" ? "grabado" : ritualStatus(state, ritual.id) === "locked" ? "faltan la tablilla y el códice" : ritualStatus(state, ritual.id) === "exhausted" ? "cordura insuficiente" : `preparado · ${ritual.cost} de cordura`}</p>`).join("")}<div class="actions"><button id="ritual-veil">Formar el velo</button><button id="ritual-reading">Leer el umbral</button><button id="close">Volver</button></div>`,
+    );
+    button("ritual-veil", () => ritualPhrase("veil", []));
+    button("ritual-reading", () => ritualPhrase("reading", []));
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "mansionEcho") {
+    const echo = mansionEchoes.find((entry) => entry.id === o.value);
+    if (echo) {
+      panel(
+        `<div class="eyebrow">MANSIÓN VEYR · ${echo.year} EN 1927</div><h2>${echo.title}</h2><p>${echo.text}</p><button id="close">Volver</button>`,
+      );
+      button("close", resume);
+    }
+    return;
+  }
   if (o.kind === "galleryClue") {
     panel(
       '<div class="eyebrow">GALERÍA VEYR · 1927</div><h2>La bóveda de las cenizas</h2><p>Adrien marcó una estrella apagada sobre el lente. Debajo escribió: «Lo que arde no desaparece. Deja una palabra en la caja astronómica».</p><p>La carta del vestíbulo y este mapa apuntan al mismo recuerdo.</p><button id="close">Volver al rellano</button>',
@@ -479,7 +749,343 @@ function interact(o: Interactable) {
     button("close", resume);
     return;
   }
+  if (o.kind === "romanEcho") {
+    const echo = romanEchoes.find((entry) => entry.id === o.id);
+    if (!echo) return;
+    if (!state.campaign.witnessed.includes(echo.id)) {
+      state.campaign.witnessed.push(echo.id);
+      world.remove(o);
+      audio.tone(180, 0.45);
+      if (
+        romanEchoes.every((entry) =>
+          state.campaign.witnessed.includes(entry.id),
+        )
+      ) {
+        state.sanity = clamp(state.sanity + 12);
+        toast(
+          "Los tres testimonios fijan la memoria de Lucius. Recuperas 12 de cordura.",
+        );
+      }
+    }
+    panel(
+      `<div class="eyebrow">ROMA · TESTIMONIO ${romanEchoes.indexOf(echo) + 1}/3</div><h2>${echo.title}</h2><p>${echo.text}</p><p>La secuencia permanece en el diario incluso después de salir del santuario.</p><button id="close">Conservar el testimonio</button>`,
+    );
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "mosaicPuzzle") {
+    if (
+      !state.read.includes("11") ||
+      !state.items.includes("Pigmento de cinabrio")
+    ) {
+      toast("El registro y el cinabrio de la galería revelan el patrón.");
+      return;
+    }
+    if (state.items.includes("Boceto recompuesto")) {
+      toast("El rostro auténtico ya ha quedado fijado en el boceto.");
+      return;
+    }
+    panel(
+      '<div class="eyebrow">ROMA · 312 · HORNO</div><h2>El rostro sustraído</h2><p>Las tres capas de teselas esperan la secuencia del registro de Aurelia.</p><div class="actions"><button id="mosaic-answer0">Rojo · Negro · Claro</button><button id="mosaic-answer1">Claro · Rojo · Negro</button><button id="mosaic-answer2">Negro · Claro · Rojo</button><button id="close">Volver</button></div>',
+    );
+    for (let i = 0; i < 3; i++)
+      button("mosaic-answer" + i, () => {
+        if (attemptMosaicPattern(state, i) === "solved") {
+          const face = world.scene.getObjectByName("mosaic-restored-face");
+          if (face) face.visible = true;
+          audio.tone(560, 0.55);
+          toast(
+            "Aurelia recompone el rostro. El custodio revela la cámara del molde.",
+          );
+        } else {
+          toast("Las caras de las teselas cambian. Pierdes 5 de cordura.");
+        }
+        resume();
+      });
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "coastLedger") {
+    if (
+      !state.read.includes("13") ||
+      !state.read.includes("14") ||
+      !state.items.includes("Tabla de mareas")
+    ) {
+      toast("Necesitas ambos registros y la tabla de mareas del muelle.");
+      return;
+    }
+    if (state.items.includes("Registro corregido")) {
+      toast("La fecha auténtica ya está fijada en el registro.");
+      return;
+    }
+    panel(
+      '<div class="eyebrow">COSTA · 537 · DEPÓSITO</div><h2>La nave que no llegó</h2><p>¿Qué fecha y marea abrieron el canal para el barco sin nombre?</p><div class="actions"><button id="coast-answer0">Día doce · pleamar</button><button id="coast-answer1">Día trece · bajamar</button><button id="coast-answer2">Día catorce · pleamar</button><button id="close">Volver</button></div>',
+    );
+    for (let i = 0; i < 3; i++)
+      button("coast-answer" + i, () => {
+        if (correctCoastLedger(state, i) === "solved") {
+          audio.tone(420, 0.6);
+          toast("La tinta falsa se desprende. Ya puedes recuperar la lista.");
+        } else
+          toast("El mar devuelve nombres equivocados. Pierdes 6 de cordura.");
+        resume();
+      });
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "starAlignment") {
+    if (
+      !state.read.includes("15") ||
+      !state.read.includes("16") ||
+      !state.items.includes("Carta astral")
+    ) {
+      toast("Necesitas la carta y las observaciones de ambas salas.");
+      return;
+    }
+    if (state.items.includes("Patrón de Samira")) {
+      toast("Las tres horas ya señalan el astro ausente.");
+      return;
+    }
+    const stage = state.items.includes("Segundo azimut")
+      ? 3
+      : state.items.includes("Primer azimut")
+        ? 2
+        : 1;
+    panel(
+      `<div class="eyebrow">MONTAÑA · 783 · ASTROLABIO</div><h2>La estrella que falta</h2><p>Marca ${stage}/3. Sigue el cuaderno de Samira: su huella, su negación y su lugar vacío.</p><div class="actions"><button id="stars-answer0">Alba · este</button><button id="stars-answer1">Noche · centro</button><button id="stars-answer2">Ocaso · oeste</button><button id="close">Volver</button></div>`,
+    );
+    for (let i = 0; i < 3; i++)
+      button("stars-answer" + i, () => {
+        const result = starAlignmentStep(state, i);
+        const wheel = world.scene.getObjectByName("astrolabe-wheel");
+        if (result === "correct") {
+          if (wheel) wheel.rotation.z += Math.PI / 3;
+          audio.tone(430 + stage * 70, 0.35);
+          interact(o);
+        } else if (result === "solved") {
+          if (wheel) wheel.rotation.z = Math.PI;
+          audio.tone(610, 0.65);
+          toast("El astrolabio fija la ausencia. El disco puede recuperarse.");
+          resume();
+        } else {
+          if (wheel) wheel.rotation.z = 0;
+          toast(
+            "La cúpula cambia de estación. La secuencia vuelve al inicio; pierdes 5 de cordura.",
+          );
+          resume();
+        }
+      });
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "quarryArch") {
+    if (
+      !state.read.includes("17") ||
+      !state.read.includes("18") ||
+      !state.items.includes("Cuña marcada")
+    ) {
+      toast("La cuña y los dos cuadernos revelan el orden de los sillares.");
+      return;
+    }
+    if (state.items.includes("Arco ensamblado")) {
+      toast("El arco auténtico ya está asentado.");
+      return;
+    }
+    const stage = state.items.includes("Clave colocada")
+      ? 3
+      : state.items.includes("Base asentada")
+        ? 2
+        : 1;
+    panel(
+      `<div class="eyebrow">ALPES · 1092 · CÁMARA DEL ARCO</div><h2>La piedra que conserva un nombre</h2><p>Sillar ${stage}/3. Sigue las marcas originales del cuaderno de Idris.</p><div class="actions"><button id="quarry-answer0">Base de piedra</button><button id="quarry-answer1">Cierre de cristal</button><button id="quarry-answer2">Clave de bronce</button><button id="close">Volver</button></div>`,
+    );
+    for (let i = 0; i < 3; i++)
+      button("quarry-answer" + i, () => {
+        const result = assembleQuarryArch(state, i);
+        if (result === "correct") {
+          audio.tone(240 + stage * 80, 0.42);
+          interact(o);
+        } else if (result === "solved") {
+          const arch = world.scene.getObjectByName("quarry-assembled-arch");
+          if (arch) arch.visible = true;
+          audio.tone(560, 0.65);
+          toast("El arco auténtico se sostiene. El plano está al descubierto.");
+          resume();
+        } else {
+          toast(
+            "Los sillares cambian de nombre. Empieza de nuevo; pierdes 5 de cordura.",
+          );
+          resume();
+        }
+      });
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "hospitalRemedy") {
+    if (
+      !state.read.includes("19") ||
+      !state.read.includes("20") ||
+      !state.items.includes("Hierbas de serbal")
+    ) {
+      toast(
+        "Lee ambos historiales y recoge el serbal antes de elegir el remedio.",
+      );
+      return;
+    }
+    if (state.items.includes("Remedio identificado")) {
+      toast("El tratamiento de Bran ya está identificado.");
+      return;
+    }
+    panel(
+      '<div class="eyebrow">HOSPITAL · 1217 · BOTIQUÍN</div><h2>Una historia escrita sobre otra</h2><p>Ada recuerda su nombre y tiene fiebre. Bran no tiene fiebre, pero ha olvidado el suyo. ¿Qué remedio corresponde a Bran?</p><div class="actions"><button id="hospital-answer0">Raíz amarga</button><button id="hospital-answer1">Serbal</button><button id="hospital-answer2">Agua de la fuente</button><button id="close">Volver</button></div>',
+    );
+    for (let i = 0; i < 3; i++)
+      button("hospital-answer" + i, () => {
+        const result = identifyHospitalRemedy(state, i);
+        toast(
+          result === "solved"
+            ? "El serbal conserva el nombre de Bran. El cuaderno puede abrirse."
+            : "La historia cambia de paciente; pierdes 6 de cordura.",
+        );
+        audio.tone(result === "solved" ? 520 : 90, 0.55);
+        resume();
+      });
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "hospitalChoice") {
+    if (!state.items.includes("Cuaderno de Oona")) {
+      toast("Salva primero el cuaderno original.");
+      return;
+    }
+    if (
+      state.items.includes("Testimonio de Ada") ||
+      state.items.includes("Testimonio de Bran")
+    ) {
+      toast("El testimonio elegido ya está conservado en el cuaderno.");
+      return;
+    }
+    panel(
+      '<div class="eyebrow">HOSPITAL · 1217 · TESTIMONIO</div><h2>Una voz debe llegar al futuro</h2><p>Ada puede describir la fiebre y la memoria que resistió. Bran puede contar cómo una vida ajena ocupó la suya. Oona solo dispone de una página a salvo de la falsificación.</p><div class="actions"><button id="hospital-ada">Conservar a Ada</button><button id="hospital-bran">Conservar a Bran</button><button id="close">Volver</button></div>',
+    );
+    for (const choice of ["Ada", "Bran"] as const)
+      button("hospital-" + choice.toLowerCase(), () => {
+        if (keepHospitalTestimony(state, choice)) {
+          writeSave(state);
+          toast(`El testimonio de ${choice} queda a salvo.`);
+        }
+        resume();
+      });
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "lateEvidence") {
+    const chapter = lateChapterForRoom(state.room)!;
+    const index = Number(o.value);
+    const evidence = chapter.evidence[index];
+    if (inspectLateEvidence(state, chapter, index)) {
+      state.sanity = clamp(state.sanity - 2);
+      writeSave(state);
+      audio.tone(185 - index * 35, 0.28, "triangle");
+    }
+    panel(
+      `<div class="eyebrow">PRUEBA MATERIAL · ${chapter.year}</div><h2>${evidence.name}</h2><p>${evidence.text}</p><button id="close">Conservar en el diario</button>`,
+    );
+    button("close", resume);
+    return;
+  }
+  if (o.kind === "latePuzzle") {
+    const chapter = lateChapterForRoom(state.room)!;
+    const stage = latePuzzleStage(state, chapter);
+    const ready =
+      state.read.includes(String(chapter.room)) &&
+      state.read.includes(String(chapter.room + 1)) &&
+      state.items.includes(chapter.clue) &&
+      lateEvidenceCount(state, chapter) === chapter.evidence.length;
+    if (stage === chapter.order.length || !ready) {
+      panel(
+        `<div class="eyebrow">${chapter.year} · ${chapter.inner}</div><h2>${chapter.puzzleTask}</h2><p>${stage === chapter.order.length ? "El mecanismo ya está resuelto." : lateObjective(state)}</p><button id="close">Volver</button>`,
+      );
+      button("close", resume);
+      return;
+    }
+    panel(
+      `<div class="eyebrow">${chapter.year} · ${chapter.inner} · ${stage + 1}/3</div><h2>${chapter.puzzleTask}</h2><p>${chapter.steps[stage]}</p><div class="actions">${chapter.answers.map((answer, index) => `<button id="late-answer${index}">${answer}</button>`).join("")}<button id="close">Volver</button></div>`,
+    );
+    chapter.answers.forEach((_, index) =>
+      button(`late-answer${index}`, () => {
+        const result = solveLatePuzzle(state, chapter, index);
+        resume();
+        toast(
+          result === "wrong"
+            ? "La prueba se altera. Pierdes 6 de cordura."
+            : result === "locked"
+              ? lateObjective(state)
+              : result === "correct"
+                ? `Marca ${stage + 1}/3 conservada. Examina de nuevo el mecanismo.`
+                : result === "already"
+                  ? "El mecanismo ya está resuelto."
+                  : `Resuelto: ${chapter.solution}`,
+        );
+        if (result !== "locked" && result !== "already") writeSave(state);
+      }),
+    );
+    button("close", resume);
+    return;
+  }
   if (o.kind === "item") {
+    const lateItem = lateChapterForRoom(state.room);
+    if (lateItem && o.id === `${lateItem.id}-artifact`) {
+      if (!lateArtifactUnlocked(state, lateItem)) {
+        toast(lateObjective(state));
+        return;
+      }
+    }
+    if (
+      o.id === "hospital-record" &&
+      !state.items.includes("Remedio identificado")
+    ) {
+      toast(
+        "El cuaderno usa nombres falsos. Identifica primero el remedio de Bran.",
+      );
+      return;
+    }
+    if (o.id === "hospital-record" && !state.defeated.includes("enemy20")) {
+      toast("El custodio de salas retiene el cuaderno. Debes apartarlo.");
+      return;
+    }
+    if (o.id === "quarry-plan" && !state.items.includes("Arco ensamblado")) {
+      toast("El plano permanece sellado. Ensambla el arco auténtico.");
+      return;
+    }
+    if (o.id === "quarry-plan" && !state.defeated.includes("enemy18")) {
+      toast("El obrero petrificado protege el plano. Debes vencerlo.");
+      return;
+    }
+    if (o.id === "stars-disc" && !state.items.includes("Patrón de Samira")) {
+      toast("El disco no señala ninguna puerta. Alinea el astrolabio.");
+      return;
+    }
+    if (o.id === "stars-disc" && !state.defeated.includes("enemy16")) {
+      toast("El vigilante ciego guarda el disco. Debes apartarlo.");
+      return;
+    }
+    if (o.id === "coast-list" && !state.items.includes("Registro corregido")) {
+      toast("La lista está sellada por una fecha falsa. Corrige el registro.");
+      return;
+    }
+    if (o.id === "coast-list" && !state.defeated.includes("enemy14")) {
+      toast("El custodio ahogado protege los nombres. Debes vencerlo.");
+      return;
+    }
+    if (o.id === "mosaic-mold" && !state.items.includes("Boceto recompuesto")) {
+      toast("El molde está cubierto por un rostro falso. Recompón el mosaico.");
+      return;
+    }
+    if (o.id === "mosaic-mold" && !state.defeated.includes("enemy12")) {
+      toast("El custodio de teselas protege el molde. Debes vencerlo.");
+      return;
+    }
     if (
       o.id === "medieval-codex" &&
       !state.items.includes("Sello de Montfort")
@@ -505,6 +1111,14 @@ function interact(o: Interactable) {
     state.collected.push(o.value!);
     world.remove(o);
     toast("Recogido: " + o.value);
+    if (o.id === "upper-portraits" || o.id === "upper-observatory") {
+      panel(
+        o.id === "upper-portraits"
+          ? '<div class="eyebrow">SALA DE RETRATOS · 1927</div><h2>Folio de los huéspedes</h2><p>El mayordomo anotó una regla: «Permanece quieto mientras lo miren. Un parpadeo basta para ganar un paso». Bajo la tinta aparece el dibujo de una mujer que desciende la escalera cuando la casa oye pasos.</p><button id="close">Guardar el folio</button>'
+          : '<div class="eyebrow">OBSERVATORIO VEYR · 1927</div><h2>Carta de la raíz</h2><p>Las raíces bajo la mansión conservan nombres arrancados de los retratos. La carta marca tres pulsos de crecimiento. Después de cada barrida, el centro queda expuesto un instante.</p><button id="close">Guardar la carta</button>',
+      );
+      button("close", resume);
+    }
     if (o.id === "medieval-codex") {
       panel(
         `<div class="eyebrow">FRANCIA · 1348 · EPÍLOGO</div><h2>El último nombre</h2><p>Isabelle recupera el códice. En sus páginas ve el sello de Lucius Varro y el plano de una mansión que todavía no existe. Escribe un último mensaje para quien lo encuentre en 1927: «No luches contra lo que recuerda. Descubre quién le enseñó a olvidar».</p><p>El camino de regreso atraviesa el claustro.</p><button id="close">Continuar</button>`,
@@ -514,6 +1128,37 @@ function interact(o: Interactable) {
     if (o.id === "roman-tablet") {
       panel(
         `<div class="eyebrow">ROMA · 189 D. C. · EPÍLOGO</div><h2>El cartógrafo del vacío</h2><p>Lucius arranca del altar la última inscripción. El centurión permanece inmóvil. Bajo la piedra descubre el mapa de una casa que aún tardará siglos en construirse. Su nombre no figura en él: el de Élise Moreau sí.</p><p>La tablilla queda ligada a su recuerdo. El arco al sur conduce de regreso a 1927.</p><button id="close">Continuar</button>`,
+      );
+      button("close", resume);
+    }
+    if (o.id === "mosaic-mold") {
+      panel(
+        '<div class="eyebrow">ROMA · 312 · EPÍLOGO</div><h2>Un rostro conservado</h2><p>El molde no muestra a Aurelia: conserva la cara de alguien que aún no ha nacido. En el reverso está el signo de Lucius. Aurelia lo envuelve en lino y lo deja entre los cimientos del taller para la próxima testigo.</p><p>El pórtico de la galería lleva de regreso a 1927.</p><button id="close">Continuar</button>',
+      );
+      button("close", resume);
+    }
+    if (o.id === "coast-list") {
+      panel(
+        '<div class="eyebrow">COSTA · 537 · EPÍLOGO</div><h2>Los pasajeros ausentes</h2><p>Maeve copia los nombres legibles: Livia, Aedan y Mara. Una cuarta línea dice «Adrien Moreau», un niño que aún no ha nacido. La lista queda sellada en una caja de sal; una restauradora podrá abrirla en 1927.</p><p>La escalinata del muelle es la última salida.</p><button id="close">Continuar</button>',
+      );
+      button("close", resume);
+    }
+    if (o.id === "stars-disc") {
+      panel(
+        '<div class="eyebrow">MONTAÑA · 783 · EPÍLOGO</div><h2>El centro vacío</h2><p>Samira descubre que el disco no apunta a una estrella, sino a un umbral construido siglos después. Graba las tres horas en bronce y esconde la pieza bajo la terraza. En 1927, la caja astronómica de Veyr podrá reconocerla.</p><p>Vuelve por la terraza antes de que el vigilante regrese.</p><button id="close">Continuar</button>',
+      );
+      button("close", resume);
+    }
+    if (o.id === "quarry-plan") {
+      panel(
+        '<div class="eyebrow">ALPES · 1092 · EPÍLOGO</div><h2>Un arco para otra casa</h2><p>Idris conserva el plano auténtico. La salida dibujada en él retrocede cada vez que intenta cruzarla; el arco construido, en cambio, permanece. Envuelve el dibujo y lo deja bajo la primera piedra destinada a Veyr.</p><p>La rampa de la cantera conduce de regreso a 1927.</p><button id="close">Continuar</button>',
+      );
+      button("close", resume);
+    }
+    if (lateItem && o.id === `${lateItem.id}-artifact`) {
+      writeSave(state);
+      panel(
+        `<div class="eyebrow">${lateItem.year} · EPÍLOGO</div><h2>${lateItem.artifact}</h2><p>${lateItem.epilogue}</p><button id="close">Continuar</button>`,
       );
       button("close", resume);
     }
@@ -559,6 +1204,207 @@ function interact(o: Interactable) {
     button("close", resume);
   }
   if (o.kind === "door") {
+    const lateDoor = lateChapters.find((chapter) =>
+      o.id.startsWith(`${chapter.id}-`),
+    );
+    if (
+      lateDoor &&
+      o.id === `${lateDoor.id}-inner` &&
+      !state.items.includes(lateDoor.clue)
+    ) {
+      toast(lateDoor.pickup);
+      return;
+    }
+    if (
+      lateDoor &&
+      o.id === `${lateDoor.id}-return` &&
+      !state.campaign.completed.includes(lateDoor.id)
+    ) {
+      if (!lateExitUnlocked(state, lateDoor)) {
+        toast(lateObjective(state));
+        return;
+      }
+      completeChapter(state.campaign, lateDoor.id);
+      writeSave(state);
+      panel(
+        `<div class="eyebrow">${lateDoor.year} · CAPÍTULO CONCLUIDO</div><h2>${lateDoor.place}</h2><p>${lateDoor.epilogue} La prueba queda en el inventario para la siguiente época.</p><button id="close">Regresar a 1927</button>`,
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = 0;
+        state.z = 4.4;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
+    if (
+      o.id === "hospital-ward" &&
+      !state.items.includes("Hierbas de serbal")
+    ) {
+      toast("Recoge el serbal de la sala de camino antes de entrar.");
+      return;
+    }
+    if (
+      o.id === "hospital-return" &&
+      !state.campaign.completed.includes("hospital-1217")
+    ) {
+      if (!hospitalObjective(state).startsWith("Regresa")) {
+        toast(hospitalObjective(state));
+        return;
+      }
+      completeChapter(state.campaign, "hospital-1217");
+      writeSave(state);
+      const witness = state.items.includes("Testimonio de Ada")
+        ? "Ada"
+        : "Bran";
+      panel(
+        `<div class="eyebrow">PASO DE MONTAÑA · 1217 · RECORRIDO CONCLUIDO</div><h2>El nombre bajo la fiebre</h2><p>Oona salva el cuaderno y la voz de ${witness}. El hospital queda atrás, pero el registro viajará hasta Isabelle de Montfort.</p><button id="close">Regresar a 1927</button>`,
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = 2.6;
+        state.z = -3.3;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
+    if (o.id === "quarry-chamber" && !state.items.includes("Cuña marcada")) {
+      toast("Las marcas de la cuña permiten abrir la cámara del arco.");
+      return;
+    }
+    if (
+      o.id === "quarry-return" &&
+      !state.campaign.completed.includes("quarry-1092")
+    ) {
+      if (!quarryObjective(state).startsWith("Sal")) {
+        toast(quarryObjective(state));
+        return;
+      }
+      completeChapter(state.campaign, "quarry-1092");
+      writeSave(state);
+      panel(
+        '<div class="eyebrow">ALPES · 1092 · RECORRIDO CONCLUIDO</div><h2>La forma del umbral</h2><p>Idris abandona la cantera con un plano que la piedra no puede alterar. El arco auténtico queda de pie para quien llegue después.</p><button id="close">Regresar a 1927</button>',
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = -6.2;
+        state.z = 0;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
+    if (o.id === "stars-dome" && !state.items.includes("Carta astral")) {
+      toast("La cúpula exige la carta astral de la terraza.");
+      return;
+    }
+    if (
+      o.id === "stars-return" &&
+      !state.campaign.completed.includes("stars-783")
+    ) {
+      if (!starsObjective(state).startsWith("Cruza")) {
+        toast(starsObjective(state));
+        return;
+      }
+      completeChapter(state.campaign, "stars-783");
+      writeSave(state);
+      panel(
+        '<div class="eyebrow">MONTAÑA · 783 · RECORRIDO CONCLUIDO</div><h2>Una posición imposible</h2><p>Samira deja el disco oculto. La marca señala el mismo umbral que Lucius vio en piedra, Aurelia conservó en un molde y Maeve encontró entre los nombres perdidos.</p><button id="close">Regresar a 1927</button>',
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = -6.2;
+        state.z = -2.5;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
+    if (o.id === "coast-vault" && !state.items.includes("Tabla de mareas")) {
+      toast("La puerta del depósito exige la tabla de mareas del muelle.");
+      return;
+    }
+    if (
+      o.id === "coast-return" &&
+      !state.campaign.completed.includes("coast-537")
+    ) {
+      if (!coastObjective(state).startsWith("Evacúa")) {
+        toast(coastObjective(state));
+        return;
+      }
+      completeChapter(state.campaign, "coast-537");
+      writeSave(state);
+      panel(
+        '<div class="eyebrow">COSTA · 537 · RECORRIDO CONCLUIDO</div><h2>La lista que llegó a tierra</h2><p>Maeve sale antes de que el depósito se llene. Su lista conserva nombres que el Intervalo quiso borrar y queda junto a las pruebas de Lucius y Aurelia.</p><button id="close">Regresar a 1927</button>',
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = -6.2;
+        state.z = 2.5;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
+    if (
+      o.id === "medieval-return" &&
+      !state.campaign.completed.includes("abbey-1348") &&
+      abbeyObjective(state).startsWith("Regresa")
+    ) {
+      completeChapter(state.campaign, "abbey-1348");
+      writeSave(state);
+      panel(
+        '<div class="eyebrow">FRANCIA · 1348 · RECORRIDO CONCLUIDO</div><h2>El nombre que sobrevivió</h2><p>Isabelle oculta el códice entre los muros del claustro. Siglos después, Élise encontrará su lectura junto a la tablilla de Lucius y el molde de Aurelia.</p><button id="close">Regresar a 1927</button>',
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = -5.2;
+        state.z = -4.2;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
+    if (
+      o.id === "mosaic-kiln" &&
+      !state.items.includes("Pigmento de cinabrio")
+    ) {
+      toast(
+        "Necesitas el cinabrio de la galería para revelar el patrón del horno.",
+      );
+      return;
+    }
+    if (
+      o.id === "mosaic-return" &&
+      !state.campaign.completed.includes("mosaic-312")
+    ) {
+      if (!mosaicObjective(state).startsWith("Regresa")) {
+        toast(mosaicObjective(state));
+        return;
+      }
+      completeChapter(state.campaign, "mosaic-312");
+      writeSave(state);
+      panel(
+        '<div class="eyebrow">ROMA · 312 · RECORRIDO CONCLUIDO</div><h2>El segundo testigo</h2><p>Aurelia deja el molde en un muro que siglos después formará parte de la casa Veyr. La tablilla de Lucius y su mosaico muestran ahora el mismo rostro ausente.</p><button id="close">Regresar a 1927</button>',
+      );
+      button("close", () => {
+        state.room = 0;
+        state.x = 6.2;
+        state.z = -0.6;
+        loadRoom();
+        writeSave(state);
+        resume();
+      });
+      return;
+    }
     const phase2Lock = phase2DoorLocked(o.id, state.phase2);
     if (phase2Lock) {
       toast(phase2Lock);
@@ -609,7 +1455,14 @@ function interact(o: Interactable) {
       return;
     }
     state.room = o.target!;
-    if (o.id === "legacy-passage" || o.id === "legacy-back") {
+    if (lateDoor) {
+      state.x = 0;
+      state.z = o.id.endsWith("-back")
+        ? -4.2
+        : o.id.endsWith("-return")
+          ? 4.4
+          : 5.2;
+    } else if (o.id === "legacy-passage" || o.id === "legacy-back") {
       state.x = o.id === "legacy-passage" ? -2.8 : 2.7;
       state.z = -4.3;
     } else if (
@@ -627,6 +1480,72 @@ function interact(o: Interactable) {
         o.id === "medieval-back"
           ? 5.2
           : -4.2;
+    } else if (
+      ["mosaic-portal", "mosaic-return", "mosaic-kiln", "mosaic-back"].includes(
+        o.id,
+      )
+    ) {
+      state.x = o.id === "mosaic-return" ? 6.2 : 0;
+      state.z =
+        o.id === "mosaic-kiln" || o.id === "mosaic-portal"
+          ? 5.2
+          : o.id === "mosaic-return"
+            ? -0.6
+            : -4.2;
+    } else if (
+      ["coast-portal", "coast-return", "coast-vault", "coast-back"].includes(
+        o.id,
+      )
+    ) {
+      state.x = o.id === "coast-return" ? -6.2 : 0;
+      state.z =
+        o.id === "coast-portal" || o.id === "coast-vault"
+          ? 5.2
+          : o.id === "coast-return"
+            ? 2.5
+            : -4.2;
+    } else if (
+      ["stars-portal", "stars-return", "stars-dome", "stars-back"].includes(
+        o.id,
+      )
+    ) {
+      state.x = o.id === "stars-return" ? -6.2 : 0;
+      state.z =
+        o.id === "stars-portal" || o.id === "stars-dome"
+          ? 5.2
+          : o.id === "stars-return"
+            ? -2.5
+            : -4.2;
+    } else if (
+      [
+        "quarry-portal",
+        "quarry-return",
+        "quarry-chamber",
+        "quarry-back",
+      ].includes(o.id)
+    ) {
+      state.x = o.id === "quarry-return" ? -6.2 : 0;
+      state.z =
+        o.id === "quarry-portal" || o.id === "quarry-chamber"
+          ? 5.2
+          : o.id === "quarry-return"
+            ? 0
+            : -4.2;
+    } else if (
+      [
+        "hospital-portal",
+        "hospital-return",
+        "hospital-ward",
+        "hospital-back",
+      ].includes(o.id)
+    ) {
+      state.x = o.id === "hospital-return" ? 2.6 : 0;
+      state.z =
+        o.id === "hospital-portal" || o.id === "hospital-ward"
+          ? 5.2
+          : o.id === "hospital-return"
+            ? -3.3
+            : -4.2;
     } else if (o.id === "roman-portal" || o.id === "roman-return") {
       state.x = 0;
       state.z = o.id === "roman-portal" ? 5.2 : -4.2;
@@ -681,7 +1600,7 @@ function interact(o: Interactable) {
       return;
     }
     panel(
-      `<div class="eyebrow">EL MECANISMO ${o.target! + 1}</div><h2>Una palabra, una ausencia</h2><p>Tres inscripciones rodean la cerradura. Los documentos explican el orden. ¿Qué palabra corresponde a este sello?</p><div class="actions">${["Ceniza", "Marea", "Umbral"].map((s, i) => `<button id="answer${i}">${s}</button>`).join("")}<button id="close">Volver</button></div>`,
+      `<div class="eyebrow">EL MECANISMO ${o.target! + 1}</div><h2>Una palabra, una ausencia</h2><p>Tres inscripciones rodean la cerradura. Los documentos explican el orden. ¿Qué palabra corresponde a este sello?</p>${o.id === "mansion-puzzle" && state.items.includes("Disco estelar") ? "<p>El disco de Samira apunta al comienzo: CENIZA.</p>" : ""}<div class="actions">${["Ceniza", "Marea", "Umbral"].map((s, i) => `<button id="answer${i}">${s}</button>`).join("")}<button id="close">Volver</button></div>`,
     );
     for (let i = 0; i < 3; i++)
       button("answer" + i, () => {
@@ -709,7 +1628,7 @@ function interact(o: Interactable) {
     const temporalEnding = legacyEnding(state);
     const chosenEnding = temporalEnding && memoryConsequence(state);
     panel(
-      `<div class="eyebrow">FIN · ${temporalEnding ? temporalEnding.title : state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${temporalEnding ? "Lo que tres épocas protegieron." : state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${temporalEnding ? temporalEnding.text + (chosenEnding ? " " + chosenEnding.description : "") : state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/5</p><button id="finish">Volver al título</button>`,
+      `<div class="eyebrow">FIN · ${temporalEnding ? temporalEnding.title : state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${temporalEnding ? "Lo que tres épocas protegieron." : state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${temporalEnding ? temporalEnding.text + (chosenEnding ? " " + chosenEnding.description : "") : state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/${notes.length}</p><button id="finish">Volver al título</button>`,
     );
     button("finish", () => {
       started = false;
@@ -719,8 +1638,55 @@ function interact(o: Interactable) {
 }
 function update(dt: number) {
   const c = input.poll();
-  if (state.room === 8) {
-    const objective = romanObjective(state);
+  if (state.room === 0) {
+    const place =
+      state.floor === 0
+        ? names[0]
+        : state.x < -3.45 && state.z > -5.1
+          ? "Sala de retratos · planta superior"
+          : state.x < 0.65 && state.z > -5.1
+            ? "Observatorio Veyr · planta superior"
+            : "Galería del rellano · planta superior";
+    if (el("location").textContent !== place)
+      el("location").textContent = place;
+    const objective =
+      state.floor === 1
+        ? state.items.includes("Folio del rellano") &&
+          state.items.includes("Carta de la raíz")
+          ? "Las dos pruebas despiertan la raíz en el observatorio. Puedes regresar por la escalera."
+          : "Explora las dos salas del rellano y conserva sus documentos."
+        : "La escalera del muro este conduce a la galería superior.";
+    if (el("objective").textContent !== objective)
+      el("objective").textContent = objective;
+  }
+  if (input.take("KeyC")) {
+    targetZone =
+      targetZones[(targetZones.indexOf(targetZone) + 1) % targetZones.length];
+    el("target-zone").textContent = `OBJETIVO · ${targetNames[targetZone]}`;
+    toast(
+      targetZone === "head"
+        ? "Cabeza: daño mayor, exige apuntar de frente."
+        : targetZone === "arms"
+          ? "Brazos: daño menor, retrasa el próximo ataque."
+          : "Torso: golpe fiable.",
+    );
+  }
+  if (state.room >= 8) {
+    const objective = lateChapterForRoom(state.room)
+      ? lateObjective(state)
+      : state.room === 8
+        ? romanObjective(state)
+        : state.room === 9 || state.room === 10
+          ? abbeyObjective(state)
+          : state.room === 11 || state.room === 12
+            ? mosaicObjective(state)
+            : state.room === 13 || state.room === 14
+              ? coastObjective(state)
+              : state.room === 15 || state.room === 16
+                ? starsObjective(state)
+                : state.room === 17 || state.room === 18
+                  ? quarryObjective(state)
+                  : hospitalObjective(state);
     if (el("objective").textContent !== objective)
       el("objective").textContent = objective;
   }
@@ -770,12 +1736,25 @@ function update(dt: number) {
   const speed = combat.dodge > 0 ? 6.8 : c.guard ? 1.2 : c.run ? 4.1 : 2.7,
     dx = (x * Math.cos(yaw) + z * Math.sin(yaw)) * speed * dt,
     dz = (-x * Math.sin(yaw) + z * Math.cos(yaw)) * speed * dt;
-  const p = move(state.x, state.z, dx, dz, world.obstacles);
+  let p: { x: number; z: number };
+  if (state.room === 0) {
+    const next = mansionMove(
+      state.x,
+      state.z,
+      dx,
+      dz,
+      state.floor,
+      world.obstacles,
+      world.upperObstacles,
+    );
+    state.floor = next.level;
+    p = next;
+  } else p = move(state.x, state.z, dx, dz, world.obstacles);
   state.x = p.x;
   state.z = p.z;
   player.position.set(
     p.x,
-    state.room === 0 ? mansionFloorHeight(p.x, p.z) : 0,
+    state.room === 0 ? mansionFloorHeight(p.x, p.z, state.floor) : 0,
     p.z,
   );
   if (len > 0.1) {
@@ -789,9 +1768,11 @@ function update(dt: number) {
       audio.lastStep = state.elapsed;
     }
   }
+  syncMansionThreat();
   contact[0].position.copy(player.position).setY(player.position.y + 0.025);
-  contact[1].position.copy(enemy.position).setY(0.025);
-  threat.position.copy(enemy.position).setY(0.035);
+  contact[1].position.copy(enemy.position).setY(enemy.position.y + 0.025);
+  contact[1].visible = enemy.visible;
+  threat.position.copy(enemy.position).setY(enemy.position.y + 0.035);
   threat.visible =
     enemy.visible && enemy.position.distanceTo(player.position) < 2.8;
   const tell =
@@ -811,13 +1792,25 @@ function update(dt: number) {
     state,
     player,
     enemy,
-    world.obstacles,
+    state.room === 0 && state.floor === 1
+      ? world.upperObstacles
+      : world.obstacles,
     lightAttack,
     (f, d) => audio.tone(f, d, "triangle"),
     toast,
     c.guard,
     heavyAttack,
     c.run || lightAttack || heavyAttack ? 1 : len > 0.1 ? 0.25 : 0,
+    targetZone,
+    combat.kind === "guest"
+      ? isThreatOnCamera(camera, enemy, world.upperObstacles)
+      : isObserved(
+          state.x,
+          state.z,
+          player.rotation.y,
+          enemy.position.x,
+          enemy.position.z,
+        ),
   );
   if (wasAlive && !enemy.visible) {
     corpse.position.copy(enemy.position);
@@ -837,7 +1830,8 @@ function update(dt: number) {
   );
   hud.hitFeedback.classList.toggle("blocked", combat.guarding);
   audio.ambient(state.elapsed, state.sanity);
-  terror.update(dt, player, enemy, combat, audio, settings, state.elapsed);
+  if (pendingRitualSound && audio.ritual(pendingRitualSound))
+    pendingRitualSound = undefined;
   animateCharacter(
     player,
     state.elapsed,
@@ -848,6 +1842,14 @@ function update(dt: number) {
     c.run,
     dt,
   );
+  if (ritualVisual) {
+    if (ritualVisual.update(dt))
+      animateRitual(player, ritualVisual.elapsed / ritualVisual.duration);
+    else {
+      ritualVisual.dispose();
+      ritualVisual = undefined;
+    }
+  }
   world.shadowBudget.mark(
     len > 0.1 ||
       combat.animation > 0 ||
@@ -864,6 +1866,26 @@ function update(dt: number) {
   world.lastEnemyX = enemy.position.x;
   world.lastEnemyZ = enemy.position.z;
   world.lastEnemyVisible = enemy.visible;
+  near = world.nearest(state.x, state.z, 1.9, player.position.y);
+  const inspectionFocus =
+    (near &&
+      [
+        "ritual",
+        "ritualSecret",
+        "mansionEcho",
+        "seal",
+        "phase2Puzzle",
+        "memoryChoice",
+        "legacy",
+        "galleryClue",
+      ].includes(near.kind)) ||
+    near?.level === 1
+      ? new T.Vector3(
+          near.x,
+          near.level === 1 || near.kind === "galleryClue" ? 3.85 : 1.25,
+          near.z,
+        )
+      : undefined;
   cinematic.update(
     camera,
     state.x,
@@ -871,20 +1893,23 @@ function update(dt: number) {
     state.room,
     dt,
     settings.reduced,
-    world.obstacles,
+    state.room === 0 && state.floor === 1
+      ? world.upperObstacles
+      : world.obstacles,
     {
       mode: settings.cameraMode,
       height: player.position.y,
       enemy: enemy.position,
+      enemyKind: combat.kind,
       combat: enemy.visible && enemy.position.distanceTo(player.position) < 2.8,
+      focus: inspectionFocus,
     },
   );
-  near = world.nearest(state.x, state.z, 1.9, player.position.y);
   world.highlight.visible = Boolean(near);
   if (near)
     world.highlight.position.set(
       near.x,
-      near.kind === "galleryClue" ? 2.715 : 0.075,
+      near.level === 1 || near.kind === "galleryClue" ? 2.715 : 0.075,
       near.z,
     );
   world.atmosphere.update(dt, state.elapsed, settings.reduced);
@@ -910,6 +1935,16 @@ function update(dt: number) {
         audio.sanityEvent(event),
       ),
     ),
+  );
+  terror.update(
+    dt,
+    player,
+    enemy,
+    combat,
+    audio,
+    settings,
+    state.elapsed,
+    state.sanity,
   );
 }
 let last = performance.now();

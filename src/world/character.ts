@@ -191,6 +191,40 @@ export function character(
     }
     // The small scarf keeps the face and neck recognisable from distant shots.
     oval(hips, blouse, 0, 0.7, 0.105, 0.12, 0.042, 0.055);
+    // The conservator's leather tool harness and split collar remain readable
+    // from an overhead fixed camera, without adding texture fetches.
+    const strapMaterial = pbr("leather", 0x4d382e);
+    for (const side of [-1, 1]) {
+      const collar = add(
+        hips,
+        new T.BoxGeometry(0.16, 0.085, 0.08),
+        blouse,
+        side * 0.11,
+        0.66,
+        0.12,
+      );
+      collar.rotation.z = side * 0.33;
+      const sash = add(
+        hips,
+        new T.BoxGeometry(0.045, 0.57, 0.028),
+        strapMaterial,
+        side * 0.13,
+        0.37,
+        0.16,
+      );
+      sash.rotation.z = side * 0.15;
+    }
+    const lens = add(
+      hips,
+      new T.CylinderGeometry(0.052, 0.052, 0.024, 12),
+      brass,
+      0.06,
+      0.29,
+      0.21,
+    );
+    lens.rotation.x = Math.PI / 2;
+    lens.name = "elise-restoration-lens";
+    lens.userData.keep = true;
   }
   if (!historical) {
     const bag = add(
@@ -535,4 +569,33 @@ export function animateDeath(root: T.Group, progress: number) {
   r.rightArm.rotation.x = -t * 0.55;
   r.head.rotation.x = t * 0.5;
   r.coatTails.rotation.x = -t * 0.25;
+}
+
+/** Upper-body gesture layered after locomotion while a ritual resolves. */
+export function animateRitual(root: T.Group, progress: number) {
+  const rig = root.userData.rig as Rig | undefined;
+  if (!rig) return;
+  const weight = Math.sin(Math.PI * T.MathUtils.clamp(progress, 0, 1));
+  rig.leftArm.rotation.x = T.MathUtils.lerp(
+    rig.leftArm.rotation.x,
+    -1.35,
+    weight,
+  );
+  rig.rightArm.rotation.x = T.MathUtils.lerp(
+    rig.rightArm.rotation.x,
+    -1.35,
+    weight,
+  );
+  rig.leftArm.rotation.z = T.MathUtils.lerp(
+    rig.leftArm.rotation.z,
+    0.35,
+    weight,
+  );
+  rig.rightArm.rotation.z = T.MathUtils.lerp(
+    rig.rightArm.rotation.z,
+    -0.35,
+    weight,
+  );
+  rig.head.rotation.x += weight * 0.14;
+  rig.coatTails.rotation.x -= weight * 0.06;
 }

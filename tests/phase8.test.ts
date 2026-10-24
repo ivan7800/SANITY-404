@@ -1,12 +1,120 @@
 import { describe, expect, it, vi } from "vitest";
 import * as T from "three";
-import { PsychologicalDirector, Sanity } from "../src/systems/sanity";
+import {
+  PsychologicalDirector,
+  Sanity,
+  eligibleSanityEvents,
+} from "../src/systems/sanity";
 import { Audio } from "../src/systems/audio";
 import { fresh, parseSave } from "../src/systems/state";
 import { World } from "../src/world/scene";
 import { character } from "../src/world/character";
 
 describe("Fase 8: director psicológico", () => {
+  it("reserva los sucesos del rellano para la planta, sala y pruebas correctas", () => {
+    const state = fresh();
+    state.sanity = 40;
+    state.x = -5;
+    state.z = -3;
+    expect(
+      eligibleSanityEvents(state).some(
+        (event) => event.id === "upper-crawler-scrape",
+      ),
+    ).toBe(false);
+    state.floor = 1;
+    expect(
+      eligibleSanityEvents(state).some(
+        (event) => event.id === "upper-crawler-scrape",
+      ),
+    ).toBe(true);
+    state.x = 5;
+    state.z = -5.8;
+    expect(
+      eligibleSanityEvents(state).some(
+        (event) => event.id === "upper-widow-veil",
+      ),
+    ).toBe(false);
+    state.items.push("Folio del rellano");
+    expect(
+      eligibleSanityEvents(state).some(
+        (event) => event.id === "upper-widow-veil",
+      ),
+    ).toBe(true);
+  });
+  it("sitúa la aparición de la galería en la misma altura que Élise", () => {
+    const state = fresh();
+    state.floor = 1;
+    state.x = 2;
+    state.z = -5.8;
+    state.sanity = 60;
+    state.elapsed = 8;
+    const world = new World(0, [], [], []);
+    const sanity = new Sanity(world);
+    sanity.update(
+      state,
+      world,
+      {
+        reduced: false,
+        reduceFlashes: true,
+        reduceDistortion: true,
+        reduceAudio: true,
+      },
+      () => {},
+      () => {},
+    );
+    expect(sanity.activeId).toBe("upper-guest-turn");
+    expect(sanity.apparition.visible).toBe(true);
+    expect(sanity.apparition.position.y).toBe(2.64);
+    expect(sanity.apparition.position.z).toBe(-5.8);
+    world.dispose();
+  });
+  it("pliega temporalmente la galería sin modificar colisiones ni guardado", () => {
+    const state = fresh();
+    state.sanity = 50;
+    state.elapsed = 8;
+    const world = new World(0, [], [], []);
+    const obstacles = JSON.stringify(world.obstacles);
+    const progress = JSON.stringify(state);
+    const sanity = new Sanity(world);
+    sanity.update(
+      state,
+      world,
+      {
+        reduced: false,
+        reduceFlashes: true,
+        reduceDistortion: false,
+        reduceAudio: true,
+      },
+      () => {},
+      () => {},
+    );
+    expect(sanity.activeId).toBe("mansion-folded-gallery");
+    expect(world.scene.getObjectByName("sanity-folded-gallery")?.visible).toBe(
+      true,
+    );
+    expect(
+      world.scene.getObjectByName("sanity-folded-gallery")?.children,
+    ).toHaveLength(1);
+    expect(JSON.stringify(world.obstacles)).toBe(obstacles);
+    expect(JSON.stringify(state)).toBe(progress);
+    state.elapsed = 12;
+    sanity.update(
+      state,
+      world,
+      {
+        reduced: false,
+        reduceFlashes: true,
+        reduceDistortion: false,
+        reduceAudio: true,
+      },
+      () => {},
+      () => {},
+    );
+    expect(world.scene.getObjectByName("sanity-folded-gallery")?.visible).toBe(
+      false,
+    );
+    world.dispose();
+  });
   it("agrupa la aparición sin perder triángulos ni alterar su silueta", () => {
     const world = new World(0, [], [], []);
     const original = character(true);
@@ -74,7 +182,9 @@ describe("Fase 8: director psicológico", () => {
     const director = new PsychologicalDirector();
     state.elapsed = 8;
     expect(director.choose(state)?.id).toBe("mansion-echo");
-    for (const time of [20, 25, 60, 103]) {
+    state.elapsed = 20;
+    expect(director.choose(state)?.id).toBe("mansion-folded-gallery");
+    for (const time of [25, 60, 103]) {
       state.elapsed = time;
       expect(director.choose(state)).toBeUndefined();
     }

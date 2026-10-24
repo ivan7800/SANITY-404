@@ -28,6 +28,16 @@ export function prop(kind: string, id: string, color: number) {
     g.add(o);
     return o;
   };
+  if (kind === "romanEcho") {
+    const stone = pbr("stone", 0x8b806b);
+    box(0, 0.13, 0, 0.72, 0.26, 0.55, stone);
+    box(0, 0.72, 0, 0.53, 0.95, 0.27, stone);
+    box(0, 1.23, 0, 0.64, 0.1, 0.35, brass);
+    const mark = id.endsWith("ash") ? 1 : id.endsWith("tide") ? 2 : 3;
+    for (let i = 0; i < mark; i++)
+      box((i - (mark - 1) / 2) * 0.13, 0.77, 0.143, 0.038, 0.43, 0.015, dark);
+    return batchRigid(g);
+  }
   if (kind === "galleryClue") {
     box(0, 0.35, 0, 0.72, 0.09, 0.46, wood);
     box(0, 0.42, 0, 0.59, 0.025, 0.36, brass);
@@ -50,6 +60,24 @@ export function prop(kind: string, id: string, color: number) {
     glass.position.y = 0.67;
     g.add(glass);
     return g;
+  }
+  if (kind === "ritual" || kind === "ritualSecret") {
+    const stone = pbr("stone", 0x555c54);
+    for (const x of [-0.43, 0.43]) box(x, 0.49, 0, 0.19, 0.95, 0.68, stone);
+    box(0, 1.02, 0, 1.22, 0.14, 0.8, stone);
+    box(0, 1.11, 0, 1.02, 0.025, 0.61, dark);
+    for (let i = 0; i < 3; i++) {
+      const sign = new T.Mesh(
+        new T.TorusGeometry(0.11, 0.022, 6, i === 0 ? 4 : i === 1 ? 8 : 16),
+        brass,
+      );
+      sign.rotation.x = Math.PI / 2;
+      sign.rotation.z = i * 0.3;
+      sign.position.set(-0.31 + i * 0.31, 1.15, 0);
+      g.add(sign);
+    }
+    if (kind === "ritualSecret") box(0, 1.16, -0.2, 0.68, 0.018, 0.08, paper);
+    return batchRigid(g);
   }
   if (kind === "door") {
     if (id === "roman-portal") {
@@ -101,6 +129,61 @@ export function prop(kind: string, id: string, color: number) {
         o.receiveShadow = true;
       }
     });
+    return batchRigid(g);
+  }
+  if (kind === "lateEvidence") {
+    box(0, 0.42, 0, 0.92, 0.84, 0.62, wood);
+    box(0, 0.86, 0, 0.96, 0.06, 0.66, brass);
+    const photo = id.startsWith("photo-");
+    box(0, 0.91, 0, 0.68, 0.025, 0.43, photo ? dark : paper);
+    if (id.startsWith("theatre-")) {
+      for (const z of [-0.11, -0.055, 0, 0.055, 0.11])
+        box(0, 0.93, z, 0.56, 0.006, 0.006, dark);
+    } else if (id.startsWith("press-")) {
+      for (const x of [-0.21, -0.07, 0.07, 0.21])
+        box(x, 0.93, 0, 0.055, 0.02, 0.16, dark);
+    } else if (photo) {
+      const mark = new T.Mesh(new T.TorusGeometry(0.12, 0.022, 6, 12), brass);
+      mark.position.set(0, 0.94, 0);
+      mark.rotation.x = Math.PI / 2;
+      g.add(mark);
+    } else {
+      box(0.18, 0.93, -0.09, 0.13, 0.025, 0.13, brass);
+    }
+    return batchRigid(g);
+  }
+  if (kind === "latePuzzle") {
+    box(0, 0.44, 0, 1.15, 0.88, 0.82, wood);
+    box(0, 0.9, 0, 1.2, 0.08, 0.85, brass);
+    if (id.startsWith("press-")) {
+      for (const z of [-0.18, 0.18]) {
+        const roller = new T.Mesh(
+          new T.CylinderGeometry(0.13, 0.13, 0.82, 10),
+          brass,
+        );
+        roller.position.set(0, 1.08, z);
+        roller.rotation.z = Math.PI / 2;
+        g.add(roller);
+      }
+    } else if (id.startsWith("veyr-")) {
+      box(0, 1.02, 0, 0.72, 0.16, 0.52, dark);
+      box(0, 1.115, 0, 0.63, 0.025, 0.44, paper);
+      cylinder(0.11, 0.03, 1.15, brass);
+    } else if (id.startsWith("theatre-")) {
+      for (const x of [-0.28, 0.28]) {
+        const wheel = new T.Mesh(
+          new T.TorusGeometry(0.17, 0.045, 6, 12),
+          brass,
+        );
+        wheel.position.set(x, 1.14, 0);
+        wheel.rotation.x = Math.PI / 2;
+        g.add(wheel);
+      }
+    } else {
+      box(0, 1.01, 0, 0.83, 0.07, 0.61, dark);
+      box(0, 1.055, 0, 0.67, 0.02, 0.46, paper);
+      cylinder(0.1, 0.025, 1.08, brass);
+    }
     return batchRigid(g);
   }
   // Functional desk/table with separate legs, drawers and a leather writing surface.

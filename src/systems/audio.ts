@@ -106,7 +106,7 @@ export class Audio {
       g.disconnect();
     };
   }
-  directional(frequency: number, pan: number, duration = 0.45) {
+  directional(frequency: number, pan: number, duration = 0.45, delay = 0) {
     if (
       !this.ctx ||
       !this.gain ||
@@ -119,7 +119,7 @@ export class Audio {
     const oscillator = this.ctx.createOscillator();
     const level = this.ctx.createGain();
     const stereo = this.ctx.createStereoPanner();
-    const now = this.ctx.currentTime;
+    const now = this.ctx.currentTime + delay;
     oscillator.type = "triangle";
     oscillator.frequency.setValueAtTime(frequency, now);
     oscillator.frequency.exponentialRampToValueAtTime(
@@ -142,6 +142,49 @@ export class Audio {
       stereo.disconnect();
     };
   }
+  /** A layered, spatial lament with a rising formant and a breath tail. */
+  lament(pan: number) {
+    if (
+      !this.ctx ||
+      !this.gain ||
+      this.ctx.state !== "running" ||
+      this.activeTones > 9 ||
+      this.reduceAudio
+    )
+      return;
+    this.activeTones++;
+    const now = this.ctx.currentTime;
+    const stereo = this.ctx.createStereoPanner();
+    stereo.pan.value = Math.max(-1, Math.min(1, pan));
+    stereo.connect(this.gain);
+    let ended = 0;
+    for (const [frequency, level] of [
+      [196, 0.042],
+      [294, 0.019],
+    ] as const) {
+      const voice = this.ctx.createOscillator();
+      const envelope = this.ctx.createGain();
+      voice.type = "sine";
+      voice.frequency.setValueAtTime(frequency, now);
+      voice.frequency.linearRampToValueAtTime(frequency * 1.24, now + 0.65);
+      voice.frequency.linearRampToValueAtTime(frequency * 0.73, now + 1.5);
+      envelope.gain.setValueAtTime(0.001, now);
+      envelope.gain.linearRampToValueAtTime(level, now + 0.23);
+      envelope.gain.exponentialRampToValueAtTime(0.001, now + 1.55);
+      voice.connect(envelope);
+      envelope.connect(stereo);
+      voice.start(now);
+      voice.stop(now + 1.55);
+      voice.onended = () => {
+        voice.disconnect();
+        envelope.disconnect();
+        if (++ended === 2) {
+          this.activeTones--;
+          stereo.disconnect();
+        }
+      };
+    }
+  }
   silence(time: number, seconds: number) {
     this.silenceUntil = Math.max(this.silenceUntil, time + seconds);
     if (!this.ctx || !this.ambientBus) return;
@@ -157,7 +200,40 @@ export class Audio {
     this.nextAmbient = time + 9 + Math.sin(time) * 2;
     // Slow wood creak; interval and pitch respond to sanity without sudden peaks.
     this.tone(
-      (this.room === 7 ? 82 : this.room === 6 ? 155 : 125) + sanity * 0.35,
+      (this.room >= 27
+        ? 72
+        : this.room >= 25
+          ? 174
+          : this.room >= 23
+            ? 118
+            : this.room >= 21
+              ? 142
+              : this.room === 20
+                ? 84
+                : this.room === 19
+                  ? 132
+                  : this.room === 18
+                    ? 64
+                    : this.room === 17
+                      ? 96
+                      : this.room === 16
+                        ? 108
+                        : this.room === 15
+                          ? 156
+                          : this.room === 14
+                            ? 72
+                            : this.room === 13
+                              ? 138
+                              : this.room === 12
+                                ? 92
+                                : this.room === 11
+                                  ? 164
+                                  : this.room === 7
+                                    ? 82
+                                    : this.room === 6
+                                      ? 155
+                                      : 125) +
+        sanity * 0.35,
       0.65,
       "triangle",
     );
@@ -200,13 +276,73 @@ export class Audio {
     if (kind === "mechanism" || kind === "whisper")
       this.tone(frequency * 1.48, 0.34, "sine");
   }
+  /** Three ascending, slightly detuned notes distinguish the house's two rites. */
+  ritual(kind: "veil" | "reading") {
+    if (
+      !this.ctx ||
+      !this.gain ||
+      this.ctx.state !== "running" ||
+      this.activeTones > 8
+    )
+      return false;
+    const base = kind === "veil" ? 164.81 : 146.83;
+    for (let i = 0; i < 3; i++) {
+      const oscillator = this.ctx.createOscillator();
+      const level = this.ctx.createGain();
+      const start = this.ctx.currentTime + i * 0.18;
+      oscillator.type = i === 1 ? "triangle" : "sine";
+      oscillator.frequency.setValueAtTime(base * [1, 1.25, 1.5][i], start);
+      oscillator.frequency.linearRampToValueAtTime(
+        base * [1.06, 1.32, 1.6][i],
+        start + 0.42,
+      );
+      level.gain.setValueAtTime(0.001, start);
+      level.gain.linearRampToValueAtTime(
+        this.reduceAudio ? 0.025 : 0.075,
+        start + 0.04,
+      );
+      level.gain.exponentialRampToValueAtTime(0.001, start + 0.48);
+      oscillator.connect(level);
+      level.connect(this.gain);
+      this.activeTones++;
+      oscillator.start(start);
+      oscillator.stop(start + 0.5);
+      oscillator.onended = () => {
+        this.activeTones--;
+        oscillator.disconnect();
+        level.disconnect();
+      };
+    }
+    return true;
+  }
   sanityEvent(id: string) {
-    if (id === "abbey-bell") {
+    if (id.startsWith("upper-")) {
+      this.directional(
+        id.includes("widow") ? 118 : id.includes("root") ? 62 : 192,
+        id.includes("gallery") ? -0.7 : 0.7,
+        0.8,
+      );
+      this.tone(id.includes("root") ? 55 : 140, 0.55, "triangle");
+    } else if (id.startsWith("press-")) {
+      this.tone(132, 0.45, "square");
+      this.tone(88, 0.75, "triangle");
+    } else if (id.startsWith("veyr-")) {
+      this.tone(185, 0.7, "sine");
+      this.tone(92, 0.5, "triangle");
+    } else if (id.startsWith("theatre-")) {
+      this.tone(220, 0.28, "sine");
+      this.tone(330, 0.6, "sine");
+    } else if (id.startsWith("photo-")) {
+      this.tone(110, 0.85, "sawtooth");
+    } else if (id === "abbey-bell") {
       this.tone(196, 1.1, "sine");
       this.tone(294, 0.8, "sine");
     } else if (id === "roman-ritual") {
       this.tone(110, 0.9, "triangle");
       this.tone(165, 0.65, "sine");
+    } else if (id === "mosaic-false-face") {
+      this.tone(174, 0.7, "triangle");
+      this.tone(261, 0.48, "sine");
     } else if (id === "scriptorium-margin") {
       this.tone(245, 0.5, "triangle");
     } else {

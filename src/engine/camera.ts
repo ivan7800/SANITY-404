@@ -6,6 +6,8 @@ export interface CameraContext {
   height?: number;
   enemy?: T.Vector3;
   combat?: boolean;
+  enemyKind?: string;
+  focus?: T.Vector3;
 }
 /** World-aligned controls are independent of the authored camera cuts. */
 export class CinematicCamera {
@@ -28,7 +30,17 @@ export class CinematicCamera {
     let eye: T.Vector3;
     const height = room === 0 ? (context.height ?? 0) : 0;
     if (room === 0) {
-      if (height > 0.15) {
+      if (height > 2.3 && x < 1) {
+        this.zone =
+          x < -3.4 ? "sala de retratos superior" : "observatorio superior";
+        eye = new T.Vector3(
+          x < -3.4
+            ? T.MathUtils.clamp(x + 0.9, -5.9, -4)
+            : T.MathUtils.clamp(x + 0.9, -2.8, 0.1),
+          4.5,
+          T.MathUtils.clamp(z + 1.5, -4.8, -1.8),
+        );
+      } else if (height > 0.15) {
         this.zone = z < -5.1 ? "rellano superior" : "escalera Veyr";
         eye =
           z < -5.1
@@ -37,6 +49,9 @@ export class CinematicCamera {
       } else if (x > 4.8 && z > 1.6 && z < 4.6) {
         this.zone = "umbral romano";
         eye = new T.Vector3(3.55, 2.65, 5.75);
+      } else if (x > 4.8 && z < 0.5 && z > -1.4) {
+        this.zone = "umbral del mosaico";
+        eye = new T.Vector3(3.7, 2.55, 2.2);
       } else if (z > 1) {
         this.zone = "entrada";
         eye = new T.Vector3(6.8, 2.35, 7.25);
@@ -75,7 +90,7 @@ export class CinematicCamera {
       eye.lerp(
         new T.Vector3(
           T.MathUtils.clamp(x + 3.2, -7.2, 7.2),
-          height + 2.15,
+          height + (context.enemyKind === "nameRoot" ? 2.45 : 2.15),
           T.MathUtils.clamp(z + 3.5, -7.2, 7.2),
         ),
         0.45,
@@ -97,8 +112,12 @@ export class CinematicCamera {
       this.ray.set(anchor, direction.normalize());
       let closest = distance;
       for (const o of obstacles) {
-        this.box.min.set(o.x - o.w / 2, 0, o.z - o.d / 2);
-        this.box.max.set(o.x + o.w / 2, o.height ?? 2, o.z + o.d / 2);
+        this.box.min.set(o.x - o.w / 2, o.y ?? 0, o.z - o.d / 2);
+        this.box.max.set(
+          o.x + o.w / 2,
+          (o.y ?? 0) + (o.height ?? 2),
+          o.z + o.d / 2,
+        );
         if (this.box.containsPoint(anchor)) continue;
         if (this.ray.intersectBox(this.box, hit)) {
           const d = hit.distanceTo(anchor);
@@ -121,12 +140,37 @@ export class CinematicCamera {
       desired.set(4.55, height + 1.05, -5.65);
     if (this.zone === "umbral romano" && context.mode !== "modern")
       desired.set(6.55, 1.5, 3);
-    if (fighting) desired.lerp(context.enemy!.clone().setY(1.1), 0.35);
+    if (fighting)
+      desired.lerp(
+        context
+          .enemy!.clone()
+          .add(
+            new T.Vector3(
+              0,
+              context.enemyKind === "crawler"
+                ? 0.55
+                : context.enemyKind === "nameRoot"
+                  ? 1.5
+                  : 1.1,
+              0,
+            ),
+          ),
+        0.35,
+      );
+    else if (context.focus && context.focus.distanceTo(anchor) < 2.8)
+      desired.lerp(context.focus, 0.42);
     if (!this.initialized || dt === 0 || reduced) this.target.copy(desired);
     else this.target.lerp(desired, 1 - Math.exp(-dt * 7));
     this.initialized = true;
     camera.lookAt(this.corrected ? anchor : this.target);
-    const fov = context.mode === "modern" ? 54 : fighting ? 59 : 58;
+    const fov =
+      fighting && context.enemyKind === "nameRoot"
+        ? 64
+        : context.mode === "modern"
+          ? 54
+          : fighting || context.focus
+            ? 59
+            : 58;
     if (camera.fov !== fov) {
       camera.fov = fov;
       camera.updateProjectionMatrix();
