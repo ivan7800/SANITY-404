@@ -7,10 +7,23 @@ import { lightScene } from "../render/lighting";
 import { qualityProfile } from "../render/quality";
 import { prop } from "./props";
 import { mansion } from "./mansion";
+import { decorateMansionEchoes } from "./mansion-echoes";
 import { decorateRomanSanctuary } from "./roman-sanctuary";
 import { decorateMedievalAbbey } from "./medieval-abbey";
+import { decorateMosaicWorkshop } from "./mosaic-workshop";
+import { decorateCoastalArchive } from "./coastal-archive";
+import { decorateStarObservatory } from "./star-observatory";
+import { decorateQuarry } from "./quarry-1092";
+import { decorateRoadHospital } from "./road-hospital";
+import { decorateLateChapter } from "./late-chapters";
+import { lateChapters, lateChapterForRoom } from "../systems/late-chapters";
 import { decoratePhase2Room } from "./phase2-rooms";
 import { newPhase2, type Phase2Progress } from "../systems/phase2";
+import {
+  newCampaign,
+  romanEchoes,
+  type CampaignProgress,
+} from "../systems/campaign";
 export { character } from "./character";
 import { blocked, type Obstacle } from "../systems/state";
 export function enemySpawn(obstacles: Obstacle[]): [number, number] {
@@ -37,6 +50,24 @@ export const names = [
   "Santuario de los nombres",
   "Claustro de la ceniza",
   "Scriptorium del silencio",
+  "Taller de los rostros",
+  "Horno de las teselas",
+  "Muelle de los nombres",
+  "Archivo de la marea",
+  "Terraza del astro ausente",
+  "Cúpula de las tres horas",
+  "Cantera de los nombres",
+  "Cámara del arco",
+  "Hospital del camino",
+  "Enfermería de los nombres",
+  "Imprenta de frontera",
+  "Sala de las planchas",
+  "Casa Veyr de 1610",
+  "Galería de retratos",
+  "Teatro de autómatas",
+  "Tramoya de las voces",
+  "Archivo fotográfico",
+  "Cuarto de revelado",
 ];
 export const subtitles = [
   "ALPES EUROPEOS · NOVIEMBRE DE 1927",
@@ -50,12 +81,31 @@ export const subtitles = [
   "ROMA · AÑO 189 D. C. · EL PRIMER INTERVALO",
   "FRANCIA · AÑO 1348 · EL CLAUSTRO CERRADO",
   "FRANCIA · AÑO 1348 · LOS LIBROS SIN AUTORES",
+  "ROMA · AÑO 312 D. C. · EL ROSTRO SUSTITUIDO",
+  "ROMA · AÑO 312 D. C. · LA COPIA Y EL MOLDE",
+  "COSTA OCCIDENTAL · AÑO 537 · LOS QUE ZARPARON",
+  "COSTA OCCIDENTAL · AÑO 537 · EL REGISTRO BORRADO",
+  "MONTAÑA · AÑO 783 · LA ESTRELLA QUE FALTA",
+  "MONTAÑA · AÑO 783 · MEDIR LA AUSENCIA",
+  "ALPES · AÑO 1092 · LA PIEDRA QUE MIENTE",
+  "ALPES · AÑO 1092 · EL PLANO DEL UMBRAL",
+  "PASO DE MONTAÑA · AÑO 1217 · LAS CAMAS VACÍAS",
+  "PASO DE MONTAÑA · AÑO 1217 · UNA VIDA ESCRITA DOS VECES",
+  "FRONTERA · AÑO 1491 · LA TIRADA FALSA",
+  "FRONTERA · AÑO 1491 · EL TIPO QUE RECUERDA",
+  "CASA VEYR · AÑO 1610 · EL PRIMER PACTO",
+  "CASA VEYR · AÑO 1610 · LOS RETRATOS SIN INÉS",
+  "TEATRO · AÑO 1786 · VOCES PRESTADAS",
+  "TEATRO · AÑO 1786 · LA PARTITURA MECÁNICA",
+  "ARCHIVO · AÑO 1899 · LA PUERTA FUTURA",
+  "ARCHIVO · AÑO 1899 · EL NEGATIVO IMPOSIBLE",
 ];
 export interface Interactable {
   id: string;
   name: string;
   x: number;
   z: number;
+  level?: 0 | 1;
   kind:
     | "note"
     | "item"
@@ -67,10 +117,22 @@ export interface Interactable {
     | "discovery"
     | "phase2End"
     | "romanPuzzle"
+    | "romanEcho"
+    | "mosaicPuzzle"
+    | "coastLedger"
+    | "starAlignment"
+    | "quarryArch"
+    | "hospitalRemedy"
+    | "hospitalChoice"
+    | "latePuzzle"
+    | "lateEvidence"
     | "medievalPuzzle"
     | "legacy"
     | "memoryChoice"
-    | "galleryClue";
+    | "galleryClue"
+    | "mansionEcho"
+    | "ritual"
+    | "ritualSecret";
   value?: string;
   target?: number;
   rotation?: number;
@@ -79,6 +141,7 @@ export interface Interactable {
 export class World {
   scene = new T.Scene();
   obstacles: Obstacle[] = [];
+  upperObstacles: Obstacle[] = [];
   objects: Interactable[] = [];
   lights: T.PointLight[] = [];
   private materials = new Map<string, T.MeshStandardMaterial>();
@@ -98,10 +161,11 @@ export class World {
     collected: string[] = [],
     quality = 1.3,
     progress: Phase2Progress = newPhase2(),
+    campaign: CampaignProgress = newCampaign(),
   ) {
     const scene = this.scene;
     const eraAtmosphere =
-      room === 8
+      room === 8 || room === 11 || room === 12
         ? { background: "#1d1a16", fog: "#42382c", density: 0.019 }
         : room >= 9
           ? { background: "#111916", fog: "#303d37", density: 0.027 }
@@ -120,7 +184,7 @@ export class World {
       ),
     );
     const wall =
-      room === 8
+      room === 8 || room === 11 || room === 12
         ? 0x5f5543
         : room === 9
           ? 0x444940
@@ -140,7 +204,19 @@ export class World {
       16,
       0.5,
       16,
-      room === 8 ? 0x6f644e : room >= 9 ? 0x55574e : 0x333532,
+      room === 19 || room === 20
+        ? 0x646e62
+        : room === 17 || room === 18
+          ? 0x777b70
+          : room === 15 || room === 16
+            ? 0x626b75
+            : room === 13 || room === 14
+              ? 0x697970
+              : room === 8 || room === 11 || room === 12
+                ? 0x6f644e
+                : room >= 9
+                  ? 0x55574e
+                  : 0x333532,
       false,
       room >= 8 ? "stone" : undefined,
     );
@@ -205,7 +281,7 @@ export class World {
         );
       }
     if (room === 0) {
-      scene.add(mansion(this.obstacles));
+      scene.add(mansion(this.obstacles, this.upperObstacles));
       this.obstacles.push(
         { x: -4, z: -2, w: 3, d: 1.6, height: 1.5 },
         { x: 4, z: 1, w: 2, d: 3, height: 1.5 },
@@ -269,6 +345,24 @@ export class World {
       this.lamp(0, 2, -3, 0x72e8c0, 35);
     }
     if (room === 8) decorateRomanSanctuary(this);
+    else if (room === 11 || room === 12)
+      decorateMosaicWorkshop(this, items.includes("Boceto recompuesto"));
+    else if (room === 13 || room === 14) decorateCoastalArchive(this);
+    else if (room === 15 || room === 16)
+      decorateStarObservatory(
+        this,
+        items.includes("Segundo azimut")
+          ? 2
+          : items.includes("Primer azimut")
+            ? 1
+            : items.includes("Patrón de Samira")
+              ? 3
+              : 0,
+      );
+    else if (room === 17 || room === 18)
+      decorateQuarry(this, items.includes("Arco ensamblado"));
+    else if (room === 19 || room === 20) decorateRoadHospital(this);
+    else if (lateChapterForRoom(room)) decorateLateChapter(this, quality);
     else if (room === 9 || room === 10) decorateMedievalAbbey(this);
     else decoratePhase2Room(this);
     this.add(
@@ -285,7 +379,7 @@ export class World {
       {
         id: "note" + room,
         name: "Leer documento",
-        x: -5.5,
+        x: room >= 11 ? -3.5 : -5.5,
         z: 5,
         kind: "note",
       },
@@ -308,6 +402,17 @@ export class World {
       room !== 8 &&
       room !== 9 &&
       room !== 10 &&
+      room !== 11 &&
+      room !== 12 &&
+      room !== 13 &&
+      room !== 14 &&
+      room !== 15 &&
+      room !== 16 &&
+      room !== 17 &&
+      room !== 18 &&
+      room !== 19 &&
+      room !== 20 &&
+      room < 21 &&
       !collected.includes("Tónico " + room)
     )
       this.add(
@@ -348,6 +453,65 @@ export class World {
     if (room === 0) {
       this.add(
         {
+          id: "upper-save",
+          name: "Escritorio del rellano · guardar",
+          x: 2,
+          z: -5.8,
+          level: 1,
+          kind: "save",
+        },
+        0xa58e6e,
+      );
+      if (!items.includes("Folio del rellano"))
+        this.add(
+          {
+            id: "upper-portraits",
+            name: "Recoger el folio de los huéspedes",
+            x: -5,
+            z: -3,
+            level: 1,
+            kind: "item",
+            value: "Folio del rellano",
+          },
+          0x9b8868,
+        );
+      if (!items.includes("Carta de la raíz"))
+        this.add(
+          {
+            id: "upper-observatory",
+            name: "Recoger la carta de la raíz",
+            x: -1.3,
+            z: -3,
+            level: 1,
+            kind: "item",
+            value: "Carta de la raíz",
+          },
+          0x8ca99b,
+        );
+      const portals = [
+        { x: 4.2, z: -3.8 },
+        { x: 4.2, z: -5.4 },
+        { x: -4.2, z: -3.8 },
+        { x: -4.2, z: -5.4 },
+      ];
+      lateChapters.forEach((chapter, index) => {
+        const prerequisite =
+          index === 0 ? "abbey-1348" : lateChapters[index - 1].id;
+        if (!campaign.completed.includes(prerequisite)) return;
+        this.add(
+          {
+            id: `${chapter.id}-portal`,
+            name: `Cruzar hacia ${chapter.place} · año ${chapter.year}`,
+            x: portals[index].x,
+            z: portals[index].z,
+            kind: "door",
+            target: chapter.room,
+          },
+          chapter.colors[1],
+        );
+      });
+      this.add(
+        {
           id: "roman-portal",
           name: "Atravesar la grieta romana · año 189",
           x: 6.2,
@@ -358,6 +522,513 @@ export class World {
         },
         0x9b8050,
       );
+      if (campaign.completed.includes("roman-189"))
+        this.add(
+          {
+            id: "mosaic-portal",
+            name: "Seguir el molde hacia el taller · año 312",
+            x: 6.2,
+            z: -0.6,
+            kind: "door",
+            target: 11,
+            rotation: Math.PI / 2,
+          },
+          0xb07854,
+        );
+      if (campaign.completed.includes("mosaic-312"))
+        this.add(
+          {
+            id: "coast-portal",
+            name: "Cruzar hacia el archivo costero · año 537",
+            x: -6.2,
+            z: 2.5,
+            kind: "door",
+            target: 13,
+            rotation: -Math.PI / 2,
+          },
+          0x76989a,
+        );
+      if (campaign.completed.includes("coast-537"))
+        this.add(
+          {
+            id: "stars-portal",
+            name: "Seguir la carta astral · año 783",
+            x: -6.2,
+            z: -2.5,
+            kind: "door",
+            target: 15,
+            rotation: -Math.PI / 2,
+          },
+          0x92a6b9,
+        );
+      if (campaign.completed.includes("stars-783"))
+        this.add(
+          {
+            id: "quarry-portal",
+            name: "Seguir las marcas de la cantera · año 1092",
+            x: -6.2,
+            z: 0,
+            kind: "door",
+            target: 17,
+            rotation: -Math.PI / 2,
+          },
+          0x9a9b88,
+        );
+      if (campaign.completed.includes("quarry-1092"))
+        this.add(
+          {
+            id: "hospital-portal",
+            name: "Seguir el cuaderno de Oona · año 1217",
+            x: 2.6,
+            z: -3.3,
+            kind: "door",
+            target: 19,
+            rotation: Math.PI / 2,
+          },
+          0x91a398,
+        );
+    }
+    const late = lateChapterForRoom(room);
+    if (late) {
+      const first = room === late.room;
+      const prefix = late.id;
+      this.add(
+        {
+          id: `${prefix}-${first ? "return" : "back"}`,
+          name: first ? "Regresar a 1927" : `Volver a ${late.place}`,
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: first ? 0 : late.room,
+        },
+        late.colors[1],
+      );
+      if (first) {
+        this.add(
+          {
+            id: `${prefix}-inner`,
+            name: `Entrar en ${late.inner}`,
+            x: 0,
+            z: -6.1,
+            kind: "door",
+            target: late.room + 1,
+          },
+          late.colors[1],
+        );
+        if (!items.includes(late.clue))
+          this.add(
+            {
+              id: `${prefix}-clue`,
+              name: `Recoger ${late.clue}`,
+              x: 2.25,
+              z: -1.6,
+              kind: "item",
+              value: late.clue,
+            },
+            late.colors[1],
+          );
+      } else {
+        late.evidence.forEach((evidence, index) => {
+          this.add(
+            {
+              id: `${prefix}-evidence-${index}`,
+              name: `Inspeccionar ${evidence.name}`,
+              x: index === 0 ? -2.4 : 2.4,
+              z: 1.15,
+              kind: "lateEvidence",
+              value: String(index),
+            },
+            late.colors[1],
+          );
+        });
+        this.add(
+          {
+            id: `${prefix}-puzzle`,
+            name: late.puzzleTask,
+            x: -2.4,
+            z: -2.2,
+            kind: "latePuzzle",
+          },
+          late.colors[1],
+        );
+        if (!items.includes(late.artifact))
+          this.add(
+            {
+              id: `${prefix}-artifact`,
+              name: `Conservar ${late.artifact}`,
+              x: 2.4,
+              z: -4.1,
+              kind: "item",
+              value: late.artifact,
+            },
+            late.colors[1],
+          );
+      }
+    }
+    if (room === 19) {
+      this.add(
+        {
+          id: "hospital-return",
+          name: "Regresar a 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0x91a398,
+      );
+      this.add(
+        {
+          id: "hospital-ward",
+          name: "Entrar en la enfermería",
+          x: 0,
+          z: -6.1,
+          kind: "door",
+          target: 20,
+        },
+        0x91a398,
+      );
+      if (!items.includes("Hierbas de serbal"))
+        this.add(
+          {
+            id: "hospital-rowan",
+            name: "Recoger hierbas de serbal",
+            x: -2.3,
+            z: 1.6,
+            kind: "item",
+            value: "Hierbas de serbal",
+          },
+          0x829a73,
+        );
+    }
+    if (room === 20) {
+      this.add(
+        {
+          id: "hospital-back",
+          name: "Volver a la sala de camino",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 19,
+        },
+        0x91a398,
+      );
+      this.add(
+        {
+          id: "hospital-remedy",
+          name: "Comparar remedios e historiales",
+          x: -2.4,
+          z: -2.2,
+          kind: "hospitalRemedy",
+        },
+        0x9da98a,
+      );
+      if (!items.includes("Cuaderno de Oona"))
+        this.add(
+          {
+            id: "hospital-record",
+            name: "Salvar el cuaderno de Oona",
+            x: 0,
+            z: -4.1,
+            kind: "item",
+            value: "Cuaderno de Oona",
+          },
+          0xb4aa8e,
+        );
+      this.add(
+        {
+          id: "hospital-testimony",
+          name: "Conservar un testimonio",
+          x: 2.2,
+          z: -2.2,
+          kind: "hospitalChoice",
+        },
+        0xaca58a,
+      );
+    }
+    if (room === 17) {
+      this.add(
+        {
+          id: "quarry-return",
+          name: "Regresar a 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0x9a9b88,
+      );
+      this.add(
+        {
+          id: "quarry-chamber",
+          name: "Entrar en la cámara del arco",
+          x: 0,
+          z: -6.1,
+          kind: "door",
+          target: 18,
+        },
+        0x9a9b88,
+      );
+      if (!items.includes("Cuña marcada"))
+        this.add(
+          {
+            id: "quarry-wedge",
+            name: "Recoger la cuña marcada",
+            x: -3.4,
+            z: 1.8,
+            kind: "item",
+            value: "Cuña marcada",
+          },
+          0xa79b7c,
+        );
+    }
+    if (room === 18) {
+      this.add(
+        {
+          id: "quarry-back",
+          name: "Volver a la cantera",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 17,
+        },
+        0x9a9b88,
+      );
+      this.add(
+        {
+          id: "quarry-assembly",
+          name: "Ensamblar el arco de piedra",
+          x: -2.8,
+          z: -4.4,
+          kind: "quarryArch",
+        },
+        0xa79b7c,
+      );
+      if (!items.includes("Plano del umbral"))
+        this.add(
+          {
+            id: "quarry-plan",
+            name: "Conservar el plano del umbral",
+            x: 0,
+            z: -4.05,
+            kind: "item",
+            value: "Plano del umbral",
+          },
+          0xb7ac8d,
+        );
+    }
+    if (room === 15) {
+      this.add(
+        {
+          id: "stars-return",
+          name: "Regresar a 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0x92a6b9,
+      );
+      this.add(
+        {
+          id: "stars-dome",
+          name: "Entrar en la cúpula",
+          x: 0,
+          z: -6.1,
+          kind: "door",
+          target: 16,
+        },
+        0x92a6b9,
+      );
+      if (!items.includes("Carta astral"))
+        this.add(
+          {
+            id: "stars-chart",
+            name: "Recoger la carta astral",
+            x: -3.4,
+            z: 1.7,
+            kind: "item",
+            value: "Carta astral",
+          },
+          0xb8b398,
+        );
+    }
+    if (room === 16) {
+      this.add(
+        {
+          id: "stars-back",
+          name: "Volver a la terraza",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 15,
+        },
+        0x92a6b9,
+      );
+      this.add(
+        {
+          id: "stars-wheel",
+          name: "Alinear el astrolabio",
+          x: -2.7,
+          z: -4.4,
+          kind: "starAlignment",
+        },
+        0xb8b398,
+      );
+      if (!items.includes("Disco estelar"))
+        this.add(
+          {
+            id: "stars-disc",
+            name: "Conservar el disco estelar",
+            x: 0,
+            z: -4,
+            kind: "item",
+            value: "Disco estelar",
+          },
+          0xc6b790,
+        );
+    }
+    if (room === 13) {
+      this.add(
+        {
+          id: "coast-return",
+          name: "Regresar a 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0x76989a,
+      );
+      this.add(
+        {
+          id: "coast-vault",
+          name: "Entrar en el depósito de embarque",
+          x: 0,
+          z: -6.1,
+          kind: "door",
+          target: 14,
+        },
+        0x76989a,
+      );
+      if (!items.includes("Tabla de mareas"))
+        this.add(
+          {
+            id: "coast-tides",
+            name: "Recoger tabla de mareas",
+            x: -3.5,
+            z: 2,
+            kind: "item",
+            value: "Tabla de mareas",
+          },
+          0xa9b9a3,
+        );
+    }
+    if (room === 14) {
+      this.add(
+        {
+          id: "coast-back",
+          name: "Volver al muelle",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 13,
+        },
+        0x76989a,
+      );
+      this.add(
+        {
+          id: "coast-ledger",
+          name: "Cruzar fechas y mareas",
+          x: -2.7,
+          z: -3.8,
+          kind: "coastLedger",
+        },
+        0xb1ad91,
+      );
+      if (!items.includes("Lista de pasajeros"))
+        this.add(
+          {
+            id: "coast-list",
+            name: "Conservar la lista de pasajeros",
+            x: 0,
+            z: -4.05,
+            kind: "item",
+            value: "Lista de pasajeros",
+          },
+          0xbeb69c,
+        );
+    }
+    if (room === 11) {
+      this.add(
+        {
+          id: "mosaic-return",
+          name: "Regresar a 1927",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 0,
+        },
+        0xa67d55,
+      );
+      this.add(
+        {
+          id: "mosaic-kiln",
+          name: "Entrar al horno de las teselas",
+          x: 0,
+          z: -6.1,
+          kind: "door",
+          target: 12,
+        },
+        0xa67d55,
+      );
+      if (!items.includes("Pigmento de cinabrio"))
+        this.add(
+          {
+            id: "mosaic-pigment",
+            name: "Recoger pigmento de cinabrio",
+            x: -4.4,
+            z: 1.6,
+            kind: "item",
+            value: "Pigmento de cinabrio",
+          },
+          0xb75d47,
+        );
+    }
+    if (room === 12) {
+      this.add(
+        {
+          id: "mosaic-back",
+          name: "Volver a la galería",
+          x: 0,
+          z: 6.1,
+          kind: "door",
+          target: 11,
+        },
+        0xa67d55,
+      );
+      this.add(
+        {
+          id: "mosaic-pattern",
+          name: "Recomponer el rostro en las teselas",
+          x: -3.5,
+          z: -4.4,
+          kind: "mosaicPuzzle",
+        },
+        0xbb8e62,
+      );
+      if (!items.includes("Molde de Aurelia"))
+        this.add(
+          {
+            id: "mosaic-mold",
+            name: "Recuperar el molde auténtico",
+            x: 0,
+            z: -4.2,
+            kind: "item",
+            value: "Molde de Aurelia",
+          },
+          0xc2a77e,
+        );
     }
     if (room === 9) {
       this.add(
@@ -419,6 +1090,18 @@ export class World {
         );
     }
     if (room === 8) {
+      for (const echo of romanEchoes)
+        if (!campaign.witnessed.includes(echo.id))
+          this.add(
+            {
+              id: echo.id,
+              name: echo.name,
+              x: echo.x,
+              z: echo.z,
+              kind: "romanEcho",
+            },
+            0xb49768,
+          );
       this.add(
         {
           id: "roman-inscription",
@@ -475,6 +1158,16 @@ export class World {
           kind: "legacy",
         },
         0xaeb993,
+      );
+      this.add(
+        {
+          id: "ritual-table",
+          name: "Leer la mesa de los tres signos",
+          x: 0,
+          z: 2.7,
+          kind: "ritual",
+        },
+        0xa6ac91,
       );
       if (items.includes("Memoria reconciliada"))
         this.add(
@@ -752,6 +1445,17 @@ export class World {
       );
     }
     if (room === 7) {
+      if (items.includes("Lectura del umbral"))
+        this.add(
+          {
+            id: "ritual-secret",
+            name: "Examinar el nombre bajo la piedra",
+            x: -2.1,
+            z: 4.4,
+            kind: "ritualSecret",
+          },
+          0xa7c9ae,
+        );
       this.add(
         {
           id: "basement-back",
@@ -796,6 +1500,7 @@ export class World {
           0xbba677,
         );
     }
+    if (room <= 7) decorateMansionEchoes(this, items);
     const staticGroup = new T.Group();
     for (const object of [...scene.children])
       if (object.userData.staticBox) staticGroup.add(object);
@@ -863,7 +1568,11 @@ export class World {
   }
   add(o: Interactable, color: number) {
     const m = prop(o.kind, o.id, color);
-    m.position.set(o.x, o.kind === "galleryClue" ? 2.64 : 0, o.z);
+    m.position.set(
+      o.x,
+      o.level === 1 || o.kind === "galleryClue" ? 2.64 : 0,
+      o.z,
+    );
     if (o.rotation) m.rotation.y = o.rotation;
     this.scene.add(m);
     o.mesh = m;
@@ -873,7 +1582,10 @@ export class World {
     let nearest: Interactable | undefined;
     let best = radius * radius;
     for (const object of this.objects) {
-      if (this.room === 0 && (object.kind === "galleryClue") !== y > 1.4)
+      if (
+        this.room === 0 &&
+        (object.level === 1 || object.kind === "galleryClue") !== y > 1.4
+      )
         continue;
       const dx = object.x - x;
       const dz = object.z - z;

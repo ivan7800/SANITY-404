@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   animateCharacter,
   animateDeath,
+  animateRitual,
   character,
   type Rig,
 } from "../src/world/character";
@@ -57,5 +58,18 @@ describe("animación articulada Fase 3", () => {
     animateCharacter(actor, 0.2, false, 0, false, 0, false, 1 / 60);
     expect(rig.hips.rotation.x).toBeCloseTo(0);
     expect(rig.head.rotation.z).toBeCloseTo(0);
+  });
+  it("superpone un gesto ritual reversible y conserva su herramienta distintiva", () => {
+    const actor = character();
+    const rig = rigOf(actor);
+    expect(actor.getObjectByName("elise-restoration-lens")).toBeDefined();
+    animateCharacter(actor, 0, false);
+    const before = rig.leftArm.rotation.x;
+    animateRitual(actor, 0.5);
+    expect(rig.leftArm.rotation.x).toBeLessThan(before);
+    expect(rig.rightArm.rotation.x).toBeLessThan(before);
+    animateCharacter(actor, 1, false);
+    animateRitual(actor, 1);
+    expect(rig.leftArm.rotation.x).toBeCloseTo(before);
   });
 });

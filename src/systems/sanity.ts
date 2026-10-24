@@ -1,5 +1,6 @@
 import * as T from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { batchRigid } from "../render/batch";
 import type { State } from "./state";
 import { character, type World } from "../world/scene";
 
@@ -17,9 +18,75 @@ export interface SanityEvent {
   read?: number;
   discovery?: string;
   item?: string;
+  area?:
+    "upper-stair" | "upper-gallery" | "upper-portraits" | "upper-observatory";
   priority?: number;
 }
 export const sanityEvents: SanityEvent[] = [
+  {
+    id: "press-future-headline",
+    rooms: [21, 22],
+    threshold: 80,
+    read: 21,
+    priority: 4,
+    text: "La primera plana anuncia la muerte de Tomás con la fecha de mañana.",
+  },
+  {
+    id: "veyr-missing-portrait",
+    rooms: [23, 24],
+    threshold: 78,
+    read: 23,
+    priority: 4,
+    text: "El retrato de Inés deja un hueco donde estaba su rostro.",
+  },
+  {
+    id: "theatre-unearned-applause",
+    rooms: [25, 26],
+    threshold: 76,
+    read: 25,
+    priority: 4,
+    text: "El público aplaude una escena que aún no has representado.",
+  },
+  {
+    id: "photo-aged-self",
+    rooms: [27, 28],
+    threshold: 74,
+    read: 27,
+    priority: 4,
+    text: "En la placa acabas de envejecer cuarenta años.",
+  },
+  {
+    id: "press-reversed-type",
+    rooms: [22],
+    threshold: 46,
+    read: 22,
+    priority: 3,
+    text: "Los tipos impresos se invierten y forman tu nombre al revés.",
+  },
+  {
+    id: "veyr-vanishing-name",
+    rooms: [24],
+    threshold: 44,
+    read: 24,
+    priority: 3,
+    text: "En el árbol familiar desaparece el nombre de Inés mientras lo lees.",
+  },
+  {
+    id: "theatre-phantom-chorus",
+    rooms: [26],
+    threshold: 43,
+    read: 26,
+    priority: 3,
+    text: "La tramoya canta con voces de personas que aún no han nacido.",
+  },
+  {
+    id: "photo-unfixed-door",
+    rooms: [28],
+    threshold: 42,
+    read: 28,
+    priority: 3,
+    text: "Una puerta de tres bisagras aparece en la pared del cuarto oscuro.",
+  },
   {
     id: "roman-ritual",
     rooms: [8],
@@ -59,6 +126,82 @@ export const sanityEvents: SanityEvent[] = [
     text: "Una figura de bronce aparece donde Lucius no recuerda haber mirado.",
   },
   {
+    id: "roman-double",
+    rooms: [8],
+    threshold: 65,
+    item: "Marca de Varro",
+    priority: 4,
+    text: "La figura junto al altar lleva el rostro de Lucius. Al girarte, ya no está.",
+  },
+  {
+    id: "mosaic-false-face",
+    rooms: [11, 12],
+    threshold: 75,
+    item: "Pigmento de cinabrio",
+    priority: 4,
+    text: "El mosaico muestra tu rostro donde faltaban las teselas. La figura se aparta al mirarla.",
+  },
+  {
+    id: "coast-passengers",
+    rooms: [13, 14],
+    threshold: 78,
+    item: "Tabla de mareas",
+    priority: 4,
+    text: "Una fila de pasajeros espera en el muelle. Ninguno moja la madera.",
+  },
+  {
+    id: "coast-upward-rain",
+    rooms: [14],
+    threshold: 45,
+    read: 14,
+    text: "Gotas saladas ascienden desde el suelo del depósito.",
+  },
+  {
+    id: "stars-unseen-watcher",
+    rooms: [15, 16],
+    threshold: 72,
+    item: "Carta astral",
+    priority: 4,
+    text: "Una segunda figura sigue la estrella que no está en el cielo.",
+  },
+  {
+    id: "stars-reverse-dust",
+    rooms: [16],
+    threshold: 42,
+    read: 16,
+    text: "El polvo asciende hacia una constelación que ninguna carta conserva.",
+  },
+  {
+    id: "quarry-wrong-name",
+    rooms: [17, 18],
+    threshold: 75,
+    item: "Cuña marcada",
+    priority: 4,
+    text: "Una marca de corte adopta tu nombre mientras la observas.",
+  },
+  {
+    id: "quarry-receding-exit",
+    rooms: [18],
+    threshold: 42,
+    read: 18,
+    text: "La salida de piedra se aleja un paso por cada paso que das.",
+  },
+  {
+    id: "hospital-occupied-beds",
+    rooms: [19, 20],
+    threshold: 72,
+    item: "Hierbas de serbal",
+    priority: 4,
+    text: "Las camas se hunden bajo el peso de pacientes que no puedes ver.",
+  },
+  {
+    id: "hospital-swapped-chart",
+    rooms: [20],
+    threshold: 43,
+    read: 20,
+    text: "Tu nombre aparece en el historial de un paciente muerto hace años.",
+  },
+  {
     id: "roman-false-exit",
     rooms: [8],
     threshold: 45,
@@ -81,6 +224,63 @@ export const sanityEvents: SanityEvent[] = [
     rooms: [0],
     threshold: 35,
     text: "Alguien se mueve junto al portal, pero no proyecta sombra.",
+  },
+  {
+    id: "mansion-folded-gallery",
+    rooms: [0],
+    threshold: 55,
+    priority: -1,
+    text: "Un segundo arco cruza el vestíbulo. Al parpadear, vuelve a estar detrás de la pared.",
+  },
+  {
+    id: "upper-guest-turn",
+    rooms: [0],
+    area: "upper-gallery",
+    threshold: 75,
+    priority: 4,
+    text: "El huésped aparece al fondo de la galería. Solo cambia de postura cuando dejas de mirarlo.",
+  },
+  {
+    id: "upper-widow-veil",
+    rooms: [0],
+    area: "upper-stair",
+    item: "Folio del rellano",
+    threshold: 68,
+    priority: 4,
+    text: "Un velo roza la barandilla desde arriba. Los pasos continúan descendiendo después de detenerte.",
+  },
+  {
+    id: "upper-reflection-step",
+    rooms: [0],
+    area: "upper-observatory",
+    threshold: 48,
+    priority: 4,
+    text: "Tu reflejo da un paso que Élise no ha dado.",
+  },
+  {
+    id: "upper-crawler-scrape",
+    rooms: [0],
+    area: "upper-portraits",
+    threshold: 72,
+    priority: 4,
+    text: "Algo raspa la madera bajo los retratos y se detiene al entrar en la sala.",
+  },
+  {
+    id: "upper-root-names",
+    rooms: [0],
+    area: "upper-observatory",
+    item: "Carta de la raíz",
+    threshold: 42,
+    priority: 5,
+    text: "Los nombres tallados bajo el suelo responden con voces distintas.",
+  },
+  {
+    id: "archive-aged-eyes",
+    rooms: [5],
+    threshold: 58,
+    item: "Acta original de Inés",
+    priority: 4,
+    text: "El retrato de Inés envejece otra vez. Sus ojos siguen a Élise hasta el umbral.",
   },
   {
     id: "hushed-index",
@@ -165,6 +365,16 @@ export function eligibleSanityEvents(state: State) {
     (event) =>
       event.rooms.includes(state.room) &&
       state.sanity <= event.threshold &&
+      (event.area === undefined ||
+        (state.room === 0 &&
+          state.floor === 1 &&
+          (event.area === "upper-stair"
+            ? state.x > 3.65
+            : event.area === "upper-gallery"
+              ? state.z < -5.1 && state.x <= 3.65
+              : event.area === "upper-portraits"
+                ? state.x < -3.45 && state.z > -5.1
+                : state.x >= -3.45 && state.x < 0.65 && state.z > -5.1))) &&
       (event.read === undefined || state.read.includes(String(event.read))) &&
       (event.item === undefined || state.items.includes(event.item)) &&
       (event.discovery === undefined ||
@@ -220,6 +430,7 @@ export class Sanity {
   private until = 0;
   private book: T.Mesh;
   private falseDoor: T.Group;
+  private ghostArch?: T.Group;
   private shadow: T.Mesh;
   private rain: T.Points;
   private portraits: T.Mesh[] = [];
@@ -229,6 +440,7 @@ export class Sanity {
   private baseFog = 0;
   private initialLights: number[];
   private eraGlyph?: T.Mesh;
+  private latePortrait?: T.Mesh;
   private glyphIntensity = 0;
   constructor(world: World, entryTime = 0) {
     this.director = new PsychologicalDirector(entryTime);
@@ -284,9 +496,11 @@ export class Sanity {
         opacity: 0.8,
       }),
     );
+    this.book.name = "sanity-book";
     this.book.visible = false;
     world.scene.add(this.book);
     this.falseDoor = new T.Group();
+    this.falseDoor.name = "sanity-false-door";
     const dark = new T.MeshStandardMaterial({
       color: 0x171b1b,
       transparent: true,
@@ -306,6 +520,42 @@ export class Sanity {
     }
     this.falseDoor.visible = false;
     world.scene.add(this.falseDoor);
+    if (world.room === 0) {
+      this.ghostArch = new T.Group();
+      this.ghostArch.name = "sanity-folded-gallery";
+      const ghostStone = new T.MeshStandardMaterial({
+        color: 0x80968b,
+        emissive: 0x1c3b35,
+        transparent: true,
+        opacity: 0.32,
+        depthWrite: false,
+      });
+      for (const x of [-1.15, 1.15]) {
+        const column = new T.Mesh(
+          new T.CylinderGeometry(0.13, 0.18, 2.8, 8),
+          ghostStone,
+        );
+        column.position.set(x, 1.4, 0);
+        this.ghostArch.add(column);
+      }
+      for (let i = 0; i < 7; i++) {
+        const angle = (i / 6) * Math.PI;
+        const stone = new T.Mesh(
+          new T.BoxGeometry(0.45, 0.3, 0.32),
+          ghostStone,
+        );
+        stone.position.set(
+          Math.cos(angle) * 1.15,
+          2.8 + Math.sin(angle) * 0.82,
+          0,
+        );
+        stone.rotation.z = angle - Math.PI / 2;
+        this.ghostArch.add(stone);
+      }
+      this.ghostArch.position.set(0, 0, -2.3);
+      this.ghostArch.visible = false;
+      world.scene.add(batchRigid(this.ghostArch));
+    }
     this.shadow = new T.Mesh(
       new T.PlaneGeometry(0.8, 2.2),
       new T.MeshBasicMaterial({
@@ -346,6 +596,12 @@ export class Sanity {
         (this.portraits[0].material as T.MeshStandardMaterial).color,
       );
     this.ring = world.scene.getObjectByName("threshold-ring");
+    this.latePortrait = world.scene.getObjectByName("late-veyr-portrait") as
+      T.Mesh | undefined;
+    if (this.latePortrait) {
+      const material = this.latePortrait.material as T.MeshStandardMaterial;
+      material.transparent = true;
+    }
     this.eraGlyph = world.scene.getObjectByName(
       world.room === 8 ? "roman-ritual-sigil" : "abbey-codex-glyph",
     ) as T.Mesh | undefined;
@@ -381,7 +637,9 @@ export class Sanity {
           ? 0
           : Math.sin(state.elapsed * 0.6 + i) * 0.08 * intensity;
       const breathing =
-        active === "breathing-seal" && !options.reduceFlashes
+        (active === "breathing-seal" ||
+          active === "theatre-unearned-applause") &&
+        !options.reduceFlashes
           ? Math.sin(state.elapsed * 2.2) * 0.13
           : 0;
       light.intensity = base * (1 + wave + breathing);
@@ -399,24 +657,57 @@ export class Sanity {
       active === "silent-choir" ||
       active === "unknown-penitent" ||
       active === "roman-witness" ||
+      active === "roman-double" ||
+      active === "mosaic-false-face" ||
+      active === "coast-passengers" ||
+      active === "stars-unseen-watcher" ||
+      active === "quarry-wrong-name" ||
+      active === "hospital-occupied-beds" ||
+      active === "veyr-missing-portrait" ||
+      active === "theatre-phantom-chorus" ||
+      active === "photo-aged-self" ||
       active === "abbey-visitor" ||
       active === "ink-apparition" ||
       active === "mansion-echo" ||
+      active === "upper-guest-turn" ||
+      active === "upper-widow-veil" ||
+      active === "upper-reflection-step" ||
+      active === "archive-aged-eyes" ||
       active === "mansion-reflection";
-    if (this.apparition.visible)
-      this.apparition.position.set(
-        T.MathUtils.clamp(
-          state.x + (active === "glass-double" ? 3 : -2.5),
-          -6.8,
-          6.8,
-        ),
-        0,
-        T.MathUtils.clamp(state.z - 2.8, -6.5, 6.5),
-      );
+    if (this.apparition.visible) {
+      if (active === "upper-guest-turn")
+        this.apparition.position.set(
+          T.MathUtils.clamp(state.x - 2, -5.8, 3),
+          2.64,
+          -5.8,
+        );
+      else if (active === "upper-widow-veil")
+        this.apparition.position.set(5, 2.64, -5.85);
+      else if (active === "upper-reflection-step")
+        this.apparition.position.set(
+          T.MathUtils.clamp(state.x + 1, -2.8, 0.2),
+          2.64,
+          T.MathUtils.clamp(state.z - 0.8, -4.7, -2),
+        );
+      else
+        this.apparition.position.set(
+          T.MathUtils.clamp(
+            state.x + (active === "glass-double" ? 3 : -2.5),
+            -6.8,
+            6.8,
+          ),
+          state.room === 0 && state.floor === 1 ? 2.64 : 0,
+          T.MathUtils.clamp(state.z - 2.8, -6.5, 6.5),
+        );
+    }
     this.book.visible =
       active === "hushed-index" ||
       active === "levitating-book" ||
-      active === "scriptorium-margin";
+      active === "scriptorium-margin" ||
+      active === "press-future-headline" ||
+      active === "press-reversed-type" ||
+      active === "veyr-vanishing-name";
+    if (active === "hospital-swapped-chart") this.book.visible = true;
     if (this.book.visible) {
       this.book.position.set(
         -3,
@@ -428,37 +719,77 @@ export class Sanity {
     this.falseDoor.visible =
       active === "missing-door" ||
       active === "lengthened-aisle" ||
-      active === "roman-false-exit";
+      active === "roman-false-exit" ||
+      active === "quarry-receding-exit" ||
+      active === "photo-unfixed-door";
+    if (this.ghostArch) {
+      this.ghostArch.visible =
+        active === "mansion-folded-gallery" || active === "upper-root-names";
+      if (this.ghostArch.visible) {
+        this.ghostArch.position.y = active === "upper-root-names" ? 2.64 : 0;
+        this.ghostArch.position.x = active === "upper-root-names" ? -1.3 : 0;
+        this.ghostArch.position.z =
+          (active === "upper-root-names" ? -3.5 : -2.3) -
+          (options.reduceDistortion ? 0 : Math.sin(state.elapsed * 1.3) * 0.35);
+        this.ghostArch.scale.z = options.reduceDistortion
+          ? 1
+          : 1 + Math.sin(state.elapsed * 1.1) * 0.18;
+      } else {
+        this.ghostArch.position.x = 0;
+        this.ghostArch.position.y = 0;
+        this.ghostArch.position.z = -2.3;
+        this.ghostArch.scale.z = 1;
+      }
+    }
     if (this.falseDoor.visible) {
       this.falseDoor.position.set(
         0,
         0,
-        active === "lengthened-aisle" && !options.reduceDistortion
+        (active === "lengthened-aisle" || active === "quarry-receding-exit") &&
+          !options.reduceDistortion
           ? -5.8 - Math.sin(state.elapsed * 1.6) * 0.7
           : -6.3,
       );
       this.falseDoor.scale.setScalar(
-        active === "lengthened-aisle" && !options.reduceDistortion ? 1.15 : 1,
+        (active === "lengthened-aisle" || active === "quarry-receding-exit") &&
+          !options.reduceDistortion
+          ? 1.15
+          : 1,
       );
     }
     this.shadow.visible =
       active === "second-footsteps" ||
       active === "shadow-without-body" ||
-      active === "abbey-bell";
+      active === "abbey-bell" ||
+      active === "theatre-unearned-applause";
+    if (active === "upper-crawler-scrape") this.shadow.visible = true;
     if (this.shadow.visible)
       this.shadow.position.set(
         T.MathUtils.clamp(state.x + Math.sin(state.elapsed * 2) * 1.5, -6, 6),
-        0.035,
+        state.room === 0 && state.floor === 1 ? 2.675 : 0.035,
         T.MathUtils.clamp(state.z - 1.7, -6, 6),
       );
-    this.rain.visible = active === "rain-upwards";
+    this.rain.visible =
+      active === "rain-upwards" ||
+      active === "coast-upward-rain" ||
+      active === "stars-reverse-dust";
     if (this.rain.visible) this.rain.position.y = (state.elapsed * 0.7) % 0.4;
     if (this.portraits.length) {
       const material = this.portraits[0].material as T.MeshStandardMaterial;
       material.color.copy(this.portraitColor);
-      if (active === "portraits-turn" && !options.reduceDistortion)
+      if (
+        (active === "portraits-turn" ||
+          active === "veyr-missing-portrait" ||
+          active === "archive-aged-eyes") &&
+        !options.reduceDistortion
+      )
         material.color.lerp(this.alteredPortraitColor, 0.72);
     }
+    if (this.latePortrait)
+      (this.latePortrait.material as T.MeshStandardMaterial).opacity =
+        active === "veyr-missing-portrait" && !options.reduceDistortion
+          ? 0.12
+          : 1;
     if (this.ring)
       this.ring.scale.setScalar(
         active === "breathing-seal" && !options.reduceDistortion
@@ -466,7 +797,8 @@ export class Sanity {
           : 1,
       );
     (world.scene.fog as T.FogExp2).density =
-      active === "lengthened-aisle" && !options.reduceDistortion
+      (active === "lengthened-aisle" || active === "photo-unfixed-door") &&
+      !options.reduceDistortion
         ? this.baseFog * 0.7
         : this.baseFog;
     return options.reduced ? 0.5 : 0.55 + intensity * 0.45;

@@ -1,12 +1,46 @@
 import * as T from "three";
 import { qualityProfile } from "./quality";
+import { lateChapterForRoom } from "../systems/late-chapters";
 export function lightScene(scene: T.Scene, quality: number, room = 0) {
   const p = qualityProfile(quality);
-  const roman = room === 8;
+  const late = lateChapterForRoom(room);
+  const roman = room === 8 || room === 11 || room === 12;
   const medieval = room === 9 || room === 10;
+  const coast = room === 13 || room === 14;
+  const stars = room === 15 || room === 16;
+  const quarry = room === 17 || room === 18;
+  const hospital = room === 19 || room === 20;
   const moon = new T.DirectionalLight(
-    roman ? 0xe9b778 : medieval ? 0xa8b8af : 0x91b7ed,
-    roman ? 1.3 : medieval ? 1.45 : 1.7,
+    late
+      ? late.colors[1]
+      : roman
+        ? 0xe9b778
+        : quarry
+          ? 0xa9b4a0
+          : hospital
+            ? 0xa7c5b0
+            : stars
+              ? 0x9ba8d0
+              : coast
+                ? 0x97b9b9
+                : medieval
+                  ? 0xa8b8af
+                  : 0x91b7ed,
+    late
+      ? 1.28
+      : roman
+        ? 1.3
+        : quarry
+          ? 1.25
+          : hospital
+            ? 1.22
+            : stars
+              ? 1.18
+              : coast
+                ? 1.2
+                : medieval
+                  ? 1.45
+                  : 1.7,
   );
   moon.position.set(
     roman ? -5 : medieval ? -8 : -7,
@@ -15,7 +49,21 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
   );
   scene.add(moon);
   const key = new T.SpotLight(
-    roman ? 0xffb76b : medieval ? 0xffc69a : 0xffc58b,
+    late
+      ? late.colors[1]
+      : roman
+        ? 0xffb76b
+        : quarry
+          ? 0xd4bc91
+          : hospital
+            ? 0xd8c293
+            : stars
+              ? 0xc9bfaa
+              : coast
+                ? 0xb7d0bd
+                : medieval
+                  ? 0xffc69a
+                  : 0xffc58b,
     roman ? (quality === 1 ? 102 : 94) : quality === 1 ? 115 : 105,
     22,
     Math.PI * 0.38,
@@ -34,7 +82,19 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
   key.shadow.camera.near = 0.3;
   key.shadow.camera.far = 23;
   const fill = new T.PointLight(
-    roman ? 0xff9b4e : medieval ? 0xe5ae83 : 0xffd2a0,
+    roman
+      ? 0xff9b4e
+      : quarry
+        ? 0x8e9b80
+        : hospital
+          ? 0x8cae97
+          : stars
+            ? 0x889cb8
+            : coast
+              ? 0x799da1
+              : medieval
+                ? 0xe5ae83
+                : 0xffd2a0,
     quality === 1 ? 7 : 5,
     11,
     2,

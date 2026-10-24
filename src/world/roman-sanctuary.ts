@@ -47,6 +47,44 @@ export function decorateRomanSanctuary(world: World) {
   for (const z of [-5.6, 0, 5.6]) {
     b(0, 0.015, z, 11.4, 0.025, 0.08, 0x8c846e, false);
   }
+  // The three side testimonies form a readable route around the combat floor.
+  // All masonry uses the world's static batching; no extra dynamic lights.
+  for (const side of [-1, 1]) {
+    for (const z of [-3.45, 3.45]) {
+      b(side * 7.52, 1.45, z, 0.18, 2.7, 2.3, 0x514d43, false, "stone");
+      b(side * 7.39, 2.75, z, 0.38, 0.17, 2.6, 0xa09579, false, "stone");
+      b(side * 7.37, 0.28, z, 0.42, 0.35, 2.52, 0x81755f, false, "stone");
+      for (const dz of [-0.75, -0.25, 0.25, 0.75])
+        b(side * 7.4, 1.5, z + dz, 0.04, 1.52, 0.055, 0x9d8a69, false, "stone");
+    }
+  }
+  // Worn tesserae show a processional band and a broken route to the altar.
+  for (let i = -11; i <= 11; i++) {
+    const z = i * 0.46;
+    for (const x of [-1.15, -0.69, 0.69, 1.15])
+      b(
+        x,
+        0.027,
+        z,
+        0.32,
+        0.018,
+        0.33,
+        (i + Math.round(x * 10)) % 3 === 0 ? 0x805a48 : 0xada080,
+        false,
+        "stone",
+      );
+  }
+  for (const [x, z] of [
+    [-4.15, 3.45],
+    [4.15, 3.45],
+    [0, 1.35],
+  ] as const) {
+    b(x, 0.016, z, 1.15, 0.025, 1.15, 0x55473a, false, "stone");
+    for (const offset of [-0.48, 0.48]) {
+      b(x + offset, 0.02, z, 0.04, 0.03, 1.15, 0xb69d6f, false, "brass");
+      b(x, 0.02, z + offset, 1.15, 0.03, 0.04, 0xb69d6f, false, "brass");
+    }
+  }
   const altar = b(0, 0.8, -5.3, 2.4, 1.6, 1.2, 0x706d62);
   altar.name = "altar-romano";
   b(0, 1.67, -5.3, 2.75, 0.16, 1.5, 0x9e957b, false);

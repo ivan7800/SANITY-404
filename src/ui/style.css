@@ -160,6 +160,19 @@ header {
   max-height: 90vh;
   overflow: auto;
 }
+details {
+  border-top: 1px solid #777258;
+  padding: 12px 0;
+}
+details summary {
+  cursor: pointer;
+  color: #d3c5a2;
+  font: 600 14px/1.6 system-ui;
+}
+details summary:focus-visible {
+  outline: 2px solid #c6b98d;
+  outline-offset: 3px;
+}
 .ornament {
   color: #9a956e;
   letter-spacing: 0.4em;

@@ -49,4 +49,31 @@ describe("Fase 4.4 — consecuencias entre épocas", () => {
     ruins.dispose();
     expect(parseSave(JSON.stringify(s))).toEqual(s);
   });
+  it("el molde de Aurelia altera la memoria y el epílogo sin bloquear la ruta antigua", () => {
+    const state = fresh();
+    state.items.push(
+      "Tablilla del intervalo",
+      "Molde de Aurelia",
+      "Lista de pasajeros",
+      "Disco estelar",
+      "Plano del umbral",
+      "Cuaderno de Oona",
+      "Testimonio de Bran",
+    );
+    expect(legacy(state).mosaic).toBe(true);
+    expect(legacy(state).complete).toBe(false);
+    expect(legacy(state).clue).toContain("Aurelia");
+    expect(legacy(state).clue).toContain("Maeve");
+    expect(legacy(state).clue).toContain("Samira");
+    expect(legacy(state).clue).toContain("Idris");
+    expect(legacy(state).clue).toContain("Oona");
+    state.items.push("Códice de Montfort");
+    reconcileLegacy(state);
+    state.phase2.discoveries.push("adrien");
+    expect(legacyEnding(state)?.text).toContain("molde de Aurelia");
+    expect(legacyEnding(state)?.text).toContain("lista de Maeve");
+    expect(legacyEnding(state)?.text).toContain("disco de Samira");
+    expect(legacyEnding(state)?.text).toContain("plano de Idris");
+    expect(legacyEnding(state)?.text).toContain("Bran");
+  });
 });

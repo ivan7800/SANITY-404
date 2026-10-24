@@ -1,10 +1,12 @@
 import { newPhase2, validPhase2, type Phase2Progress } from "./phase2";
 import { newCampaign, validCampaign, type CampaignProgress } from "./campaign";
+import { lateChapters } from "./late-chapters";
 export interface State {
   version: 2;
   room: number;
   x: number;
   z: number;
+  floor: 0 | 1;
   health: number;
   sanity: number;
   items: string[];
@@ -22,6 +24,7 @@ export const fresh = (): State => ({
   room: 0,
   x: 0,
   z: 5,
+  floor: 0,
   health: 100,
   sanity: 100,
   items: [],
@@ -38,6 +41,7 @@ export const clamp = (n: number, min = 0, max = 100) =>
   Math.max(min, Math.min(max, n));
 export interface Obstacle {
   height?: number;
+  y?: number;
   x: number;
   z: number;
   w: number;
@@ -76,7 +80,7 @@ export function parseSave(raw: string): State | null {
       (s.version !== 1 && s.version !== 2) ||
       !Number.isInteger(s.room) ||
       s.room < 0 ||
-      s.room > 10 ||
+      s.room > (s.version === 1 ? 10 : 28) ||
       !["x", "z", "health", "sanity", "elapsed"].every((k) =>
         Number.isFinite(s[k]),
       ) ||
@@ -88,6 +92,26 @@ export function parseSave(raw: string): State | null {
       s.sanity > 100 ||
       s.elapsed < 0 ||
       typeof s.ended !== "boolean"
+    )
+      return null;
+    if (s.floor === undefined)
+      s.floor =
+        s.room === 0 &&
+        s.x >= 3.72 &&
+        s.x <= 6.28 &&
+        s.z <= -5.11 &&
+        s.z >= -6.48
+          ? 1
+          : 0;
+    if (s.floor !== 0 && s.floor !== 1) return null;
+    if (s.room !== 0) s.floor = 0;
+    if (
+      s.floor === 1 &&
+      !(
+        (s.x >= -6.55 && s.x <= 6.35 && s.z >= -6.65 && s.z <= -4.5) ||
+        (s.x >= -6.55 && s.x <= -3.45 && s.z > -4.5 && s.z <= -1.35) ||
+        (s.x >= -3.35 && s.x <= 0.65 && s.z > -4.5 && s.z <= -1.35)
+      )
     )
       return null;
     for (const k of ["items", "collected", "read", "defeated"])
@@ -114,17 +138,64 @@ export function parseSave(raw: string): State | null {
       "Memoria reconciliada",
       "Juramento de Lucius",
       "Promesa de Isabelle",
+      "Rito del velo",
+      "Velo activo",
+      "Rito de lectura",
+      "Lectura del umbral",
+      "Folio del rellano",
+      "Carta de la raíz",
+      "Pigmento de cinabrio",
+      "Boceto recompuesto",
+      "Molde de Aurelia",
+      "Tabla de mareas",
+      "Registro corregido",
+      "Lista de pasajeros",
+      "Carta astral",
+      "Primer azimut",
+      "Segundo azimut",
+      "Patrón de Samira",
+      "Disco estelar",
+      "Cuña marcada",
+      "Base asentada",
+      "Clave colocada",
+      "Arco ensamblado",
+      "Plano del umbral",
+      "Hierbas de serbal",
+      "Remedio identificado",
+      "Cuaderno de Oona",
+      "Testimonio de Ada",
+      "Testimonio de Bran",
+      ...lateChapters.flatMap((chapter) => [
+        chapter.clue,
+        chapter.solution,
+        chapter.artifact,
+      ]),
     ];
     if (
       !s.items.every((v: string) => allowedItems.includes(v)) ||
       !s.collected.every((v: string) => allowedItems.includes(v)) ||
-      !s.read.every((v: string) => /^(?:[0-9]|10)$/.test(v)) ||
-      !s.defeated.every((v: string) => /^enemy(?:[0-9]|10)$/.test(v))
+      !s.read.every((v: string) => /^(?:[0-9]|1[0-9]|2[0-8])$/.test(v)) ||
+      !s.defeated.every(
+        (v: string) =>
+          /^enemy(?:[0-9]|1[0-9]|2[0-8])$/.test(v) ||
+          [
+            "mansion-guest",
+            "mansion-widow",
+            "mansion-crawler",
+            "mansion-reflection",
+            "mansion-root",
+          ].includes(v),
+      )
     )
       return null;
     if (
       s.items.includes("Juramento de Lucius") &&
       s.items.includes("Promesa de Isabelle")
+    )
+      return null;
+    if (
+      s.items.includes("Testimonio de Ada") &&
+      s.items.includes("Testimonio de Bran")
     )
       return null;
     if (
@@ -144,7 +215,10 @@ export function parseSave(raw: string): State | null {
       s.campaign = newCampaign();
       if (s.room === 8 || s.phase2.visited.includes(8))
         s.campaign.visited.push("roman-189");
-      if (s.room >= 9 || s.phase2.visited.some((room: number) => room >= 9))
+      if (
+        (s.room >= 9 && s.room <= 10) ||
+        s.phase2.visited.some((room: number) => room >= 9 && room <= 10)
+      )
         s.campaign.visited.push("abbey-1348");
       s.version = 2;
     } else if (!validCampaign(s.campaign)) return null;

@@ -78,6 +78,8 @@ El [repositorio público](https://github.com/ivan7800/SANITY-404) contiene el c�
 
 Consulta [la revisión y prueba de Fase 1](docs/FASE1-REVISION.md), [los lanzadores](docs/LANZADORES.md), [el registro histórico de verificación](docs/VERIFICACION.md) y [el registro de REA](docs/REA.md).
 
+La campaña histórica de la rama `fase11/campana-historica` incluye las investigaciones de 1491, 1610, 1786 y 1899. Su alcance y las comprobaciones pendientes están en [Fase 12](docs/FASE12.md).
+
 ## Fase 1.6 · Presentación cinematográfica
 
 Cámara clásica o moderna en Opciones, planos a media altura, combate bloqueado por obstáculos, reacciones y caídas articuladas. Se conserva la campaña. [Cambios, pruebas y rendimiento real](docs/FASE16.md) · [Capturas comparativas](docs/comparativa-fase16.html). En HD 620, Bajo a 720p: 55,5–55,9 FPS en la muestra de exploración y 42,3–46,9 en combate; todavía no se garantizan 45 FPS sostenidos.

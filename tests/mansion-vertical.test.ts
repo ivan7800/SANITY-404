@@ -97,3 +97,18 @@ it("la madera de la escalera conserva el paso audible con un timbre propio", () 
   audio.step(0, false, true);
   expect(tone).toHaveBeenCalledWith(63, 0.15, "triangle");
 });
+
+it("acerca el punto de inspección al centro sin perder de vista a Élise", () => {
+  const focus = new T.Vector3(0, 1.25, 2.7);
+  const camera = new T.PerspectiveCamera(58, 16 / 9);
+  const director = new CinematicCamera();
+  director.update(camera, 0, 4, 0, 0, false, [], { focus });
+  camera.updateMatrixWorld();
+  const projectedFocus = focus.clone().project(camera);
+  const projectedPlayer = new T.Vector3(0, 1.25, 4).project(camera);
+  expect(Math.abs(projectedFocus.x)).toBeLessThan(0.8);
+  expect(Math.abs(projectedFocus.y)).toBeLessThan(0.8);
+  expect(Math.abs(projectedPlayer.x)).toBeLessThan(0.8);
+  expect(Math.abs(projectedPlayer.y)).toBeLessThan(0.8);
+  expect(camera.fov).toBe(59);
+});

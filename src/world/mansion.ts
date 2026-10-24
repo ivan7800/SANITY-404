@@ -5,11 +5,15 @@ import { pbr } from "../render/materials";
 import { furnishings } from "./furnishings";
 import type { Obstacle } from "../systems/state";
 /** The stair and landing share a height field, so old saves need no Y value. */
-export function mansionFloorHeight(x: number, z: number) {
+export function mansionFloorHeight(x: number, z: number, floor: 0 | 1 = 0) {
+  if (floor === 1) return 2.64;
   if (x < 3.72 || x > 6.28 || z > -1.55 || z < -6.48) return 0;
   return z <= -5.11 ? 2.64 : ((-z - 1.55) / 3.56) * 2.64;
 }
-export function mansion(obstacles: Obstacle[]) {
+export function mansion(
+  obstacles: Obstacle[],
+  upperObstacles: Obstacle[] = [],
+) {
   const group = new T.Group();
   group.name = "Vestíbulo Veyr · arquitectura original";
   const wood = pbr("wood", 0x684632);
@@ -104,24 +108,30 @@ export function mansion(obstacles: Obstacle[]) {
   // carved risers and individual treads keep the sixth-generation silhouette.
   for (let i = 0; i < 12; i++) {
     const z = -1.72 - i * 0.31;
-    const h = 0.22 * (i + 1);
+    const h = mansionFloorHeight(5, z);
     box(5, h / 2, z, 2.55, h, 0.34, wood);
-    box(5, h + 0.025, z, 2.62, 0.05, 0.34, marble);
+    box(5, h, z, 2.62, 0.035, 0.34, marble);
     box(5, h * 0.58, z + 0.18, 2.35, 0.065, 0.035, wornGold);
   }
   box(5, 1.32, -5.83, 2.66, 2.64, 1.42, wood);
   box(5, 2.67, -5.83, 2.7, 0.055, 1.43, marble);
   for (const x of [3.51, 6.49]) {
-    obstacles.push({ x, z: -3.96, w: 0.16, d: 5.25, height: 3.8 });
+    obstacles.push({
+      x,
+      z: x < 4 ? -3.24 : -3.96,
+      w: 0.16,
+      d: x < 4 ? 3.8 : 5.25,
+      height: 3.8,
+    });
     for (let i = 0; i < 12; i++) {
       const z = -1.6 - i * 0.31;
-      const h = 0.22 * i;
+      const h = mansionFloorHeight(5, z);
       box(x, h + 0.74, z, 0.1, 1.2, 0.1, wood);
       mesh(new T.SphereGeometry(0.095, 8, 6), trim, x, h + 1.39, z);
     }
     const rail = box(x, 1.93, -3.35, 0.15, 0.13, 4.1, wood);
     rail.rotation.x = 0.38;
-    box(x, 3.59, -5.83, 0.17, 0.14, 1.48, wood);
+    if (x > 4) box(x, 3.59, -5.83, 0.17, 0.14, 1.48, wood);
   }
   obstacles.push({ x: 5, z: -6.66, w: 2.95, d: 0.16, height: 3.7 });
   for (let x = 3.72; x <= 6.28; x += 0.32) {
@@ -129,6 +139,93 @@ export function mansion(obstacles: Obstacle[]) {
     mesh(new T.SphereGeometry(0.07, 8, 6), trim, x, 3.73, -6.58);
   }
   box(5, 3.75, -6.58, 3.05, 0.13, 0.16, wood);
+  // Walkable mezzanine: the west portrait room and central observatory open
+  // from one continuous gallery. Their walls are colliders only at this level.
+  const upperWall = (x: number, z: number, w: number, d: number) => {
+    box(x, 3.82, z, w, 2.18, d, wood);
+    upperObstacles.push({ x, z, w, d, y: 2.64, height: 2.18 });
+  };
+  for (const [x, z, w, d] of [
+    [0, -5.55, 13.1, 2.2],
+    [-5, -3.4, 3.1, 4.2],
+    [-1.35, -3.4, 4, 4.2],
+  ] as const) {
+    box(x, 2.57, z, w, 0.14, d, wood);
+    box(x, 2.65, z, w, 0.025, d, marble);
+  }
+  // Doors are deliberately ajar: the openings are wide enough for the player
+  // capsule and require no stateful collision change when a save is loaded.
+  for (const [x, width] of [
+    [-6.0, 1.1],
+    [-3.9, 1.1],
+    [-2.65, 1.4],
+    [0, 1.4],
+  ] as const)
+    upperWall(x, -5, width, 0.2);
+  upperWall(-3.4, -3.25, 0.18, 3.3);
+  upperWall(-2.95, -1.35, 7.2, 0.2);
+  upperWall(-6.55, -3.3, 0.2, 4.1);
+  upperWall(0.65, -3.3, 0.2, 4.1);
+  for (const x of [-5, -1.3]) {
+    for (const side of [-0.62, 0.62])
+      box(x + side, 3.78, -5.02, 0.12, 2.24, 0.26, marble);
+    box(x, 4.84, -5.02, 1.38, 0.13, 0.28, wornGold);
+    // A real hinge group lets encounters disturb the leaf without changing
+    // the collision-free doorway or any saved navigation state.
+    const hinge = new T.Group();
+    hinge.name = x < -3 ? "upper-door-portraits" : "upper-door-observatory";
+    hinge.position.set(x - 0.57, 2.67, -4.9);
+    hinge.rotation.y = -0.8;
+    const leaf = new T.Mesh(new T.BoxGeometry(0.72, 1.5, 0.08), wood);
+    leaf.position.set(0.36, 0.75, 0);
+    leaf.castShadow = true;
+    hinge.add(leaf);
+    group.add(hinge);
+  }
+  // The open edge has a raised rail and repeated balusters; the landing keeps
+  // its clear connection to the top tread at the east end.
+  for (let x = 0.85; x <= 3.35; x += 0.3) {
+    box(x, 3.3, -4.54, 0.075, 1.2, 0.075, wood);
+    mesh(new T.SphereGeometry(0.065, 7, 5), trim, x, 3.94, -4.54);
+  }
+  box(2.1, 3.93, -4.54, 2.65, 0.11, 0.14, wood);
+  upperObstacles.push({
+    x: 2.1,
+    z: -4.54,
+    w: 2.65,
+    d: 0.14,
+    y: 2.64,
+    height: 1.35,
+  });
+  for (const x of [-6.45, -3.55, -3.25, 0.55])
+    box(x, 3.75, -3.25, 0.1, 2.1, 3.2, damp);
+  // Furnishing and evidence silhouettes keep the new rooms legible from the
+  // balcony, with the central walking lanes unobstructed.
+  for (const z of [-4.15, -2.5]) {
+    box(-6.15, 3.15, z, 0.35, 0.85, 0.7, wood);
+    box(-5.9, 3.62, z, 0.08, 0.68, 0.45, wornGold);
+  }
+  box(-0.2, 3.02, -2.2, 0.8, 0.6, 0.55, wood);
+  upperObstacles.push({
+    x: -0.2,
+    z: -2.2,
+    w: 0.8,
+    d: 0.55,
+    y: 2.64,
+    height: 0.68,
+  });
+  const upperDial = mesh(
+    new T.TorusGeometry(0.38, 0.035, 6, 24),
+    trim,
+    -0.2,
+    3.7,
+    -2.2,
+  );
+  upperDial.rotation.x = 0.32;
+  for (const x of [-6.1, -4.1]) {
+    box(x, 4.03, -1.42, 0.72, 0.9, 0.09, wornGold);
+    box(x, 4.03, -1.35, 0.58, 0.74, 0.04, black);
+  }
   // The chart is mounted on the inside face of the side balustrade. The
   // previous north-wall mount put the rear balusters across its drawing.
   const chartX = 3.78;
@@ -214,6 +311,23 @@ export function mansion(obstacles: Obstacle[]) {
       const crack = box(x + 0.13, 0.032, z - 0.11, 0.016, 0.006, 0.49, soot);
       crack.rotation.y = ((x + z) % 3) * 0.24;
     }
+  // A three-sign inlay makes the ritual order observable in the architecture.
+  const inlay = pbr("brass", 0x8c7758, { roughness: 0.84 });
+  for (const [index, x] of [-0.75, 0, 0.75].entries()) {
+    const frame = mesh(
+      new T.TorusGeometry(0.21, 0.018, 5, 16),
+      inlay,
+      x,
+      0.065,
+      2.7,
+    );
+    frame.rotation.x = Math.PI / 2;
+    if (index === 0) box(x, 0.066, 2.7, 0.24, 0.012, 0.045, inlay);
+    if (index === 1) {
+      box(x, 0.066, 2.7, 0.035, 0.012, 0.25, inlay);
+      box(x, 0.066, 2.7, 0.2, 0.012, 0.035, inlay);
+    }
+  }
   // Fireplace, mantel and three framed paintings, plus furniture with carved legs.
   box(-5.7, 0.9, -5.8, 2.8, 1.8, 0.8, wood);
   box(-5.7, 1, -5.31, 1.6, 1.45, 0.04, black);
@@ -260,6 +374,12 @@ export function mansion(obstacles: Obstacle[]) {
   mesh(new T.CylinderGeometry(0.04, 0.04, 1, 8), trim, 0, 4.5, 0);
   const ring = mesh(new T.TorusGeometry(0.85, 0.045, 6, 24), trim, 0, 3.95, 0);
   ring.rotation.x = Math.PI / 2;
+  const flame = new T.MeshStandardMaterial({
+    color: 0xd3a264,
+    emissive: 0xc46b2e,
+    emissiveIntensity: 1.15,
+    roughness: 0.9,
+  });
   for (let i = 0; i < 8; i++) {
     const a = (i * Math.PI) / 4;
     mesh(
@@ -267,6 +387,13 @@ export function mansion(obstacles: Obstacle[]) {
       marble,
       Math.cos(a) * 0.85,
       4.13,
+      Math.sin(a) * 0.85,
+    );
+    mesh(
+      new T.ConeGeometry(0.035, 0.12, 6),
+      flame,
+      Math.cos(a) * 0.85,
+      4.34,
       Math.sin(a) * 0.85,
     );
   }

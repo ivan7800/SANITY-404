@@ -2,9 +2,15 @@ import { describe, expect, it } from "vitest";
 import {
   chapters,
   completeChapter,
+  mosaicObjective,
+  abbeyObjective,
+  attemptMosaicPattern,
+  romanEchoes,
   romanObjective,
 } from "../src/systems/campaign";
-import { fresh, parseSave } from "../src/systems/state";
+import { blocked, fresh, parseSave } from "../src/systems/state";
+import { World } from "../src/world/scene";
+import { eligibleSanityEvents } from "../src/systems/sanity";
 
 describe("campaña histórica", () => {
   it("conecta doce capítulos y solo registra escenas existentes como producción", () => {
@@ -12,7 +18,8 @@ describe("campaña histórica", () => {
     expect(new Set(chapters.map((chapter) => chapter.id)).size).toBe(12);
     chapters.forEach((chapter, index) => {
       expect(chapter.prerequisite).toBe(index ? chapters[index - 1].id : null);
-      expect(chapter.status === "draft").toBe(chapter.room === null);
+      expect(chapter.status).toBe("production");
+      expect(chapter.room).not.toBeNull();
     });
   });
 
@@ -33,9 +40,9 @@ describe("campaña histórica", () => {
     expect(migrated?.phase2).toEqual(old.phase2);
   });
 
-  it("rechaza capítulos de diseño inyectados en un guardado", () => {
+  it("rechaza capítulos desconocidos inyectados en un guardado", () => {
     const state = fresh();
-    state.campaign.visited.push("mosaic-312" as never);
+    state.campaign.visited.push("future-2030" as never);
     expect(parseSave(JSON.stringify(state))).toBeNull();
   });
 
@@ -56,5 +63,150 @@ describe("campaña histórica", () => {
     expect(parseSave(JSON.stringify(state))?.campaign.completed).toEqual([
       "roman-189",
     ]);
+  });
+
+  it("restaura los testimonios romanos pendientes tras cargar", () => {
+    const state = fresh();
+    state.room = 8;
+    state.campaign.visited.push("roman-189");
+    state.campaign.witnessed.push(romanEchoes[0].id);
+    const restored = parseSave(JSON.stringify(state));
+    expect(restored?.campaign.witnessed).toEqual([romanEchoes[0].id]);
+    const world = new World(
+      8,
+      [],
+      [],
+      [],
+      [],
+      1,
+      undefined,
+      restored!.campaign,
+    );
+    expect(
+      world.objects
+        .filter((object) => object.kind === "romanEcho")
+        .map((object) => object.id),
+    ).toEqual(romanEchoes.slice(1).map((echo) => echo.id));
+    world.dispose();
+  });
+
+  it("el doble romano aparece solo al conocer la marca con cordura baja", () => {
+    const state = fresh();
+    state.room = 8;
+    state.sanity = 60;
+    expect(
+      eligibleSanityEvents(state).some((event) => event.id === "roman-double"),
+    ).toBe(false);
+    state.items.push("Marca de Varro");
+    expect(
+      eligibleSanityEvents(state).some((event) => event.id === "roman-double"),
+    ).toBe(true);
+  });
+
+  it("el taller de 312 enlaza dos salas, guarda el molde y conserva los guardados antiguos", () => {
+    const old = fresh();
+    expect(parseSave(JSON.stringify(old))).toEqual(old);
+    const mansion = new World(0, [], [], []);
+    expect(
+      mansion.objects.some((object) => object.id === "mosaic-portal"),
+    ).toBe(false);
+    mansion.dispose();
+    completeChapter(old.campaign, "roman-189");
+    const openMansion = new World(
+      0,
+      old.items,
+      [],
+      [],
+      [],
+      1,
+      old.phase2,
+      old.campaign,
+    );
+    const portal = openMansion.objects.find(
+      (object) => object.id === "mosaic-portal",
+    );
+    expect(portal?.target).toBe(11);
+    expect(blocked(portal!.x, portal!.z, openMansion.obstacles)).toBe(false);
+    openMansion.dispose();
+    expect(mosaicObjective(old)).toMatch(/registro/);
+    old.room = 11;
+    old.phase2.visited.push(11);
+    old.campaign.visited.push("mosaic-312");
+    old.read.push("11");
+    expect(mosaicObjective(old)).toMatch(/pigmento/);
+    const gallery = new World(
+      11,
+      old.items,
+      [],
+      old.read,
+      [],
+      1,
+      old.phase2,
+      old.campaign,
+    );
+    expect(
+      gallery.objects.find((object) => object.id === "mosaic-pigment"),
+    ).toBeDefined();
+    expect(
+      gallery.objects.find((object) => object.id === "mosaic-kiln")?.target,
+    ).toBe(12);
+    gallery.dispose();
+    old.items.push("Pigmento de cinabrio", "Boceto recompuesto");
+    old.room = 12;
+    old.phase2.visited.push(12);
+    expect(mosaicObjective(old)).toMatch(/custodio/);
+    const kiln = new World(
+      12,
+      old.items,
+      [],
+      old.read,
+      [],
+      1,
+      old.phase2,
+      old.campaign,
+    );
+    expect(
+      kiln.objects.find((object) => object.id === "mosaic-back")?.target,
+    ).toBe(11);
+    expect(
+      kiln.objects.find((object) => object.id === "mosaic-mold")?.value,
+    ).toBe("Molde de Aurelia");
+    kiln.dispose();
+    old.defeated.push("enemy12");
+    old.items.push("Molde de Aurelia");
+    old.collected.push("Molde de Aurelia");
+    expect(mosaicObjective(old)).toMatch(/Regresa/);
+    completeChapter(old.campaign, "mosaic-312");
+    expect(parseSave(JSON.stringify(old))).toEqual(old);
+  });
+
+  it("la abadía solo queda lista para concluir tras investigación, combate y códice", () => {
+    const state = fresh();
+    expect(abbeyObjective(state)).toMatch(/registro/);
+    state.read.push("9", "10");
+    expect(abbeyObjective(state)).toMatch(/Descifra/);
+    state.items.push("Sello de Montfort");
+    expect(abbeyObjective(state)).toMatch(/copista/);
+    state.defeated.push("enemy10");
+    expect(abbeyObjective(state)).toMatch(/códice/);
+    state.items.push("Códice de Montfort");
+    expect(abbeyObjective(state)).toMatch(/Regresa/);
+  });
+
+  it("el mosaico rechaza intentos prematuros y fija una sola respuesta persistente", () => {
+    const state = fresh();
+    expect(attemptMosaicPattern(state, 1)).toBe("locked");
+    state.read.push("11");
+    state.items.push("Pigmento de cinabrio");
+    expect(attemptMosaicPattern(state, 0)).toBe("wrong");
+    expect(state.sanity).toBe(95);
+    expect(attemptMosaicPattern(state, 1)).toBe("solved");
+    expect(attemptMosaicPattern(state, 1)).toBe("already");
+    expect(
+      state.items.filter((item) => item === "Boceto recompuesto"),
+    ).toHaveLength(1);
+    expect(parseSave(JSON.stringify(state))?.items).toContain(
+      "Boceto recompuesto",
+    );
   });
 });
