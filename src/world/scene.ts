@@ -467,8 +467,8 @@ export class World {
           {
             id: "upper-portraits",
             name: "Recoger el folio de los huéspedes",
-            x: -5,
-            z: -3,
+            x: -5.9,
+            z: -2.5,
             level: 1,
             kind: "item",
             value: "Folio del rellano",
@@ -480,8 +480,8 @@ export class World {
           {
             id: "upper-observatory",
             name: "Recoger la carta de la raíz",
-            x: -1.3,
-            z: -3,
+            x: -0.2,
+            z: -2.2,
             level: 1,
             kind: "item",
             value: "Carta de la raíz",

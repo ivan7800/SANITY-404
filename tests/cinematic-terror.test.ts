@@ -156,7 +156,9 @@ it("la cámara encuadra un encuentro en la planta superior a su altura real", ()
     .project(camera);
   expect(Math.abs(projected.x)).toBeLessThan(0.9);
   expect(Math.abs(projected.y)).toBeLessThan(0.9);
-  expect(camera.fov).toBe(64);
+  expect(director.corrected).toBe(false);
+  expect(camera.position.z).toBeLessThan(-6);
+  expect(camera.fov).toBe(68);
   world.dispose();
 });
 

@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-24",
+  "browser": "Chromium, ventana real 1280 × 720, Intel HD Graphics 620",
+  "method": "Eventos KeyboardEvent enviados a los listeners reales del juego; inspección con sanityInspect; prueba funcional separada de las mediciones FPS",
+  "route": [
+    { "step": "inicio", "floor": 0, "x": 5, "z": -1.5 },
+    { "step": "subida", "floor": 1, "z": -5.14365, "walkingLimbPose": 0.3064 },
+    { "step": "retratos", "floor": 1, "x": -4.94113, "z": -3.07437, "cameraCorrected": false, "picked": "Folio del rellano", "walkingLimbPose": 0.3818 },
+    { "step": "observatorio", "floor": 1, "x": -1.38766, "z": -3.07437, "cameraCorrected": false, "picked": "Carta de la raíz" },
+    { "step": "guardado manual", "floor": 1, "x": 1.9409, "z": -5.77329, "toast": "Memoria conservada. Partida guardada." },
+    { "step": "recarga de la página y carga", "floor": 1, "x": 1.9409, "z": -5.77329, "itemsPreserved": ["Folio del rellano", "Carta de la raíz"] },
+    { "step": "descenso", "floor": 0, "x": 4.91036, "z": -5.09856, "health": 100 }
+  ],
+  "boss": {
+    "initialPlayerHealth": 100,
+    "initialEnemyHealth": 165,
+    "observedPhases": [1, 2, 3],
+    "effectiveHeavyHits": 4,
+    "enemyHealthAfterVictory": -35,
+    "defeatedIds": ["mansion-root"],
+    "finalPlayerHealth": 100,
+    "finalPlayerSanity": 100,
+    "enemyVisible": false,
+    "paused": false,
+    "method": "Defensa activada durante el aviso de ataque y cuatro golpes fuertes durante vulnerabilidad; ejecución continua sin pausas entre fases"
+  }
+}

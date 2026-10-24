@@ -117,3 +117,20 @@ it("encuadra las pistas de ambas salas superiores con colisiones de su altura", 
   }
   world.dispose();
 });
+
+it("mantiene la cámara del pasillo superior detrás de las puertas", () => {
+  const world = new World(0, [], [], []);
+  const camera = new T.PerspectiveCamera(58, 16 / 9);
+  const director = new CinematicCamera();
+  director.update(camera, -5, -5.7, 0, 0, false, world.upperObstacles, {
+    height: 2.64,
+  });
+  camera.updateMatrixWorld();
+  const actor = new T.Vector3(-5, 3.89, -5.7).project(camera);
+  expect(camera.position.z).toBeLessThan(-6.5);
+  expect(director.corrected).toBe(false);
+  expect(Math.abs(actor.x)).toBeLessThan(0.8);
+  expect(Math.abs(actor.y)).toBeLessThan(0.8);
+  expect(camera.fov).toBe(63);
+  world.dispose();
+});

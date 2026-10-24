@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-24T12:23:25.692Z",
+  "method": "real popup 1280x720 combat A/B/A; CSS veil display none or block, 100 warmup + 600 frames",
+  "results": [
+    {
+      "condition": "veil-hidden-1",
+      "viewport": [
+        1280,
+        720
+      ],
+      "canvas": [
+        1024,
+        576
+      ],
+      "fps": 60.02340912956053,
+      "min60": 60.01800540162044,
+      "health": 28,
+      "paused": false,
+      "over25": 0,
+      "perf": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728,
+        "renderMedianMs": 6.700000002980232,
+        "renderP95Ms": 10.400000005960464,
+        "updateMedianMs": 0.5,
+        "updateP95Ms": 1.2000000029802322,
+        "averageFps": 60.02340912956052
+      },
+      "gpu": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 9.188916,
+        "p95Ms": 12.963916
+      }
+    },
+    {
+      "condition": "veil-normal",
+      "viewport": [
+        1280,
+        720
+      ],
+      "canvas": [
+        1024,
+        576
+      ],
+      "fps": 56.272509003601435,
+      "min60": 53.748992206396125,
+      "health": 28,
+      "paused": false,
+      "over25": 40,
+      "perf": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 33.29999999999927,
+        "renderMedianMs": 4.5999999940395355,
+        "renderP95Ms": 9.199999988079071,
+        "updateMedianMs": 0.5,
+        "updateP95Ms": 1.3999999910593033,
+        "averageFps": 56.27250900360143
+      },
+      "gpu": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 8.17925,
+        "p95Ms": 12.496582
+      }
+    },
+    {
+      "condition": "veil-hidden-2",
+      "viewport": [
+        1280,
+        720
+      ],
+      "canvas": [
+        1024,
+        576
+      ],
+      "fps": 59.92449513612848,
+      "min60": 59.03768572271966,
+      "health": 28,
+      "paused": false,
+      "over25": 1,
+      "perf": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272,
+        "renderMedianMs": 6.799999997019768,
+        "renderP95Ms": 11.099999994039536,
+        "updateMedianMs": 0.5,
+        "updateP95Ms": 1.2000000029802322,
+        "averageFps": 59.92449513612847
+      },
+      "gpu": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 9.250749,
+        "p95Ms": 13.027833
+      }
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "date": "2026-10-24T08:07:13.266Z",
+  "steps": [
+    {
+      "at": "inicio",
+      "version": 2,
+      "room": 0,
+      "x": 5,
+      "z": -1.5,
+      "floor": 0,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy0",
+        "mansion-guest",
+        "mansion-widow",
+        "mansion-crawler",
+        "mansion-reflection",
+        "mansion-root"
+      ],
+      "seals": [],
+      "elapsed": 0.3000999999999998,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0
+        ],
+        "solved": [],
+        "steps": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "discoveries": [],
+        "shortcuts": [],
+        "ending": false
+      },
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      }
+    },
+    {
+      "at": "escalera",
+      "version": 2,
+      "room": 0,
+      "x": 5,
+      "z": -5.324549999999998,
+      "floor": 1,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy0",
+        "mansion-guest",
+        "mansion-widow",
+        "mansion-crawler",
+        "mansion-reflection",
+        "mansion-root"
+      ],
+      "seals": [],
+      "elapsed": 1.7333000000000003,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0
+        ],
+        "solved": [],
+        "steps": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "discoveries": [],
+        "shortcuts": [],
+        "ending": false
+      },
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      }
+    },
+    {
+      "at": "retratos",
+      "version": 2,
+      "room": 0,
+      "x": -4.9449100000000055,
+      "z": -3.074639999999995,
+      "floor": 1,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy0",
+        "mansion-guest",
+        "mansion-widow",
+        "mansion-crawler",
+        "mansion-reflection",
+        "mansion-root"
+      ],
+      "seals": [],
+      "elapsed": 7.01640000000003,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0
+        ],
+        "solved": [],
+        "steps": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "discoveries": [],
+        "shortcuts": [],
+        "ending": false
+      },
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      }
+    },
+    {
+      "at": "observatorio",
+      "version": 2,
+      "room": 0,
+      "x": -1.3903600000000031,
+      "z": -3.0746400000000005,
+      "floor": 1,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy0",
+        "mansion-guest",
+        "mansion-widow",
+        "mansion-crawler",
+        "mansion-reflection",
+        "mansion-root"
+      ],
+      "seals": [],
+      "elapsed": 10.8496,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0
+        ],
+        "solved": [],
+        "steps": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "discoveries": [],
+        "shortcuts": [],
+        "ending": false
+      },
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      }
+    },
+    {
+      "at": "guardado",
+      "version": 2,
+      "room": 0,
+      "x": 1.9392799999999992,
+      "z": -5.774640000000008,
+      "floor": 1,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy0",
+        "mansion-guest",
+        "mansion-widow",
+        "mansion-crawler",
+        "mansion-reflection",
+        "mansion-root"
+      ],
+      "seals": [],
+      "elapsed": 13.632799999999952,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0
+        ],
+        "solved": [],
+        "steps": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "discoveries": [],
+        "shortcuts": [],
+        "ending": false
+      },
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      }
+    },
+    {
+      "at": "recarga",
+      "version": 2,
+      "room": 0,
+      "x": 1.9392799999999992,
+      "z": -5.774640000000008,
+      "floor": 1,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "collected": [],
+      "read": [],
+      "defeated": [
+        "enemy0",
+        "mansion-guest",
+        "mansion-widow",
+        "mansion-crawler",
+        "mansion-reflection",
+        "mansion-root"
+      ],
+      "seals": [],
+      "elapsed": 13.899499999999955,
+      "ended": false,
+      "phase2": {
+        "visited": [
+          0
+        ],
+        "solved": [],
+        "steps": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "discoveries": [],
+        "shortcuts": [],
+        "ending": false
+      },
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      }
+    }
+  ],
+  "errors": []
+}
