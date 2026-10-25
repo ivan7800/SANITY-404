@@ -1,0 +1,365 @@
+[
+  {
+    "tag": "new-game",
+    "at": "2026-10-25T08:14:58.640Z",
+    "room": 0,
+    "x": 0,
+    "z": 5,
+    "health": 100,
+    "enemy": {
+      "position": [
+        2,
+        0,
+        -2.6742799999999978
+      ],
+      "visible": true
+    },
+    "combat": {
+      "enemyHealth": 60,
+      "windup": 0,
+      "guarding": false,
+      "animation": 0,
+      "kind": "shade",
+      "aiState": "patrol",
+      "phase": 1,
+      "vulnerable": 0,
+      "stamina": 100,
+      "dodge": 0,
+      "hurt": 0
+    },
+    "prompt": "",
+    "objects": [
+      {
+        "id": "save0",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note0",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "key",
+        "name": "Recoger llave de latón",
+        "kind": "item",
+        "x": -4,
+        "z": -0.5
+      },
+      {
+        "id": "tonic0",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Biblioteca prohibida",
+        "kind": "door",
+        "target": 1,
+        "x": 0,
+        "z": -7
+      },
+      {
+        "id": "upper-save",
+        "name": "Escritorio del rellano · guardar",
+        "kind": "save",
+        "x": 2,
+        "z": -5.8,
+        "level": 1
+      },
+      {
+        "id": "upper-portraits",
+        "name": "Recoger el folio de los huéspedes",
+        "kind": "item",
+        "x": -5.9,
+        "z": -2.5,
+        "level": 1
+      },
+      {
+        "id": "upper-observatory",
+        "name": "Recoger la carta de la raíz",
+        "kind": "item",
+        "x": -0.2,
+        "z": -2.2,
+        "level": 1
+      },
+      {
+        "id": "roman-portal",
+        "name": "Atravesar la grieta romana · año 189",
+        "kind": "door",
+        "target": 8,
+        "x": 6.2,
+        "z": 3
+      },
+      {
+        "id": "medieval-portal",
+        "name": "Observar un recuerdo adelantado de 1348",
+        "kind": "door",
+        "target": 9,
+        "x": -5.8,
+        "z": -5.2
+      },
+      {
+        "id": "legacy-desk",
+        "name": "Reconstruir la memoria de las tres épocas",
+        "kind": "legacy",
+        "x": -2.5,
+        "z": -4.7
+      },
+      {
+        "id": "ritual-table",
+        "name": "Leer la mesa de los tres signos",
+        "kind": "ritual",
+        "x": 0,
+        "z": 2.7
+      },
+      {
+        "id": "mansion-puzzle",
+        "name": "Examinar caja astronómica",
+        "kind": "seal",
+        "target": 0,
+        "x": 3,
+        "z": 4
+      },
+      {
+        "id": "gallery-chart",
+        "name": "Examinar carta astral del rellano",
+        "kind": "galleryClue",
+        "x": 4.35,
+        "z": -6.1
+      }
+    ]
+  },
+  {
+    "tag": "roman-portal-near",
+    "at": "2026-10-25T08:15:01.335Z",
+    "room": 0,
+    "x": 5.08302,
+    "z": 3.110810000000003,
+    "health": 100,
+    "enemy": {
+      "position": [
+        2.3036934221579877,
+        0,
+        -0.44087822453267994
+      ],
+      "visible": true
+    },
+    "combat": {
+      "enemyHealth": 60,
+      "windup": 0,
+      "guarding": false,
+      "animation": 0,
+      "kind": "shade",
+      "aiState": "chase",
+      "phase": 1,
+      "vulnerable": 0,
+      "stamina": 100,
+      "dodge": 0,
+      "hurt": 0
+    },
+    "prompt": "E / A · Atravesar la grieta romana · año 189",
+    "objects": [
+      {
+        "id": "save0",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note0",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "key",
+        "name": "Recoger llave de latón",
+        "kind": "item",
+        "x": -4,
+        "z": -0.5
+      },
+      {
+        "id": "tonic0",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Biblioteca prohibida",
+        "kind": "door",
+        "target": 1,
+        "x": 0,
+        "z": -7
+      },
+      {
+        "id": "upper-save",
+        "name": "Escritorio del rellano · guardar",
+        "kind": "save",
+        "x": 2,
+        "z": -5.8,
+        "level": 1
+      },
+      {
+        "id": "upper-portraits",
+        "name": "Recoger el folio de los huéspedes",
+        "kind": "item",
+        "x": -5.9,
+        "z": -2.5,
+        "level": 1
+      },
+      {
+        "id": "upper-observatory",
+        "name": "Recoger la carta de la raíz",
+        "kind": "item",
+        "x": -0.2,
+        "z": -2.2,
+        "level": 1
+      },
+      {
+        "id": "roman-portal",
+        "name": "Atravesar la grieta romana · año 189",
+        "kind": "door",
+        "target": 8,
+        "x": 6.2,
+        "z": 3
+      },
+      {
+        "id": "medieval-portal",
+        "name": "Observar un recuerdo adelantado de 1348",
+        "kind": "door",
+        "target": 9,
+        "x": -5.8,
+        "z": -5.2
+      },
+      {
+        "id": "legacy-desk",
+        "name": "Reconstruir la memoria de las tres épocas",
+        "kind": "legacy",
+        "x": -2.5,
+        "z": -4.7
+      },
+      {
+        "id": "ritual-table",
+        "name": "Leer la mesa de los tres signos",
+        "kind": "ritual",
+        "x": 0,
+        "z": 2.7
+      },
+      {
+        "id": "mansion-puzzle",
+        "name": "Examinar caja astronómica",
+        "kind": "seal",
+        "target": 0,
+        "x": 3,
+        "z": 4
+      },
+      {
+        "id": "gallery-chart",
+        "name": "Examinar carta astral del rellano",
+        "kind": "galleryClue",
+        "x": 4.35,
+        "z": -6.1
+      }
+    ]
+  },
+  {
+    "tag": "roman-enter",
+    "at": "2026-10-25T08:15:01.602Z",
+    "room": 8,
+    "x": 0,
+    "z": 5.2,
+    "health": 100,
+    "enemy": {
+      "position": [
+        3,
+        0,
+        -3
+      ],
+      "visible": true
+    },
+    "combat": {
+      "enemyHealth": 115,
+      "windup": 0,
+      "guarding": false,
+      "animation": 0,
+      "kind": "centurion",
+      "aiState": "patrol",
+      "phase": 1,
+      "vulnerable": 0,
+      "stamina": 100,
+      "dodge": 0,
+      "hurt": 0
+    },
+    "prompt": "E / A · Atravesar la grieta romana · año 189",
+    "objects": [
+      {
+        "id": "save8",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5
+      },
+      {
+        "id": "note8",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5
+      },
+      {
+        "id": "roman-echo-ash",
+        "name": "Testimonio de la ceniza",
+        "kind": "romanEcho",
+        "x": -4.15,
+        "z": 3.45
+      },
+      {
+        "id": "roman-echo-tide",
+        "name": "Testimonio de la marea",
+        "kind": "romanEcho",
+        "x": 4.15,
+        "z": 3.45
+      },
+      {
+        "id": "roman-echo-threshold",
+        "name": "Testimonio del umbral",
+        "kind": "romanEcho",
+        "x": 0,
+        "z": 1.35
+      },
+      {
+        "id": "roman-inscription",
+        "name": "Descifrar la inscripción del altar",
+        "kind": "romanPuzzle",
+        "x": -2.9,
+        "z": -4.25
+      },
+      {
+        "id": "roman-return",
+        "name": "Regresar a la mansión · año 1927",
+        "kind": "door",
+        "target": 0,
+        "x": 0,
+        "z": 6.1
+      },
+      {
+        "id": "roman-tablet",
+        "name": "Recoger tablilla del intervalo",
+        "kind": "item",
+        "x": 0,
+        "z": -4.1
+      }
+    ]
+  }
+]

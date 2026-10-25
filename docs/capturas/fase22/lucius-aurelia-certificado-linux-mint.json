@@ -1,0 +1,4235 @@
+{
+  "startedAt": "2026-10-25T13:12:42.468Z",
+  "url": "http://127.0.0.1:5174/",
+  "headed": true,
+  "browser": "chromium",
+  "preparedState": false,
+  "through": "aurelia",
+  "actions": [
+    {
+      "label": "Nueva partida",
+      "at": "2026-10-25T13:12:45.659Z",
+      "wallMs": 3191,
+      "room": 0,
+      "x": 0,
+      "z": 5,
+      "health": 100,
+      "sanity": 100,
+      "items": [],
+      "read": [],
+      "defeated": [],
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      },
+      "enemy": {
+        "position": [
+          2,
+          0,
+          -2.6741949999999974
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 147,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:12:48.132Z",
+      "room": 0,
+      "axis": "x",
+      "target": 5.2,
+      "from": [
+        0,
+        5
+      ],
+      "to": [
+        5.172929999999998,
+        5
+      ],
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "enemy": {
+        "position": [
+          2.2242099954923855,
+          0,
+          -0.5891776298663131
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "chase",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:12:48.985Z",
+      "room": 0,
+      "axis": "z",
+      "target": 3,
+      "from": [
+        5.172929999999998,
+        5
+      ],
+      "to": [
+        5.172929999999998,
+        3.0211699999999997
+      ],
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "enemy": {
+        "position": [
+          2.39670098144036,
+          0,
+          0.11216729225952318
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "chase",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "portal romano próximo",
+      "at": "2026-10-25T13:12:48.994Z",
+      "wallMs": 6526,
+      "room": 0,
+      "x": 5.172929999999998,
+      "z": 3.0211699999999997,
+      "health": 100,
+      "sanity": 99.78004,
+      "items": [],
+      "read": [],
+      "defeated": [],
+      "campaign": {
+        "visited": [
+          "mansion-1927"
+        ],
+        "completed": [],
+        "witnessed": []
+      },
+      "enemy": {
+        "position": [
+          2.39670098144036,
+          0,
+          0.11216729225952318
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "chase",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Atravesar la grieta romana · año 189",
+      "memory": {
+        "geometries": 158,
+        "textures": 21
+      }
+    },
+    {
+      "label": "interacción roman-portal",
+      "at": "2026-10-25T13:12:49.283Z",
+      "wallMs": 6815,
+      "room": 8,
+      "x": 0,
+      "z": 5.2,
+      "health": 100,
+      "sanity": 96.73011999999999,
+      "items": [],
+      "read": [],
+      "defeated": [],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": []
+      },
+      "enemy": {
+        "position": [
+          3,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 115,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Atravesar la grieta romana · año 189",
+      "memory": {
+        "geometries": 129,
+        "textures": 21
+      }
+    },
+    {
+      "label": "captura",
+      "path": "docs/capturas/fase22/acumulativa-roman-portal-introduccion.png",
+      "at": "2026-10-25T13:12:49.651Z"
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:12:51.752Z",
+      "room": 8,
+      "axis": "x",
+      "target": -4.3,
+      "from": [
+        0,
+        5.2
+      ],
+      "to": [
+        -4.273559999999999,
+        5.2
+      ],
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "enemy": {
+        "position": [
+          4.8142199999999855,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 115,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:12:51.873Z",
+      "room": 8,
+      "axis": "z",
+      "target": 5,
+      "from": [
+        -4.273559999999999,
+        5.2
+      ],
+      "to": [
+        -4.273559999999999,
+        5.0649999999999995
+      ],
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "enemy": {
+        "position": [
+          4.904129999999985,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 115,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción note8",
+      "at": "2026-10-25T13:12:52.056Z",
+      "wallMs": 9587,
+      "room": 8,
+      "x": -4.273559999999999,
+      "z": 5.0649999999999995,
+      "health": 100,
+      "sanity": 84.73011999999999,
+      "items": [],
+      "read": [
+        "8"
+      ],
+      "defeated": [],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation"
+        ]
+      },
+      "enemy": {
+        "position": [
+          4.814309999999986,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 115,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Leer documento",
+      "memory": {
+        "geometries": 130,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:12:53.922Z",
+      "room": 8,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        -4.273559999999999,
+        5.0649999999999995
+      ],
+      "to": [
+        -0.045630000000000955,
+        5.0649999999999995
+      ],
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "enemy": {
+        "position": [
+          3.13499999999999,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 115,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:12:55.574Z",
+      "room": 8,
+      "axis": "z",
+      "target": 1.4,
+      "from": [
+        -0.045630000000000955,
+        5.0649999999999995
+      ],
+      "to": [
+        -0.045630000000000955,
+        1.4213500000000059
+      ],
+      "healthBefore": 100,
+      "healthAfter": 100,
+      "enemy": {
+        "position": [
+          2.3163353467807726,
+          0,
+          -1.9108200002358413
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 115,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "chase",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "defensa",
+      "context": "combate en sala 8",
+      "at": "2026-10-25T13:12:57.421Z",
+      "room": 8,
+      "player": [
+        0.7192799999999971,
+        -0.37792999999999827
+      ],
+      "enemyKind": "centurion",
+      "enemyPosition": [
+        1.7072462044571188,
+        0,
+        -1.296255280390486
+      ],
+      "healthBefore": 100,
+      "healthAfter": 95,
+      "staminaAfter": 95.35220000000002
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:12:57.813Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 115,
+      "enemyHealthAfter": 65,
+      "playerHealthAfter": 95,
+      "staminaBefore": 97.45100000000001,
+      "staminaAfter": 67.24979999999998
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:12:58.657Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 65,
+      "enemyHealthAfter": 65,
+      "playerHealthAfter": 95,
+      "staminaBefore": 77.7455999999999,
+      "staminaAfter": 82.54439999999988
+    },
+    {
+      "label": "defensa",
+      "context": "combate en sala 8",
+      "at": "2026-10-25T13:12:59.421Z",
+      "room": 8,
+      "player": [
+        1.0340999999999982,
+        -0.6479299999999983
+      ],
+      "enemyKind": "centurion",
+      "enemyPosition": [
+        1.9437248813544565,
+        0,
+        -1.6188662463741064
+      ],
+      "healthBefore": 95,
+      "healthAfter": 95,
+      "staminaAfter": 77.67279999999978
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:12:59.818Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 65,
+      "enemyHealthAfter": 15,
+      "playerHealthAfter": 95,
+      "staminaBefore": 80.07219999999975,
+      "staminaAfter": 49.86919999999973
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:00.652Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 15,
+      "enemyHealthAfter": 15,
+      "playerHealthAfter": 95,
+      "staminaBefore": 60.06619999999966,
+      "staminaAfter": 64.86319999999965
+    },
+    {
+      "label": "defensa",
+      "context": "combate en sala 8",
+      "at": "2026-10-25T13:13:01.451Z",
+      "room": 8,
+      "player": [
+        1.3038299999999927,
+        -0.9179299999999984
+      ],
+      "enemyKind": "centurion",
+      "enemyPosition": [
+        2.031945528792113,
+        0,
+        -1.6469421686555417
+      ],
+      "healthBefore": 95,
+      "healthAfter": 90,
+      "staminaAfter": 71.7602999999997
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:01.885Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 15,
+      "enemyHealthAfter": -35,
+      "playerHealthAfter": 90,
+      "staminaBefore": 73.86089999999973,
+      "staminaAfter": 44.259099999999684
+    },
+    {
+      "label": "combate de sala 8 terminado",
+      "at": "2026-10-25T13:13:02.365Z",
+      "wallMs": 19897,
+      "room": 8,
+      "x": 1.3038299999999927,
+      "z": -1.1876600000000026,
+      "health": 90,
+      "sanity": 84.66001499999996,
+      "items": [],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 53.255499999999685,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 177,
+        "textures": 21
+      },
+      "attacks": [
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 115,
+          "enemyHealthAfter": 65,
+          "playerHealthAfter": 95,
+          "staminaBefore": 97.45100000000001,
+          "staminaAfter": 67.24979999999998
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 65,
+          "enemyHealthAfter": 65,
+          "playerHealthAfter": 95,
+          "staminaBefore": 77.7455999999999,
+          "staminaAfter": 82.54439999999988
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 65,
+          "enemyHealthAfter": 15,
+          "playerHealthAfter": 95,
+          "staminaBefore": 80.07219999999975,
+          "staminaAfter": 49.86919999999973
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 15,
+          "enemyHealthAfter": 15,
+          "playerHealthAfter": 95,
+          "staminaBefore": 60.06619999999966,
+          "staminaAfter": 64.86319999999965
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 15,
+          "enemyHealthAfter": -35,
+          "playerHealthAfter": 90,
+          "staminaBefore": 73.86089999999973,
+          "staminaAfter": 44.259099999999684
+        }
+      ],
+      "guards": 3
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:04.716Z",
+      "room": 8,
+      "axis": "x",
+      "target": -4.15,
+      "from": [
+        1.3038299999999927,
+        -1.1876600000000026
+      ],
+      "to": [
+        -4.094009999999988,
+        -1.1876600000000026
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 95.5374999999998,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:06.873Z",
+      "room": 8,
+      "axis": "z",
+      "target": 3.8,
+      "from": [
+        -4.094009999999988,
+        -1.1876600000000026
+      ],
+      "to": [
+        -4.094009999999988,
+        3.760359999999992
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción roman-echo-ash",
+      "at": "2026-10-25T13:13:07.050Z",
+      "wallMs": 24582,
+      "room": 8,
+      "x": -4.094009999999988,
+      "z": 3.760359999999992,
+      "health": 90,
+      "sanity": 86.27515999999873,
+      "items": [],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Leer documento",
+      "memory": {
+        "geometries": 174,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:10.638Z",
+      "room": 8,
+      "axis": "x",
+      "target": 4.15,
+      "from": [
+        -4.094009999999988,
+        3.760359999999992
+      ],
+      "to": [
+        4.182569999999973,
+        3.760359999999992
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción roman-echo-tide",
+      "at": "2026-10-25T13:13:10.801Z",
+      "wallMs": 28332,
+      "room": 8,
+      "x": 4.182569999999973,
+      "z": 3.760359999999992,
+      "health": 90,
+      "sanity": 87.56382499999769,
+      "items": [],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 171,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:12.635Z",
+      "room": 8,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        4.182569999999973,
+        3.760359999999992
+      ],
+      "to": [
+        0.04373999999996075,
+        3.760359999999992
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:13.725Z",
+      "room": 8,
+      "axis": "z",
+      "target": 1.35,
+      "from": [
+        0.04373999999996075,
+        3.760359999999992
+      ],
+      "to": [
+        0.04373999999996075,
+        1.3757200000000018
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción roman-echo-threshold",
+      "at": "2026-10-25T13:13:13.906Z",
+      "wallMs": 31437,
+      "room": 8,
+      "x": 0.04373999999996075,
+      "z": 1.3757200000000018,
+      "health": 90,
+      "sanity": 100,
+      "items": [],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 168,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:15.194Z",
+      "room": 8,
+      "axis": "x",
+      "target": -2.9,
+      "from": [
+        0.04373999999996075,
+        1.3757200000000018
+      ],
+      "to": [
+        -2.834730000000035,
+        1.3757200000000018
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:17.113Z",
+      "room": 8,
+      "axis": "z",
+      "target": -3.25,
+      "from": [
+        -2.834730000000035,
+        1.3757200000000018
+      ],
+      "to": [
+        -2.834730000000035,
+        -3.167569999999999
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción roman-inscription",
+      "at": "2026-10-25T13:13:17.179Z",
+      "wallMs": 34710,
+      "room": 8,
+      "x": -2.834730000000035,
+      "z": -3.167569999999999,
+      "health": 90,
+      "sanity": 100,
+      "items": [],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Descifrar la inscripción del altar",
+      "memory": {
+        "geometries": 168,
+        "textures": 21
+      }
+    },
+    {
+      "label": "puzle roman-inscription resuelto",
+      "at": "2026-10-25T13:13:17.296Z",
+      "wallMs": 34827,
+      "room": 8,
+      "x": -2.834730000000035,
+      "z": -3.167569999999999,
+      "health": 90,
+      "sanity": 100,
+      "items": [
+        "Marca de Varro"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Descifrar la inscripción del altar",
+      "memory": {
+        "geometries": 168,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:18.495Z",
+      "room": 8,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        -2.834730000000035,
+        -3.167569999999999
+      ],
+      "to": [
+        -0.04563000000005563,
+        -3.167569999999999
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción roman-tablet",
+      "at": "2026-10-25T13:13:18.638Z",
+      "wallMs": 36170,
+      "room": 8,
+      "x": -0.04563000000005563,
+      "z": -3.167569999999999,
+      "health": 90,
+      "sanity": 100,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 163,
+        "textures": 21
+      }
+    },
+    {
+      "label": "captura",
+      "path": "docs/capturas/fase22/acumulativa-tablilla.png",
+      "at": "2026-10-25T13:13:19.076Z"
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:22.957Z",
+      "room": 8,
+      "axis": "z",
+      "target": 5.1,
+      "from": [
+        -0.04563000000005563,
+        -3.167569999999999
+      ],
+      "to": [
+        -0.04563000000005563,
+        5.0188299999999755
+      ],
+      "healthBefore": 90,
+      "healthAfter": 90,
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción roman-return",
+      "at": "2026-10-25T13:13:23.008Z",
+      "wallMs": 40539,
+      "room": 8,
+      "x": -0.04563000000005563,
+      "z": 5.0188299999999755,
+      "health": 90,
+      "sanity": 100,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3702627651477894,
+          0,
+          -1.8603465912541783
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -35,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "centurion",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Regresar a la mansión · año 1927",
+      "memory": {
+        "geometries": 163,
+        "textures": 21
+      }
+    },
+    {
+      "label": "regreso de roman-189 a 1927",
+      "at": "2026-10-25T13:13:23.429Z",
+      "wallMs": 40960,
+      "room": 0,
+      "x": 0,
+      "z": -4.2,
+      "health": 90,
+      "sanity": 99.83008000000001,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2,
+          0,
+          -2.7592799999999946
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 142,
+        "textures": 21
+      }
+    },
+    {
+      "label": "captura",
+      "path": "docs/capturas/fase22/acumulativa-roman-189-regreso.png",
+      "at": "2026-10-25T13:13:23.954Z"
+    },
+    {
+      "label": "guardado verificado",
+      "at": "2026-10-25T13:13:23.967Z",
+      "completed": [
+        "roman-189"
+      ],
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ]
+    },
+    {
+      "label": "recarga tras roman-189",
+      "at": "2026-10-25T13:13:25.387Z",
+      "wallMs": 42918,
+      "room": 0,
+      "x": 0,
+      "z": -4.2,
+      "health": 90,
+      "sanity": 99.79996,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2,
+          0,
+          -2.7166099999999984
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 142,
+        "textures": 21
+      }
+    },
+    {
+      "label": "recarga verificada",
+      "at": "2026-10-25T13:13:25.414Z",
+      "completed": [
+        "roman-189"
+      ],
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "nextPortal": "mosaic-portal"
+    },
+    {
+      "label": "defensa",
+      "context": "combate en sala 0",
+      "at": "2026-10-25T13:13:26.505Z",
+      "room": 0,
+      "player": [
+        0.7646400000000003,
+        -3.4801800000000007
+      ],
+      "enemyKind": "shade",
+      "enemyPosition": [
+        1.8043436740469696,
+        0,
+        -2.6696942199698595
+      ],
+      "healthBefore": 90,
+      "healthAfter": 87,
+      "staminaAfter": 97.31759999999993
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:26.883Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 60,
+      "enemyHealthAfter": 10,
+      "playerHealthAfter": 87,
+      "staminaBefore": 99.71699999999994,
+      "staminaAfter": 68.5982
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:27.721Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 10,
+      "enemyHealthAfter": 10,
+      "playerHealthAfter": 87,
+      "staminaBefore": 79.39280000000007,
+      "staminaAfter": 84.19160000000008
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:28.550Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 10,
+      "enemyHealthAfter": -40,
+      "playerHealthAfter": 75,
+      "staminaBefore": 94.08800000000014,
+      "staminaAfter": 63.885000000000126
+    },
+    {
+      "label": "combate de sala 0 terminado",
+      "at": "2026-10-25T13:13:29.021Z",
+      "wallMs": 46552,
+      "room": 0,
+      "x": 1.2595499999999993,
+      "z": -3.2552700000000003,
+      "health": 75,
+      "sanity": 95.53559499999957,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2.3533238338154847,
+          0,
+          -2.08778955291001
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -40,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 72.28200000000011,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 191,
+        "textures": 21
+      },
+      "attacks": [
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 60,
+          "enemyHealthAfter": 10,
+          "playerHealthAfter": 87,
+          "staminaBefore": 99.71699999999994,
+          "staminaAfter": 68.5982
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 10,
+          "enemyHealthAfter": 10,
+          "playerHealthAfter": 87,
+          "staminaBefore": 79.39280000000007,
+          "staminaAfter": 84.19160000000008
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 10,
+          "enemyHealthAfter": -40,
+          "playerHealthAfter": 75,
+          "staminaBefore": 94.08800000000014,
+          "staminaAfter": 63.885000000000126
+        }
+      ],
+      "guards": 1
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:29.568Z",
+      "room": 0,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        1.2595499999999993,
+        -3.2552700000000003
+      ],
+      "to": [
+        0.09017999999999836,
+        -3.2552700000000003
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          2.3533238338154847,
+          0,
+          -2.08778955291001
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -40,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 82.17840000000017,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:32.360Z",
+      "room": 0,
+      "axis": "z",
+      "target": 3.1,
+      "from": [
+        0.09017999999999836,
+        -3.2552700000000003
+      ],
+      "to": [
+        0.09017999999999836,
+        3.087030000000007
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          2.3533238338154847,
+          0,
+          -2.08778955291001
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -40,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:34.992Z",
+      "room": 0,
+      "axis": "x",
+      "target": 6.2,
+      "from": [
+        0.09017999999999836,
+        3.087030000000007
+      ],
+      "to": [
+        6.116849999999992,
+        3.087030000000007
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          2.3533238338154847,
+          0,
+          -2.08778955291001
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -40,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:36.569Z",
+      "room": 0,
+      "axis": "z",
+      "target": -0.6,
+      "from": [
+        6.116849999999992,
+        3.087030000000007
+      ],
+      "to": [
+        6.116849999999992,
+        -0.5568899999999936
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          2.3533238338154847,
+          0,
+          -2.08778955291001
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -40,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-portal",
+      "at": "2026-10-25T13:13:36.800Z",
+      "wallMs": 54331,
+      "room": 11,
+      "x": 0,
+      "z": 5.2,
+      "health": 75,
+      "sanity": 95.1945449999974,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Seguir el molde hacia el taller · año 312",
+      "memory": {
+        "geometries": 101,
+        "textures": 21
+      }
+    },
+    {
+      "label": "captura",
+      "path": "docs/capturas/fase22/acumulativa-mosaic-portal-introduccion.png",
+      "at": "2026-10-25T13:13:37.114Z"
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:38.697Z",
+      "room": 11,
+      "axis": "x",
+      "target": -3.3,
+      "from": [
+        0,
+        5.2
+      ],
+      "to": [
+        -3.2386500000000087,
+        5.2
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.990334959123461
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:38.825Z",
+      "room": 11,
+      "axis": "z",
+      "target": 5,
+      "from": [
+        -3.2386500000000087,
+        5.2
+      ],
+      "to": [
+        -3.2386500000000087,
+        5.020179999999999
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.9909362573897296
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción note11",
+      "at": "2026-10-25T13:13:38.955Z",
+      "wallMs": 56487,
+      "room": 11,
+      "x": -3.2386500000000087,
+      "z": 5.020179999999999,
+      "health": 75,
+      "sanity": 91.1945449999974,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo"
+      ],
+      "read": [
+        "8",
+        "11"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.99122251717178
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Leer documento",
+      "memory": {
+        "geometries": 102,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:39.399Z",
+      "room": 11,
+      "axis": "x",
+      "target": -4.2,
+      "from": [
+        -3.2386500000000087,
+        5.020179999999999
+      ],
+      "to": [
+        -4.138020000000014,
+        5.020179999999999
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.992932943003965
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:40.911Z",
+      "room": 11,
+      "axis": "z",
+      "target": 1.6,
+      "from": [
+        -4.138020000000014,
+        5.020179999999999
+      ],
+      "to": [
+        -4.138020000000014,
+        1.6462599999999878
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.99659609278443
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-pigment",
+      "at": "2026-10-25T13:13:40.957Z",
+      "wallMs": 58489,
+      "room": 11,
+      "x": -4.138020000000014,
+      "z": 1.6462599999999878,
+      "health": 75,
+      "sanity": 91.1945449999974,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio"
+      ],
+      "read": [
+        "8",
+        "11"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.996677125619587
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 97,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:42.853Z",
+      "room": 11,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        -4.138020000000014,
+        1.6462599999999878
+      ],
+      "to": [
+        -0.0448199999999967,
+        1.6462599999999878
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.9986586826031023
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:45.717Z",
+      "room": 11,
+      "axis": "z",
+      "target": -5.1,
+      "from": [
+        -0.0448199999999967,
+        1.6462599999999878
+      ],
+      "to": [
+        -0.0448199999999967,
+        -5.05568000000003
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.52479,
+          0,
+          -2.999665530245459
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-kiln",
+      "at": "2026-10-25T13:13:45.903Z",
+      "wallMs": 63435,
+      "room": 12,
+      "x": 0,
+      "z": 5.2,
+      "health": 75,
+      "sanity": 86.74512499999766,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio"
+      ],
+      "read": [
+        "8",
+        "11"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.1199699999999986,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Volver a la galería",
+      "memory": {
+        "geometries": 106,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:47.299Z",
+      "room": 12,
+      "axis": "x",
+      "target": -3.3,
+      "from": [
+        0,
+        5.2
+      ],
+      "to": [
+        -3.1940999999999993,
+        5.2
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.509850000000001,
+          0,
+          -2.9905113714922975
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:47.400Z",
+      "room": 12,
+      "axis": "z",
+      "target": 5,
+      "from": [
+        -3.1940999999999993,
+        5.2
+      ],
+      "to": [
+        -3.1940999999999993,
+        5.064729999999995
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.509850000000001,
+          0,
+          -2.990954300501059
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción note12",
+      "at": "2026-10-25T13:13:47.538Z",
+      "wallMs": 65070,
+      "room": 12,
+      "x": -3.1940999999999993,
+      "z": 5.064729999999995,
+      "health": 75,
+      "sanity": 82.74512499999766,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.509850000000001,
+          0,
+          -2.9913078508584765
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Leer documento",
+      "memory": {
+        "geometries": 106,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:49.019Z",
+      "room": 12,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        -3.1940999999999993,
+        5.064729999999995
+      ],
+      "to": [
+        -0.044550000000019456,
+        5.064729999999995
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.509850000000001,
+          0,
+          -2.9957214352042105
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:50.609Z",
+      "room": 12,
+      "axis": "z",
+      "target": 1.4,
+      "from": [
+        -0.044550000000019456,
+        5.064729999999995
+      ],
+      "to": [
+        -0.044550000000019456,
+        1.4202700000000104
+      ],
+      "healthBefore": 75,
+      "healthAfter": 75,
+      "enemy": {
+        "position": [
+          3.509850000000001,
+          0,
+          -2.9979923622713613
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "defensa",
+      "context": "combate en sala 12",
+      "at": "2026-10-25T13:13:53.552Z",
+      "room": 12,
+      "player": [
+        2.294189999999983,
+        -1.908019999999993
+      ],
+      "enemyKind": "mosaic",
+      "enemyPosition": [
+        3.327445763928117,
+        0,
+        -2.821639568120464
+      ],
+      "healthBefore": 75,
+      "healthAfter": 70,
+      "staminaAfter": 95.68520000000004
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:53.948Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 95,
+      "enemyHealthAfter": 45,
+      "playerHealthAfter": 70,
+      "staminaBefore": 98.08460000000004,
+      "staminaAfter": 70.88340000000011
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:54.813Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 45,
+      "enemyHealthAfter": 45,
+      "playerHealthAfter": 70,
+      "staminaBefore": 81.37740000000016,
+      "staminaAfter": 86.47500000000014
+    },
+    {
+      "label": "defensa",
+      "context": "combate en sala 12",
+      "at": "2026-10-25T13:13:55.439Z",
+      "room": 12,
+      "player": [
+        2.563919999999977,
+        -2.177749999999997
+      ],
+      "enemyKind": "mosaic",
+      "enemyPosition": [
+        3.327445763928117,
+        0,
+        -3.128568237177366
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "staminaAfter": 82.23950000000022
+    },
+    {
+      "label": "ataque",
+      "at": "2026-10-25T13:13:55.846Z",
+      "kind": "fuerte",
+      "enemyHealthBefore": 45,
+      "enemyHealthAfter": -5,
+      "playerHealthAfter": 70,
+      "staminaBefore": 84.63890000000029,
+      "staminaAfter": 57.73650000000022
+    },
+    {
+      "label": "combate de sala 12 terminado",
+      "at": "2026-10-25T13:13:56.321Z",
+      "wallMs": 73853,
+      "room": 12,
+      "x": 2.563919999999977,
+      "z": -2.4477499999999965,
+      "health": 70,
+      "sanity": 80.00286999999808,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 66.1335000000002,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 143,
+        "textures": 21
+      },
+      "attacks": [
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 95,
+          "enemyHealthAfter": 45,
+          "playerHealthAfter": 70,
+          "staminaBefore": 98.08460000000004,
+          "staminaAfter": 70.88340000000011
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 45,
+          "enemyHealthAfter": 45,
+          "playerHealthAfter": 70,
+          "staminaBefore": 81.37740000000016,
+          "staminaAfter": 86.47500000000014
+        },
+        {
+          "kind": "fuerte",
+          "enemyHealthBefore": 45,
+          "enemyHealthAfter": -5,
+          "playerHealthAfter": 70,
+          "staminaBefore": 84.63890000000029,
+          "staminaAfter": 57.73650000000022
+        }
+      ],
+      "guards": 2
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:58.595Z",
+      "room": 12,
+      "axis": "x",
+      "target": -2.7,
+      "from": [
+        2.563919999999977,
+        -2.4477499999999965
+      ],
+      "to": [
+        -2.6095500000000076,
+        -2.4477499999999965
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:13:59.177Z",
+      "room": 12,
+      "axis": "z",
+      "target": -3.8,
+      "from": [
+        -2.6095500000000076,
+        -2.4477499999999965
+      ],
+      "to": [
+        -2.6095500000000076,
+        -3.7521199999999912
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-pattern",
+      "at": "2026-10-25T13:13:59.247Z",
+      "wallMs": 76778,
+      "room": 12,
+      "x": -2.6095500000000076,
+      "z": -3.7521199999999912,
+      "health": 70,
+      "sanity": 81.02329499999773,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Recomponer el rostro en las teselas",
+      "memory": {
+        "geometries": 143,
+        "textures": 21
+      }
+    },
+    {
+      "label": "puzle mosaic-pattern resuelto",
+      "at": "2026-10-25T13:13:59.387Z",
+      "wallMs": 76919,
+      "room": 12,
+      "x": -2.6095500000000076,
+      "z": -3.7521199999999912,
+      "health": 70,
+      "sanity": 81.04079499999771,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Recomponer el rostro en las teselas",
+      "memory": {
+        "geometries": 146,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:14:00.495Z",
+      "room": 12,
+      "axis": "x",
+      "target": 0,
+      "from": [
+        -2.6095500000000076,
+        -3.7521199999999912
+      ],
+      "to": [
+        -0.09071999999998492,
+        -3.7521199999999912
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:14:00.751Z",
+      "room": 12,
+      "axis": "z",
+      "target": -3.2,
+      "from": [
+        -0.09071999999998492,
+        -3.7521199999999912
+      ],
+      "to": [
+        -0.09071999999998492,
+        -3.25747999999998
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-mold",
+      "at": "2026-10-25T13:14:00.919Z",
+      "wallMs": 78450,
+      "room": 12,
+      "x": -0.09071999999998492,
+      "z": -3.25747999999998,
+      "health": 70,
+      "sanity": 81.55392999999754,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "",
+      "memory": {
+        "geometries": 141,
+        "textures": 21
+      }
+    },
+    {
+      "label": "captura",
+      "path": "docs/capturas/fase22/acumulativa-molde-aurelia.png",
+      "at": "2026-10-25T13:14:01.420Z"
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:14:04.995Z",
+      "room": 12,
+      "axis": "z",
+      "target": 5.1,
+      "from": [
+        -0.09071999999998492,
+        -3.25747999999998
+      ],
+      "to": [
+        -0.09071999999998492,
+        5.064460000000085
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "enemy": {
+        "position": [
+          3.327445763928117,
+          0,
+          -3.3947784146168347
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": -5,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "dead",
+        "phase": 1,
+        "vulnerable": 0.7000999999999987,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-back",
+      "at": "2026-10-25T13:14:05.185Z",
+      "wallMs": 82716,
+      "room": 11,
+      "x": 0,
+      "z": -4.2,
+      "health": 70,
+      "sanity": 79.92004499999717,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.119969999999995,
+          0,
+          -3
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Entrar al horno de las teselas",
+      "memory": {
+        "geometries": 99,
+        "textures": 21
+      }
+    },
+    {
+      "label": "movimiento completado",
+      "at": "2026-10-25T13:14:09.271Z",
+      "room": 11,
+      "axis": "z",
+      "target": 5.1,
+      "from": [
+        0,
+        -4.2
+      ],
+      "to": [
+        0,
+        5.022119999999971
+      ],
+      "healthBefore": 70,
+      "healthAfter": 70,
+      "enemy": {
+        "position": [
+          3.524789999999996,
+          0,
+          -2.9973832486827012
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      }
+    },
+    {
+      "label": "interacción mosaic-return",
+      "at": "2026-10-25T13:14:09.319Z",
+      "wallMs": 86851,
+      "room": 11,
+      "x": 0,
+      "z": 5.022119999999971,
+      "health": 70,
+      "sanity": 78.63058499999758,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          3.524789999999996,
+          0,
+          -2.9974454190689577
+        ],
+        "visible": true
+      },
+      "combat": {
+        "enemyHealth": 95,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "mosaic",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Regresar a 1927",
+      "memory": {
+        "geometries": 99,
+        "textures": 21
+      }
+    },
+    {
+      "label": "regreso de mosaic-312 a 1927",
+      "at": "2026-10-25T13:14:09.714Z",
+      "wallMs": 87246,
+      "room": 0,
+      "x": 6.2,
+      "z": -0.6,
+      "health": 70,
+      "sanity": 78.71808499999764,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189",
+          "mosaic-312"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2,
+          0,
+          -3
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Seguir el molde hacia el taller · año 312",
+      "memory": {
+        "geometries": 113,
+        "textures": 21
+      }
+    },
+    {
+      "label": "captura",
+      "path": "docs/capturas/fase22/acumulativa-mosaic-312-regreso.png",
+      "at": "2026-10-25T13:14:10.263Z"
+    },
+    {
+      "label": "guardado verificado",
+      "at": "2026-10-25T13:14:10.273Z",
+      "completed": [
+        "roman-189",
+        "mosaic-312"
+      ],
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ]
+    },
+    {
+      "label": "recarga tras mosaic-312",
+      "at": "2026-10-25T13:14:11.654Z",
+      "wallMs": 89186,
+      "room": 0,
+      "x": 6.2,
+      "z": -0.6,
+      "health": 70,
+      "sanity": 78.7413949999976,
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ],
+      "read": [
+        "8",
+        "11",
+        "12"
+      ],
+      "defeated": [
+        "enemy8",
+        "enemy0",
+        "enemy12"
+      ],
+      "campaign": {
+        "visited": [
+          "mansion-1927",
+          "roman-189",
+          "mosaic-312"
+        ],
+        "completed": [
+          "roman-189",
+          "mosaic-312"
+        ],
+        "witnessed": [
+          "roman-formation",
+          "roman-echo-ash",
+          "roman-echo-tide",
+          "roman-echo-threshold"
+        ]
+      },
+      "enemy": {
+        "position": [
+          2,
+          0,
+          -3
+        ],
+        "visible": false
+      },
+      "combat": {
+        "enemyHealth": 60,
+        "windup": 0,
+        "guarding": false,
+        "animation": 0,
+        "kind": "shade",
+        "aiState": "patrol",
+        "phase": 1,
+        "vulnerable": 0,
+        "stamina": 100,
+        "dodge": 0,
+        "hurt": 0
+      },
+      "prompt": "E / A · Seguir el molde hacia el taller · año 312",
+      "memory": {
+        "geometries": 113,
+        "textures": 21
+      }
+    },
+    {
+      "label": "recarga verificada",
+      "at": "2026-10-25T13:14:11.670Z",
+      "completed": [
+        "roman-189",
+        "mosaic-312"
+      ],
+      "items": [
+        "Marca de Varro",
+        "Tablilla del intervalo",
+        "Pigmento de cinabrio",
+        "Boceto recompuesto",
+        "Molde de Aurelia"
+      ],
+      "nextPortal": "coast-portal"
+    }
+  ],
+  "checks": [
+    {
+      "label": "Nueva partida limpia en 1927",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:45.675Z"
+    },
+    {
+      "label": "Movimiento hasta x=5.2",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:48.132Z"
+    },
+    {
+      "label": "Movimiento hasta z=3",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:48.985Z"
+    },
+    {
+      "label": "Objeto disponible: roman-portal",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:49.007Z"
+    },
+    {
+      "label": "Transición legítima por roman-portal",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:49.296Z"
+    },
+    {
+      "label": "Protagonista de sala 8",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:49.310Z"
+    },
+    {
+      "label": "Introducción de sala 8",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:49.324Z"
+    },
+    {
+      "label": "Centurión inicializado en 189",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:49.801Z"
+    },
+    {
+      "label": "Objeto disponible: note8",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:49.808Z"
+    },
+    {
+      "label": "Movimiento hasta x=-4.3",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:51.751Z"
+    },
+    {
+      "label": "Movimiento hasta z=5",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:51.873Z"
+    },
+    {
+      "label": "Documento 8 leído",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:52.071Z"
+    },
+    {
+      "label": "Formación imposible presenciada",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:52.081Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:53.922Z"
+    },
+    {
+      "label": "Movimiento hasta z=1.4",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:55.573Z"
+    },
+    {
+      "label": "Enemigo de sala 8 vivo con 115 puntos",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:12:55.587Z"
+    },
+    {
+      "label": "Ataques efectivos registrados",
+      "passed": true,
+      "details": {
+        "attacks": [
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 115,
+            "enemyHealthAfter": 65,
+            "playerHealthAfter": 95,
+            "staminaBefore": 97.45100000000001,
+            "staminaAfter": 67.24979999999998
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 65,
+            "enemyHealthAfter": 65,
+            "playerHealthAfter": 95,
+            "staminaBefore": 77.7455999999999,
+            "staminaAfter": 82.54439999999988
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 65,
+            "enemyHealthAfter": 15,
+            "playerHealthAfter": 95,
+            "staminaBefore": 80.07219999999975,
+            "staminaAfter": 49.86919999999973
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 15,
+            "enemyHealthAfter": 15,
+            "playerHealthAfter": 95,
+            "staminaBefore": 60.06619999999966,
+            "staminaAfter": 64.86319999999965
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 15,
+            "enemyHealthAfter": -35,
+            "playerHealthAfter": 90,
+            "staminaBefore": 73.86089999999973,
+            "staminaAfter": 44.259099999999684
+          }
+        ]
+      },
+      "at": "2026-10-25T13:13:02.374Z"
+    },
+    {
+      "label": "Enemigo enemy8 derrotado de verdad",
+      "passed": true,
+      "details": {
+        "defeated": [
+          "enemy8"
+        ],
+        "visible": false,
+        "combat": {
+          "enemyHealth": -35,
+          "windup": 0,
+          "guarding": false,
+          "animation": 0,
+          "kind": "centurion",
+          "aiState": "dead",
+          "phase": 1,
+          "vulnerable": 0,
+          "stamina": 53.255499999999685,
+          "dodge": 0,
+          "hurt": 0
+        }
+      },
+      "at": "2026-10-25T13:13:02.374Z"
+    },
+    {
+      "label": "Objeto disponible: roman-echo-ash",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:02.383Z"
+    },
+    {
+      "label": "Movimiento hasta x=-4.15",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:04.716Z"
+    },
+    {
+      "label": "Movimiento hasta z=3.8",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:06.872Z"
+    },
+    {
+      "label": "Testimonio persistente: roman-echo-ash",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:07.067Z"
+    },
+    {
+      "label": "Objeto disponible: roman-echo-tide",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:07.078Z"
+    },
+    {
+      "label": "Movimiento hasta x=4.15",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:10.638Z"
+    },
+    {
+      "label": "Testimonio persistente: roman-echo-tide",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:10.818Z"
+    },
+    {
+      "label": "Objeto disponible: roman-echo-threshold",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:10.832Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:12.635Z"
+    },
+    {
+      "label": "Movimiento hasta z=1.35",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:13.724Z"
+    },
+    {
+      "label": "Testimonio persistente: roman-echo-threshold",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:13.929Z"
+    },
+    {
+      "label": "Objeto disponible: roman-inscription",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:13.932Z"
+    },
+    {
+      "label": "Movimiento hasta x=-2.9",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:15.194Z"
+    },
+    {
+      "label": "Movimiento hasta z=-3.25",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:17.112Z"
+    },
+    {
+      "label": "Puzle roman-inscription presenta respuesta",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:17.196Z"
+    },
+    {
+      "label": "Puzle roman-inscription completado",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:17.312Z"
+    },
+    {
+      "label": "Objeto disponible: roman-tablet",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:17.317Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:18.494Z"
+    },
+    {
+      "label": "Tablilla del intervalo obtenido por interacción",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:18.654Z"
+    },
+    {
+      "label": "Objeto disponible: roman-return",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:19.078Z"
+    },
+    {
+      "label": "Movimiento hasta z=5.1",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:22.957Z"
+    },
+    {
+      "label": "Epílogo de roman-189",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:23.034Z"
+    },
+    {
+      "label": "roman-189 completado al regresar",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:23.438Z"
+    },
+    {
+      "label": "Lucius sigue completado en 1927",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:23.954Z"
+    },
+    {
+      "label": "Guardado tras roman-189",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:23.967Z"
+    },
+    {
+      "label": "Recarga mantiene roman-189",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:25.400Z"
+    },
+    {
+      "label": "Portal mosaic-portal desbloqueado",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:25.414Z"
+    },
+    {
+      "label": "Amenaza de la mansión identificada",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:25.438Z"
+    },
+    {
+      "label": "Enemigo de sala 0 vivo con 60 puntos",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:25.452Z"
+    },
+    {
+      "label": "Ataques efectivos registrados",
+      "passed": true,
+      "details": {
+        "attacks": [
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 60,
+            "enemyHealthAfter": 10,
+            "playerHealthAfter": 87,
+            "staminaBefore": 99.71699999999994,
+            "staminaAfter": 68.5982
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 10,
+            "enemyHealthAfter": 10,
+            "playerHealthAfter": 87,
+            "staminaBefore": 79.39280000000007,
+            "staminaAfter": 84.19160000000008
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 10,
+            "enemyHealthAfter": -40,
+            "playerHealthAfter": 75,
+            "staminaBefore": 94.08800000000014,
+            "staminaAfter": 63.885000000000126
+          }
+        ]
+      },
+      "at": "2026-10-25T13:13:29.027Z"
+    },
+    {
+      "label": "Enemigo enemy0 derrotado de verdad",
+      "passed": true,
+      "details": {
+        "defeated": [
+          "enemy8",
+          "enemy0"
+        ],
+        "visible": false,
+        "combat": {
+          "enemyHealth": -40,
+          "windup": 0,
+          "guarding": false,
+          "animation": 0,
+          "kind": "shade",
+          "aiState": "dead",
+          "phase": 1,
+          "vulnerable": 0,
+          "stamina": 72.28200000000011,
+          "dodge": 0,
+          "hurt": 0
+        }
+      },
+      "at": "2026-10-25T13:13:29.027Z"
+    },
+    {
+      "label": "Sombra de la mansión derrotada legítimamente",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:29.035Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:29.568Z"
+    },
+    {
+      "label": "Movimiento hasta z=3.1",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:32.359Z"
+    },
+    {
+      "label": "Movimiento hasta x=6.2",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:34.992Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-portal",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:35.015Z"
+    },
+    {
+      "label": "Movimiento hasta z=-0.6",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:36.568Z"
+    },
+    {
+      "label": "Transición legítima por mosaic-portal",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:36.812Z"
+    },
+    {
+      "label": "Protagonista de sala 11",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:36.822Z"
+    },
+    {
+      "label": "Introducción de sala 11",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:36.832Z"
+    },
+    {
+      "label": "Lucius persiste al entrar en 312",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:37.205Z"
+    },
+    {
+      "label": "Objeto disponible: note11",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:37.214Z"
+    },
+    {
+      "label": "Movimiento hasta x=-3.3",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:38.697Z"
+    },
+    {
+      "label": "Movimiento hasta z=5",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:38.825Z"
+    },
+    {
+      "label": "Documento 11 leído",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:38.970Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-pigment",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:38.973Z"
+    },
+    {
+      "label": "Movimiento hasta x=-4.2",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:39.399Z"
+    },
+    {
+      "label": "Movimiento hasta z=1.6",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:40.911Z"
+    },
+    {
+      "label": "Pigmento de cinabrio obtenido por interacción",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:40.983Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-kiln",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:40.988Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:42.853Z"
+    },
+    {
+      "label": "Movimiento hasta z=-5.1",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:45.717Z"
+    },
+    {
+      "label": "Horno de teselas alcanzado",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:45.918Z"
+    },
+    {
+      "label": "Objeto disponible: note12",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:45.926Z"
+    },
+    {
+      "label": "Movimiento hasta x=-3.3",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:47.298Z"
+    },
+    {
+      "label": "Movimiento hasta z=5",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:47.400Z"
+    },
+    {
+      "label": "Documento 12 leído",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:47.554Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:49.019Z"
+    },
+    {
+      "label": "Movimiento hasta z=1.4",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:50.608Z"
+    },
+    {
+      "label": "Enemigo de sala 12 vivo con 95 puntos",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:50.618Z"
+    },
+    {
+      "label": "Ataques efectivos registrados",
+      "passed": true,
+      "details": {
+        "attacks": [
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 95,
+            "enemyHealthAfter": 45,
+            "playerHealthAfter": 70,
+            "staminaBefore": 98.08460000000004,
+            "staminaAfter": 70.88340000000011
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 45,
+            "enemyHealthAfter": 45,
+            "playerHealthAfter": 70,
+            "staminaBefore": 81.37740000000016,
+            "staminaAfter": 86.47500000000014
+          },
+          {
+            "kind": "fuerte",
+            "enemyHealthBefore": 45,
+            "enemyHealthAfter": -5,
+            "playerHealthAfter": 70,
+            "staminaBefore": 84.63890000000029,
+            "staminaAfter": 57.73650000000022
+          }
+        ]
+      },
+      "at": "2026-10-25T13:13:56.327Z"
+    },
+    {
+      "label": "Enemigo enemy12 derrotado de verdad",
+      "passed": true,
+      "details": {
+        "defeated": [
+          "enemy8",
+          "enemy0",
+          "enemy12"
+        ],
+        "visible": false,
+        "combat": {
+          "enemyHealth": -5,
+          "windup": 0,
+          "guarding": false,
+          "animation": 0,
+          "kind": "mosaic",
+          "aiState": "dead",
+          "phase": 1,
+          "vulnerable": 0.7000999999999987,
+          "stamina": 66.1335000000002,
+          "dodge": 0,
+          "hurt": 0
+        }
+      },
+      "at": "2026-10-25T13:13:56.328Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-pattern",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:56.332Z"
+    },
+    {
+      "label": "Movimiento hasta x=-2.7",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:58.595Z"
+    },
+    {
+      "label": "Movimiento hasta z=-3.8",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:59.177Z"
+    },
+    {
+      "label": "Puzle mosaic-pattern presenta respuesta",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:59.259Z"
+    },
+    {
+      "label": "Puzle mosaic-pattern completado",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:59.402Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-mold",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:13:59.411Z"
+    },
+    {
+      "label": "Movimiento hasta x=0",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:00.495Z"
+    },
+    {
+      "label": "Movimiento hasta z=-3.2",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:00.751Z"
+    },
+    {
+      "label": "Molde de Aurelia obtenido por interacción",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:00.964Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-back",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:01.425Z"
+    },
+    {
+      "label": "Movimiento hasta z=5.1",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:04.995Z"
+    },
+    {
+      "label": "Regreso legítimo del horno a la galería",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:05.198Z"
+    },
+    {
+      "label": "Objeto disponible: mosaic-return",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:05.210Z"
+    },
+    {
+      "label": "Movimiento hasta z=5.1",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:09.271Z"
+    },
+    {
+      "label": "Epílogo de mosaic-312",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:09.350Z"
+    },
+    {
+      "label": "mosaic-312 completado al regresar",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:09.730Z"
+    },
+    {
+      "label": "Guardado tras mosaic-312",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:10.273Z"
+    },
+    {
+      "label": "Recarga mantiene roman-189 y mosaic-312",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:11.658Z"
+    },
+    {
+      "label": "Portal coast-portal desbloqueado",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:11.670Z"
+    },
+    {
+      "label": "Todos los capítulos solicitados están completos",
+      "passed": true,
+      "details": {},
+      "at": "2026-10-25T13:14:11.670Z"
+    },
+    {
+      "label": "Sin errores JavaScript",
+      "passed": true,
+      "details": {
+        "errors": []
+      },
+      "at": "2026-10-25T13:14:11.670Z"
+    }
+  ],
+  "errors": [],
+  "chapters": [
+    {
+      "id": "roman-189",
+      "durationMs": 33648,
+      "artifact": "Tablilla del intervalo",
+      "enemyId": "enemy8",
+      "health": 90,
+      "completedAfterReturn": [
+        "roman-189"
+      ]
+    },
+    {
+      "id": "mosaic-312",
+      "durationMs": 32532,
+      "artifact": "Molde de Aurelia",
+      "enemyId": "enemy12",
+      "health": 70,
+      "completedAfterReturn": [
+        "roman-189",
+        "mosaic-312"
+      ]
+    }
+  ],
+  "completed": true,
+  "browserVersion": "156.0.8078.47",
+  "finishedAt": "2026-10-25T13:14:11.670Z",
+  "wallMs": 89201
+}
