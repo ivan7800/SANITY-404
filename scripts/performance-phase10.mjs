@@ -1,5 +1,7 @@
 import { chromium } from "@playwright/test";
 import { writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { extname, resolve, sep } from "node:path";
 import {
   classifyRenderer,
   summarizeFrames,
@@ -19,6 +21,13 @@ const only = option("only", "");
 const headed = process.argv.includes("--headed");
 const requireHardware = process.argv.includes("--hardware") || headed;
 const playwrightChromium = process.argv.includes("--playwright-chromium");
+const realWindow = process.argv.includes("--real-window");
+const hideVeil = process.argv.includes("--hide-veil");
+const staticMovement = process.argv.includes("--static");
+const assetRoot = option("asset-root", "");
+const chapterExits = process.argv.includes("--chapter-exits");
+const phase21Cases = process.argv.includes("--phase21-cases");
+const chapterFunctional = process.argv.includes("--chapter-functional");
 if (!Number.isFinite(seconds) || seconds < 1)
   throw new Error("--seconds debe ser al menos 1");
 if (!Number.isFinite(minFps) || minFps <= 0)
@@ -38,6 +47,13 @@ const report = {
   executablePath,
   browserVersion: null,
   only: only || null,
+  realWindow,
+  hideVeil,
+  staticMovement,
+  assetRoot: assetRoot || null,
+  chapterExits,
+  phase21Cases,
+  chapterFunctional,
   results: [],
 };
 try {
@@ -53,19 +69,84 @@ try {
         headless: !headed,
         chromiumSandbox: true,
         ignoreDefaultArgs: ["--enable-unsafe-swiftshader"],
+        args: realWindow
+          ? ["--window-size=1280,811", "--window-position=0,0"]
+          : [],
       });
       report.browserVersion = browser.version();
       const context = await browser.newContext({
-        viewport: { width: 1280, height: 720 },
-        deviceScaleFactor: 1,
+        viewport: realWindow ? null : { width: 1280, height: 720 },
+        ...(realWindow ? {} : { deviceScaleFactor: 1 }),
       });
       try {
         const page = await context.newPage();
+        if (assetRoot) {
+          const root = resolve(assetRoot);
+          await page.route("**/*", async (route) => {
+            const requestUrl = new URL(route.request().url());
+            if (requestUrl.hostname !== new URL(url).hostname)
+              return route.abort();
+            const pathname = decodeURIComponent(requestUrl.pathname).replace(
+              /^\/SANITY-404(?=\/)/,
+              "",
+            );
+            const path = resolve(
+              root,
+              `.${pathname === "/" ? "/index.html" : pathname}`,
+            );
+            if (path !== root && !path.startsWith(root + sep))
+              return route.fulfill({ status: 403 });
+            const mime =
+              {
+                ".html": "text/html",
+                ".js": "text/javascript",
+                ".css": "text/css",
+                ".svg": "image/svg+xml",
+                ".png": "image/png",
+              }[extname(path)] ?? "application/octet-stream";
+            try {
+              return route.fulfill({
+                status: 200,
+                body: await readFile(path),
+                contentType: mime,
+              });
+            } catch {
+              return route.fulfill({ status: 404 });
+            }
+          });
+        }
         const errors = [];
         page.on("pageerror", (error) => errors.push(error.message));
         page.on("console", (message) => {
           if (message.type() === "error") errors.push(message.text());
         });
+        if (chapterExits) {
+          const { runChapterExitCases } =
+            await import("./phase21-chapter-exit-cases.mjs");
+          const records = await runChapterExitCases(page, url);
+          report.results.push({
+            chapterExits: records.length,
+            preparedStates: true,
+          });
+          continue;
+        }
+        if (phase21Cases) {
+          const { runPhase21BrowserCases } =
+            await import("./phase21-browser-cases.mjs");
+          await runPhase21BrowserCases(page, url);
+          report.results.push({ phase21Cases: true, preparedStates: true });
+          continue;
+        }
+        if (chapterFunctional) {
+          const { runChapterFunctionalCases } =
+            await import("./phase21-chapter-functional-cases.mjs");
+          const records = await runChapterFunctionalCases(page, url);
+          report.results.push({
+            chapterFunctional: records.length,
+            preparedStates: true,
+          });
+          continue;
+        }
         await page.addInitScript(
           ({ room, scenario }) => {
             localStorage.setItem(
@@ -107,6 +188,38 @@ try {
             window.sanityInspect?.().draw.frame > 5 &&
             !window.sanityInspect().paused,
         );
+        if (hideVeil)
+          await page.addStyleTag({
+            content: "#veil { display: none !important; }",
+          });
+        const geometry = await page.evaluate(() => {
+          const canvas = document.querySelector("#viewport canvas");
+          const veil = document.querySelector("#veil");
+          const style = veil ? getComputedStyle(veil) : null;
+          return {
+            inner: [innerWidth, innerHeight],
+            outer: [outerWidth, outerHeight],
+            screen: [screen.width, screen.height],
+            canvas: [canvas?.width, canvas?.height],
+            canvasCss: canvas
+              ? [
+                  canvas.getBoundingClientRect().width,
+                  canvas.getBoundingClientRect().height,
+                ]
+              : null,
+            visibility: document.visibilityState,
+            dpr: devicePixelRatio,
+            veil: style
+              ? {
+                  display: style.display,
+                  background: style.backgroundImage,
+                  boxShadow: style.boxShadow,
+                }
+              : null,
+            quality: window.sanityInspect().quality,
+            scene: window.sanitySceneProfile?.(),
+          };
+        });
         const gpu = await page.evaluate(() => {
           const gl = document
             .querySelector("#viewport canvas")
@@ -145,7 +258,7 @@ try {
           );
         }
         const sample = await page.evaluate(
-          async ({ duration, scenario }) => {
+          async ({ duration, scenario, staticMovement }) => {
             const frames = [];
             const spikes = [];
             const events = [];
@@ -223,7 +336,7 @@ try {
                   lastEvent = inspect.eventCount;
                 }
                 const elapsed = now - start;
-                if (scenario === "exploration") {
+                if (scenario === "exploration" && !staticMovement) {
                   setKey(
                     ["KeyW", "KeyD", "KeyS", "KeyA"][
                       Math.floor(elapsed / 1200) % 4
@@ -292,7 +405,7 @@ try {
               jsHeapBytes: performance.memory?.usedJSHeapSize ?? null,
             };
           },
-          { duration: seconds * 1000, scenario },
+          { duration: seconds * 1000, scenario, staticMovement },
         );
         const { frames, ...observations } = sample;
         const metrics = summarizeFrames(frames);
@@ -312,6 +425,7 @@ try {
           scenario,
           gpu,
           gpuType,
+          geometry,
           ...observations,
           ...metrics,
           worstWindow,
@@ -333,6 +447,9 @@ try {
   console.log(`Datos: ${output}`);
 }
 if (
+  !chapterExits &&
+  !phase21Cases &&
+  !chapterFunctional &&
   report.results.some(
     (result) =>
       result.rejected || !result.scenarioValid || !result.performancePass,

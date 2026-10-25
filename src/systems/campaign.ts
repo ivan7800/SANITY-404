@@ -1,5 +1,6 @@
 /** Stable narrative identifiers. Only rooms with actual scenes may enter production. */
 import { lateChapters } from "./late-chapters";
+import type { State } from "./state";
 export const chapters = [
   {
     id: "roman-189",
@@ -112,6 +113,73 @@ export const chapters = [
 ] as const;
 
 export type ChapterId = (typeof chapters)[number]["id"];
+export const historicalProofs = [
+  ["roman-189", "Tablilla del intervalo"],
+  ["mosaic-312", "Molde de Aurelia"],
+  ["coast-537", "Lista de pasajeros"],
+  ["stars-783", "Disco estelar"],
+  ["quarry-1092", "Plano del umbral"],
+  ["hospital-1217", "Cuaderno de Oona"],
+  ["abbey-1348", "Códice de Montfort"],
+  ...lateChapters.map((chapter) => [chapter.id, chapter.artifact] as const),
+] as const;
+
+export function historicalEndingReadiness(
+  state: Pick<State, "campaign" | "items" | "phase2">,
+) {
+  const missingChapters = historicalProofs
+    .filter(([id]) => !state.campaign.completed.includes(id))
+    .map(([id]) => id);
+  const missingArtifacts = historicalProofs
+    .filter(([, artifact]) => !state.items.includes(artifact))
+    .map(([, artifact]) => artifact);
+  const missingReconciliation = !state.items.includes("Memoria reconciliada");
+  const missingAdrien = !state.phase2.discoveries.includes("adrien");
+  const missingChoice = !state.items.some((item) =>
+    ["Juramento de Lucius", "Promesa de Isabelle"].includes(item),
+  );
+  return {
+    ready:
+      missingChapters.length === 0 &&
+      missingArtifacts.length === 0 &&
+      !missingReconciliation &&
+      !missingAdrien &&
+      !missingChoice,
+    missingChapters,
+    missingArtifacts,
+    missingReconciliation,
+    missingAdrien,
+    missingChoice,
+  };
+}
+
+export const chapterIntroductions: Record<
+  Exclude<ChapterId, "mansion-1927">,
+  string
+> = {
+  "roman-189":
+    "Lucius trazó el santuario para la guardia. Una inscripción nombra a una mujer que aún no ha nacido; debe copiarla antes de que el centurión borre el altar.",
+  "mosaic-312":
+    "Aurelia encuentra su rostro arrancado del pavimento votivo. El cinabrio distingue el retrato original de la copia que vigila el horno.",
+  "coast-537":
+    "Maeve cuenta una nave más que las registradas. La marea cerrará el archivo; la tabla del muelle puede devolver los nombres a la lista.",
+  "stars-783":
+    "Samira observa una estrella ausente en tres horas distintas. El vigilante escucha sus pasos mientras ella busca el patrón que sobrevivirá en bronce.",
+  "quarry-1092":
+    "Idris reconoce marcas de corte que cambian bajo la lluvia. Solo la cuña original le permitirá ensamblar el arco destinado a Veyr.",
+  "hospital-1217":
+    "Oona atiende a Bran, que despierta con la vida de Ada. Debe comparar remedios e historiales antes de escoger el testimonio que conservará.",
+  "abbey-1348":
+    "Isabelle copia un registro en el que falta un nombre cada mañana. El scriptorium guarda un códice que vincula la peste con el signo romano.",
+  "press-1491":
+    "Tomás recibe una matriz firmada por Isabelle y dos tiradas falsas. Si la prensa continúa, mañana imprimirá su propia muerte.",
+  "veyr-1610":
+    "Inés encuentra su firma en un inventario anterior al pacto, aunque el árbol familiar la omite. El retrato guardián observa cada corrección.",
+  "theatre-1786":
+    "Amara oye voces en una tramoya vacía. La partitura marca un golpe grave, un silencio y uno agudo para detener el mecanismo.",
+  "photo-1899":
+    "Émile revela una puerta de Veyr anterior a su construcción. Tres bisagras distinguen el negativo auténtico de una copia que envejece a quien la mira.",
+};
 export interface CampaignProgress {
   visited: ChapterId[];
   completed: ChapterId[];

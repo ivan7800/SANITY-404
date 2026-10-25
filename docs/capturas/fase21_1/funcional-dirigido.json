@@ -1,0 +1,117 @@
+{
+  "url": "http://127.0.0.1:5186/",
+  "errors": [],
+  "records": [
+    {
+      "id": "roman-189",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "mosaic-312",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "coast-537",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "stars-783",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "quarry-1092",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "hospital-1217",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "abbey-1348",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "press-1491",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "veyr-1610",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "theatre-1786",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    },
+    {
+      "id": "photo-1899",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    }
+  ],
+  "preparedStates": true
+}

@@ -94,9 +94,13 @@ try {
     { reduced: true, volume: 0, quality: 1 },
   );
   await key("e");
+  assert.match(await page.locator("#panel").innerText(), /final anticipado/i);
+  await page
+    .getByRole("button", { name: /Cerrar ahora · final anticipado/ })
+    .click();
   assert.match(
     await page.locator("#panel").innerText(),
-    /La casa aprendió tu nombre/,
+    /fotografía de la estación ya no tiene rostros/,
   );
   console.log("PASS segundo desenlace y ajustes reducidos");
   assert.deepEqual(errors, []);

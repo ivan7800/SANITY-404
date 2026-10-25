@@ -1,0 +1,143 @@
+{
+  "date": "2026-10-24T17:57:28.153Z",
+  "url": "http://127.0.0.1:5173/",
+  "requestedSecondsPerScenario": 10,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "1348:exploration",
+  "results": [
+    {
+      "era": "1348",
+      "room": 9,
+      "scenario": "exploration",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "spikes": [],
+      "events": [],
+      "longTasks": [],
+      "telemetry": [
+        {
+          "atSeconds": 5.0020000000029805,
+          "frame": {
+            "samples": 308,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.5,
+            "renderP95Ms": 7,
+            "updateMedianMs": 0.4000000059604645,
+            "updateP95Ms": 1.0999999940395355,
+            "aiMedianMs": 0,
+            "aiP95Ms": 0.10000000894069672,
+            "averageFps": 57.05816969247869
+          },
+          "gpu": {
+            "available": true,
+            "samples": 318,
+            "medianMs": 6.605166,
+            "p95Ms": 10.761833
+          },
+          "calls": 73,
+          "heapBytes": 37259297
+        },
+        {
+          "atSeconds": 10.00010000000298,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 3.199999988079071,
+            "renderP95Ms": 6.5,
+            "updateMedianMs": 0.3999999910593033,
+            "updateP95Ms": 1,
+            "aiMedianMs": 0,
+            "aiP95Ms": 0.10000000894069672,
+            "averageFps": 60.02280866729357
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 6.4695,
+            "p95Ms": 10.038166
+          },
+          "calls": 74,
+          "heapBytes": 27199687
+        }
+      ],
+      "inspectionMs": 9.299999952316284,
+      "expectedGameSeconds": 9.9962,
+      "elapsedSeconds": 10.00940000000596,
+      "gameElapsedSeconds": 10.012800000000013,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 9,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 74,
+      "triangles": 21734,
+      "gpuResources": {
+        "geometries": 73,
+        "textures": 14
+      },
+      "gpuTiming": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 6.4695,
+        "p95Ms": 10.038166
+      },
+      "cpuTiming": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728,
+        "renderMedianMs": 3.199999988079071,
+        "renderP95Ms": 6.5,
+        "updateMedianMs": 0.3999999910593033,
+        "updateP95Ms": 1,
+        "aiMedianMs": 0,
+        "aiP95Ms": 0.10000000894069672,
+        "averageFps": 60.02280866729357
+      },
+      "jsHeapBytes": 27199687,
+      "frames": 600,
+      "averageFps": 60.022808667293546,
+      "minimumObservedFps": 59.52380952380566,
+      "minimumRolling60Fps": 60.01800540162044,
+      "frameP50Ms": 16.69999999999891,
+      "frameP95Ms": 16.700000000000728,
+      "frameP99Ms": 16.800000000000182,
+      "worstWindow": {
+        "fps": 60.01800540162044,
+        "startFrame": 148,
+        "endFrame": 207,
+        "startSeconds": 2.4657,
+        "endSeconds": 3.4654000000000007,
+        "durationMs": 999.7000000000007,
+        "missedVsyncs": 0,
+        "largestIntervalMs": 16.800000000000182
+      },
+      "performancePass": true,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}

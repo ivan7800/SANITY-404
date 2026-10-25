@@ -1,0 +1,95 @@
+{
+  "url": "http://127.0.0.1:5184/",
+  "errors": [],
+  "records": [
+    {
+      "id": "roman-189",
+      "enteredRoom": 8,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.4665999999999999,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "mosaic-312",
+      "enteredRoom": 11,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.4164999999999999,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "coast-537",
+      "enteredRoom": 13,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.4165999999999999,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "stars-783",
+      "enteredRoom": 15,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.43310000000000004,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "quarry-1092",
+      "enteredRoom": 17,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.46659999999999996,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "hospital-1217",
+      "enteredRoom": 19,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.4500000000000001,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "abbey-1348",
+      "enteredRoom": 9,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.5331999999999998,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "press-1491",
+      "enteredRoom": 21,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.4499000000000002,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "veyr-1610",
+      "enteredRoom": 23,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.3998999999999991,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "theatre-1786",
+      "enteredRoom": 25,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.48319999999999996,
+      "saved": true,
+      "loaded": true
+    },
+    {
+      "id": "photo-1899",
+      "enteredRoom": 27,
+      "returnedRoom": 0,
+      "elapsedBeforeExit": 0.5832000000000004,
+      "saved": true,
+      "loaded": true
+    }
+  ],
+  "preparedStates": true
+}

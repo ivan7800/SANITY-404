@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-25T06:24:07.138Z",
+  "url": "http://127.0.0.1:5186/",
+  "requestedSecondsPerScenario": 60,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "189:combat",
+  "realWindow": false,
+  "hideVeil": false,
+  "staticMovement": false,
+  "assetRoot": "dist",
+  "chapterExits": false,
+  "phase21Cases": false,
+  "chapterFunctional": true,
+  "results": [
+    {
+      "chapterFunctional": 11,
+      "preparedStates": true
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { completeChapter } from "../src/systems/campaign";
+import { completeChapter, historicalProofs } from "../src/systems/campaign";
 import {
   lateChapters,
   lateArtifactUnlocked,
@@ -28,6 +28,7 @@ describe("1491, 1610, 1786 y 1899", () => {
   it("encadena los cuatro portales y conserva accesibles los objetos de cada sala", () => {
     const state = fresh();
     completeChapter(state.campaign, "abbey-1348");
+    completeChapter(state.campaign, "hospital-1217");
     for (const chapter of lateChapters) {
       const mansion = new World(
         0,
@@ -164,6 +165,11 @@ describe("1491, 1610, 1786 y 1899", () => {
     );
     expect(reconcileLegacy(state)).toBe("reconciled");
     state.phase2.discoveries.push("adrien");
+    state.items.push("Promesa de Isabelle");
+    for (const [id, artifact] of historicalProofs) {
+      completeChapter(state.campaign, id);
+      if (!state.items.includes(artifact)) state.items.push(artifact);
+    }
     for (const name of ["Tomás", "Inés", "Amara", "Émile"])
       expect(legacy(state).clue).toContain(name);
     const ending = legacyEnding(state)?.text ?? "";

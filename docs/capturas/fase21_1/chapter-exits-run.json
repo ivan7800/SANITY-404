@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-25T06:16:43.004Z",
+  "url": "http://127.0.0.1:5184/",
+  "requestedSecondsPerScenario": 60,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": null,
+  "only": "189:combat",
+  "realWindow": false,
+  "hideVeil": false,
+  "staticMovement": false,
+  "assetRoot": "/tmp/sanity-404-phase21-1-qa.PzsY24",
+  "chapterExits": true,
+  "phase21Cases": false,
+  "chapterFunctional": false,
+  "results": []
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-24T18:01:23.826Z",
+  "url": "http://127.0.0.1:5173/",
+  "requestedSecondsPerScenario": 300,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "1927:exploration",
+  "results": []
+}

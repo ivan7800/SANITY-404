@@ -7,6 +7,9 @@ import {
   attemptMosaicPattern,
   romanEchoes,
   romanObjective,
+  historicalEndingReadiness,
+  historicalProofs,
+  chapterIntroductions,
 } from "../src/systems/campaign";
 import { blocked, fresh, parseSave } from "../src/systems/state";
 import { World } from "../src/world/scene";
@@ -21,6 +24,63 @@ describe("campaña histórica", () => {
       expect(chapter.status).toBe("production");
       expect(chapter.room).not.toBeNull();
     });
+  });
+
+  it("presenta cada investigación y reserva el final histórico para las once pruebas y la decisión", () => {
+    const state = fresh();
+    expect(Object.keys(chapterIntroductions)).toHaveLength(11);
+    expect(historicalEndingReadiness(state).missingChapters).toHaveLength(11);
+    for (const [id, artifact] of historicalProofs) {
+      completeChapter(state.campaign, id);
+      state.items.push(artifact);
+    }
+    expect(historicalEndingReadiness(state).ready).toBe(false);
+    state.items.push("Memoria reconciliada");
+    state.phase2.discoveries.push("adrien");
+    expect(historicalEndingReadiness(state).missingChoice).toBe(true);
+    state.items.push("Promesa de Isabelle");
+    expect(historicalEndingReadiness(state).ready).toBe(true);
+    state.items.splice(state.items.indexOf("Placa de la puerta"), 1);
+    expect(historicalEndingReadiness(state).missingArtifacts).toContain(
+      "Placa de la puerta",
+    );
+  });
+
+  it("Isabelle conserva su recuerdo temprano, pero Tomás espera a Oona salvo progreso previo", () => {
+    const state = fresh();
+    completeChapter(state.campaign, "abbey-1348");
+    const world = () =>
+      new World(
+        0,
+        state.items,
+        state.seals,
+        state.read,
+        state.collected,
+        1,
+        state.phase2,
+        state.campaign,
+      );
+    let mansion = world();
+    expect(
+      mansion.objects.some((object) => object.id === "medieval-portal"),
+    ).toBe(true);
+    expect(
+      mansion.objects.some((object) => object.id === "press-1491-portal"),
+    ).toBe(false);
+    mansion.dispose();
+    state.campaign.visited.push("press-1491");
+    mansion = world();
+    expect(
+      mansion.objects.some((object) => object.id === "press-1491-portal"),
+    ).toBe(true);
+    mansion.dispose();
+    state.campaign.visited.pop();
+    completeChapter(state.campaign, "hospital-1217");
+    mansion = world();
+    expect(
+      mansion.objects.some((object) => object.id === "press-1491-portal"),
+    ).toBe(true);
+    mansion.dispose();
   });
 
   it("migra v1 sin perder inventario, pistas, combate ni progreso lateral", () => {
