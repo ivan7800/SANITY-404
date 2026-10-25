@@ -497,7 +497,17 @@ export class World {
       lateChapters.forEach((chapter, index) => {
         const prerequisite =
           index === 0 ? "abbey-1348" : lateChapters[index - 1].id;
-        if (!campaign.completed.includes(prerequisite)) return;
+        const previouslyUnlocked = campaign.visited.includes(chapter.id);
+        if (!campaign.completed.includes(prerequisite) && !previouslyUnlocked)
+          return;
+        // Isabelle's memory can be visited early. The later chain begins only
+        // after Oona's testimony, while old saves retain visited portals.
+        if (
+          index === 0 &&
+          !campaign.completed.includes("hospital-1217") &&
+          !previouslyUnlocked
+        )
+          return;
         this.add(
           {
             id: `${chapter.id}-portal`,
@@ -1140,7 +1150,9 @@ export class World {
       this.add(
         {
           id: "medieval-portal",
-          name: "Cruzar el recuerdo de 1348",
+          name: campaign.completed.includes("hospital-1217")
+            ? "Cruzar hacia el claustro de 1348"
+            : "Observar un recuerdo adelantado de 1348",
           x: -5.8,
           z: -5.2,
           kind: "door",

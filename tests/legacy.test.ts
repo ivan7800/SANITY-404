@@ -2,6 +2,15 @@ import { describe, expect, it } from "vitest";
 import { fresh, parseSave } from "../src/systems/state";
 import { legacy, reconcileLegacy, legacyEnding } from "../src/systems/legacy";
 import { World } from "../src/world/scene";
+import { completeChapter, historicalProofs } from "../src/systems/campaign";
+
+function finishHistoricalProofs(state: ReturnType<typeof fresh>) {
+  for (const [id, artifact] of historicalProofs) {
+    completeChapter(state.campaign, id);
+    if (!state.items.includes(artifact)) state.items.push(artifact);
+  }
+  state.items.push("Juramento de Lucius");
+}
 
 describe("Fase 4.4 — consecuencias entre épocas", () => {
   it("keeps the original campaign accessible without historical progress", () => {
@@ -37,12 +46,14 @@ describe("Fase 4.4 — consecuencias entre épocas", () => {
     archive.dispose();
     expect(parseSave(JSON.stringify(s))).toEqual(s);
   });
-  it("requires both reconciled evidence and Adrien's discovery for third ending", () => {
+  it("requires eleven completed investigations, their artifacts, reconciliation, Adrien and a choice", () => {
     const s = fresh();
     s.items.push("Tablilla del intervalo", "Códice de Montfort");
     reconcileLegacy(s);
     expect(legacyEnding(s)).toBeNull();
     s.phase2.discoveries.push("adrien");
+    expect(legacyEnding(s)).toBeNull();
+    finishHistoricalProofs(s);
     expect(legacyEnding(s)?.text).toContain("Lucius");
     const ruins = new World(4, s.items, s.seals, s.read);
     expect(ruins.objects.some((o) => o.kind === "end")).toBe(true);
@@ -70,6 +81,7 @@ describe("Fase 4.4 — consecuencias entre épocas", () => {
     state.items.push("Códice de Montfort");
     reconcileLegacy(state);
     state.phase2.discoveries.push("adrien");
+    finishHistoricalProofs(state);
     expect(legacyEnding(state)?.text).toContain("molde de Aurelia");
     expect(legacyEnding(state)?.text).toContain("lista de Maeve");
     expect(legacyEnding(state)?.text).toContain("disco de Samira");

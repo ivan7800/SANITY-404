@@ -1,0 +1,204 @@
+{
+  "date": "2026-10-24T17:56:35.684Z",
+  "url": "http://127.0.0.1:5173/",
+  "requestedSecondsPerScenario": 10,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "189:exploration",
+  "results": [
+    {
+      "era": "189",
+      "room": 8,
+      "scenario": "exploration",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "spikes": [
+        {
+          "atSeconds": 2.0158000000029808,
+          "durationMs": 33.400000000000546
+        },
+        {
+          "atSeconds": 2.73220000000298,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 7.39710000000298,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 7.480400000002981,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 7.580300000002981,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 7.7303000000029805,
+          "durationMs": 50.100000000000364
+        },
+        {
+          "atSeconds": 7.76360000000298,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 7.83020000000298,
+          "durationMs": 50
+        },
+        {
+          "atSeconds": 7.86360000000298,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 7.8968000000029805,
+          "durationMs": 33.20000000000073
+        },
+        {
+          "atSeconds": 7.93010000000298,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 8.26330000000298,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 8.31330000000298,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 8.363400000002981,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 8.796500000002979,
+          "durationMs": 33.29999999999927
+        }
+      ],
+      "events": [],
+      "longTasks": [],
+      "telemetry": [
+        {
+          "atSeconds": 5.01460000000298,
+          "frame": {
+            "samples": 312,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 16.800000000000182,
+            "renderMedianMs": 5.399999991059303,
+            "renderP95Ms": 12.299999997019768,
+            "updateMedianMs": 0.30000001192092896,
+            "updateP95Ms": 2.2999999970197678,
+            "aiMedianMs": 0,
+            "aiP95Ms": 0.10000000894069672,
+            "averageFps": 55.07988348486185
+          },
+          "gpu": {
+            "available": true,
+            "samples": 326,
+            "medianMs": 7.28875,
+            "p95Ms": 11.779083
+          },
+          "calls": 102,
+          "heapBytes": 20962107
+        },
+        {
+          "atSeconds": 10.01270000000298,
+          "frame": {
+            "samples": 597,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.800000000000182,
+            "renderMedianMs": 5,
+            "renderP95Ms": 13.400000005960464,
+            "updateMedianMs": 0.29999999701976776,
+            "updateP95Ms": 2.1000000089406967,
+            "aiMedianMs": 0,
+            "aiP95Ms": 0.10000000894069672,
+            "averageFps": 55.99009622418547
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 6.991083,
+            "p95Ms": 11.95475
+          },
+          "calls": 104,
+          "heapBytes": 20967535
+        }
+      ],
+      "inspectionMs": 6.700000062584877,
+      "expectedGameSeconds": 10.0128,
+      "elapsedSeconds": 10.027,
+      "gameElapsedSeconds": 10.029400000000013,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 0,
+      "combatEngagedRatio": 0,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": false,
+      "roomAtEnd": 8,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 104,
+      "triangles": 26942,
+      "gpuResources": {
+        "geometries": 103,
+        "textures": 14
+      },
+      "gpuTiming": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 6.991083,
+        "p95Ms": 11.95475
+      },
+      "cpuTiming": {
+        "samples": 597,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.800000000000182,
+        "renderMedianMs": 5,
+        "renderP95Ms": 13.400000005960464,
+        "updateMedianMs": 0.29999999701976776,
+        "updateP95Ms": 2.1000000089406967,
+        "aiMedianMs": 0,
+        "aiP95Ms": 0.10000000894069672,
+        "averageFps": 55.99009622418547
+      },
+      "jsHeapBytes": 20967535,
+      "frames": 584,
+      "averageFps": 58.32534356024291,
+      "minimumObservedFps": 19.960079840319217,
+      "minimumRolling60Fps": 48.66574742477081,
+      "frameP50Ms": 16.69999999999891,
+      "frameP95Ms": 16.799999999999272,
+      "frameP99Ms": 33.399999999999636,
+      "worstWindow": {
+        "fps": 48.66574742477081,
+        "startFrame": 426,
+        "endFrame": 485,
+        "startSeconds": 7.1306,
+        "endSeconds": 8.363500000000002,
+        "durationMs": 1232.9000000000015,
+        "missedVsyncs": 12,
+        "largestIntervalMs": 50.100000000000364
+      },
+      "performancePass": true,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}

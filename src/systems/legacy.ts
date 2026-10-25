@@ -1,4 +1,5 @@
 import type { State } from "./state";
+import { historicalEndingReadiness } from "./campaign";
 
 /** Derive historical consequences entirely from persistent artefacts. */
 export function legacy(state: Pick<State, "items">) {
@@ -84,9 +85,10 @@ export function reconcileLegacy(
   return "reconciled";
 }
 
-export function legacyEnding(state: Pick<State, "items" | "phase2">) {
-  return state.items.includes("Memoria reconciliada") &&
-    state.phase2.discoveries.includes("adrien")
+export function legacyEnding(
+  state: Pick<State, "items" | "phase2" | "campaign">,
+) {
+  return historicalEndingReadiness(state).ready
     ? {
         title: "La historia que nadie pudo borrar",
         text:

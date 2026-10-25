@@ -1,0 +1,17 @@
+{
+  "url": "http://127.0.0.1:5186/",
+  "errors": [],
+  "records": [
+    {
+      "id": "abbey-1348",
+      "roomLoaded": true,
+      "objectiveShown": true,
+      "puzzleSolved": true,
+      "artifactPickedUp": true,
+      "enemyVisible": true,
+      "attackRegistered": true,
+      "enemyDamaged": true
+    }
+  ],
+  "preparedStates": true
+}

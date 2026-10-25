@@ -1,0 +1,313 @@
+{
+  "date": "2026-10-24T17:55:58.974Z",
+  "url": "http://127.0.0.1:5173/",
+  "requestedSecondsPerScenario": 10,
+  "minRolling60Fps": 45,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "1927:combat",
+  "results": [
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "combat",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "spikes": [
+        {
+          "atSeconds": 0.1281000000089407,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 0.5112000000089411,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 1.6275000000089404,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 1.6775000000089404,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 2.060700000008941,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 2.5772000000089412,
+          "durationMs": 50.100000000000364
+        },
+        {
+          "atSeconds": 2.9270000000089405,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 3.093700000008941,
+          "durationMs": 33.400000000000546
+        },
+        {
+          "atSeconds": 3.4268000000089405,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 3.7434000000089407,
+          "durationMs": 33.400000000000546
+        },
+        {
+          "atSeconds": 3.7933000000089403,
+          "durationMs": 33.19999999999982
+        },
+        {
+          "atSeconds": 3.8766000000089407,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 3.9766000000089408,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 4.093200000008941,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 4.193200000008941,
+          "durationMs": 33.30000000000018
+        },
+        {
+          "atSeconds": 4.226600000008941,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 4.84290000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 4.94290000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 5.242800000008941,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 6.025800000008942,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 7.058700000008941,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 7.392000000008941,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 7.70850000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 7.741800000008942,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 7.791800000008942,
+          "durationMs": 50
+        },
+        {
+          "atSeconds": 7.82510000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 7.875100000008941,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 7.975100000008941,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 8.02500000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 8.07500000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 8.108300000008942,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 8.14170000000894,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 8.22490000000894,
+          "durationMs": 33.19999999999891
+        },
+        {
+          "atSeconds": 8.27500000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 8.308300000008941,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 8.408300000008941,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 8.758100000008941,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 9.707800000008941,
+          "durationMs": 33.400000000001455
+        },
+        {
+          "atSeconds": 9.77440000000894,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 9.824300000008941,
+          "durationMs": 33.30000000000109
+        },
+        {
+          "atSeconds": 9.941000000008941,
+          "durationMs": 33.29999999999927
+        }
+      ],
+      "events": [],
+      "longTasks": [
+        {
+          "atSeconds": 2.528800000011921,
+          "durationMs": 58
+        }
+      ],
+      "telemetry": [
+        {
+          "atSeconds": 5.0095000000089405,
+          "frame": {
+            "samples": 295,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 33.30000000000018,
+            "renderMedianMs": 8.299999997019768,
+            "renderP95Ms": 18.200000002980232,
+            "updateMedianMs": 0.5999999940395355,
+            "updateP95Ms": 4.200000002980232,
+            "aiMedianMs": 0.19999998807907104,
+            "aiP95Ms": 0.699999988079071,
+            "averageFps": 49.73866127128647
+          },
+          "gpu": {
+            "available": true,
+            "samples": 305,
+            "medianMs": 8.83825,
+            "p95Ms": 13.886416
+          },
+          "calls": 120,
+          "heapBytes": 24220967
+        },
+        {
+          "atSeconds": 10.00760000000894,
+          "frame": {
+            "samples": 571,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 33.29999999999927,
+            "renderMedianMs": 7.799999997019768,
+            "renderP95Ms": 16.5,
+            "updateMedianMs": 0.5,
+            "updateP95Ms": 3.2999999970197678,
+            "aiMedianMs": 0.10000000894069672,
+            "aiP95Ms": 0.5999999940395355,
+            "averageFps": 52.24583909013551
+          },
+          "gpu": {
+            "available": true,
+            "samples": 580,
+            "medianMs": 8.94275,
+            "p95Ms": 13.839916
+          },
+          "calls": 114,
+          "heapBytes": 32420966
+        }
+      ],
+      "inspectionMs": 11.799999997019768,
+      "expectedGameSeconds": 10.0128,
+      "elapsedSeconds": 10.02920000000298,
+      "gameElapsedSeconds": 10.029500000000027,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 1,
+      "combatEngagedRatio": 1,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": true,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 114,
+      "triangles": 71768,
+      "gpuResources": {
+        "geometries": 159,
+        "textures": 14
+      },
+      "gpuTiming": {
+        "available": true,
+        "samples": 580,
+        "medianMs": 8.94275,
+        "p95Ms": 13.839916
+      },
+      "cpuTiming": {
+        "samples": 571,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 33.29999999999927,
+        "renderMedianMs": 7.799999997019768,
+        "renderP95Ms": 16.5,
+        "updateMedianMs": 0.5,
+        "updateP95Ms": 3.2999999970197678,
+        "aiMedianMs": 0.10000000894069672,
+        "aiP95Ms": 0.5999999940395355,
+        "averageFps": 52.24583909013551
+      },
+      "jsHeapBytes": 32420966,
+      "frames": 558,
+      "averageFps": 55.72866730584857,
+      "minimumObservedFps": 19.960079840319217,
+      "minimumRolling60Fps": 47.382136934375765,
+      "frameP50Ms": 16.69999999999891,
+      "frameP95Ms": 33.29999999999927,
+      "frameP99Ms": 33.400000000000546,
+      "worstWindow": {
+        "fps": 47.382136934375765,
+        "startFrame": 409,
+        "endFrame": 468,
+        "startSeconds": 7.180500000000002,
+        "endSeconds": 8.446800000000001,
+        "durationMs": 1266.2999999999993,
+        "missedVsyncs": 15,
+        "largestIntervalMs": 50
+      },
+      "performancePass": true,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}

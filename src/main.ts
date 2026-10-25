@@ -94,8 +94,11 @@ import {
   keepHospitalTestimony,
   romanEchoes,
   visitChapter,
+  historicalEndingReadiness,
+  chapterIntroductions,
 } from "./systems/campaign";
 import { readSettings } from "./systems/config";
+import { weaponProfileForRoom } from "./systems/weapons";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div><div class="help-compact">WASD · MOVER &nbsp; E · INTERACTUAR<br>ESPACIO · ATACAR &nbsp; J · FUERTE<br>V · ESQUIVAR &nbsp; F · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
@@ -198,6 +201,62 @@ function panel(html: string) {
 }
 function button(id: string, fn: () => void) {
   el(id).onclick = fn;
+}
+function showEnding(route: "ruins" | "basement", full: boolean) {
+  const historical = full ? legacyEnding(state) : null;
+  if (full && !historical) throw new Error("Final histórico sin pruebas");
+  completeChapter(state.campaign, "mansion-1927");
+  state.ended = true;
+  if (route === "basement") state.phase2.ending = true;
+  const chosen = full ? memoryConsequence(state) : null;
+  const remembered = state.phase2.discoveries.includes("adrien");
+  const title = full
+    ? historical!.title
+    : route === "basement"
+      ? remembered
+        ? "La puerta que pudo abrirse antes"
+        : "El nombre que faltaba"
+      : state.sanity >= 40
+        ? "La memoria del amanecer"
+        : "La última ausencia";
+  const text = full
+    ? historical!.text + (chosen ? ` ${chosen.description}` : "")
+    : route === "basement"
+      ? remembered
+        ? "Élise pronuncia el nombre de Étienne y Adrien cruza el umbral. Al salir, ambos saben que quedan testimonios de otras épocas sin escuchar; la casa pierde una voz, pero su origen permanece incompleto."
+        : "El guardián se disuelve y Adrien sale con Élise. No recuerdan cómo se abrió la puerta ni quién la sostuvo antes que ellos."
+      : state.sanity >= 40
+        ? "Élise quiebra los tres sellos y abandona Veyr con una fotografía de dos rostros. Ha elegido cerrar el Intervalo sin reunir todos los testimonios de su origen."
+        : "El Intervalo se cierra, pero la fotografía de la estación ya no tiene rostros. Élise eligió salir antes de conocer a quienes habían protegido sus nombres.";
+  panel(
+    `<div class="eyebrow">${full ? "FINAL HISTÓRICO · DOCE ÉPOCAS" : "FINAL ANTICIPADO · 1927"}</div><h2>${title}</h2><p>${text}</p><p>Investigaciones históricas: ${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11 · Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/${notes.length}</p><button id="finish">Volver al título</button>`,
+  );
+  button("finish", () => {
+    started = false;
+    menu();
+  });
+}
+function offerEnding(route: "ruins" | "basement") {
+  const readiness = historicalEndingReadiness(state);
+  const missingNames = readiness.missingChapters
+    .map((id) => chapters.find((chapter) => chapter.id === id)!.hero)
+    .join(", ");
+  const missing = [
+    missingNames && `investigaciones de ${missingNames}`,
+    readiness.missingArtifacts.length > 0 &&
+      `${readiness.missingArtifacts.length} pruebas materiales`,
+    readiness.missingReconciliation && "reconciliar tablilla y códice",
+    readiness.missingAdrien && "el cuaderno de Adrien",
+    readiness.missingChoice && "una decisión en el archivo familiar",
+  ]
+    .filter(Boolean)
+    .join("; ");
+  panel(
+    `<div class="eyebrow">UMBRAL DE 1927</div><h2>${readiness.ready ? "Las doce épocas responden" : "Una salida antes de conocer el origen"}</h2><p>${readiness.ready ? "Las once investigaciones, sus pruebas y tu decisión permiten reconstruir el nombre borrado." : `Puedes cerrar el Intervalo ahora y obtener un final anticipado. Para el desenlace histórico faltan: ${missing}.`}</p><div class="actions">${readiness.ready ? '<button id="full-ending">Cerrar con las pruebas</button>' : ""}<button id="early-ending">Cerrar ahora · final anticipado</button><button id="return-ending">Volver a investigar</button></div>`,
+  );
+  if (readiness.ready) button("full-ending", () => showEnding(route, true));
+  button("early-ending", () => showEnding(route, false));
+  button("return-ending", resume);
 }
 renderer.domElement.tabIndex = 0;
 function resume() {
@@ -487,7 +546,7 @@ function options() {
 function inventory() {
   const inventoryLate = lateChapterForRoom(state.room);
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${inventoryLate?.weapon ?? (state.room === 8 ? "gladius romano" : state.room === 19 || state.room === 20 ? "bastón de curandera" : state.room === 17 || state.room === 18 ? "martillo de cantero" : state.room === 15 || state.room === 16 ? "bastón astrolábico" : state.room === 13 || state.room === 14 ? "cuchillo de escriba" : state.room === 11 || state.room === 12 ? "martillo de teselas" : state.room >= 9 ? "bastón de escriba" : "bastón de fresno")} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Doce capítulos conectados en diseño; ${state.campaign.completed.length} concluidos en esta partida. ${inventoryLate ? lateObjective(state) : state.room === 8 ? romanObjective(state) : state.room === 11 || state.room === 12 ? mosaicObjective(state) : state.room === 13 || state.room === 14 ? coastObjective(state) : state.room === 15 || state.room === 16 ? starsObjective(state) : state.room === 17 || state.room === 18 ? quarryObjective(state) : state.room === 19 || state.room === 20 ? hospitalObjective(state) : state.room === 9 || state.room === 10 ? abbeyObjective(state) : "El santuario romano se alcanza desde el vestíbulo."}</p><p>Testimonios romanos: ${romanEchoes.filter((echo) => state.campaign.witnessed.includes(echo.id)).length}/3. Los tres completan una memoria opcional.</p><p>${
+    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${weaponProfileForRoom(state.room).name} · ${weaponProfileForRoom(state.room).technique} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Once investigaciones; ${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11 concluidas en esta partida. ${inventoryLate ? lateObjective(state) : state.room === 8 ? romanObjective(state) : state.room === 11 || state.room === 12 ? mosaicObjective(state) : state.room === 13 || state.room === 14 ? coastObjective(state) : state.room === 15 || state.room === 16 ? starsObjective(state) : state.room === 17 || state.room === 18 ? quarryObjective(state) : state.room === 19 || state.room === 20 ? hospitalObjective(state) : state.room === 9 || state.room === 10 ? abbeyObjective(state) : "El santuario romano inicia la cadena de pruebas; el recuerdo de Isabelle puede explorarse antes."}</p><p>Testimonios romanos: ${romanEchoes.filter((echo) => state.campaign.witnessed.includes(echo.id)).length}/3. Los tres completan una memoria opcional.</p><p>${
       romanEchoes
         .filter((echo) => state.campaign.witnessed.includes(echo.id))
         .map((echo) => `${echo.title}: ${echo.text}`)
@@ -1369,7 +1428,7 @@ function interact(o: Interactable) {
       completeChapter(state.campaign, "abbey-1348");
       autoSave();
       panel(
-        '<div class="eyebrow">FRANCIA · 1348 · RECORRIDO CONCLUIDO</div><h2>El nombre que sobrevivió</h2><p>Isabelle oculta el códice entre los muros del claustro. Siglos después, Élise encontrará su lectura junto a la tablilla de Lucius y el molde de Aurelia.</p><button id="close">Regresar a 1927</button>',
+        `<div class="eyebrow">FRANCIA · 1348 · RECORRIDO CONCLUIDO</div><h2>El nombre que sobrevivió</h2><p>${state.campaign.completed.includes("hospital-1217") ? "El cuaderno de Oona permite a Isabelle reconocer el nombre cambiado en el códice." : "Isabelle conserva el códice antes de conocer de dónde llegó el nombre cambiado. La investigación de Oona sigue pendiente."} Oculta la copia entre los muros del claustro para que Élise la encuentre en 1927.</p><button id="close">Regresar a 1927</button>`,
       );
       button("close", () => {
         state.room = 0;
@@ -1462,6 +1521,11 @@ function interact(o: Interactable) {
       toast("El umbral exige los tres sellos. Consulta tu diario.");
       return;
     }
+    const arrival = chapters.find(
+      (chapter) => chapter.room === o.target && chapter.id !== "mansion-1927",
+    );
+    const firstArrival =
+      arrival !== undefined && !state.campaign.visited.includes(arrival.id);
     state.room = o.target!;
     if (lateDoor) {
       state.x = 0;
@@ -1573,6 +1637,12 @@ function interact(o: Interactable) {
       toast("189 d. C. · Un recuerdo anterior a la casa. Busca el altar.");
     if (o.id === "medieval-portal")
       toast("1348 · Isabelle recuerda el claustro. Busca el scriptorium.");
+    if (arrival && firstArrival && arrival.id !== "mansion-1927") {
+      panel(
+        `<div class="eyebrow">${arrival.year} · ${arrival.place}</div><h2>${arrival.hero}</h2><p>${chapterIntroductions[arrival.id]}</p><p>Primer objetivo: ${el("objective").textContent}</p><button id="close">Comenzar investigación</button>`,
+      );
+      button("close", resume);
+    }
   }
   if (o.kind === "phase2End") {
     if (!state.phase2.solved.includes("basement")) {
@@ -1585,18 +1655,7 @@ function interact(o: Interactable) {
       );
       return;
     }
-    state.phase2.ending = true;
-    state.ended = true;
-    const remembered = state.phase2.discoveries.includes("adrien");
-    const temporalEnding = legacyEnding(state);
-    const chosenEnding = temporalEnding && memoryConsequence(state);
-    panel(
-      `<div class="eyebrow">FIN · LA MANSIÓN DE LOS ECOS</div><h2>${temporalEnding ? temporalEnding.title : remembered ? "Una puerta puede elegir a quién deja salir." : "El nombre que faltaba."}</h2><p>${temporalEnding ? temporalEnding.text + (chosenEnding ? " " + chosenEnding.description : "") : remembered ? "Élise pronuncia el verdadero nombre del guardián. Étienne deja caer los brazos y Adrien cruza el umbral por su propia voluntad. La casa pierde una voz, pero los hermanos conservan la historia que escribieron juntos." : "El guardián se disuelve cuando cesa el mecanismo. Adrien sale con Élise; en el tren, ninguno puede recordar cómo se abrió la puerta. El cuaderno mojado habría conservado esa respuesta."}</p><p>Investigación: ${state.phase2.discoveries.length}/3 · Documentos: ${state.read.length}/${notes.length} · Cordura: ${Math.round(state.sanity)}</p><button id="finish">Volver al título</button>`,
-    );
-    button("finish", () => {
-      started = false;
-      menu();
-    });
+    offerEnding("basement");
   }
   if (o.kind === "seal") {
     if (
@@ -1632,16 +1691,7 @@ function interact(o: Interactable) {
   }
   if (o.kind === "end") {
     if (state.seals.length < 3) return;
-    state.ended = true;
-    const temporalEnding = legacyEnding(state);
-    const chosenEnding = temporalEnding && memoryConsequence(state);
-    panel(
-      `<div class="eyebrow">FIN · ${temporalEnding ? temporalEnding.title : state.sanity >= 40 ? "LA MEMORIA DEL AMANECER" : "LA ÚLTIMA AUSENCIA"}</div><h2>${temporalEnding ? "Lo que tres épocas protegieron." : state.sanity >= 40 ? "Recordar también es dejar ir." : "La casa aprendió tu nombre."}</h2><p>${temporalEnding ? temporalEnding.text + (chosenEnding ? " " + chosenEnding.description : "") : state.sanity >= 40 ? "Élise quiebra los sellos. Por primera vez, la voz de Adrien parece lejana. Al amanecer, en el tren, una fotografía vuelve a tener dos rostros. Uno de ellos sonríe." : "El intervalo se cierra. En la estación encuentran una maleta y una fotografía sin rostros. En los Alpes, una casa añade una ventana. Detrás, alguien espera una carta."}</p><p>Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/${notes.length}</p><button id="finish">Volver al título</button>`,
-    );
-    button("finish", () => {
-      started = false;
-      menu();
-    });
+    offerEnding("ruins");
   }
 }
 function update(dt: number) {
@@ -1663,7 +1713,15 @@ function update(dt: number) {
           state.items.includes("Carta de la raíz")
           ? "Las dos pruebas despiertan la raíz en el observatorio. Puedes regresar por la escalera."
           : "Explora las dos salas del rellano y conserva sus documentos."
-        : "La escalera del muro este conduce a la galería superior.";
+        : state.seals.length === 3
+          ? historicalEndingReadiness(state).ready
+            ? "Las once pruebas y tu decisión permiten el final histórico en el umbral."
+            : "Puedes cerrar el Intervalo temprano o continuar las investigaciones históricas."
+          : !state.items.includes("Llave de latón")
+            ? "Lee la carta y busca la llave junto al escritorio del vestíbulo."
+            : !state.items.includes("Medallón Veyr")
+              ? "Resuelve la caja astronómica del vestíbulo para abrir la biblioteca."
+              : "Sigue las pistas de biblioteca, cripta y capilla para reunir tres sellos.";
     if (el("objective").textContent !== objective)
       el("objective").textContent = objective;
   }

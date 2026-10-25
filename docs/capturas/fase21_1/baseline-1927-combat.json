@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-25T06:16:55.226Z",
+  "url": "http://127.0.0.1:5181/",
+  "requestedSecondsPerScenario": 10,
+  "minRolling60Fps": 1,
+  "headed": true,
+  "requireHardware": true,
+  "executablePath": "/usr/bin/google-chrome",
+  "browserVersion": "156.0.8078.47",
+  "only": "1927:combat",
+  "realWindow": false,
+  "hideVeil": false,
+  "staticMovement": false,
+  "assetRoot": "/tmp/sanity-404-phase21-1-baseline-code/dist",
+  "chapterExits": false,
+  "phase21Cases": false,
+  "chapterFunctional": false,
+  "results": [
+    {
+      "era": "1927",
+      "room": 0,
+      "scenario": "combat",
+      "gpu": {
+        "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+        "vendor": "Google Inc. (Intel)",
+        "unmasked": true
+      },
+      "gpuType": "physical",
+      "geometry": {
+        "inner": [
+          1280,
+          720
+        ],
+        "outer": [
+          1288,
+          805
+        ],
+        "screen": [
+          1280,
+          720
+        ],
+        "canvas": [
+          1024,
+          576
+        ],
+        "canvasCss": [
+          1280,
+          720
+        ],
+        "visibility": "visible",
+        "dpr": 1,
+        "veil": {
+          "display": "block",
+          "background": "radial-gradient(rgba(0, 0, 0, 0) 48%, rgba(6, 16, 27, 0.52) 84%, rgba(3, 6, 8, 0.69) 100%)",
+          "boxShadow": "none"
+        },
+        "quality": {
+          "name": "Baja",
+          "scale": 0.8,
+          "maxPixels": 589824,
+          "shadows": false,
+          "shadowSize": 512,
+          "dust": 32
+        },
+        "scene": {
+          "meshes": 213,
+          "visibleMeshes": 157,
+          "geometries": 215,
+          "materials": 139,
+          "textures": 14,
+          "transparentMeshes": 12,
+          "shadowCastingMeshes": 189,
+          "shadowCastingLights": 0,
+          "lights": {
+            "hemisphere": 1,
+            "directional": 1,
+            "spot": 1,
+            "point": 3
+          },
+          "particles": 80,
+          "mistMeshes": 2
+        }
+      },
+      "spikes": [
+        {
+          "atSeconds": 2.5515999999880785,
+          "durationMs": 33.29999999999927
+        },
+        {
+          "atSeconds": 4.9341999999880795,
+          "durationMs": 33.399999999999636
+        },
+        {
+          "atSeconds": 6.383599999988078,
+          "durationMs": 33.399999999999636
+        }
+      ],
+      "events": [],
+      "longTasks": [],
+      "telemetry": [
+        {
+          "atSeconds": 5.00079999998808,
+          "frame": {
+            "samples": 309,
+            "frameMedianMs": 16.699999999999818,
+            "frameP95Ms": 16.700000000000728,
+            "renderMedianMs": 6.0999999940395355,
+            "renderP95Ms": 10.900000005960464,
+            "updateMedianMs": 0.5999999940395355,
+            "updateP95Ms": 1.5,
+            "aiMedianMs": 0.10000002384185791,
+            "aiP95Ms": 0.4000000059604645,
+            "averageFps": 55.19828510182207
+          },
+          "gpu": {
+            "available": true,
+            "samples": 317,
+            "medianMs": 8.603416,
+            "p95Ms": 13.487916
+          },
+          "calls": 118,
+          "heapBytes": 20966904
+        },
+        {
+          "atSeconds": 10.015499999988078,
+          "frame": {
+            "samples": 600,
+            "frameMedianMs": 16.69999999999891,
+            "frameP95Ms": 16.799999999999272,
+            "renderMedianMs": 5.300000011920929,
+            "renderP95Ms": 10.300000011920929,
+            "updateMedianMs": 0.5,
+            "updateP95Ms": 1.5,
+            "aiMedianMs": 0.10000002384185791,
+            "aiP95Ms": 0.4000000059604645,
+            "averageFps": 59.72407477454162
+          },
+          "gpu": {
+            "available": true,
+            "samples": 600,
+            "medianMs": 9.535832,
+            "p95Ms": 13.48
+          },
+          "calls": 114,
+          "heapBytes": 17478295
+        }
+      ],
+      "inspectionMs": 6.799999892711639,
+      "expectedGameSeconds": 10.0129,
+      "elapsedSeconds": 10.02719999998808,
+      "gameElapsedSeconds": 10.029600000000013,
+      "pausedFrames": 0,
+      "enemyVisibleRatio": 1,
+      "combatEngagedRatio": 1,
+      "eventCount": 0,
+      "tonicsUsed": 0,
+      "healthAtEnd": 100,
+      "pausedAtEnd": false,
+      "enemyVisible": true,
+      "roomAtEnd": 0,
+      "viewport": [
+        1280,
+        720
+      ],
+      "renderResolution": [
+        1024,
+        576
+      ],
+      "renderScale": 0.8,
+      "drawCalls": 114,
+      "triangles": 71768,
+      "gpuResources": {
+        "geometries": 159,
+        "textures": 14
+      },
+      "gpuTiming": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 9.535832,
+        "p95Ms": 13.48
+      },
+      "cpuTiming": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272,
+        "renderMedianMs": 5.300000011920929,
+        "renderP95Ms": 10.300000011920929,
+        "updateMedianMs": 0.5,
+        "updateP95Ms": 1.5,
+        "aiMedianMs": 0.10000002384185791,
+        "aiP95Ms": 0.4000000059604645,
+        "averageFps": 59.72407477454162
+      },
+      "jsHeapBytes": 17478295,
+      "frames": 598,
+      "averageFps": 59.72295738497336,
+      "minimumObservedFps": 29.94011976047937,
+      "minimumRolling60Fps": 59.03187721369537,
+      "frameP50Ms": 16.69999999999891,
+      "frameP95Ms": 16.799999999999272,
+      "frameP99Ms": 16.80000000000109,
+      "worstWindow": {
+        "fps": 59.03187721369537,
+        "startFrame": 108,
+        "endFrame": 167,
+        "startSeconds": 1.7992999999999997,
+        "endSeconds": 2.8157,
+        "durationMs": 1016.4000000000005,
+        "missedVsyncs": 1,
+        "largestIntervalMs": 33.29999999999927
+      },
+      "performancePass": true,
+      "scenarioValid": true,
+      "invalidReasons": [],
+      "errors": []
+    }
+  ]
+}

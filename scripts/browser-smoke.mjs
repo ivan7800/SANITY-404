@@ -109,8 +109,11 @@ try {
   report("Tres puzles, cripta, capilla y acceso a ruinas");
   await go(0, -1.4);
   await key("e");
+  await page
+    .getByRole("button", { name: /Cerrar ahora · final anticipado/ })
+    .click();
   await page.getByRole("button", { name: "Volver al título" }).waitFor();
-  report("Campaña completa y desenlace");
+  report("Ruta corta y final anticipado explícito");
   assert.deepEqual(errors, []);
   console.log(JSON.stringify({ passed: results, errors }, null, 2));
 } catch (e) {

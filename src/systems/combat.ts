@@ -16,6 +16,7 @@ import {
 import { absorbVeil } from "./ritual";
 import { mansionFloorHeight } from "../world/mansion";
 import { upperWalkable } from "../world/mansion-navigation";
+import { weaponProfileForRoom, type WeaponProfile } from "./weapons";
 export type TargetZone = "torso" | "arms" | "head";
 /** Segment/AABB at chest height: low carpets do not block a strike, furniture does. */
 export function strikeClear(a: T.Vector3, b: T.Vector3, obstacles: Obstacle[]) {
@@ -120,11 +121,13 @@ export class Combat {
   parryWindow = 0;
   crippled = 0;
   private guardWasDown = false;
+  private readonly weapon: WeaponProfile;
   constructor(
     room: number,
     kind = enemyKindForRoom(room),
     defeatedId = "enemy" + room,
   ) {
+    this.weapon = weaponProfileForRoom(room);
     this.kind = kind;
     this.defeatedId = defeatedId;
     this.health =
@@ -200,7 +203,8 @@ export class Combat {
     this.crippled = Math.max(0, this.crippled - dt);
     this.stamina = clamp(this.stamina + dt * (guard ? -7 : 18));
     this.guarding = guard && this.stamina > 0;
-    if (this.guarding && !this.guardWasDown) this.parryWindow = 0.24;
+    if (this.guarding && !this.guardWasDown)
+      this.parryWindow = this.weapon.parryWindow;
     else this.parryWindow = Math.max(0, this.parryWindow - dt);
     if (!this.guarding) this.parryWindow = 0;
     this.guardWasDown = this.guarding;
@@ -216,10 +220,12 @@ export class Combat {
       (attack || heavy) &&
       !guard &&
       this.attackCooldown === 0 &&
-      (!heavy || this.stamina >= 35)
+      (!heavy || this.stamina >= this.weapon.heavyCost)
     ) {
-      if (heavy) this.stamina -= 35;
-      this.attackCooldown = heavy ? 1.05 : 0.65;
+      if (heavy) this.stamina -= this.weapon.heavyCost;
+      this.attackCooldown = heavy
+        ? this.weapon.heavyCooldown
+        : this.weapon.lightCooldown;
       this.animation = 0.3;
       onSound(heavy ? 115 : 150, heavy ? 0.24 : 0.15);
       const delta = enemy.position.clone().sub(player.position).setY(0);
@@ -230,7 +236,8 @@ export class Combat {
       );
       if (
         enemy.visible &&
-        delta.length() < (heavy ? 2.1 : 1.9) &&
+        delta.length() <
+          (heavy ? this.weapon.heavyReach : this.weapon.lightReach) &&
         facing.dot(delta.normalize()) > (target === "head" ? 0.5 : -0.15) &&
         strikeClear(player.position, enemy.position, obstacles)
       ) {
