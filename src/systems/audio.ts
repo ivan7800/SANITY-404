@@ -9,6 +9,9 @@ export class Audio {
   private rainLevel?: GainNode;
   private ambientBus?: GainNode;
   private nextAmbient = 7;
+  private nextMenuTick = 0;
+  private nextMenuCreak = 0;
+  private menuAmbientStarted = false;
   private silenceUntil = 0;
   private activeTones = 0;
   get activeVoices() {
@@ -242,8 +245,27 @@ export class Audio {
       "triangle",
     );
   }
+  /** Sparse title cues; existing wind and drone provide the continuous bed. */
+  menuAmbient(time: number) {
+    if (!this.ctx || this.ctx.state !== "running" || this.volume === 0) return;
+    if (!this.menuAmbientStarted) {
+      this.menuAmbientStarted = true;
+      this.nextMenuTick = time + 2.4;
+      this.nextMenuCreak = time + 7;
+      return;
+    }
+    if (time >= this.nextMenuTick) {
+      this.nextMenuTick = time + 2.4;
+      this.tone(210, 0.07, "triangle");
+    }
+    if (time >= this.nextMenuCreak) {
+      this.nextMenuCreak = time + 12.5 + Math.sin(time * 0.31) * 2;
+      this.tone(69, 0.52, "triangle");
+    }
+  }
   setRoom(room: number) {
     this.room = room;
+    this.menuAmbientStarted = false;
     this.nextAmbient = 7;
     this.silenceUntil = 0;
     if (!this.ctx) return;

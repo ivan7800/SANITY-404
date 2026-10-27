@@ -15,6 +15,7 @@
     "test:reborn:hall": "node scripts/browser-reborn-hall.mjs",
     "test:reborn:survey": "node scripts/browser-reborn-survey.mjs",
     "test:ui": "node scripts/browser-remaster.mjs",
+    "test:phase23:browser": "node scripts/browser-remaster.mjs --output-dir=docs/capturas/fase23",
     "test:phase21:browser": "bash scripts/phase21-1-qa.sh",
     "benchmark:phase9": "node scripts/performance-phase9.mjs",
     "benchmark:phase10": "node scripts/performance-phase10.mjs",

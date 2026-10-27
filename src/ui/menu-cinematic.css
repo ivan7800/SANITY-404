@@ -1,0 +1,401 @@
+/* Title only: one compressed image and composited layers, no extra WebGL draw calls. */
+#title-scene {
+  display: none;
+  pointer-events: none;
+}
+
+#overlay.overlay--title {
+  justify-content: flex-start;
+  padding: 0;
+  overflow: hidden;
+  background: #030607;
+  backdrop-filter: none;
+}
+
+#overlay.overlay--title::before,
+#overlay.overlay--title::after {
+  content: none;
+}
+
+#overlay.overlay--title #title-scene {
+  position: absolute;
+  inset: -2%;
+  display: block;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      #020405 0%,
+      #020405b8 20%,
+      #03050636 53%,
+      #0305060d 100%
+    ),
+    linear-gradient(0deg, #010304a8 0%, transparent 32%, #02050738 100%),
+    url("../assets/menu-hall.webp") 58% 50% / cover no-repeat;
+  animation: title-breath 24s ease-in-out infinite alternate;
+}
+
+#title-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 3% 9% at 83.5% 21%,
+    #030608 13%,
+    transparent 100%
+  );
+  opacity: 0.8;
+  animation: title-figure 31s ease-in-out infinite;
+}
+
+.title-lamplight,
+.title-mist,
+.title-dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.title-lamplight {
+  background:
+    radial-gradient(circle at 44% 40%, #d99f521a, transparent 12%),
+    radial-gradient(circle at 85% 40%, #d99f521a, transparent 11%);
+  mix-blend-mode: screen;
+  animation: title-lamps 11s ease-in-out infinite;
+}
+
+.title-mist {
+  inset: 36% -8% -18%;
+  opacity: 0.44;
+  background:
+    radial-gradient(ellipse 55% 31% at 56% 80%, #78909b38, transparent 80%),
+    radial-gradient(ellipse 37% 19% at 85% 54%, #8695a22b, transparent 90%);
+  animation: title-drift 19s ease-in-out infinite alternate;
+}
+
+.title-dust {
+  opacity: 0.2;
+  background-image:
+    radial-gradient(circle, #e6d7ba 0 0.7px, transparent 1px),
+    radial-gradient(circle, #b6cbd0 0 0.6px, transparent 1px);
+  background-size:
+    139px 173px,
+    197px 151px;
+  background-position:
+    70% 12%,
+    91% 40%;
+  animation: title-dust 35s linear infinite;
+}
+
+#overlay.overlay--title .panel {
+  position: relative;
+  z-index: 1;
+}
+
+#overlay.overlay--title .panel--menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 0 min(42vw, 600px);
+  width: min(42vw, 600px);
+  max-width: none;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: clamp(28px, 4.4vw, 70px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    #030506f5 0%,
+    #030506e8 70%,
+    #03050608 100%
+  );
+  box-shadow: none;
+  transition:
+    opacity 380ms ease,
+    transform 440ms ease;
+}
+
+.panel--menu .menu-kicker {
+  margin-bottom: clamp(28px, 7vh, 78px);
+  padding-bottom: 14px;
+  border-color: #b79a6a5c;
+  color: #d7cdb8;
+  font-size: 10px;
+  letter-spacing: 0.23em;
+}
+
+.panel--menu .ornament {
+  color: #b29c79;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+}
+
+.panel--menu h1 {
+  white-space: nowrap;
+  font:
+    400 clamp(46px, 4.3vw, 66px)/0.98 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: 0.025em;
+  text-shadow: 0 3px 28px #000;
+}
+
+.panel--menu h1 span {
+  color: #b39b72;
+}
+
+.panel--menu .menu-subtitle {
+  margin-top: 15px;
+  color: #c4b99f;
+  font: 600 10px/1.6 var(--ui-font);
+  letter-spacing: 0.24em;
+}
+
+.panel--menu .rule {
+  width: 120px;
+  height: 1px;
+  margin: clamp(25px, 4vh, 42px) 0 20px;
+  background: linear-gradient(90deg, #8b3f39, #a5916a66, transparent);
+}
+
+.panel--menu .menu-motto {
+  margin: 0;
+  color: #ece5d6;
+  font:
+    italic 400 clamp(15px, 1.45vw, 19px)/1.5 Georgia,
+    serif;
+  letter-spacing: 0.12em;
+}
+
+.panel--menu .menu-intro {
+  margin: 12px 0 8px;
+  color: #bdb7aa;
+  font:
+    13px/1.6 Georgia,
+    serif;
+}
+
+.panel--menu .menu-actions {
+  margin: clamp(22px, 4vh, 38px) 0 0;
+  max-width: 370px;
+  counter-reset: menu-choice;
+}
+
+.panel--menu .menu-actions button {
+  min-height: 56px;
+  padding: 12px 35px 12px 51px;
+  border-color: #aa987044;
+  font: 600 13px/1.4 var(--ui-font);
+  letter-spacing: 0.19em;
+  text-shadow: 0 2px 8px #000;
+}
+
+.panel--menu .menu-actions button::before {
+  position: absolute;
+  left: 14px;
+  color: #9c8066;
+  font: 600 10px/1.5 var(--ui-font);
+  letter-spacing: 0;
+  counter-increment: menu-choice;
+  content: "0" counter(menu-choice);
+}
+
+.panel--menu .menu-actions button:hover:not(:disabled),
+.panel--menu .menu-actions button:focus-visible {
+  background: linear-gradient(90deg, #843c332f, #a58b5b12, transparent);
+  border-color: #c5a779;
+  color: #fff7e5;
+}
+
+.panel--menu .menu-actions button:disabled {
+  color: #8d8b85;
+  opacity: 0.72;
+}
+
+.panel--menu .menu-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  max-width: 380px;
+  margin-top: 13px;
+}
+
+.panel--menu .menu-secondary button {
+  min-height: 36px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: #aaa08e;
+  font: 600 10px/1.4 var(--ui-font);
+  letter-spacing: 0.13em;
+}
+
+.panel--menu .menu-secondary button:hover:not(:disabled),
+.panel--menu .menu-secondary button:focus-visible {
+  color: #f4e8cb;
+  background: transparent;
+  transform: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.panel--menu .menu-footer {
+  margin-top: clamp(22px, 4vh, 42px);
+  color: #b1a995 !important;
+}
+
+#overlay.overlay--departing .panel--menu {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+#title-transition {
+  position: fixed;
+  z-index: 12;
+  inset: 0;
+  pointer-events: none;
+  background: #020304;
+  opacity: 0;
+  transition: opacity 420ms ease-in-out;
+}
+
+#title-transition.title-transition--closed {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@keyframes title-breath {
+  from {
+    transform: scale(1.02) translateX(-0.4%);
+  }
+  to {
+    transform: scale(1.045) translateX(0.35%);
+  }
+}
+
+@keyframes title-figure {
+  0%,
+  12%,
+  84%,
+  100% {
+    opacity: 0.92;
+  }
+  18%,
+  79% {
+    opacity: 0.06;
+  }
+}
+
+@keyframes title-lamps {
+  0%,
+  32%,
+  39%,
+  100% {
+    opacity: 0.75;
+  }
+  35%,
+  82% {
+    opacity: 0.48;
+  }
+}
+
+@keyframes title-drift {
+  from {
+    transform: translateX(-2%);
+  }
+  to {
+    transform: translateX(2%);
+  }
+}
+
+@keyframes title-dust {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-24px);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  #overlay.overlay--title .panel--menu {
+    flex-basis: 55vw;
+    width: 55vw;
+  }
+}
+
+@media (max-width: 760px) {
+  #overlay.overlay--title {
+    align-items: flex-end;
+  }
+  #overlay.overlay--title #title-scene {
+    background-position:
+      center,
+      center,
+      64% 50%;
+  }
+  #overlay.overlay--title .panel--menu {
+    flex-basis: 100%;
+    width: 100%;
+    height: auto;
+    max-height: 100dvh;
+    padding: clamp(25px, 6vw, 46px);
+    border: 0;
+    background: linear-gradient(
+      0deg,
+      #030506f7 0%,
+      #030506e8 69%,
+      #03050655 100%
+    );
+  }
+  .panel--menu .menu-kicker {
+    margin-bottom: clamp(30px, 12vh, 90px);
+  }
+  .panel--menu h1 {
+    font-size: clamp(40px, 9.6vw, 62px);
+  }
+}
+
+@media (max-height: 640px) {
+  .panel--menu .menu-kicker {
+    margin-bottom: 16px;
+  }
+  .panel--menu .rule {
+    margin: 13px 0 9px;
+  }
+  .panel--menu .menu-actions {
+    margin-top: 13px;
+  }
+  .panel--menu .menu-actions button {
+    min-height: 43px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+  .panel--menu .menu-footer {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #overlay.overlay--title #title-scene,
+  #overlay.overlay--title #title-scene *,
+  #overlay.overlay--title #title-scene::before,
+  #overlay.overlay--title .panel--menu,
+  #title-transition {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+#overlay.overlay--reduced #title-scene,
+#overlay.overlay--reduced #title-scene *,
+#overlay.overlay--reduced #title-scene::before,
+#overlay.overlay--reduced .panel--menu {
+  animation: none !important;
+  transform: none !important;
+}
