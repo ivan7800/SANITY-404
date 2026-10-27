@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 660" role="img" aria-label="Plano técnico de Archivo familiar">
+<rect width="920" height="660" fill="#101817"/>
+<text x="32" y="26" fill="#e6d8b9" font-family="sans-serif" font-size="19">05 · Archivo familiar</text>
+<text x="32" y="46" fill="#8fa59c" font-family="sans-serif" font-size="11">Plano de colisiones y objetos · escala 36 px/m · actor r=0.34 m · z− arriba</text>
+<rect x="32" y="32" width="576" height="576" fill="#26332e" stroke="#9a936f"/>
+<path d="M32 32V608 M32 32H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M104 32V608 M32 104H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M176 32V608 M32 176H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M248 32V608 M32 248H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M320 32V608 M32 320H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M392 32V608 M32 392H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M464 32V608 M32 464H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M536 32V608 M32 536H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M608 32V608 M32 608H608" stroke="#53625b" stroke-opacity=".35"/>
+<rect x="32" y="25.69999999999999" width="576" height="12.6" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 16.00 × 0.35 m</title></rect>
+<rect x="25.69999999999999" y="32" width="12.6" height="576" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 0.35 × 16.00 m</title></rect>
+<rect x="601.7" y="32" width="12.6" height="576" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 0.35 × 16.00 m</title></rect>
+<rect x="32" y="601.7" width="576" height="12.6" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 16.00 × 0.35 m</title></rect>
+<rect x="68" y="132.79999999999998" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="68" y="420.8" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="557.6" y="132.79999999999998" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="557.6" y="420.8" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="88.70000000000002" y="156.20000000000002" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="88.70000000000002" y="210.2" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="88.70000000000002" y="372.2" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="88.70000000000002" y="426.2" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="506.29999999999995" y="156.20000000000002" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="506.29999999999995" y="210.2" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="506.29999999999995" y="372.2" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="506.29999999999995" y="426.2" width="45" height="39.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 1.25 × 1.10 m</title></rect>
+<rect x="230.90000021457672" y="487.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>save5 · 0.95 × 0.70 m</title></rect>
+<rect x="104.90000021457672" y="487.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>note5 · 0.95 × 0.70 m</title></rect>
+<rect x="511.7000002145767" y="505.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>tonic5 · 0.95 × 0.70 m</title></rect>
+<rect x="403.70000021457673" y="422.6000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>memory-altar · 0.95 × 0.70 m</title></rect>
+<rect x="185.00000042915346" y="107.24000002145769" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>legacy-back · 1.90 × 0.48 m</title></rect>
+<rect x="74.84000002145766" y="285.80000042915344" width="17.280000150203705" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>archive-back · 0.48 × 1.90 m</title></rect>
+<rect x="302.9000002145767" y="199.40000021457672" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>genealogy · 0.95 × 0.70 m</title></rect>
+<rect x="557.2400000214577" y="285.80000042915344" width="17.280000150203705" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>greenhouse-door · 0.48 × 1.90 m</title></rect>
+<rect x="410.9000002145767" y="451.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>society · 0.95 × 0.70 m</title></rect>
+<circle cx="248" cy="500" r="3.5" fill="#e5d4a7"><title>save5: Escritorio de memoria · guardar</title></circle>
+<circle cx="122" cy="500" r="3.5" fill="#e5d4a7"><title>note5: Leer documento</title></circle>
+<circle cx="528.8" cy="518" r="3.5" fill="#e5d4a7"><title>tonic5: Recoger tónico</title></circle>
+<circle cx="420.8" cy="435.2" r="3.5" fill="#e5d4a7"><title>memory-altar: Elegir el legado que sobrevivirá</title></circle>
+<circle cx="219.2" cy="111.20000000000002" r="5" fill="#e8a869"><title>legacy-back: Volver por el pasaje temporal · vestíbulo</title></circle>
+<circle cx="78.79999999999998" cy="320" r="5" fill="#e8a869"><title>archive-back: Volver · biblioteca</title></circle>
+<circle cx="320" cy="212" r="3.5" fill="#e5d4a7"><title>genealogy: Ordenar el árbol genealógico</title></circle>
+<circle cx="561.2" cy="320" r="5" fill="#e8a869"><title>greenhouse-door: Puerta de hierro · invernadero</title></circle>
+<circle cx="428" cy="464" r="3.5" fill="#e5d4a7"><title>society: Investigar el libro de socios</title></circle>
+<circle cx="172.4" cy="478.4" r="3.5" fill="#e5d4a7"><title>mansion-echo-oona: Examinar la cama ausente · 1217</title></circle>
+<circle cx="467.6" cy="478.4" r="3.5" fill="#e5d4a7"><title>mansion-echo-ines: Examinar el retrato envejecido · 1610</title></circle>
+<circle cx="320" cy="489.20000000000005" r="3.5" fill="#e5d4a7"><title>mansion-echo-elise: Examinar la memoria de élise · 1927</title></circle>
+<circle cx="320" cy="507.20000000000005" r="6" fill="#65c4aa"><title>Referencia de aparición para el plano</title></circle>
+<circle cx="428" cy="212" r="5" fill="#bd685e"><title>Aparición genérica del enemigo; la mansión también tiene amenazas dinámicas</title></circle>
+<circle cx="489.20000000000005" cy="550.4" r="5" fill="#78b9df"><title>Cámara representativa</title></circle>
+<text x="627" y="75" fill="#e6d8b9" font-family="sans-serif" font-size="15">Accesos y objetivos</text>
+<text x="627" y="98" fill="#8fa59c" font-family="sans-serif" font-size="11">● puerta   ● objeto   ● aparición   ● enemigo   ● cámara</text>
+<text x="627" y="120" fill="#d4c69f" font-family="sans-serif" font-size="11">note5 (-5.5, 5.0)</text>
+<text x="627" y="139" fill="#e8a869" font-family="sans-serif" font-size="11">legacy-back (-2.8, -5.8)</text>
+<text x="627" y="158" fill="#e8a869" font-family="sans-serif" font-size="11">archive-back (-6.7, 0.0)</text>
+<text x="627" y="177" fill="#d4c69f" font-family="sans-serif" font-size="11">genealogy (0.0, -3.0)</text>
+<text x="627" y="196" fill="#e8a869" font-family="sans-serif" font-size="11">greenhouse-door (6.7, 0.0)</text>
+<text x="627" y="620" fill="#8fa59c" font-family="sans-serif" font-size="10">Geometría reconstruida para análisis; pendiente de jugar en Chromium.</text>
+</svg>

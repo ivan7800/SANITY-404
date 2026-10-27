@@ -205,7 +205,7 @@ export const romanEchoes = [
   {
     id: "roman-echo-threshold",
     name: "Testimonio del umbral",
-    x: 0,
+    x: 2,
     z: 1.35,
     title: "Lo que se atraviesa",
     text: "La última estela señala el arco meridional. Ningún soldado proyecta sombra al cruzarlo. UMBRAL cierra la secuencia.",

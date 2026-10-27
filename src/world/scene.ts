@@ -17,7 +17,9 @@ import { decorateQuarry } from "./quarry-1092";
 import { decorateRoadHospital } from "./road-hospital";
 import { decorateLateChapter } from "./late-chapters";
 import { lateChapters, lateChapterForRoom } from "../systems/late-chapters";
+import { hallArmchair, hallWritingDesk } from "./furnishings";
 import { decoratePhase2Room } from "./phase2-rooms";
+import { historicArchitecture } from "./historic-architecture";
 import { newPhase2, type Phase2Progress } from "../systems/phase2";
 import {
   newCampaign,
@@ -26,6 +28,7 @@ import {
 } from "../systems/campaign";
 export { character } from "./character";
 import { blocked, type Obstacle } from "../systems/state";
+import { clearInteractionLine } from "../systems/collision";
 export function enemySpawn(obstacles: Obstacle[]): [number, number] {
   return (
     (
@@ -137,6 +140,7 @@ export interface Interactable {
   target?: number;
   rotation?: number;
   mesh?: T.Object3D;
+  collider?: Obstacle;
 }
 export class World {
   scene = new T.Scene();
@@ -269,7 +273,16 @@ export class World {
       for (const z of [-5, 3]) {
         // The east pier at z=3 stood directly in front of the Roman threshold.
         // Keep its structural rhythm by moving this one pier behind the bay.
-        const pierZ = room === 0 && x > 0 && z === 3 ? 0.7 : z;
+        const pierZ =
+          room === 0 && x > 0 && z === 3
+            ? 1.2
+            : room === 0 && x < 0 && z === 3
+              ? 4.4
+              : room === 0 && x < 0 && z === -5
+                ? -6.8
+                : (room === 1 || room === 3) && x < 0 && z === -5
+                  ? -6.8
+                  : z;
         this.box(x, 1.6, pierZ, 0.4, 3.2, 0.4, 0x666654);
         this.lamp(
           x,
@@ -283,13 +296,13 @@ export class World {
     if (room === 0) {
       scene.add(mansion(this.obstacles, this.upperObstacles));
       this.obstacles.push(
-        { x: -4, z: -2, w: 3, d: 1.6, height: 1.5 },
-        { x: 4, z: 1, w: 2, d: 3, height: 1.5 },
+        { id: "hall-writing-desk", ...hallWritingDesk, height: 1.5 },
+        { id: "hall-armchair", ...hallArmchair, height: 1.5 },
       );
     }
     if (room === 1) {
       for (const x of [-5, 5])
-        for (const z of [-3, 2]) {
+        for (const z of [-2.2, 2.8]) {
           this.box(x, 1.7, z, 1, 3.4, 3.4, 0x30281d);
           for (let i = 0; i < 14; i++)
             this.box(
@@ -312,7 +325,7 @@ export class World {
         }
     }
     if (room === 3) {
-      for (const x of [-4, 4])
+      for (const x of [-3.5, 3.5])
         for (const z of [-3, 0, 3]) this.box(x, 0.5, z, 2.5, 1, 0.65, 0x393025);
       this.box(3, 0.8, -5, 3, 1.6, 1.3, 0x707263);
       this.box(0, 3.6, -7.6, 0.3, 2, 0.2, 0xa49a78, false);
@@ -365,12 +378,13 @@ export class World {
     else if (lateChapterForRoom(room)) decorateLateChapter(this, quality);
     else if (room === 9 || room === 10) decorateMedievalAbbey(this);
     else decoratePhase2Room(this);
+    if (room >= 8 && room <= 20) scene.add(historicArchitecture(room));
     this.add(
       {
         id: "save" + room,
         name: "Escritorio de memoria · guardar",
-        x: -2,
-        z: 5,
+        x: room === 4 ? -3.5 : -2,
+        z: room === 4 ? 5.5 : 5,
         kind: "save",
       },
       0x8b7753,
@@ -390,8 +404,8 @@ export class World {
         {
           id: "key",
           name: "Recoger llave de latón",
-          x: -4,
-          z: -0.5,
+          x: -3.8,
+          z: 0.5,
           kind: "item",
           value: "Llave de latón",
         },
@@ -419,8 +433,8 @@ export class World {
         {
           id: "tonic" + room,
           name: "Recoger tónico",
-          x: 5.8,
-          z: 5.5,
+          x: room === 0 ? 6.6 : 5.8,
+          z: room === 0 ? 5 : 5.5,
           kind: "item",
           value: "Tónico " + room,
         },
@@ -455,7 +469,7 @@ export class World {
         {
           id: "upper-save",
           name: "Escritorio del rellano · guardar",
-          x: 2,
+          x: -5.8,
           z: -5.8,
           level: 1,
           kind: "save",
@@ -489,10 +503,13 @@ export class World {
           0x8ca99b,
         );
       const portals = [
-        { x: 4.2, z: -3.8 },
-        { x: 4.2, z: -5.4 },
+        // The east stair and upper landing are different floors. These two
+        // inherited door leaves belonged to the ground floor, so give them
+        // actual ground-level bays along the south wall instead.
+        { x: 2.6, z: 6.7 },
+        { x: 5, z: 6.7 },
         { x: -4.2, z: -3.8 },
-        { x: -4.2, z: -5.4 },
+        { x: -3.2, z: -5.9 },
       ];
       lateChapters.forEach((chapter, index) => {
         const prerequisite =
@@ -589,7 +606,7 @@ export class World {
           {
             id: "hospital-portal",
             name: "Seguir el cuaderno de Oona · año 1217",
-            x: 2.6,
+            x: 1.8,
             z: -3.3,
             kind: "door",
             target: 19,
@@ -1165,8 +1182,8 @@ export class World {
         {
           id: "legacy-desk",
           name: "Reconstruir la memoria de las tres épocas",
-          x: -2.5,
-          z: -4.7,
+          x: -1.5,
+          z: -4.3,
           kind: "legacy",
         },
         0xaeb993,
@@ -1186,7 +1203,7 @@ export class World {
           {
             id: "legacy-passage",
             name: "Atravesar el pasaje temporal · archivo Veyr",
-            x: 2.7,
+            x: 2,
             z: -5.8,
             kind: "door",
             target: 5,
@@ -1588,6 +1605,24 @@ export class World {
     if (o.rotation) m.rotation.y = o.rotation;
     this.scene.add(m);
     o.mesh = m;
+    // Props are tangible desks, plinths or door leaves. Derive their collider
+    // from the rendered mesh instead of maintaining a second size catalogue.
+    m.updateWorldMatrix(true, true);
+    const bounds = new T.Box3().setFromObject(m);
+    const collider: Obstacle = {
+      id: o.id,
+      x: (bounds.min.x + bounds.max.x) / 2,
+      z: (bounds.min.z + bounds.max.z) / 2,
+      w: bounds.max.x - bounds.min.x,
+      d: bounds.max.z - bounds.min.z,
+      y: bounds.min.y,
+      height: bounds.max.y - bounds.min.y,
+    };
+    o.collider = collider;
+    (o.level === 1 || o.kind === "galleryClue"
+      ? this.upperObstacles
+      : this.obstacles
+    ).push(collider);
     this.objects.push(o);
   }
   nearest(x: number, z: number, radius = 1.9, y = 0) {
@@ -1602,7 +1637,12 @@ export class World {
       const dx = object.x - x;
       const dz = object.z - z;
       const distance = dx * dx + dz * dz;
-      if (distance < best) {
+      const obstacles =
+        y > 1.4 && this.room === 0 ? this.upperObstacles : this.obstacles;
+      if (
+        distance < best &&
+        clearInteractionLine({ x, z }, object, obstacles, y + 1.05)
+      ) {
         best = distance;
         nearest = object;
       }
@@ -1612,6 +1652,15 @@ export class World {
   remove(o: Interactable) {
     if (!this.objects.includes(o)) return;
     this.objects = this.objects.filter((item) => item !== o);
+    if (o.collider) {
+      const colliders =
+        o.level === 1 || o.kind === "galleryClue"
+          ? this.upperObstacles
+          : this.obstacles;
+      const index = colliders.indexOf(o.collider);
+      if (index >= 0) colliders.splice(index, 1);
+      o.collider = undefined;
+    }
     if (!o.mesh) return;
     this.scene.remove(o.mesh);
     // Each prop owns its geometry and materials. Surface textures are shared

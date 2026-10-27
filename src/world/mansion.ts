@@ -3,6 +3,7 @@ import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { portrait } from "../render/portrait";
 import { pbr } from "../render/materials";
 import { furnishings } from "./furnishings";
+import { moreauHallArchitecture } from "./mansion-architecture";
 import type { Obstacle } from "../systems/state";
 /** The stair and landing share a height field, so old saves need no Y value. */
 export function mansionFloorHeight(x: number, z: number, floor: 0 | 1 = 0) {
@@ -294,9 +295,43 @@ export function mansion(
   box(6.42, 3.04, 3, 0.2, 0.3, 0.55, plaster);
   for (const z of [2.38, 2.69, 3, 3.31, 3.62])
     box(6.39, 0.06, z, 0.82, 0.11, 0.025, wornGold);
-  // Coffered ceiling beams stay high enough to preserve the authored camera views.
-  for (const x of [-5, 0, 5]) box(x, 4.98, 0, 0.25, 0.18, 16, wood);
-  for (const z of [-5, 0, 5]) box(0, 4.98, z, 16, 0.18, 0.25, wood);
+  // The later memories now open in two south-wall bays on the ground floor.
+  // Three narrow piers create actual thresholds; their colliders match the
+  // stone returns and leave the central approaches to both doors clear.
+  for (const [index, x] of [1.2, 3.8, 6.15].entries()) {
+    box(x, 1.55, 7.16, 0.22, 3.1, 0.94, marble);
+    box(x, 0.22, 6.79, 0.36, 0.44, 0.36, soot);
+    box(x, 3.15, 6.79, 0.38, 0.14, 0.4, trim);
+    obstacles.push({
+      id: `south-memory-pier-${index}`,
+      x,
+      z: 7.16,
+      w: 0.22,
+      d: 0.94,
+      height: 3.1,
+    });
+  }
+  for (const x of [2.6, 5]) {
+    const arch: T.Vector3[] = [];
+    for (let i = 0; i <= 16; i++) {
+      const a = (Math.PI * i) / 16;
+      arch.push(
+        new T.Vector3(x - 1.07 * Math.cos(a), 2.83 + 0.52 * Math.sin(a), 6.69),
+      );
+    }
+    mesh(
+      new T.TubeGeometry(new T.CatmullRomCurve3(arch), 20, 0.105, 7),
+      marble,
+      0,
+      0,
+      0,
+    );
+    box(x, 3.43, 6.68, 0.25, 0.23, 0.23, trim);
+    box(x, 3.65, 7.24, 2.18, 0.12, 0.65, wood);
+  }
+  // A continuous plaster vault and inset side arcades replace the flat beam grid.
+  for (const object of [...moreauHallArchitecture().children])
+    group.add(object);
   // Checkered stone threshold and runner edging.
   for (let x = -7; x < 8; x++)
     for (let z = -7; z < 8; z++) {

@@ -4,6 +4,7 @@ import { pbr } from "../render/materials";
 import { lateChapterForRoom, type LateChapter } from "../systems/late-chapters";
 import { character, type Rig } from "./character";
 import type { World } from "./scene";
+import { lateArchitecture } from "./late-architecture";
 
 export function lateHero(chapter: LateChapter): T.Group {
   const actor = character(false, chapter.year < 1700 ? "medieval" : "modern");
@@ -223,6 +224,7 @@ export function decorateLateChapter(world: World, quality = 1.3) {
   const [base, accent, dark] = chapter.colors;
   world.scene.background = new T.Color(base);
   world.scene.fog = new T.FogExp2(dark, 0.028);
+  world.scene.add(batchRigid(lateArchitecture(chapter.year, inner, low)));
   if (chapter.year === 1491) {
     for (const side of [-1, 1])
       for (const z of low ? [-3.5, 3.5] : [-3.5, 0, 3.5]) {
@@ -254,6 +256,18 @@ export function decorateLateChapter(world: World, quality = 1.3) {
       }
     b(-4, 0.65, -3.5, 2.3, 1.3, 1.1, base, true, "wood");
   } else if (chapter.year === 1786) {
+    // The proscenium's two load-bearing piers enter the playable height.
+    // Keep their physical footprint identical to the visible shaft.
+    for (const x of [-6.8, 6.8])
+      world.obstacles.push({
+        id: `theatre-proscenium-${x < 0 ? "west" : "east"}`,
+        x,
+        z: -4.65,
+        w: 0.35,
+        d: 0.5,
+        y: 1.205,
+        height: 3.45,
+      });
     for (const x of [-5, 5])
       b(x, 0.35, -5.1, 2.5, 0.7, 2.4, dark, true, "wood");
     for (const x of low ? [-4, 0, 4] : [-4, -2, 0, 2, 4]) {

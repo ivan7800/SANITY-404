@@ -11,7 +11,7 @@ export const mansionEchoes = [
     item: "Tablilla del intervalo",
     room: 0,
     x: 6.1,
-    z: 5.2,
+    z: 6.6,
     title: "La junta de Lucius",
     text: "La junta romana atraviesa la piedra del vestíbulo. Lucius trazó el primer límite del Intervalo aquí, muchos siglos antes de que existiera la casa.",
     color: 0xa89b75,

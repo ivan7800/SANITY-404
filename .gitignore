@@ -5,6 +5,8 @@ playwright-report/
 coverage/
 .vite/
 .cache/
+.local-backups/
+*.tsbuildinfo
 
 .sanity-launcher/
 
@@ -31,3 +33,8 @@ Thumbs.db
 *~
 tmp/
 temp/
+
+# Browser attempts that failed before gameplay; kept locally for diagnosis
+docs/capturas/fase22/sandbox-*/
+docs/capturas/fase22/campana-completa-trace-*.json
+docs/capturas/fase22/final-fallo-*.png

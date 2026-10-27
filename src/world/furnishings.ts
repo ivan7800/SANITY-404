@@ -1,5 +1,8 @@
 import * as T from "three";
 import { pbr } from "../render/materials";
+// One authored footprint is shared by the visible seat and the physical map.
+export const hallArmchair = { x: 4.45, z: 0.95, w: 1.5, d: 1.65 } as const;
+export const hallWritingDesk = { x: -3, z: -1.6, w: 3, d: 1.6 } as const;
 /** All meshes are folded cloth, turned furniture, fixtures or carved details. */
 export function furnishings() {
   const group = new T.Group();
@@ -93,7 +96,9 @@ export function furnishings() {
       rod.rotation.x = Math.PI / 2;
     }
   velvet.side = T.DoubleSide;
-  // Carved writing desk replacing the solid prototype block, with drawers and turned legs.
+  // Reposition the complete desk assembly into the side study bay. Keeping
+  // its meshes together preserves their visual alignment with the collider.
+  const deskStart = group.children.length;
   box(-4, 1.27, -2, 3, 0.14, 1.6, wood);
   box(-4, 1.36, -2, 2.7, 0.035, 1.33, upholstery);
   for (const x of [-5.24, -2.76])
@@ -127,25 +132,31 @@ export function furnishings() {
     );
     book.rotation.y = i * 0.12;
   }
-  // Chesterfield-like chaise with carved feet, padded back, buttons and rolled arms.
-  box(4, 0.48, 1, 1.8, 0.3, 2.8, wood);
-  box(4, 0.7, 1, 1.58, 0.26, 2.65, upholstery);
-  box(4.8, 1.04, 1, 0.25, 0.8, 2.9, upholstery);
-  for (const z of [-0.4, 2.4]) {
+  for (const part of group.children.slice(deskStart)) {
+    part.position.x += hallWritingDesk.x + 4;
+    part.position.z += hallWritingDesk.z + 2;
+  }
+  // A compact armchair leaves the stair's lower landing and the Roman bay
+  // readable. Its carved frame keeps the former chaise's material language.
+  const { x: chairX, z: chairZ } = hallArmchair;
+  box(chairX, 0.48, chairZ, 1.4, 0.3, 1.55, wood);
+  box(chairX, 0.7, chairZ, 1.24, 0.26, 1.4, upholstery);
+  box(chairX + 0.58, 1.04, chairZ, 0.23, 0.8, 1.56, upholstery);
+  for (const z of [chairZ - 0.73, chairZ + 0.73]) {
     const arm = add(
-      new T.CylinderGeometry(0.16, 0.16, 1.8, 12),
+      new T.CylinderGeometry(0.13, 0.13, 1.3, 12),
       upholstery,
-      4,
+      chairX,
       0.98,
       z,
     );
     arm.rotation.z = Math.PI / 2;
   }
-  for (const z of [-0.2, 0.45, 1.1, 1.75, 2.2])
+  for (const z of [chairZ - 0.5, chairZ, chairZ + 0.5])
     for (const y of [0.9, 1.18])
-      add(new T.SphereGeometry(0.025, 8, 6), gold, 4.64, y, z);
-  for (const x of [3.25, 4.75])
-    for (const z of [-0.2, 2.2]) {
+      add(new T.SphereGeometry(0.025, 8, 6), gold, chairX + 0.48, y, z);
+  for (const x of [chairX - 0.52, chairX + 0.52])
+    for (const z of [chairZ - 0.57, chairZ + 0.57]) {
       const leg = add(
         new T.CylinderGeometry(0.05, 0.085, 0.3, 10),
         wood,
@@ -153,7 +164,7 @@ export function furnishings() {
         0.2,
         z,
       );
-      leg.rotation.z = (x - 4) * 0.12;
+      leg.rotation.z = (x - chairX) * 0.12;
     }
   // Brass sconces and fabric shades co-located with the actual warm interior lights.
   for (const x of [-6.8, 6.8])

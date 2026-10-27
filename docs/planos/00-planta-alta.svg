@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 660" role="img" aria-label="Plano técnico de la planta alta Moreau">
+<rect width="920" height="660" fill="#101817"/>
+<text x="32" y="26" fill="#e6d8b9" font-family="sans-serif" font-size="19">00 · Galería y habitaciones superiores</text>
+<text x="32" y="46" fill="#8fa59c" font-family="sans-serif" font-size="11">Planta distinta: únicamente los colisionadores superiores gobiernan este recorrido.</text>
+<rect x="32" y="32" width="576" height="576" fill="#1b2422" stroke="#9a936f"/>
+<rect x="84.20000000000002" y="80.6" width="471.59999999999997" height="77.39999999999999" fill="#34483f" stroke="#4c6d5e" opacity="1"><title>Obstáculo arquitectónico · 13.10 × 2.15 m</title></rect>
+<rect x="84.20000000000002" y="122" width="111.60000000000001" height="149.4" fill="#34483f" stroke="#4c6d5e" opacity="1"><title>Obstáculo arquitectónico · 3.10 × 4.15 m</title></rect>
+<rect x="199.39999999999998" y="122" width="144" height="149.4" fill="#34483f" stroke="#4c6d5e" opacity="1"><title>Obstáculo arquitectónico · 4.00 × 4.15 m</title></rect>
+<rect x="84.20000000000002" y="136.4" width="39.6" height="7.2" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 1.10 × 0.20 m</title></rect>
+<rect x="159.79999999999998" y="136.4" width="39.6" height="7.2" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 1.10 × 0.20 m</title></rect>
+<rect x="199.4" y="136.4" width="50.4" height="7.2" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 1.40 × 0.20 m</title></rect>
+<rect x="294.8" y="136.4" width="50.4" height="7.2" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 1.40 × 0.20 m</title></rect>
+<rect x="194.36" y="143.6" width="6.4799999999999995" height="118.8" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 0.18 × 3.30 m</title></rect>
+<rect x="84.19999999999999" y="267.8" width="259.2" height="7.2" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 7.20 × 0.20 m</title></rect>
+<rect x="80.60000000000002" y="127.4" width="7.2" height="147.6" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 0.20 × 4.10 m</title></rect>
+<rect x="339.8" y="127.4" width="7.2" height="147.6" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 0.20 × 4.10 m</title></rect>
+<rect x="347.9" y="154.04" width="95.39999999999999" height="5.040000000000001" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 2.65 × 0.14 m</title></rect>
+<rect x="298.4" y="230.89999999999998" width="28.8" height="19.8" fill="#716658" stroke="#a59776" opacity="0.86"><title>Obstáculo arquitectónico · 0.80 × 0.55 m</title></rect>
+<rect x="94.10000021457674" y="98.60000021457674" width="34.19999957084656" height="25.199999570846558" fill="#716658" stroke="#a59776" opacity="0.86"><title>upper-save · 0.95 × 0.70 m</title></rect>
+<rect x="90.50000021457672" y="217.40000021457672" width="34.19999957084656" height="25.199999570846558" fill="#716658" stroke="#a59776" opacity="0.86"><title>upper-portraits · 0.95 × 0.70 m</title></rect>
+<rect x="295.70000021457673" y="228.20000021457673" width="34.19999957084656" height="25.199999570846558" fill="#716658" stroke="#a59776" opacity="0.86"><title>upper-observatory · 0.95 × 0.70 m</title></rect>
+<rect x="463.6399994850159" y="92.1199998497963" width="25.92000102996826" height="16.56000030040741" fill="#716658" stroke="#a59776" opacity="0.86"><title>gallery-chart · 0.72 × 0.46 m</title></rect>
+<circle cx="111.20000000000002" cy="111.20000000000002" r="5" fill="#e5d4a7"><title>Escritorio del rellano · guardar</title></circle>
+<circle cx="107.6" cy="230" r="5" fill="#e5d4a7"><title>Recoger el folio de los huéspedes</title></circle>
+<circle cx="312.8" cy="240.8" r="5" fill="#e5d4a7"><title>Recoger la carta de la raíz</title></circle>
+<circle cx="510.79999999999995" cy="111.20000000000002" r="6" fill="#65c4aa"><title>Referencia de desembarco superior</title></circle>
+<text x="627" y="80" fill="#e6d8b9" font-family="sans-serif" font-size="15">Galería, escalera y dos estancias</text>
+<text x="627" y="110" fill="#8fa59c" font-family="sans-serif" font-size="11">Ver datos.json para alturas y colisionadores.</text>
+</svg>

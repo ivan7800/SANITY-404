@@ -10,6 +10,7 @@ import { eligibleSanityEvents } from "../src/systems/sanity";
 import { createEnemy, enemyKindForRoom } from "../src/world/enemies";
 import { maeve } from "../src/world/maeve";
 import { World } from "../src/world/scene";
+import { reachableFromEntrance } from "./room-navigation";
 
 describe("archivo costero, año 537", () => {
   it("abre el portal tras Aurelia y deja accesibles las dos salas", () => {
@@ -44,7 +45,8 @@ describe("archivo costero, año 537", () => {
       (object) => object.id === "coast-portal",
     );
     expect(portal?.target).toBe(13);
-    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(false);
+    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(true);
+    expect(reachableFromEntrance(mansion.obstacles, portal!)).toBe(true);
     mansion.dispose();
     for (const room of [13, 14]) {
       const world = new World(
@@ -57,10 +59,12 @@ describe("archivo costero, año 537", () => {
         state.phase2,
         state.campaign,
       );
-      for (const object of world.objects)
-        expect(blocked(object.x, object.z, world.obstacles), object.id).toBe(
-          false,
+      for (const object of world.objects) {
+        expect(object.collider, object.id).toBeDefined();
+        expect(reachableFromEntrance(world.obstacles, object), object.id).toBe(
+          true,
         );
+      }
       expect(
         world.objects.find(
           (object) =>

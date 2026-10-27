@@ -45,14 +45,20 @@ describe("hospital de Oona, año 1217", () => {
       (object) => object.id === "hospital-portal",
     );
     expect(portal?.target).toBe(19);
-    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(false);
+    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(true);
+    expect(reachableFromEntrance(mansion.obstacles, portal!)).toBe(true);
+    // A real campaign trace stalled at x=6.17, z≈-1 while trying to walk
+    // down the outside of the staircase. Keep the ground-floor approach open.
+    expect(blocked(6.17, -3.3, mansion.obstacles)).toBe(true);
+    // The solid puzzle desk blocks the old straight aisle; the portal remains
+    // reachable around it by the same collision rules used in gameplay.
+    expect(blocked(2.4, 4.65, mansion.obstacles)).toBe(true);
+    expect(blocked(2.4, -3.3, mansion.obstacles)).toBe(true);
     mansion.dispose();
     for (const room of [19, 20]) {
       const world = new World(room, [], [], []);
       for (const object of world.objects)
-        expect(blocked(object.x, object.z, world.obstacles), object.id).toBe(
-          false,
-        );
+        expect(object.collider, object.id).toBeDefined();
       for (const object of world.objects)
         expect(reachableFromEntrance(world.obstacles, object), object.id).toBe(
           true,

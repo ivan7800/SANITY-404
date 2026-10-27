@@ -1,12 +1,66 @@
 import * as T from "three";
+import { batchRigid } from "../render/batch";
 import { pbr } from "../render/materials";
 import type { World } from "./scene";
+
+function vaultedRoomRoof(
+  world: World,
+  id: string,
+  edgeHeight: number,
+  rise: number,
+  color: number,
+  ribColor: number,
+) {
+  const shell = pbr("stone", color, { side: T.DoubleSide });
+  const rib = pbr("wood", ribColor);
+  const vertices: number[] = [];
+  const uv: number[] = [];
+  const indices: number[] = [];
+  const height = (x: number) =>
+    edgeHeight + rise * Math.sqrt(Math.max(0, 1 - (x / 7.45) ** 2));
+  for (let j = 0; j <= 16; j++)
+    for (let i = 0; i <= 24; i++) {
+      const x = -7.45 + (14.9 * i) / 24;
+      vertices.push(x, height(x), -7.45 + (14.9 * j) / 16);
+      uv.push(i / 3, j / 2);
+    }
+  for (let j = 0; j < 16; j++)
+    for (let i = 0; i < 24; i++) {
+      const a = j * 25 + i;
+      indices.push(a, a + 25, a + 1, a + 1, a + 25, a + 26);
+    }
+  const roof = new T.BufferGeometry();
+  roof.setAttribute("position", new T.Float32BufferAttribute(vertices, 3));
+  roof.setAttribute("uv", new T.Float32BufferAttribute(uv, 2));
+  roof.setIndex(indices);
+  roof.computeVertexNormals();
+  const mesh = new T.Mesh(roof, shell);
+  mesh.name = `${id}-vault`;
+  mesh.receiveShadow = true;
+  world.scene.add(mesh);
+  const ribs = new T.Group();
+  for (const z of [-6, -3, 0, 3, 6]) {
+    const points: T.Vector3[] = [];
+    for (let i = 0; i <= 16; i++) {
+      const x = -7.4 + (14.8 * i) / 16;
+      points.push(new T.Vector3(x, height(x) - 0.045, z));
+    }
+    ribs.add(
+      new T.Mesh(
+        new T.TubeGeometry(new T.CatmullRomCurve3(points), 20, 0.065, 5),
+        rib,
+      ),
+    );
+  }
+  world.scene.add(batchRigid(ribs));
+}
 
 /** Original architectural details. Broad center lanes remain clear for combat and camera. */
 export function decoratePhase2Room(world: World) {
   const b = world.box.bind(world);
   const room = world.room;
   if (room === 1) {
+    vaultedRoomRoof(world, "library", 4.58, 0.69, 0x615443, 0x8b7854);
     // Upper gallery, brass ladder and catalog drawers give the library a readable silhouette.
     for (const x of [-6.55, 6.55]) {
       b(x, 3.23, 0, 0.18, 0.16, 12.8, 0x76664e, false);
@@ -22,10 +76,32 @@ export function decoratePhase2Room(world: World) {
         b(x, 1.1, -5.9 + i * 0.34, 0.78, 0.075, 0.24, 0x534334, false);
     world.lamp(0, 3.4, 0, 0xe0b779, 10);
   }
+  if (room === 2) {
+    // The crypt has a continuous stone vault and a procession of recessed
+    // name niches. Both sit behind the existing wall and tomb colliders.
+    vaultedRoomRoof(world, "crypt", 4.45, 0.62, 0x68695f, 0x969484);
+    const bronze = pbr("brass", 0x645d49, { roughness: 0.9 });
+    for (const z of [-6, -3, 0, 3, 6]) {
+      for (const side of [-1, 1]) {
+        b(side * 7.5, 2.3, z, 0.21, 3.9, 0.3, 0x706d5e, false);
+        b(side * 7.39, 1.58, z + 0.82, 0.07, 2.35, 1.35, 0x303c39, false);
+        b(side * 7.32, 2.83, z + 0.82, 0.08, 0.1, 1.48, 0x8b8875, false);
+        for (let line = 0; line < 3; line++) {
+          const mark = new T.Mesh(
+            new T.BoxGeometry(0.012, 0.018, 0.65 - line * 0.1),
+            bronze,
+          );
+          mark.position.set(side * 7.275, 1.65 - line * 0.11, z + 0.82);
+          world.scene.add(mark);
+        }
+      }
+    }
+    world.lamp(0, 3.5, -3.8, 0xa4a091, 7);
+  }
   if (room === 3) {
     // Ribbed vault and freestanding observatory keep the center traversable.
     for (const x of [-6.2, 6.2])
-      for (const z of [-5, -1, 3]) {
+      for (const z of [-3.65, 3, 5.4]) {
         b(x, 2.5, z, 0.34, 4.9, 0.32, 0x646257);
         const rib = b(x * 0.5, 4.55, z, 6.2, 0.14, 0.16, 0x8b8471, false);
         rib.rotation.z = x < 0 ? -0.13 : 0.13;
@@ -49,10 +125,47 @@ export function decoratePhase2Room(world: World) {
     }
     world.lamp(0, 3.5, -3.8, 0xa8b7bd, 8);
   }
+  if (room === 4) {
+    // The ruined sanctuary still reads as one structure: a broken overhead
+    // oculus joins the ring of existing columns while leaving combat space clear.
+    const pale = pbr("stone", 0x858a78);
+    const scar = pbr("stone", 0x4a665d);
+    for (const [start, arc] of [
+      [0.1, 1.18],
+      [1.58, 1.06],
+      [3.03, 1.27],
+      [4.58, 1.35],
+    ]) {
+      const segment = new T.Mesh(
+        new T.TorusGeometry(4.55, 0.2, 7, 22, arc),
+        pale,
+      );
+      segment.rotation.x = Math.PI / 2;
+      segment.rotateOnWorldAxis(new T.Vector3(0, 1, 0), start);
+      segment.position.y = 4.03;
+      segment.name = "ruin-oculus";
+      world.scene.add(segment);
+    }
+    for (let i = 0; i < 8; i++) {
+      const angle = (i / 8) * Math.PI * 2 + Math.PI / 8;
+      const x = Math.cos(angle) * 5;
+      const z = Math.sin(angle) * 5;
+      b(x, 3.45, z, 1.02, 0.18, 1.02, 0x8b8b79, false);
+      const vein = new T.Mesh(
+        new T.CylinderGeometry(0.018, 0.018, 1.2, 5),
+        scar,
+      );
+      vein.rotation.z = angle * 0.38;
+      vein.position.set(x, 2.65, z);
+      world.scene.add(vein);
+    }
+    world.lamp(0, 3.9, -3, 0x72a797, 8);
+  }
   if (room === 5) {
+    vaultedRoomRoof(world, "archive", 4.41, 0.55, 0x55584f, 0x776247);
     world.scene.background = new T.Color("#111a21");
     for (const x of [-5.8, 5.8])
-      for (const z of [-4, -1.5, 1, 3.5]) {
+      for (const z of [-4, -2.5, 2, 3.5]) {
         b(x, 1.15, z, 1.25, 2.3, 1.1, 0x514435);
         for (let i = 0; i < 4; i++) {
           b(x, 0.42 + i * 0.47, z + 0.57, 0.9, 0.25, 0.05, 0x7b684c, false);
@@ -159,10 +272,11 @@ export function decoratePhase2Room(world: World) {
     world.lamp(0, 3.3, 0, 0x98c9bf, 8);
   }
   if (room === 7) {
+    vaultedRoomRoof(world, "basement", 4.28, 0.34, 0x444940, 0x5e5d4d);
     world.scene.background = new T.Color("#111514");
     world.scene.fog = new T.FogExp2("#171d1c", 0.038);
     for (const x of [-5.7, 5.7])
-      for (const z of [-4.5, -2, 0.5, 3]) {
+      for (const z of [-4.5, -2, 1.8, 3.8]) {
         b(x, 1.2, z, 0.9, 2.4, 1, 0x555449);
         b(x, 2.43, z, 1.15, 0.12, 1.1, 0x837b67, false);
       }

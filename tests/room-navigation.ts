@@ -1,6 +1,6 @@
 import { blocked, type Obstacle } from "../src/systems/state";
 
-/** Sample the same player radius used by movement to catch isolated interactions. */
+/** Reach a standing position in interaction range around solid props. */
 export function reachableFromEntrance(
   obstacles: Obstacle[],
   target: { x: number; z: number },
@@ -13,7 +13,7 @@ export function reachableFromEntrance(
   const seen = new Set([key(queue[0][0], queue[0][1])]);
   for (let head = 0; head < queue.length; head++) {
     const [x, z] = queue[head];
-    if (Math.hypot(x / scale - target.x, z / scale - target.z) < 0.38)
+    if (Math.hypot(x / scale - target.x, z / scale - target.z) < 1.65)
       return true;
     for (const [dx, dz] of [
       [1, 0],

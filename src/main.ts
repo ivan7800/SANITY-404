@@ -1,8 +1,10 @@
 import * as T from "three";
 import "./ui/style.css";
+import "./ui/remaster.css";
 import { applyQuality, qualityProfile } from "./render/quality";
 import { textureBudget, simplifyLowMaterials } from "./render/materials";
 import { FrameMetrics } from "./render/metrics";
+import { simulationDeltaSeconds } from "./engine/time";
 import { GpuTimer } from "./render/gpu-timer";
 import { CinematicCamera } from "./engine/camera";
 import {
@@ -31,7 +33,8 @@ import {
   solveLatePuzzle,
 } from "./systems/late-chapters";
 import { mansionFloorHeight } from "./world/mansion";
-import { mansionMove } from "./world/mansion-navigation";
+import { mansionMove, upperWalkable } from "./world/mansion-navigation";
+import { safeSpawn } from "./systems/collision";
 import { activeMansionEchoes, mansionEchoes } from "./world/mansion-echoes";
 import { createEnemy, enemyKindForRoom, type EnemyKind } from "./world/enemies";
 import {
@@ -49,7 +52,7 @@ import {
   subtitles,
   type Interactable,
 } from "./world/scene";
-import { fresh, clamp, move, type State } from "./systems/state";
+import { fresh, clamp, move, blocked, type State } from "./systems/state";
 import {
   advancePuzzle,
   phase2DoorLocked,
@@ -101,7 +104,13 @@ import { readSettings } from "./systems/config";
 import { weaponProfileForRoom } from "./systems/weapons";
 import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
+const qaMode =
+  import.meta.env.DEV && new URLSearchParams(location.search).get("qa") === "1";
 app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div><div class="help-compact">WASD · MOVER &nbsp; E · INTERACTUAR<br>ESPACIO · ATACAR &nbsp; J · FUERTE<br>V · ESQUIVAR &nbsp; F · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.insertAdjacentHTML(
+  "beforeend",
+  `<div id="touch-controls" aria-label="Controles táctiles" hidden><div class="touch-move" aria-label="Movimiento"><button data-touch-key="KeyW" aria-label="Avanzar">↑</button><div><button data-touch-key="KeyA" aria-label="Izquierda">←</button><button data-touch-key="KeyS" aria-label="Retroceder">↓</button><button data-touch-key="KeyD" aria-label="Derecha">→</button></div></div><div class="touch-actions"><button data-touch-key="KeyE">Interactuar</button><button data-touch-key="Space">Atacar</button><button data-touch-key="KeyF">Defender</button><button data-touch-key="KeyV">Esquivar</button><button data-touch-key="KeyH">Tónico</button><button data-touch-key="Tab">Diario</button><button data-touch-key="Escape">Pausa</button></div></div>`,
+);
 const el = (id: string) => document.getElementById(id)!;
 const hud = {
   health: el("health"),
@@ -184,6 +193,7 @@ function toast(text: string) {
   toastTime = 5;
 }
 function autoSave() {
+  if (qaMode) return;
   if (!writeSave(state))
     queueMicrotask(() =>
       toast(
@@ -191,12 +201,22 @@ function autoSave() {
       ),
     );
 }
-function panel(html: string) {
+function panel(html: string, kind = "story") {
   paused = true;
   audio.pause();
   input.clear();
   el("overlay").hidden = false;
+  el("touch-controls").hidden = true;
+  el("panel").className = `panel panel--${kind}`;
   el("panel").innerHTML = html;
+  if (
+    el("panel").querySelector('[id*="answer"], [id^="sign-"], [id^="choose-"]')
+  )
+    el("panel").classList.add("panel--puzzle");
+  el("overlay").setAttribute(
+    "aria-label",
+    el("panel").querySelector("h1,h2")?.textContent || "Menú del juego",
+  );
   el("panel").querySelector<HTMLButtonElement>("button")?.focus();
 }
 function button(id: string, fn: () => void) {
@@ -230,6 +250,7 @@ function showEnding(route: "ruins" | "basement", full: boolean) {
         : "El Intervalo se cierra, pero la fotografía de la estación ya no tiene rostros. Élise eligió salir antes de conocer a quienes habían protegido sus nombres.";
   panel(
     `<div class="eyebrow">${full ? "FINAL HISTÓRICO · DOCE ÉPOCAS" : "FINAL ANTICIPADO · 1927"}</div><h2>${title}</h2><p>${text}</p><p>Investigaciones históricas: ${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11 · Tiempo: ${Math.floor(state.elapsed / 60)} min · Cordura: ${Math.round(state.sanity)} · Documentos: ${state.read.length}/${notes.length}</p><button id="finish">Volver al título</button>`,
+    "ending",
   );
   button("finish", () => {
     started = false;
@@ -262,6 +283,7 @@ renderer.domElement.tabIndex = 0;
 function resume() {
   paused = false;
   el("overlay").hidden = true;
+  el("touch-controls").hidden = false;
   input.clear();
   audio.resume();
   renderer.domElement.focus();
@@ -301,6 +323,21 @@ function loadRoom() {
     state.phase2,
     state.campaign,
   );
+  const spawn = safeSpawn(
+    { x: state.x, z: state.z },
+    state.room === 0 && state.floor === 1
+      ? world.upperObstacles
+      : world.obstacles,
+    state.room === 0 && state.floor === 1
+      ? (x, z) => upperWalkable(x, z)
+      : undefined,
+  );
+  if (!spawn)
+    throw new Error(
+      `No hay posición de entrada libre en sala ${state.room}: ${state.x},${state.z}`,
+    );
+  state.x = spawn.x;
+  state.z = spawn.z;
   player = late
     ? lateHero(late)
     : state.room === 8
@@ -483,7 +520,8 @@ function begin(s: State) {
 
 function menu() {
   panel(
-    `<div class="ornament">ARCHIVO DE LAS AUSENCIAS · 1927</div><h1>SANITY—404</h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p>Una carta de tu hermano desaparecido. Una casa que no existe.<br>Veintinueve lugares donde la memoria empieza a pudrirse.</p><div class="actions"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button></div><p class="small">Campaña histórica · acceso a otras épocas desde el vestíbulo<br>Teclado y ratón / mando estándar · recursos originales y audio sintetizado</p>`,
+    `<div class="menu-kicker">${started ? "PAUSA · PARTIDA EN CURSO" : "UN ARCHIVO IMPOSIBLE"} <span>FRANCIA · 1927</span></div><div class="ornament">EXPEDIENTE 404 / MANSIÓN VEYR</div><h1>SANITY<span>—404</span></h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p class="menu-intro">Una carta de tu hermano desaparecido.<br>Una casa que conserva lo que el mundo olvidó.</p><nav class="actions menu-actions" aria-label="Menú principal"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button><button id="load-menu" ${readSave() ? "" : "disabled"}>Cargar partida</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button><button id="credits">Créditos</button></nav><p class="small menu-footer">DOCE ÉPOCAS · UNA MEMORIA<br>TECLADO, RATÓN Y MANDO · AUDIO ORIGINAL</p>`,
+    "menu",
   );
   button("new", () => {
     if (started) {
@@ -499,12 +537,35 @@ function menu() {
     if (s) begin(s);
     else toast("No hay una partida válida.");
   });
+  button("load-menu", loadMenu);
   button("settings", options);
+  button("credits", credits);
   if (started) button("resume", resume);
+}
+function loadMenu() {
+  const saved = readSave();
+  panel(
+    `<div class="eyebrow">ARCHIVO DE PARTIDA</div><h2>Cargar partida</h2>${saved ? `<div class="save-slot"><div class="eyebrow">ÚLTIMA MEMORIA GUARDADA</div><strong>${names[saved.room]}</strong><span>${saved.campaign.completed.length}/12 capítulos · ${Math.floor(saved.elapsed / 60)} min · Salud ${Math.ceil(saved.health)}</span></div>` : "<p>No hay una partida guardada válida.</p>"}<div class="actions"><button id="load-confirm" ${saved ? "" : "disabled"}>Cargar memoria</button><button id="back">Volver al título</button></div>`,
+    "save",
+  );
+  button("load-confirm", () => {
+    const current = readSave();
+    if (current) begin(current);
+    else loadMenu();
+  });
+  button("back", menu);
+}
+function credits() {
+  panel(
+    `<div class="eyebrow">SANITY—404 · CRÉDITOS</div><h2>Los nombres que permanecen</h2><p>Una historia interactiva original sobre memoria, pérdida y los lugares que nos recuerdan.</p><div class="credits-lines"><p>DISEÑO, CÓDIGO Y MUNDO<br><strong>Proyecto SANITY—404</strong></p><p>MÚSICA Y SONIDO<br><strong>Síntesis original en tiempo real</strong></p><p>TECNOLOGÍA<br><strong>Three.js · WebGL · TypeScript</strong></p></div><button id="back">Volver al título</button>`,
+    "credits",
+  );
+  button("back", menu);
 }
 function options() {
   panel(
-    `<div class="eyebrow">AJUSTES DE LA EXPERIENCIA</div><h2>Un horror a tu medida</h2><label><input type="checkbox" id="reduced" ${settings.reduced ? "checked" : ""}> Reducir efectos psicológicos y movimiento de cámara</label><label><input type="checkbox" id="reduce-flashes" ${settings.reduceFlashes ? "checked" : ""}> Reducir variaciones de luz</label><label><input type="checkbox" id="reduce-distortion" ${settings.reduceDistortion ? "checked" : ""}> Reducir distorsiones visuales</label><label><input type="checkbox" id="reduce-audio" ${settings.reduceAudio ? "checked" : ""}> Reducir sonidos intensos y susurros</label><p class="small">Los eventos nunca bloquean el progreso ni imitan avisos del sistema. No se utilizan destellos rápidos.</p><label>Volumen <input id="volume" type="range" min="0" max="1" step=".05" value="${settings.volume}"></label><label>Calidad gráfica <select id="quality"><option value="1">Baja</option><option value="1.3">Media</option><option value="1.6">Alta</option></select></label><label>Cámara <select id="camera-mode"><option value="classic">Clásica · encuadres por zona</option><option value="modern">Moderna · seguimiento cercano</option></select></label><p class="small">Movimiento con ejes estables. Mando: stick izquierdo mover · LB defender · RB fuerte · R3 esquivar · A interactuar · B atacar · X tónico · Y inventario · Select mapa · Start pausa.<br>Teclado: J fuerte · V esquivar · Shift correr. Ratón: izquierdo atacar · derecho fuerte.</p><div class="actions"><button id="back">Aplicar y volver</button></div>`,
+    `<div class="eyebrow">AJUSTES DE LA EXPERIENCIA</div><h2>Un horror a tu medida</h2><div class="settings-grid"><section class="settings-group"><div class="eyebrow">ACCESIBILIDAD Y ATMÓSFERA</div><label><input type="checkbox" id="reduced" ${settings.reduced ? "checked" : ""}> Reducir efectos psicológicos y movimiento de cámara</label><label><input type="checkbox" id="reduce-flashes" ${settings.reduceFlashes ? "checked" : ""}> Reducir variaciones de luz</label><label><input type="checkbox" id="reduce-distortion" ${settings.reduceDistortion ? "checked" : ""}> Reducir distorsiones visuales</label><label><input type="checkbox" id="reduce-audio" ${settings.reduceAudio ? "checked" : ""}> Reducir sonidos intensos y susurros</label><p class="small">Los eventos no bloquean el progreso ni imitan avisos del sistema. No hay destellos rápidos.</p></section><section class="settings-group"><div class="eyebrow">IMAGEN Y SONIDO</div><label>Volumen <input id="volume" type="range" min="0" max="1" step=".05" value="${settings.volume}"></label><label>Calidad gráfica <select id="quality"><option value="1">Baja</option><option value="1.3">Media</option><option value="1.6">Alta</option></select></label><label>Cámara <select id="camera-mode"><option value="classic">Clásica · encuadres por zona</option><option value="modern">Moderna · seguimiento cercano</option></select></label></section></div><details class="controls-help"><summary>Controles de teclado, ratón y mando</summary><p>Movimiento: WASD o stick izquierdo · Interactuar: E / A · Ataque: Espacio / B · Fuerte: J / RB · Defender: F / LB · Esquivar: V / R3 · Tónico: H / X · Inventario: Tab / Y · Mapa: M / Select · Pausa: Esc / Start · Correr: Shift · Ratón: izquierdo atacar, derecho fuerte.</p></details><div class="actions"><button id="back">Aplicar y volver</button></div>`,
+    "settings",
   );
   (el("camera-mode") as HTMLSelectElement).value = settings.cameraMode;
   (el("quality") as HTMLSelectElement).value = String(settings.quality);
@@ -545,33 +606,42 @@ function options() {
 }
 function inventory() {
   const inventoryLate = lateChapterForRoom(state.room);
+  const objective = inventoryLate
+    ? lateObjective(state)
+    : state.room === 8
+      ? romanObjective(state)
+      : state.room === 11 || state.room === 12
+        ? mosaicObjective(state)
+        : state.room === 13 || state.room === 14
+          ? coastObjective(state)
+          : state.room === 15 || state.room === 16
+            ? starsObjective(state)
+            : state.room === 17 || state.room === 18
+              ? quarryObjective(state)
+              : state.room === 19 || state.room === 20
+                ? hospitalObjective(state)
+                : state.room === 9 || state.room === 10
+                  ? abbeyObjective(state)
+                  : "El santuario romano inicia la cadena de pruebas; el recuerdo de Isabelle puede explorarse antes.";
+  const items = state.items.filter((item) => !item.startsWith("Tónico"));
+  const tonics = state.items.length - items.length;
+  const witnesses = romanEchoes.filter((echo) =>
+    state.campaign.witnessed.includes(echo.id),
+  );
+  const evidence = lateChapters.flatMap((chapter) =>
+    chapter.evidence
+      .filter((_, index) =>
+        state.campaign.witnessed.includes(`${chapter.id}-evidence-${index}`),
+      )
+      .map((clue) => `${chapter.year} · ${clue.name}: ${clue.text}`),
+  );
   panel(
-    `<div class="eyebrow">PERTENENCIAS Y RECUERDOS</div><h2>Inventario</h2><p>Arma: ${weaponProfileForRoom(state.room).name} · ${weaponProfileForRoom(state.room).technique} · golpes sin munición</p><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}</p><p>${state.items.filter((i) => !i.startsWith("Tónico")).join(" · ") || "Todavía no has recogido objetos."}</p><p>Tónicos: ${state.items.filter((i) => i.startsWith("Tónico")).length} · Sellos: ${state.seals.length}/3 · Mecanismos: ${state.phase2.solved.length}/4</p><div class="actions"><button id="heal">Beber tónico</button><button id="close">Volver</button></div><h2>Campaña histórica</h2><p>Once investigaciones; ${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11 concluidas en esta partida. ${inventoryLate ? lateObjective(state) : state.room === 8 ? romanObjective(state) : state.room === 11 || state.room === 12 ? mosaicObjective(state) : state.room === 13 || state.room === 14 ? coastObjective(state) : state.room === 15 || state.room === 16 ? starsObjective(state) : state.room === 17 || state.room === 18 ? quarryObjective(state) : state.room === 19 || state.room === 20 ? hospitalObjective(state) : state.room === 9 || state.room === 10 ? abbeyObjective(state) : "El santuario romano inicia la cadena de pruebas; el recuerdo de Isabelle puede explorarse antes."}</p><p>Testimonios romanos: ${romanEchoes.filter((echo) => state.campaign.witnessed.includes(echo.id)).length}/3. Los tres completan una memoria opcional.</p><p>${
-      romanEchoes
-        .filter((echo) => state.campaign.witnessed.includes(echo.id))
-        .map((echo) => `${echo.title}: ${echo.text}`)
-        .join("<br>") || "Aún no has leído ninguna estela romana."
-    }</p><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
+    `<div class="eyebrow">ARCHIVO PERSONAL · ${names[state.room]}</div><h2>Inventario y diario</h2><div class="inventory-summary"><div><span>ARMA</span><strong>${weaponProfileForRoom(state.room).name}</strong><small>${weaponProfileForRoom(state.room).technique} · sin munición</small></div><div><span>RECURSOS</span><strong>${tonics} tónicos</strong><small>${state.seals.length}/3 sellos · ${state.phase2.solved.length}/4 mecanismos</small></div><div><span>INVESTIGACIONES</span><strong>${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11</strong><small>épocas concluidas</small></div></div><div class="eyebrow section-label">OBJETOS CONSERVADOS</div><div class="item-grid">${items.length ? items.map((item, index) => `<div class="item-card"><span>${String(index + 1).padStart(2, "0")}</span><strong>${item}</strong></div>`).join("") : "<p>La colección está vacía. Examina la mansión para encontrar pistas.</p>"}</div><div class="actions"><button id="heal" ${tonics ? "" : "disabled"}>Beber tónico</button><button id="close">Volver</button></div><div class="eyebrow section-label">DIARIO DE INVESTIGACIÓN</div><p class="journal-lead">${objective}</p><details><summary>Memoria y decisión</summary><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}.</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}.</p></details><details><summary>Testimonios romanos · ${witnesses.length}/3</summary><p>${witnesses.map((echo) => `${echo.title}: ${echo.text}`).join("<br>") || "Aún no has leído ninguna estela romana."}</p></details><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
       activeMansionEchoes(state.items)
         .map((echo) => `${echo.year} · ${echo.title}: ${echo.text}`)
         .join("<br>") ||
       "Las pruebas históricas todavía no han cambiado la casa."
-    }</p></details><details><summary>Pruebas históricas · ${lateChapters.reduce((count, chapter) => count + lateEvidenceCount(state, chapter), 0)}/8</summary><p>${
-      lateChapters
-        .flatMap((chapter) =>
-          chapter.evidence
-            .filter((_, index) =>
-              state.campaign.witnessed.includes(
-                `${chapter.id}-evidence-${index}`,
-              ),
-            )
-            .map(
-              (evidence) =>
-                `${chapter.year} · ${evidence.name}: ${evidence.text}`,
-            ),
-        )
-        .join("<br>") || "Todavía no has examinado pruebas de estas salas."
-    }</p></details><details><summary>Capítulos concluidos · ${state.campaign.completed.length}/12</summary><p>${
+    }</p></details><details><summary>Pruebas históricas · ${lateChapters.reduce((count, chapter) => count + lateEvidenceCount(state, chapter), 0)}/8</summary><p>${evidence.join("<br>") || "Todavía no has examinado pruebas de estas salas."}</p></details><details><summary>Capítulos concluidos · ${state.campaign.completed.length}/12</summary><p>${
       chapters
         .filter((chapter) => state.campaign.completed.includes(chapter.id))
         .map(
@@ -579,6 +649,7 @@ function inventory() {
         )
         .join("<br>") || "Aún no has concluido un capítulo."
     }</p></details><details><summary>Documentos · ${state.read.length}/${notes.length}</summary>${state.read.map((i) => `<p><strong>${notes[Number(i)][0]}</strong><br>${notes[Number(i)][1]}</p>`).join("")}${state.phase2.discoveries.map((id) => `<p><strong>${discoveries[id][0]}</strong><br>${discoveries[id][1]}</p>`).join("")}</details>`,
+    "inventory",
   );
   button("close", resume);
   button("heal", () => {
@@ -1255,9 +1326,11 @@ function interact(o: Interactable) {
   }
   if (o.kind === "save") {
     toast(
-      writeSave(state)
-        ? "Memoria conservada. Partida guardada."
-        : "El navegador no permite guardar. Libera almacenamiento o sal del modo privado.",
+      qaMode
+        ? "Modo QA: la partida de diagnóstico no se guarda."
+        : writeSave(state)
+          ? "Memoria conservada. Partida guardada."
+          : "El navegador no permite guardar. Libera almacenamiento o sal del modo privado.",
     );
   }
   if (o.kind === "phase2Puzzle") phase2Puzzle(o.id as PuzzleId);
@@ -1640,6 +1713,7 @@ function interact(o: Interactable) {
     if (arrival && firstArrival && arrival.id !== "mansion-1927") {
       panel(
         `<div class="eyebrow">${arrival.year} · ${arrival.place}</div><h2>${arrival.hero}</h2><p>${chapterIntroductions[arrival.id]}</p><p>Primer objetivo: ${el("objective").textContent}</p><button id="close">Comenzar investigación</button>`,
+        "chapter",
       );
       button("close", resume);
     }
@@ -1779,6 +1853,7 @@ function update(dt: number) {
     if (deathTime >= 0.85) {
       panel(
         '<div class="eyebrow">LA CASA CONSERVA OTRO RECUERDO</div><h2>Tu voz se ha apagado.</h2><p>Puedes recuperar la última memoria guardada o volver a empezar.</p><div class="actions"><button id="retry">Reintentar</button><button id="title">Título</button></div>',
+        "death",
       );
       button("retry", () => begin(readSave() ?? fresh()));
       button("title", menu);
@@ -1999,6 +2074,11 @@ function update(dt: number) {
   state.elapsed += dt;
   setHudStyle(hud.health, "width", state.health + "%");
   setHudStyle(hud.sanity, "width", state.sanity + "%");
+  el("hud").classList.toggle("critical", state.health <= 30);
+  el("hud").classList.toggle(
+    "unstable",
+    state.sanity <= 35 && !settings.reduceDistortion,
+  );
   setHudText(hud.hptext, String(Math.ceil(state.health)));
   setHudText(hud.sptext, String(Math.ceil(state.sanity)));
   setHudStyle(hud.stamina, "width", combat.stamina + "%");
@@ -2030,7 +2110,7 @@ let aiCostFrame = 0;
 function frame(now: number) {
   requestAnimationFrame(frame);
   const interval = now - last;
-  const dt = Math.min(interval / 1000, 0.2);
+  const dt = simulationDeltaSeconds(interval);
   last = now;
   aiCostFrame = 0;
   const updateStart = performance.now();
@@ -2182,6 +2262,7 @@ function sceneProfile() {
 export function inspect() {
   return {
     state: structuredClone(state),
+    interaction: near ? { id: near.id, name: near.name } : null,
     paused,
     camera: camera.position.toArray(),
     target: player.position.toArray(),
@@ -2283,6 +2364,10 @@ if (import.meta.env.DEV) {
         }),
       ),
       obstacles: world.obstacles.length,
+      navigationObstacles: (state.room === 0 && state.floor === 1
+        ? world.upperObstacles
+        : world.obstacles
+      ).map(({ id, x, z, w, d, y, height }) => ({ id, x, z, w, d, y, height })),
       upperObstacles: world.upperObstacles.length,
       lights: world.lights.length,
     }),
@@ -2300,4 +2385,127 @@ if (import.meta.env.DEV) {
     value: sceneProfile,
     configurable: true,
   });
+  if (qaMode) {
+    let markers: T.Group | undefined;
+    const clearMarkers = () => {
+      if (!markers) return;
+      markers.parent?.remove(markers);
+      markers.traverse((object) => {
+        if (!(object instanceof T.LineSegments || object instanceof T.Line))
+          return;
+        object.geometry.dispose();
+        (object.material as T.Material).dispose();
+      });
+      markers = undefined;
+    };
+    const markerGroup = () => {
+      clearMarkers();
+      markers = new T.Group();
+      world.scene.add(markers);
+      return markers;
+    };
+    Object.defineProperty(window, "sanityQa", {
+      value: {
+        openRoom(room: number, floor: 0 | 1 = 0) {
+          if (!Number.isInteger(room) || room < 0 || room >= names.length)
+            throw new RangeError(`Sala inválida: ${room}`);
+          if (floor === 1 && room !== 0)
+            throw new RangeError("Solo la mansión tiene galería superior.");
+          clearMarkers();
+          const diagnostic = fresh();
+          diagnostic.room = room;
+          diagnostic.floor = floor;
+          diagnostic.x = floor ? 5.3 : 0;
+          diagnostic.z = floor ? -5.8 : 5.2;
+          begin(diagnostic);
+          return inspect();
+        },
+        position(x: number, z: number) {
+          const obstacles =
+            state.room === 0 && state.floor === 1
+              ? world.upperObstacles
+              : world.obstacles;
+          if (
+            !Number.isFinite(x) ||
+            !Number.isFinite(z) ||
+            blocked(x, z, obstacles) ||
+            (state.room === 0 && state.floor === 1 && !upperWalkable(x, z))
+          )
+            throw new RangeError(`Punto de diagnóstico bloqueado: ${x},${z}`);
+          state.x = x;
+          state.z = z;
+          player.position.set(
+            x,
+            state.room === 0 ? mansionFloorHeight(x, z, state.floor) : 0,
+            z,
+          );
+          return inspect();
+        },
+        inspect,
+        objects: () =>
+          world.objects.map(({ id, kind, x, z, level }) => ({
+            id,
+            kind,
+            x,
+            z,
+            level,
+          })),
+        obstacles: () =>
+          structuredClone(
+            state.room === 0 && state.floor === 1
+              ? world.upperObstacles
+              : world.obstacles,
+          ),
+        showColliders() {
+          const group = markerGroup();
+          const obstacles =
+            state.room === 0 && state.floor === 1
+              ? world.upperObstacles
+              : world.obstacles;
+          for (const obstacle of obstacles) {
+            const bottom = obstacle.y ?? (state.floor ? 2.64 : 0);
+            const box = new T.Box3(
+              new T.Vector3(
+                obstacle.x - obstacle.w / 2,
+                bottom,
+                obstacle.z - obstacle.d / 2,
+              ),
+              new T.Vector3(
+                obstacle.x + obstacle.w / 2,
+                bottom + (obstacle.height ?? 2),
+                obstacle.z + obstacle.d / 2,
+              ),
+            );
+            group.add(new T.Box3Helper(box, obstacle.id ? 0xffaa55 : 0x66ccbb));
+          }
+          return obstacles.length;
+        },
+        showRoute(points: Array<{ x: number; z: number }>) {
+          if (
+            !Array.isArray(points) ||
+            !points.every(
+              (point) => Number.isFinite(point.x) && Number.isFinite(point.z),
+            )
+          )
+            throw new TypeError("La ruta debe contener posiciones finitas.");
+          const group = markerGroup();
+          const height = state.floor ? 2.75 : 0.12;
+          group.add(
+            new T.Line(
+              new T.BufferGeometry().setFromPoints([
+                new T.Vector3(state.x, height, state.z),
+                ...points.map(
+                  (point) => new T.Vector3(point.x, height, point.z),
+                ),
+              ]),
+              new T.LineBasicMaterial({ color: 0xe5ba77, depthTest: false }),
+            ),
+          );
+          return points.length;
+        },
+        clear: clearMarkers,
+      },
+      configurable: true,
+    });
+  }
 }

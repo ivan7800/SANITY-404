@@ -77,7 +77,7 @@ export function decorateRomanSanctuary(world: World) {
   for (const [x, z] of [
     [-4.15, 3.45],
     [4.15, 3.45],
-    [0, 1.35],
+    [2, 1.35],
   ] as const) {
     b(x, 0.016, z, 1.15, 0.025, 1.15, 0x55473a, false, "stone");
     for (const offset of [-0.48, 0.48]) {

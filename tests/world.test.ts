@@ -1,25 +1,23 @@
 import { it, expect } from "vitest";
 import { World, names } from "../src/world/scene";
 import { blocked, fresh } from "../src/systems/state";
+import { safeSpawn } from "../src/systems/collision";
+import { reachableFromEntrance } from "./room-navigation";
 import { drinkTonic } from "../src/systems/inventory";
 import * as T from "three";
 import { vi } from "vitest";
 it("los escenarios tienen puntos de llegada y caminos transitables", () => {
   for (let room = 0; room < names.length; room++) {
     const w = new World(room, [], [], []);
-    expect(blocked(0, 5.8, w.obstacles)).toBe(false);
-    if (room >= 8) {
-      // The Roman altar intentionally blocks the far end of the nave.
-      // The approach to the interactive inscription remains traversable.
-      for (let z = -3; z <= 6; z += 0.5)
-        expect(blocked(0, z, w.obstacles)).toBe(false);
-      if (room === 8) expect(blocked(-2.9, -4.25, w.obstacles)).toBe(false);
-      if (room === 10) expect(blocked(-2.9, -4.7, w.obstacles)).toBe(false);
-    } else {
-      expect(blocked(0, -5.8, w.obstacles)).toBe(false);
-      for (let z = -6; z <= 6; z += 0.5)
-        expect(blocked(0, z, w.obstacles)).toBe(false);
-    }
+    const arrival = safeSpawn({ x: 0, z: 5.2 }, w.obstacles);
+    expect(arrival, `sala ${room}`).toBeDefined();
+    expect(blocked(arrival!.x, arrival!.z, w.obstacles), `sala ${room}`).toBe(
+      false,
+    );
+    expect(
+      reachableFromEntrance(w.obstacles, { x: 0, z: -5.8 }, arrival),
+      `sala ${room}`,
+    ).toBe(true);
     if (room === 0) {
       expect(blocked(5.8, -6, w.obstacles)).toBe(false);
       expect(blocked(-5.8, -6, w.obstacles)).toBe(false);

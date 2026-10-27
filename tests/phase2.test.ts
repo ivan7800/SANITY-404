@@ -47,6 +47,49 @@ it("los cuatro mecanismos conservan pasos, no se bloquean por errores y abren ru
     expect(phase2DoorLocked(id, progress)).toBeNull();
 });
 
+it("tras enemy5, altar y tónico, el invernadero exige resolver genealogy", () => {
+  const state = fresh();
+  state.room = 5;
+  state.defeated.push("enemy5");
+  state.items.push("Memoria reconciliada", "Juramento de Lucius", "Tónico 5");
+  state.collected.push("Tónico 5");
+  const world = new World(
+    5,
+    state.items,
+    [],
+    state.read,
+    state.collected,
+    1,
+    state.phase2,
+    state.campaign,
+  );
+  try {
+    expect(
+      world.objects.find((object) => object.id === "greenhouse-door"),
+    ).toMatchObject({
+      x: 6.7,
+      z: 0,
+      target: 6,
+    });
+    expect(world.objects.some((object) => object.id === "genealogy")).toBe(
+      true,
+    );
+    expect(phase2DoorLocked("greenhouse-door", state.phase2)).toContain(
+      "árbol de Veyr",
+    );
+    state.read.push("5");
+    for (const choice of [0, 1, 2])
+      advancePuzzle(state.phase2, "genealogy", choice);
+    expect(state.phase2.solved).toContain("genealogy");
+    expect(phase2DoorLocked("greenhouse-door", state.phase2)).toBeNull();
+    const restored = parseSave(JSON.stringify(state));
+    expect(restored?.phase2.solved).toContain("genealogy");
+    expect(phase2DoorLocked("greenhouse-door", restored!.phase2)).toBeNull();
+  } finally {
+    world.dispose();
+  }
+});
+
 it("cada área tiene arquitectura transitable, documento y puerta conectada", () => {
   for (const room of [1, 5, 6, 3, 7]) {
     const world = new World(room, [], [], [], [], 1);

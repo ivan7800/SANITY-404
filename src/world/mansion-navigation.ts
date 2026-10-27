@@ -1,4 +1,6 @@
-import { blocked, move, type Obstacle } from "../systems/state";
+import { blocked, type Obstacle } from "../systems/state";
+import { moveWithin } from "../systems/collision";
+import { onMansionLanding } from "./mansion-topology";
 
 export type MansionLevel = 0 | 1;
 /** The balcony and two chambers occupy the same map coordinates as the ground floor. */
@@ -31,16 +33,24 @@ export function mansionMove(
   upper: Obstacle[],
 ) {
   if (level === 0) {
-    const next = move(x, z, dx, dz, ground);
-    const onTop = next.x > 3.72 && next.x < 6.28 && next.z <= -5.11;
+    const entersFromStair = x > 3.72 && x < 6.28 && z > -5.11;
+    const next = moveWithin(x, z, dx, dz, (px, pz) => {
+      if (blocked(px, pz, ground)) return false;
+      if (!onMansionLanding(px, pz)) return true;
+      // Validate the destination floor before changing levels. Otherwise a
+      // side approach can place the actor inside an upper-floor exhibit.
+      return (
+        entersFromStair && upperWalkable(px, pz) && !blocked(px, pz, upper)
+      );
+    });
+    const onTop = onMansionLanding(next.x, next.z);
     return { ...next, level: (onTop ? 1 : 0) as MansionLevel };
   }
   const walkable = (px: number, pz: number) =>
     (upperWalkable(px, pz) ||
       (px > 3.72 && px < 6.28 && pz > -5.6 && pz < -4.9)) &&
     !blocked(px, pz, upper);
-  const nx = walkable(x + dx, z) ? x + dx : x;
-  const nz = walkable(nx, z + dz) ? z + dz : z;
+  const { x: nx, z: nz } = moveWithin(x, z, dx, dz, walkable);
   const descending = nx > 3.72 && nx < 6.28 && nz > -5.11;
   return { x: nx, z: nz, level: (descending ? 0 : 1) as MansionLevel };
 }
