@@ -5,6 +5,7 @@ import { mansionMove, upperWalkable } from "../src/world/mansion-navigation";
 import { World } from "../src/world/scene";
 import * as T from "three";
 import { CinematicCamera } from "../src/engine/camera";
+import { hallArmchair } from "../src/world/furnishings";
 import { moreauHallArchitecture } from "../src/world/mansion-architecture";
 import {
   MANSION_CHART_FRAME,
@@ -164,5 +165,20 @@ it("mantiene la cámara del pasillo superior detrás de las puertas", () => {
   expect(Math.abs(actor.x)).toBeLessThan(0.8);
   expect(Math.abs(actor.y)).toBeLessThan(0.8);
   expect(camera.fov).toBe(63);
+  world.dispose();
+});
+
+it("encuadra el pie de la escalera sin mirar a través del sillón", () => {
+  const world = new World(0, [], [], []);
+  const camera = new T.PerspectiveCamera(58, 16 / 9);
+  const director = new CinematicCamera();
+  director.update(camera, 5, -1.3, 0, 0, false, world.obstacles, {
+    height: 0,
+  });
+  expect(director.zone).toBe("pie de escalera Veyr");
+  expect(camera.position.x).toBeGreaterThan(
+    hallArmchair.x + hallArmchair.w / 2 + 0.1,
+  );
+  expect(director.corrected).toBe(false);
   world.dispose();
 });

@@ -906,6 +906,23 @@ export class Combat {
                                     ? 1.35
                                     : 0.9),
             );
+          // The widow's visible skirt and Élise's body need about one metre
+          // between their centres. Her attack reach and damage are unchanged.
+          const bodySpace =
+            this.kind === "widow" &&
+            Math.abs(enemy.position.y - player.position.y) < 0.8
+              ? 1.05
+              : 0;
+          const playerDistance = Math.hypot(
+            enemy.position.x - player.position.x,
+            enemy.position.z - player.position.z,
+          );
+          if (bodySpace && this.aiState !== "retreat")
+            vector.clampLength(0, Math.max(0, playerDistance - bodySpace));
+          const preservesBodySpace = (x: number, z: number) =>
+            !bodySpace ||
+            Math.hypot(x - player.position.x, z - player.position.z) >=
+              Math.min(bodySpace, playerDistance);
           const next = move(
             enemy.position.x,
             enemy.position.z,
@@ -928,9 +945,13 @@ export class Combat {
               vector.x,
               obstacles,
             );
-            if (!upperThreat || upperWalkable(side.x, side.z))
+            if (
+              (!upperThreat || upperWalkable(side.x, side.z)) &&
+              preservesBodySpace(side.x, side.z)
+            )
               enemy.position.set(side.x, enemy.position.y, side.z);
-          } else enemy.position.set(next.x, enemy.position.y, next.z);
+          } else if (preservesBodySpace(next.x, next.z))
+            enemy.position.set(next.x, enemy.position.y, next.z);
           if (this.kind === "widow")
             enemy.position.y = mansionFloorHeight(
               enemy.position.x,

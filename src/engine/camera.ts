@@ -55,6 +55,11 @@ export class CinematicCamera {
       } else if (x > 4.8 && z > 1.6 && z < 4.6) {
         this.zone = "umbral romano";
         eye = new T.Vector3(3.55, 2.65, 5.75);
+      } else if (x > 4.2 && z <= -0.9 && z >= -1.55) {
+        // The mosaic-bay eye looks through the armchair at the stair foot.
+        // Keep the first step in the same camera sequence as the upper flight.
+        this.zone = "pie de escalera Veyr";
+        eye = new T.Vector3(5.8, 2.35, 1.1);
       } else if (x > 4.8 && z < 0.5 && z > -1.4) {
         this.zone = "umbral del mosaico";
         eye = new T.Vector3(3.7, 2.55, 2.2);
