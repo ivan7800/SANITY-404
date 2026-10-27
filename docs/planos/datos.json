@@ -1,0 +1,9437 @@
+[
+  {
+    "room": 0,
+    "name": "Mansión Veyr",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": {
+      "x": 5.3,
+      "z": -5.8
+    },
+    "representativeCamera": {
+      "x": -0.55,
+      "z": 7.15
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -6.8,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 4.4,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 1.2,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 3.51,
+        "z": -3.24,
+        "w": 0.16,
+        "d": 3.8,
+        "height": 3.8
+      },
+      {
+        "x": 6.49,
+        "z": -3.96,
+        "w": 0.16,
+        "d": 5.25,
+        "height": 3.8
+      },
+      {
+        "x": 5,
+        "z": -6.66,
+        "w": 2.95,
+        "d": 0.16,
+        "height": 3.7
+      },
+      {
+        "id": "south-memory-pier-0",
+        "x": 1.2,
+        "z": 7.16,
+        "w": 0.22,
+        "d": 0.94,
+        "height": 3.1
+      },
+      {
+        "id": "south-memory-pier-1",
+        "x": 3.8,
+        "z": 7.16,
+        "w": 0.22,
+        "d": 0.94,
+        "height": 3.1
+      },
+      {
+        "id": "south-memory-pier-2",
+        "x": 6.15,
+        "z": 7.16,
+        "w": 0.22,
+        "d": 0.94,
+        "height": 3.1
+      },
+      {
+        "id": "hall-writing-desk",
+        "x": -3,
+        "z": -1.6,
+        "w": 3,
+        "d": 1.6,
+        "height": 1.5
+      },
+      {
+        "id": "hall-armchair",
+        "x": 4.45,
+        "z": 0.95,
+        "w": 1.5,
+        "d": 1.65,
+        "height": 1.5
+      },
+      {
+        "id": "save0",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note0",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "key",
+        "x": -3.8,
+        "z": 0.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.985588437318802
+      },
+      {
+        "id": "tonic0",
+        "x": 6.6,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "next",
+        "x": 0,
+        "z": -6.869999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "press-1491-portal",
+        "x": 2.6,
+        "z": 6.830000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "veyr-1610-portal",
+        "x": 5,
+        "z": 6.830000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "theatre-1786-portal",
+        "x": -4.2,
+        "z": -3.669999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "photo-1899-portal",
+        "x": -3.2,
+        "z": -5.769999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "roman-portal",
+        "x": 6.1099999964237215,
+        "z": 3,
+        "w": 0.36000001430511475,
+        "d": 1.8700000047683716,
+        "y": 0.02499999999999991,
+        "height": 2.7649999618530274
+      },
+      {
+        "id": "mosaic-portal",
+        "x": 6.330000002682209,
+        "z": -0.6000000000000001,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "coast-portal",
+        "x": -6.330000002682209,
+        "z": 2.5,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "stars-portal",
+        "x": -6.330000002682209,
+        "z": -2.5,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "quarry-portal",
+        "x": -6.330000002682209,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "hospital-portal",
+        "x": 1.930000002682209,
+        "z": -3.3,
+        "w": 0.4800000041723256,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "medieval-portal",
+        "x": -5.8,
+        "z": -5.069999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "legacy-desk",
+        "x": -1.5,
+        "z": -4.3,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "ritual-table",
+        "x": 0,
+        "z": 2.7,
+        "w": 1.2200000286102295,
+        "d": 0.800000011920929,
+        "y": 0.015000006183981895,
+        "height": 1.1540525946766138
+      },
+      {
+        "id": "legacy-passage",
+        "x": 2,
+        "z": -5.669999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "mansion-puzzle",
+        "x": 3,
+        "z": 4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [
+      {
+        "x": -6,
+        "z": -5,
+        "w": 1.1,
+        "d": 0.2,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": -3.9,
+        "z": -5,
+        "w": 1.1,
+        "d": 0.2,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": -2.65,
+        "z": -5,
+        "w": 1.4,
+        "d": 0.2,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": 0,
+        "z": -5,
+        "w": 1.4,
+        "d": 0.2,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": -3.4,
+        "z": -3.25,
+        "w": 0.18,
+        "d": 3.3,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": -2.95,
+        "z": -1.35,
+        "w": 7.2,
+        "d": 0.2,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": -6.55,
+        "z": -3.3,
+        "w": 0.2,
+        "d": 4.1,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": 0.65,
+        "z": -3.3,
+        "w": 0.2,
+        "d": 4.1,
+        "y": 2.64,
+        "height": 2.18
+      },
+      {
+        "x": 2.1,
+        "z": -4.54,
+        "w": 2.65,
+        "d": 0.14,
+        "y": 2.64,
+        "height": 1.35
+      },
+      {
+        "x": -0.2,
+        "z": -2.2,
+        "w": 0.8,
+        "d": 0.55,
+        "y": 2.64,
+        "height": 0.68
+      },
+      {
+        "id": "upper-save",
+        "x": -5.8,
+        "z": -5.8,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": 2.6399999940395356,
+        "height": 1.1930268899022418
+      },
+      {
+        "id": "upper-portraits",
+        "x": -5.9,
+        "z": -2.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": 2.6399999940395356,
+        "height": 1.3000000046193598
+      },
+      {
+        "id": "upper-observatory",
+        "x": -0.19999999999999998,
+        "z": -2.2,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": 2.6399999940395356,
+        "height": 1.3000000046193598
+      },
+      {
+        "id": "gallery-chart",
+        "x": 4.35,
+        "z": -6.1,
+        "w": 0.7200000286102295,
+        "d": 0.46000000834465027,
+        "y": 2.944999998211861,
+        "height": 0.6055050501845787
+      }
+    ],
+    "objects": [
+      {
+        "id": "save0",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note0",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "key",
+        "name": "Recoger llave de latón",
+        "kind": "item",
+        "x": -3.8,
+        "z": 0.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic0",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 6.6,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Biblioteca prohibida",
+        "kind": "door",
+        "x": 0,
+        "z": -7,
+        "level": 0,
+        "target": 1
+      },
+      {
+        "id": "upper-save",
+        "name": "Escritorio del rellano · guardar",
+        "kind": "save",
+        "x": -5.8,
+        "z": -5.8,
+        "level": 1,
+        "target": null
+      },
+      {
+        "id": "upper-portraits",
+        "name": "Recoger el folio de los huéspedes",
+        "kind": "item",
+        "x": -5.9,
+        "z": -2.5,
+        "level": 1,
+        "target": null
+      },
+      {
+        "id": "upper-observatory",
+        "name": "Recoger la carta de la raíz",
+        "kind": "item",
+        "x": -0.2,
+        "z": -2.2,
+        "level": 1,
+        "target": null
+      },
+      {
+        "id": "press-1491-portal",
+        "name": "Cruzar hacia Imprenta de frontera · año 1491",
+        "kind": "door",
+        "x": 2.6,
+        "z": 6.7,
+        "level": 0,
+        "target": 21
+      },
+      {
+        "id": "veyr-1610-portal",
+        "name": "Cruzar hacia Casa Veyr de 1610 · año 1610",
+        "kind": "door",
+        "x": 5,
+        "z": 6.7,
+        "level": 0,
+        "target": 23
+      },
+      {
+        "id": "theatre-1786-portal",
+        "name": "Cruzar hacia Teatro de autómatas · año 1786",
+        "kind": "door",
+        "x": -4.2,
+        "z": -3.8,
+        "level": 0,
+        "target": 25
+      },
+      {
+        "id": "photo-1899-portal",
+        "name": "Cruzar hacia Archivo fotográfico · año 1899",
+        "kind": "door",
+        "x": -3.2,
+        "z": -5.9,
+        "level": 0,
+        "target": 27
+      },
+      {
+        "id": "roman-portal",
+        "name": "Atravesar la grieta romana · año 189",
+        "kind": "door",
+        "x": 6.2,
+        "z": 3,
+        "level": 0,
+        "target": 8
+      },
+      {
+        "id": "mosaic-portal",
+        "name": "Seguir el molde hacia el taller · año 312",
+        "kind": "door",
+        "x": 6.2,
+        "z": -0.6,
+        "level": 0,
+        "target": 11
+      },
+      {
+        "id": "coast-portal",
+        "name": "Cruzar hacia el archivo costero · año 537",
+        "kind": "door",
+        "x": -6.2,
+        "z": 2.5,
+        "level": 0,
+        "target": 13
+      },
+      {
+        "id": "stars-portal",
+        "name": "Seguir la carta astral · año 783",
+        "kind": "door",
+        "x": -6.2,
+        "z": -2.5,
+        "level": 0,
+        "target": 15
+      },
+      {
+        "id": "quarry-portal",
+        "name": "Seguir las marcas de la cantera · año 1092",
+        "kind": "door",
+        "x": -6.2,
+        "z": 0,
+        "level": 0,
+        "target": 17
+      },
+      {
+        "id": "hospital-portal",
+        "name": "Seguir el cuaderno de Oona · año 1217",
+        "kind": "door",
+        "x": 1.8,
+        "z": -3.3,
+        "level": 0,
+        "target": 19
+      },
+      {
+        "id": "medieval-portal",
+        "name": "Cruzar hacia el claustro de 1348",
+        "kind": "door",
+        "x": -5.8,
+        "z": -5.2,
+        "level": 0,
+        "target": 9
+      },
+      {
+        "id": "legacy-desk",
+        "name": "Reconstruir la memoria de las tres épocas",
+        "kind": "legacy",
+        "x": -1.5,
+        "z": -4.3,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "ritual-table",
+        "name": "Leer la mesa de los tres signos",
+        "kind": "ritual",
+        "x": 0,
+        "z": 2.7,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "legacy-passage",
+        "name": "Atravesar el pasaje temporal · archivo Veyr",
+        "kind": "door",
+        "x": 2,
+        "z": -5.8,
+        "level": 0,
+        "target": 5
+      },
+      {
+        "id": "mansion-puzzle",
+        "name": "Examinar caja astronómica",
+        "kind": "seal",
+        "x": 3,
+        "z": 4,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "gallery-chart",
+        "name": "Examinar carta astral del rellano",
+        "kind": "galleryClue",
+        "x": 4.35,
+        "z": -6.1,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-roman",
+        "name": "Examinar la junta de lucius · 189",
+        "kind": "mansionEcho",
+        "x": 6.1,
+        "z": 6.6,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-emile",
+        "name": "Examinar la puerta fotografiada · 1899",
+        "kind": "mansionEcho",
+        "x": -6.1,
+        "z": 4.3,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "next",
+        "nearest": {
+          "id": "legacy-passage",
+          "distance": 1.513472836338113
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "press-1491-portal",
+        "nearest": {
+          "id": "south-memory-pier-1",
+          "distance": 1.0899999999999996
+        },
+        "maneuverAreaClear": false
+      },
+      {
+        "id": "veyr-1610-portal",
+        "nearest": {
+          "id": "south-memory-pier-2",
+          "distance": 1.0400000000000003
+        },
+        "maneuverAreaClear": false
+      },
+      {
+        "id": "theatre-1786-portal",
+        "nearest": {
+          "id": "medieval-portal",
+          "distance": 1.2179490981458803
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "photo-1899-portal",
+        "nearest": {
+          "id": "legacy-desk",
+          "distance": 1.750178570747654
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "roman-portal",
+        "nearest": {
+          "id": "hall-armchair",
+          "distance": 1.581336460086847
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "mosaic-portal",
+        "nearest": {
+          "id": "hall-armchair",
+          "distance": 1.2351619327035626
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "coast-portal",
+        "nearest": {
+          "id": "quarry-portal",
+          "distance": 1.550000011920929
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "stars-portal",
+        "nearest": {
+          "id": "theatre-1786-portal",
+          "distance": 1.4026403730695833
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "quarry-portal",
+        "nearest": {
+          "id": "coast-portal",
+          "distance": 1.550000011920929
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "hospital-portal",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.6299999999999997
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "medieval-portal",
+        "nearest": {
+          "id": "theatre-1786-portal",
+          "distance": 1.44450684215583
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "legacy-passage",
+        "nearest": {
+          "id": "next",
+          "distance": 1.3384319247232765
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [
+      {
+        "id": "arranque",
+        "x": 5,
+        "z": -1.55,
+        "nearestFurniture": {
+          "id": "hall-armchair",
+          "distance": 1.675
+        }
+      },
+      {
+        "id": "rellano",
+        "x": 5,
+        "z": -5.8,
+        "nearestFurniture": {
+          "id": "hall-armchair",
+          "distance": 5.925
+        }
+      }
+    ],
+    "enemyReference": {
+      "x": 0,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -6.8
+      ],
+      [
+        -6.8,
+        3.1,
+        4.4
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        1.2
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 1,
+    "name": "Biblioteca prohibida",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4.7,
+      "z": 6.4
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -6.8,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5,
+        "z": -2.2,
+        "w": 1,
+        "d": 3.4,
+        "height": 3.4
+      },
+      {
+        "x": -5,
+        "z": 2.8,
+        "w": 1,
+        "d": 3.4,
+        "height": 3.4
+      },
+      {
+        "x": 5,
+        "z": -2.2,
+        "w": 1,
+        "d": 3.4,
+        "height": 3.4
+      },
+      {
+        "x": 5,
+        "z": 2.8,
+        "w": 1,
+        "d": 3.4,
+        "height": 3.4
+      },
+      {
+        "id": "save1",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note1",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "tonic1",
+        "x": 5.8,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "back",
+        "x": 0,
+        "z": 7.130000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "next",
+        "x": 0,
+        "z": -6.869999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "seal1",
+        "x": 0,
+        "z": -4.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "manuscripts",
+        "x": 2.4,
+        "z": -1,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "archive-door",
+        "x": 6.830000002682209,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "library-shortcut",
+        "x": -6.569999997317791,
+        "z": -5.3,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save1",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note1",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic1",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "back",
+        "name": "Volver · Mansión Veyr",
+        "kind": "door",
+        "x": 0,
+        "z": 7,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Cripta de los nombres",
+        "kind": "door",
+        "x": 0,
+        "z": -7,
+        "level": 0,
+        "target": 2
+      },
+      {
+        "id": "seal1",
+        "name": "Examinar mecanismo del sello",
+        "kind": "seal",
+        "x": 0,
+        "z": -4.5,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "manuscripts",
+        "name": "Clasificar manuscritos",
+        "kind": "phase2Puzzle",
+        "x": 2.4,
+        "z": -1,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "archive-door",
+        "name": "Puerta secreta · archivo familiar",
+        "kind": "door",
+        "x": 6.7,
+        "z": 0,
+        "level": 0,
+        "target": 5
+      },
+      {
+        "id": "library-shortcut",
+        "name": "Atajo · capilla",
+        "kind": "door",
+        "x": -6.7,
+        "z": -5.3,
+        "level": 0,
+        "target": 3
+      },
+      {
+        "id": "mansion-echo-aurelia",
+        "name": "Examinar el rostro recuperado · 312",
+        "kind": "mansionEcho",
+        "x": 5.8,
+        "z": -5.2,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-maeve",
+        "name": "Examinar la marca de la marea · 537",
+        "kind": "mansionEcho",
+        "x": -5.8,
+        "z": 4.3,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-tomas",
+        "name": "Examinar la página invertida · 1491",
+        "kind": "mansionEcho",
+        "x": 2.9,
+        "z": 4.5,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "back",
+        "nearest": {
+          "id": "save1",
+          "distance": 2.2468032930919764
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "next",
+        "nearest": {
+          "id": "seal1",
+          "distance": 2.1500000059604645
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "archive-door",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.3
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "library-shortcut",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.3
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -6.8
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.4,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 2,
+    "name": "Cripta de los nombres",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4,
+      "z": 7.2
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4,
+        "z": -3,
+        "w": 1.5,
+        "d": 2.7,
+        "height": 1.1
+      },
+      {
+        "x": -4,
+        "z": 2,
+        "w": 1.5,
+        "d": 2.7,
+        "height": 1.1
+      },
+      {
+        "x": 4,
+        "z": -3,
+        "w": 1.5,
+        "d": 2.7,
+        "height": 1.1
+      },
+      {
+        "x": 4,
+        "z": 2,
+        "w": 1.5,
+        "d": 2.7,
+        "height": 1.1
+      },
+      {
+        "id": "save2",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note2",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "tonic2",
+        "x": 5.8,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "back",
+        "x": 0,
+        "z": 7.130000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "next",
+        "x": 0,
+        "z": -6.869999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "seal2",
+        "x": 0,
+        "z": -4.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save2",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note2",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic2",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "back",
+        "name": "Volver · Biblioteca prohibida",
+        "kind": "door",
+        "x": 0,
+        "z": 7,
+        "level": 0,
+        "target": 1
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Capilla del silencio",
+        "kind": "door",
+        "x": 0,
+        "z": -7,
+        "level": 0,
+        "target": 3
+      },
+      {
+        "id": "seal2",
+        "name": "Examinar mecanismo del sello",
+        "kind": "seal",
+        "x": 0,
+        "z": -4.5,
+        "level": 0,
+        "target": 1
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "back",
+        "nearest": {
+          "id": "save2",
+          "distance": 2.2468032930919764
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "next",
+        "nearest": {
+          "id": "seal2",
+          "distance": 2.1500000059604645
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 2,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.5,
+        -3.8
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 3,
+    "name": "Capilla del silencio",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4.7,
+      "z": 6.4
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -6.8,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -3.5,
+        "z": -3,
+        "w": 2.5,
+        "d": 0.65,
+        "height": 1
+      },
+      {
+        "x": -3.5,
+        "z": 0,
+        "w": 2.5,
+        "d": 0.65,
+        "height": 1
+      },
+      {
+        "x": -3.5,
+        "z": 3,
+        "w": 2.5,
+        "d": 0.65,
+        "height": 1
+      },
+      {
+        "x": 3.5,
+        "z": -3,
+        "w": 2.5,
+        "d": 0.65,
+        "height": 1
+      },
+      {
+        "x": 3.5,
+        "z": 0,
+        "w": 2.5,
+        "d": 0.65,
+        "height": 1
+      },
+      {
+        "x": 3.5,
+        "z": 3,
+        "w": 2.5,
+        "d": 0.65,
+        "height": 1
+      },
+      {
+        "x": 3,
+        "z": -5,
+        "w": 3,
+        "d": 1.3,
+        "height": 1.6
+      },
+      {
+        "x": -6.2,
+        "z": -3.65,
+        "w": 0.34,
+        "d": 0.32,
+        "height": 4.9
+      },
+      {
+        "x": -6.2,
+        "z": 3,
+        "w": 0.34,
+        "d": 0.32,
+        "height": 4.9
+      },
+      {
+        "x": -6.2,
+        "z": 5.4,
+        "w": 0.34,
+        "d": 0.32,
+        "height": 4.9
+      },
+      {
+        "x": 6.2,
+        "z": -3.65,
+        "w": 0.34,
+        "d": 0.32,
+        "height": 4.9
+      },
+      {
+        "x": 6.2,
+        "z": 3,
+        "w": 0.34,
+        "d": 0.32,
+        "height": 4.9
+      },
+      {
+        "x": 6.2,
+        "z": 5.4,
+        "w": 0.34,
+        "d": 0.32,
+        "height": 4.9
+      },
+      {
+        "id": "save3",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note3",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "tonic3",
+        "x": 5.8,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "back",
+        "x": 0,
+        "z": 7.130000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "next",
+        "x": 0,
+        "z": -6.869999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "seal3",
+        "x": 0,
+        "z": -4.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "chapel-side",
+        "x": -6.569999997317791,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "astronomy",
+        "x": -2.1,
+        "z": -3.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "basement-door",
+        "x": 6.830000002682209,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "chapel-shortcut",
+        "x": -6.569999997317791,
+        "z": -5.3,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save3",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note3",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic3",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "back",
+        "name": "Volver · Cripta de los nombres",
+        "kind": "door",
+        "x": 0,
+        "z": 7,
+        "level": 0,
+        "target": 2
+      },
+      {
+        "id": "next",
+        "name": "Abrir · Ruinas del intervalo",
+        "kind": "door",
+        "x": 0,
+        "z": -7,
+        "level": 0,
+        "target": 4
+      },
+      {
+        "id": "seal3",
+        "name": "Examinar mecanismo del sello",
+        "kind": "seal",
+        "x": 0,
+        "z": -4.5,
+        "level": 0,
+        "target": 2
+      },
+      {
+        "id": "chapel-side",
+        "name": "Galería cubierta · invernadero",
+        "kind": "door",
+        "x": -6.7,
+        "z": 0,
+        "level": 0,
+        "target": 6
+      },
+      {
+        "id": "astronomy",
+        "name": "Alinear la bóveda astronómica",
+        "kind": "phase2Puzzle",
+        "x": -2.1,
+        "z": -3.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "basement-door",
+        "name": "Escalera de piedra · sótanos",
+        "kind": "door",
+        "x": 6.7,
+        "z": 0,
+        "level": 0,
+        "target": 7
+      },
+      {
+        "id": "chapel-shortcut",
+        "name": "Atajo · biblioteca",
+        "kind": "door",
+        "x": -6.7,
+        "z": -5.3,
+        "level": 0,
+        "target": 1
+      },
+      {
+        "id": "mansion-echo-samira",
+        "name": "Examinar el cielo de samira · 783",
+        "kind": "mansionEcho",
+        "x": -5.3,
+        "z": 4.3,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-isabelle",
+        "name": "Examinar la campana de isabelle · 1348",
+        "kind": "mansionEcho",
+        "x": 5.3,
+        "z": 4.3,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-amara",
+        "name": "Examinar el mecanismo sin voz · 1786",
+        "kind": "mansionEcho",
+        "x": 0,
+        "z": 4.7,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "back",
+        "nearest": {
+          "id": "save3",
+          "distance": 2.2468032930919764
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "next",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 2.0180436070610566
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "chapel-side",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.9500000000000002
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "basement-door",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.9500000000000002
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "chapel-shortcut",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.3
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 0,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -6.8
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.5,
+        -3.8
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 4,
+    "name": "Ruinas del intervalo",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4,
+      "z": 7.2
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 4.619397662556434,
+        "z": 1.913417161825449,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": 1.9134171618254492,
+        "z": 4.619397662556434,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": -1.9134171618254485,
+        "z": 4.619397662556434,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": -4.619397662556434,
+        "z": 1.9134171618254494,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": -4.619397662556434,
+        "z": -1.9134171618254483,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": -1.9134171618254516,
+        "z": -4.619397662556432,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": 1.91341716182545,
+        "z": -4.619397662556433,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "x": 4.619397662556432,
+        "z": -1.913417161825452,
+        "w": 0.8,
+        "d": 0.8,
+        "height": 3.4
+      },
+      {
+        "id": "save4",
+        "x": -3.5,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note4",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "back",
+        "x": 0,
+        "z": 7.130000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "end",
+        "x": 0,
+        "z": -3,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save4",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -3.5,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note4",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "back",
+        "name": "Volver · Capilla del silencio",
+        "kind": "door",
+        "x": 0,
+        "z": 7,
+        "level": 0,
+        "target": 3
+      },
+      {
+        "id": "end",
+        "name": "Cerrar el intervalo",
+        "kind": "end",
+        "x": 0,
+        "z": -3,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "back",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 2.492632569151481
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        2,
+        -3
+      ],
+      [
+        0,
+        3.9,
+        -3
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 5,
+    "name": "Archivo familiar",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4.7,
+      "z": 6.4
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.8,
+        "z": -4,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": -5.8,
+        "z": -2.5,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": -5.8,
+        "z": 2,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": -5.8,
+        "z": 3.5,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": 5.8,
+        "z": -4,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": 5.8,
+        "z": -2.5,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": 5.8,
+        "z": 2,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "x": 5.8,
+        "z": 3.5,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 2.3
+      },
+      {
+        "id": "save5",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note5",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "tonic5",
+        "x": 5.8,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "memory-altar",
+        "x": 2.8,
+        "z": 3.2,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "legacy-back",
+        "x": -2.8,
+        "z": -5.669999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "archive-back",
+        "x": -6.569999997317791,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "genealogy",
+        "x": 0,
+        "z": -3,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "greenhouse-door",
+        "x": 6.830000002682209,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "society",
+        "x": 3,
+        "z": 4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save5",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note5",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic5",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "memory-altar",
+        "name": "Elegir el legado que sobrevivirá",
+        "kind": "memoryChoice",
+        "x": 2.8,
+        "z": 3.2,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "legacy-back",
+        "name": "Volver por el pasaje temporal · vestíbulo",
+        "kind": "door",
+        "x": -2.8,
+        "z": -5.8,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "archive-back",
+        "name": "Volver · biblioteca",
+        "kind": "door",
+        "x": -6.7,
+        "z": 0,
+        "level": 0,
+        "target": 1
+      },
+      {
+        "id": "genealogy",
+        "name": "Ordenar el árbol genealógico",
+        "kind": "phase2Puzzle",
+        "x": 0,
+        "z": -3,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "greenhouse-door",
+        "name": "Puerta de hierro · invernadero",
+        "kind": "door",
+        "x": 6.7,
+        "z": 0,
+        "level": 0,
+        "target": 6
+      },
+      {
+        "id": "society",
+        "name": "Investigar el libro de socios",
+        "kind": "discovery",
+        "x": 3,
+        "z": 4,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-oona",
+        "name": "Examinar la cama ausente · 1217",
+        "kind": "mansionEcho",
+        "x": -4.1,
+        "z": 4.4,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-ines",
+        "name": "Examinar el retrato envejecido · 1610",
+        "kind": "mansionEcho",
+        "x": 4.1,
+        "z": 4.4,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-elise",
+        "name": "Examinar la memoria de élise · 1927",
+        "kind": "mansionEcho",
+        "x": 0,
+        "z": 4.7,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "legacy-back",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 2.6838638191979856
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "archive-back",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.475847214314544
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "greenhouse-door",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.475847214314544
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.3,
+        -4
+      ],
+      [
+        2.8,
+        2.5,
+        3.2
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 6,
+    "name": "Invernadero de vidrio negro",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4.1,
+      "z": 6.4
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.7,
+        "z": -4.5,
+        "w": 1.45,
+        "d": 1.5,
+        "height": 0.75
+      },
+      {
+        "x": -5.7,
+        "z": -2.5,
+        "w": 1.45,
+        "d": 1.5,
+        "height": 0.75
+      },
+      {
+        "x": -5.7,
+        "z": 3,
+        "w": 1.45,
+        "d": 1.5,
+        "height": 0.75
+      },
+      {
+        "x": 5.7,
+        "z": -4.5,
+        "w": 1.45,
+        "d": 1.5,
+        "height": 0.75
+      },
+      {
+        "x": 5.7,
+        "z": -2.5,
+        "w": 1.45,
+        "d": 1.5,
+        "height": 0.75
+      },
+      {
+        "x": 5.7,
+        "z": 3,
+        "w": 1.45,
+        "d": 1.5,
+        "height": 0.75
+      },
+      {
+        "id": "save6",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note6",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "tonic6",
+        "x": 5.8,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "greenhouse-back",
+        "x": -6.569999997317791,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "greenhouse-chapel",
+        "x": 6.830000002682209,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "adrien",
+        "x": 3,
+        "z": 4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save6",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note6",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic6",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "greenhouse-back",
+        "name": "Volver · archivo",
+        "kind": "door",
+        "x": -6.7,
+        "z": 0,
+        "level": 0,
+        "target": 5
+      },
+      {
+        "id": "greenhouse-chapel",
+        "name": "Galería cubierta · capilla",
+        "kind": "door",
+        "x": 6.7,
+        "z": 0,
+        "level": 0,
+        "target": 3
+      },
+      {
+        "id": "adrien",
+        "name": "Examinar el cuaderno mojado",
+        "kind": "discovery",
+        "x": 3,
+        "z": 4,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "greenhouse-back",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.7714753738056874
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "greenhouse-chapel",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.7714753738056874
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.3,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 7,
+    "name": "Sótanos de la vigilia",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 4.7,
+      "z": 6.4
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.7,
+        "z": -4.5,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": -5.7,
+        "z": -2,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": -5.7,
+        "z": 1.8,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": -5.7,
+        "z": 3.8,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": 5.7,
+        "z": -4.5,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": 5.7,
+        "z": -2,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": 5.7,
+        "z": 1.8,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": 5.7,
+        "z": 3.8,
+        "w": 0.9,
+        "d": 1,
+        "height": 2.4
+      },
+      {
+        "x": -3.7,
+        "z": -3.8,
+        "w": 1.3,
+        "d": 1.2,
+        "height": 1.4
+      },
+      {
+        "x": -3.7,
+        "z": 2.8,
+        "w": 1.3,
+        "d": 1.2,
+        "height": 1.4
+      },
+      {
+        "x": 3.7,
+        "z": -3.8,
+        "w": 1.3,
+        "d": 1.2,
+        "height": 1.4
+      },
+      {
+        "x": 3.7,
+        "z": 2.8,
+        "w": 1.3,
+        "d": 1.2,
+        "height": 1.4
+      },
+      {
+        "id": "save7",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note7",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "tonic7",
+        "x": 5.8,
+        "z": 5.5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      },
+      {
+        "id": "basement-back",
+        "x": -6.569999997317791,
+        "z": 0,
+        "w": 0.48000000417232513,
+        "d": 1.899999976158142,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "basement",
+        "x": 0,
+        "z": -4.3,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "phase2-end",
+        "x": 0,
+        "z": -6.2,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "guardian",
+        "x": 3,
+        "z": 4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save7",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note7",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "tonic7",
+        "name": "Recoger tónico",
+        "kind": "item",
+        "x": 5.8,
+        "z": 5.5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "basement-back",
+        "name": "Subir · capilla",
+        "kind": "door",
+        "x": -6.7,
+        "z": 0,
+        "level": 0,
+        "target": 3
+      },
+      {
+        "id": "basement",
+        "name": "Cerrar las tres mordazas",
+        "kind": "phase2Puzzle",
+        "x": 0,
+        "z": -4.3,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "phase2-end",
+        "name": "Atravesar el umbral de Adrien",
+        "kind": "phase2End",
+        "x": 0,
+        "z": -6.2,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "guardian",
+        "name": "Leer la placa del guardián",
+        "kind": "discovery",
+        "x": 3,
+        "z": 4,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mansion-echo-idris",
+        "name": "Examinar el arco de idris · 1092",
+        "kind": "mansionEcho",
+        "x": 5.4,
+        "z": -5.2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "basement-back",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 1.4115594213493106
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 2,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.2,
+        -5.5
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 8,
+    "name": "Santuario de los nombres",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.7,
+        "z": -5,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": -5.7,
+        "z": -5,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": -5.7,
+        "z": -2,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": -5.7,
+        "z": -2,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": -5.7,
+        "z": 1,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": -5.7,
+        "z": 1,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": -5.7,
+        "z": 4,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": -5.7,
+        "z": 4,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": 5.7,
+        "z": -5,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": 5.7,
+        "z": -5,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": 5.7,
+        "z": -2,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": 5.7,
+        "z": -2,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": 5.7,
+        "z": 1,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": 5.7,
+        "z": 1,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": 5.7,
+        "z": 4,
+        "w": 0.65,
+        "d": 0.65,
+        "height": 3.1
+      },
+      {
+        "x": 5.7,
+        "z": 4,
+        "w": 0.98,
+        "d": 0.98,
+        "height": 0.36
+      },
+      {
+        "x": 0,
+        "z": -5.3,
+        "w": 2.4,
+        "d": 1.2,
+        "height": 1.6
+      },
+      {
+        "x": -2.625,
+        "z": -5.35,
+        "w": 0.63,
+        "d": 0.63,
+        "height": 1.12
+      },
+      {
+        "x": 2.625,
+        "z": -5.35,
+        "w": 0.63,
+        "d": 0.63,
+        "height": 1.12
+      },
+      {
+        "id": "save8",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note8",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "roman-echo-ash",
+        "x": -4.15,
+        "z": 3.45,
+        "w": 0.7200000286102295,
+        "d": 0.550000011920929,
+        "y": 4.76837147544984e-9,
+        "height": 1.2799999959766866
+      },
+      {
+        "id": "roman-echo-tide",
+        "x": 4.15,
+        "z": 3.45,
+        "w": 0.7200000286102295,
+        "d": 0.550000011920929,
+        "y": 4.76837147544984e-9,
+        "height": 1.2799999959766866
+      },
+      {
+        "id": "roman-echo-threshold",
+        "x": 2,
+        "z": 1.35,
+        "w": 0.7200000286102295,
+        "d": 0.550000011920929,
+        "y": 4.76837147544984e-9,
+        "height": 1.2799999959766866
+      },
+      {
+        "id": "roman-inscription",
+        "x": -2.9,
+        "z": -4.25,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "roman-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "roman-tablet",
+        "x": 0,
+        "z": -4.1,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save8",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note8",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "roman-echo-ash",
+        "name": "Testimonio de la ceniza",
+        "kind": "romanEcho",
+        "x": -4.15,
+        "z": 3.45,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "roman-echo-tide",
+        "name": "Testimonio de la marea",
+        "kind": "romanEcho",
+        "x": 4.15,
+        "z": 3.45,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "roman-echo-threshold",
+        "name": "Testimonio del umbral",
+        "kind": "romanEcho",
+        "x": 2,
+        "z": 1.35,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "roman-inscription",
+        "name": "Descifrar la inscripción del altar",
+        "kind": "romanPuzzle",
+        "x": -2.9,
+        "z": -4.25,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "roman-return",
+        "name": "Regresar a la mansión · año 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "roman-tablet",
+        "name": "Recoger tablilla del intervalo",
+        "kind": "item",
+        "x": 0,
+        "z": -4.1,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "roman-return",
+        "nearest": {
+          "id": "save8",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -4.5,
+        2.35,
+        -4.5
+      ],
+      [
+        4.5,
+        2.35,
+        3.5
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 9,
+    "name": "Claustro de la ceniza",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.9,
+        "z": -5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": -2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": 0,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": 2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": 5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": -5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": -2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": 0,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": 2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": 5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -4,
+        "z": 0.5,
+        "w": 1.15,
+        "d": 2,
+        "height": 0.74
+      },
+      {
+        "x": 4,
+        "z": 0.5,
+        "w": 1.15,
+        "d": 2,
+        "height": 0.74
+      },
+      {
+        "x": 0,
+        "z": -6.6,
+        "w": 2.4,
+        "d": 1.2,
+        "height": 0.36
+      },
+      {
+        "id": "save9",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note9",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "medieval-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "medieval-scriptorium",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save9",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note9",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "medieval-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "medieval-scriptorium",
+        "name": "Entrar al scriptorium",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 10
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "medieval-return",
+        "nearest": {
+          "id": "save9",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "medieval-scriptorium",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 0
+        },
+        "maneuverAreaClear": false
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -5,
+        2.8,
+        -4.5
+      ],
+      [
+        5,
+        2.8,
+        4.5
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 10,
+    "name": "Scriptorium del silencio",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.9,
+        "z": -5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": -2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": 0,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": 2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -5.9,
+        "z": 5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": -5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": -2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": 0,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": 2.6,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": 5.9,
+        "z": 5.2,
+        "w": 0.48,
+        "d": 0.48,
+        "height": 3.1
+      },
+      {
+        "x": -4.2,
+        "z": -4.5,
+        "w": 1.1,
+        "d": 1.35,
+        "height": 2.2
+      },
+      {
+        "x": -4.2,
+        "z": -1.5,
+        "w": 1.1,
+        "d": 1.35,
+        "height": 2.2
+      },
+      {
+        "x": -4.2,
+        "z": 1.5,
+        "w": 1.1,
+        "d": 1.35,
+        "height": 2.2
+      },
+      {
+        "x": 4.2,
+        "z": -4.5,
+        "w": 1.1,
+        "d": 1.35,
+        "height": 2.2
+      },
+      {
+        "x": 4.2,
+        "z": -1.5,
+        "w": 1.1,
+        "d": 1.35,
+        "height": 2.2
+      },
+      {
+        "x": 4.2,
+        "z": 1.5,
+        "w": 1.1,
+        "d": 1.35,
+        "height": 2.2
+      },
+      {
+        "x": 0,
+        "z": -5.6,
+        "w": 2.1,
+        "d": 1,
+        "height": 1.3
+      },
+      {
+        "x": -2.7,
+        "z": -2.5,
+        "w": 1.2,
+        "d": 0.86,
+        "height": 1.36
+      },
+      {
+        "x": 2.7,
+        "z": -2.5,
+        "w": 1.2,
+        "d": 0.86,
+        "height": 1.36
+      },
+      {
+        "id": "save10",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note10",
+        "x": -5.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "medieval-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "medieval-manuscript",
+        "x": -2.9,
+        "z": -4.7,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "medieval-codex",
+        "x": 0,
+        "z": -4.1,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save10",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note10",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -5.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "medieval-back",
+        "name": "Volver al claustro",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 9
+      },
+      {
+        "id": "medieval-manuscript",
+        "name": "Descifrar el códice sellado",
+        "kind": "medievalPuzzle",
+        "x": -2.9,
+        "z": -4.7,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "medieval-codex",
+        "name": "Recuperar el códice de Montfort",
+        "kind": "item",
+        "x": 0,
+        "z": -4.1,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "medieval-back",
+        "nearest": {
+          "id": "save10",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 0,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -4.8,
+        2.75,
+        -4
+      ],
+      [
+        4.8,
+        2.75,
+        -4
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 11,
+    "name": "Taller de los rostros",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.8,
+        "z": -5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -5.8,
+        "z": -1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -5.8,
+        "z": 1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -5.8,
+        "z": 5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": -5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": -1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": 1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": 5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -4.5,
+        "z": -3.3,
+        "w": 1.25,
+        "d": 1.6,
+        "height": 1.12
+      },
+      {
+        "x": 4.5,
+        "z": -3.3,
+        "w": 1.25,
+        "d": 1.6,
+        "height": 1.12
+      },
+      {
+        "id": "save11",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note11",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "mosaic-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "mosaic-kiln",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "mosaic-pigment",
+        "x": -4.4,
+        "z": 1.6,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save11",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note11",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mosaic-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "mosaic-kiln",
+        "name": "Entrar al horno de las teselas",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 12
+      },
+      {
+        "id": "mosaic-pigment",
+        "name": "Recoger pigmento de cinabrio",
+        "kind": "item",
+        "x": -4.4,
+        "z": 1.6,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "mosaic-return",
+        "nearest": {
+          "id": "save11",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "mosaic-kiln",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 4.3606908856281015
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -4.5,
+        2.35,
+        -3.3
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 12,
+    "name": "Horno de las teselas",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.8,
+        "z": -5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -5.8,
+        "z": -1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -5.8,
+        "z": 1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": -5.8,
+        "z": 5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": -5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": -1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": 1.7,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 5.8,
+        "z": 5.1,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 2.9
+      },
+      {
+        "x": 0,
+        "z": -6.4,
+        "w": 3.15,
+        "d": 1.5,
+        "height": 2.9
+      },
+      {
+        "x": -4.4,
+        "z": -3.3,
+        "w": 1.1,
+        "d": 1.5,
+        "height": 1.08
+      },
+      {
+        "x": 4.4,
+        "z": -3.3,
+        "w": 1.1,
+        "d": 1.5,
+        "height": 1.08
+      },
+      {
+        "id": "save12",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note12",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "mosaic-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "mosaic-pattern",
+        "x": -3.5,
+        "z": -4.4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save12",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note12",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "mosaic-back",
+        "name": "Volver a la galería",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 11
+      },
+      {
+        "id": "mosaic-pattern",
+        "name": "Recomponer el rostro en las teselas",
+        "kind": "mosaicPuzzle",
+        "x": -3.5,
+        "z": -4.4,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "mosaic-back",
+        "nearest": {
+          "id": "save12",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        2.45,
+        -5.2
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 13,
+    "name": "Muelle de los nombres",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.7,
+        "z": -5.2,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -5.7,
+        "z": -1.8,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -5.7,
+        "z": 1.6,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -5.7,
+        "z": 5,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": -5.2,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": -1.8,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": 1.6,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": 5,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -4.6,
+        "z": -3.1,
+        "w": 1.05,
+        "d": 1.3,
+        "height": 0.96
+      },
+      {
+        "x": 4.6,
+        "z": -3.1,
+        "w": 1.05,
+        "d": 1.3,
+        "height": 0.96
+      },
+      {
+        "id": "save13",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note13",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "coast-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "coast-vault",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "coast-tides",
+        "x": -3.5,
+        "z": 2,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save13",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note13",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "coast-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "coast-vault",
+        "name": "Entrar en el depósito de embarque",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 14
+      },
+      {
+        "id": "coast-tides",
+        "name": "Recoger tabla de mareas",
+        "kind": "item",
+        "x": -3.5,
+        "z": 2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "coast-return",
+        "nearest": {
+          "id": "save13",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "coast-vault",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 4.704054102580027
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -4.8,
+        2.6,
+        3.2
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 14,
+    "name": "Archivo de la marea",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.7,
+        "z": -5.2,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -5.7,
+        "z": -1.8,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -5.7,
+        "z": 1.6,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -5.7,
+        "z": 5,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": -5.2,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": -1.8,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": 1.6,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": 5.7,
+        "z": 5,
+        "w": 0.56,
+        "d": 0.56,
+        "height": 3.3
+      },
+      {
+        "x": -4.55,
+        "z": -3.7,
+        "w": 1.05,
+        "d": 1.65,
+        "height": 2.5
+      },
+      {
+        "x": -4.55,
+        "z": -0.6,
+        "w": 1.05,
+        "d": 1.65,
+        "height": 2.5
+      },
+      {
+        "x": -4.55,
+        "z": 2.5,
+        "w": 1.05,
+        "d": 1.65,
+        "height": 2.5
+      },
+      {
+        "x": 4.55,
+        "z": -3.7,
+        "w": 1.05,
+        "d": 1.65,
+        "height": 2.5
+      },
+      {
+        "x": 4.55,
+        "z": -0.6,
+        "w": 1.05,
+        "d": 1.65,
+        "height": 2.5
+      },
+      {
+        "x": 4.55,
+        "z": 2.5,
+        "w": 1.05,
+        "d": 1.65,
+        "height": 2.5
+      },
+      {
+        "x": 0,
+        "z": -5.4,
+        "w": 2.25,
+        "d": 1.1,
+        "height": 1.36
+      },
+      {
+        "id": "save14",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note14",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "coast-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "coast-ledger",
+        "x": -2.7,
+        "z": -3.8,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save14",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note14",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "coast-back",
+        "name": "Volver al muelle",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 13
+      },
+      {
+        "id": "coast-ledger",
+        "name": "Cruzar fechas y mareas",
+        "kind": "coastLedger",
+        "x": -2.7,
+        "z": -3.8,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "coast-back",
+        "nearest": {
+          "id": "save14",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        2.7,
+        -4.4
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 15,
+    "name": "Terraza del astro ausente",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.95,
+        "z": -5.5,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -5.95,
+        "z": -2.1,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -5.95,
+        "z": 1.3,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -5.95,
+        "z": 4.7,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": -5.5,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": -2.1,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": 1.3,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": 4.7,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -4.3,
+        "z": -4,
+        "w": 1.2,
+        "d": 1.45,
+        "height": 1.44
+      },
+      {
+        "x": 4.3,
+        "z": -4,
+        "w": 1.2,
+        "d": 1.45,
+        "height": 1.44
+      },
+      {
+        "id": "save15",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note15",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "stars-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "stars-dome",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "stars-chart",
+        "x": -3.4,
+        "z": 1.7000000000000002,
+        "w": 0.949999988079071,
+        "d": 0.6999999880790713,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save15",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note15",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "stars-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "stars-dome",
+        "name": "Entrar en la cúpula",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 16
+      },
+      {
+        "id": "stars-chart",
+        "name": "Recoger la carta astral",
+        "kind": "item",
+        "x": -3.4,
+        "z": 1.7,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "stars-return",
+        "nearest": {
+          "id": "save15",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "stars-dome",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 3.9472300414341186
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -4.8,
+        2.8,
+        2.5
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 16,
+    "name": "Cúpula de las tres horas",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5.95,
+        "z": -5.5,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -5.95,
+        "z": -2.1,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -5.95,
+        "z": 1.3,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": -5.95,
+        "z": 4.7,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": -5.5,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": -2.1,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": 1.3,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 5.95,
+        "z": 4.7,
+        "w": 0.6,
+        "d": 0.6,
+        "height": 3.12
+      },
+      {
+        "x": 0,
+        "z": -5.35,
+        "w": 2.2,
+        "d": 1.2,
+        "height": 1.24
+      },
+      {
+        "id": "save16",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note16",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "stars-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "stars-wheel",
+        "x": -2.7,
+        "z": -4.4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save16",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note16",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "stars-back",
+        "name": "Volver a la terraza",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 15
+      },
+      {
+        "id": "stars-wheel",
+        "name": "Alinear el astrolabio",
+        "kind": "starAlignment",
+        "x": -2.7,
+        "z": -4.4,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "stars-back",
+        "nearest": {
+          "id": "save16",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        2.9,
+        -4.7
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 17,
+    "name": "Cantera de los nombres",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.05,
+        "z": -5,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -6.05,
+        "z": -1.7,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -6.05,
+        "z": 1.6,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -6.05,
+        "z": 4.9,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": -5,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": -1.7,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": 1.6,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": 4.9,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -4.5,
+        "z": -4.2,
+        "w": 1.3,
+        "d": 1.75,
+        "height": 1.18
+      },
+      {
+        "x": -4.5,
+        "z": -1,
+        "w": 1.3,
+        "d": 1.75,
+        "height": 1.18
+      },
+      {
+        "x": -4.5,
+        "z": 2.2,
+        "w": 1.3,
+        "d": 1.75,
+        "height": 1.18
+      },
+      {
+        "x": 4.5,
+        "z": -4.2,
+        "w": 1.3,
+        "d": 1.75,
+        "height": 1.18
+      },
+      {
+        "x": 4.5,
+        "z": -1,
+        "w": 1.3,
+        "d": 1.75,
+        "height": 1.18
+      },
+      {
+        "x": 4.5,
+        "z": 2.2,
+        "w": 1.3,
+        "d": 1.75,
+        "height": 1.18
+      },
+      {
+        "id": "save17",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note17",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "quarry-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "quarry-chamber",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "quarry-wedge",
+        "x": -3.4,
+        "z": 1.7999999999999998,
+        "w": 0.949999988079071,
+        "d": 0.6999999880790708,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save17",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note17",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "quarry-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "quarry-chamber",
+        "name": "Entrar en la cámara del arco",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 18
+      },
+      {
+        "id": "quarry-wedge",
+        "name": "Recoger la cuña marcada",
+        "kind": "item",
+        "x": -3.4,
+        "z": 1.8,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "quarry-return",
+        "nearest": {
+          "id": "save17",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "quarry-chamber",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 3.984109059752255
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -4.5,
+        2.7,
+        2.6
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 18,
+    "name": "Cámara del arco",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.05,
+        "z": -5,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -6.05,
+        "z": -1.7,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -6.05,
+        "z": 1.6,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -6.05,
+        "z": 4.9,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": -5,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": -1.7,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": 1.6,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": 6.05,
+        "z": 4.9,
+        "w": 0.68,
+        "d": 0.68,
+        "height": 2.9
+      },
+      {
+        "x": -4.35,
+        "z": -3,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 1.38
+      },
+      {
+        "x": 4.35,
+        "z": -3,
+        "w": 1.25,
+        "d": 1.1,
+        "height": 1.38
+      },
+      {
+        "id": "save18",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note18",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "quarry-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "quarry-assembly",
+        "x": -2.8,
+        "z": -4.4,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save18",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note18",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "quarry-back",
+        "name": "Volver a la cantera",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 17
+      },
+      {
+        "id": "quarry-assembly",
+        "name": "Ensamblar el arco de piedra",
+        "kind": "quarryArch",
+        "x": -2.8,
+        "z": -4.4,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "quarry-back",
+        "nearest": {
+          "id": "save18",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        2.7,
+        -4.8
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 19,
+    "name": "Hospital del camino",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4.8,
+        "z": -3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": -4.8,
+        "z": 0,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": -4.8,
+        "z": 3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": 4.8,
+        "z": -3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": 4.8,
+        "z": 0,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": 4.8,
+        "z": 3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": -3.2,
+        "z": 1.75,
+        "w": 0.9,
+        "d": 0.7,
+        "height": 1.2
+      },
+      {
+        "id": "save19",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note19",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "hospital-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "hospital-ward",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "hospital-rowan",
+        "x": -2.3,
+        "z": 1.6,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save19",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note19",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "hospital-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "hospital-ward",
+        "name": "Entrar en la enfermería",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 20
+      },
+      {
+        "id": "hospital-rowan",
+        "name": "Recoger hierbas de serbal",
+        "kind": "item",
+        "x": -2.3,
+        "z": 1.6,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "hospital-return",
+        "nearest": {
+          "id": "save19",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "hospital-ward",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 4.286516651081621
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        2.8,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 20,
+    "name": "Enfermería de los nombres",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4.8,
+        "z": -3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": -4.8,
+        "z": 0,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": -4.8,
+        "z": 3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": 4.8,
+        "z": -3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": 4.8,
+        "z": 0,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": 4.8,
+        "z": 3.6,
+        "w": 1.48,
+        "d": 2.25,
+        "height": 0.23
+      },
+      {
+        "x": -2.8,
+        "z": -3.65,
+        "w": 1.5,
+        "d": 1,
+        "height": 1.3
+      },
+      {
+        "id": "save20",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note20",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "hospital-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "hospital-remedy",
+        "x": -2.4,
+        "z": -2.2,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      },
+      {
+        "id": "hospital-testimony",
+        "x": 2.2,
+        "z": -2.2,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.6427495539188386
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save20",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note20",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "hospital-back",
+        "name": "Volver a la sala de camino",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 19
+      },
+      {
+        "id": "hospital-remedy",
+        "name": "Comparar remedios e historiales",
+        "kind": "hospitalRemedy",
+        "x": -2.4,
+        "z": -2.2,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "hospital-testimony",
+        "name": "Conservar un testimonio",
+        "kind": "hospitalChoice",
+        "x": 2.2,
+        "z": -2.2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "hospital-back",
+        "nearest": {
+          "id": "save20",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        -2.8,
+        2.45,
+        -3.5
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 21,
+    "name": "Imprenta de frontera",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4.8,
+        "z": -3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": -4.8,
+        "z": 0,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": -4.8,
+        "z": 3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": 4.8,
+        "z": -3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": 4.8,
+        "z": 0,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": 4.8,
+        "z": 3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": -4,
+        "z": -4,
+        "w": 2.3,
+        "d": 1.5,
+        "height": 0.16
+      },
+      {
+        "x": -4.8,
+        "z": -0.6,
+        "w": 1.3,
+        "d": 0.8,
+        "height": 2.3
+      },
+      {
+        "id": "save21",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note21",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "press-1491-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "press-1491-inner",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "press-1491-clue",
+        "x": 2.25,
+        "z": -1.6,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save21",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note21",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "press-1491-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "press-1491-inner",
+        "name": "Entrar en Sala de las planchas",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 22
+      },
+      {
+        "id": "press-1491-clue",
+        "name": "Recoger Prueba de impresión",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "press-1491-return",
+        "nearest": {
+          "id": "save21",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "press-1491-inner",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 3.1535694062442956
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 22,
+    "name": "Sala de las planchas",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4.8,
+        "z": -3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": -4.8,
+        "z": 0,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": -4.8,
+        "z": 3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": 4.8,
+        "z": -3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": 4.8,
+        "z": 0,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": 4.8,
+        "z": 3.5,
+        "w": 1.4,
+        "d": 0.85,
+        "height": 1.45
+      },
+      {
+        "x": -4,
+        "z": -4,
+        "w": 2.3,
+        "d": 1.5,
+        "height": 0.16
+      },
+      {
+        "x": 4.9,
+        "z": -3.4,
+        "w": 1.3,
+        "d": 0.8,
+        "height": 2.3
+      },
+      {
+        "id": "save22",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note22",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "press-1491-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "press-1491-evidence-0",
+        "x": -2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9399999845027924
+      },
+      {
+        "id": "press-1491-evidence-1",
+        "x": 2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9399999845027924
+      },
+      {
+        "id": "press-1491-puzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "w": 1.2000000476837158,
+        "d": 0.8500000238418579,
+        "y": 2.384185793236071e-9,
+        "height": 1.2036373591423035
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save22",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note22",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "press-1491-back",
+        "name": "Volver a Imprenta de frontera",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 21
+      },
+      {
+        "id": "press-1491-evidence-0",
+        "name": "Inspeccionar Marca de la matriz",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "press-1491-evidence-1",
+        "name": "Inspeccionar Titular adelantado",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "press-1491-puzzle",
+        "name": "Ordena las planchas y bloquea la tirada falsa.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "press-1491-back",
+        "nearest": {
+          "id": "save22",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        -3.4
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 23,
+    "name": "Casa Veyr de 1610",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4,
+        "z": -3.5,
+        "w": 2.3,
+        "d": 1.1,
+        "height": 1.3
+      },
+      {
+        "id": "save23",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note23",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "veyr-1610-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "veyr-1610-inner",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "veyr-1610-clue",
+        "x": 2.25,
+        "z": -1.6,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save23",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note23",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "veyr-1610-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "veyr-1610-inner",
+        "name": "Entrar en Galería de retratos",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 24
+      },
+      {
+        "id": "veyr-1610-clue",
+        "name": "Recoger Inventario de Inés",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "veyr-1610-return",
+        "nearest": {
+          "id": "save23",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "veyr-1610-inner",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 3.5106979363083917
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 24,
+    "name": "Galería de retratos",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -4,
+        "z": -3.5,
+        "w": 2.3,
+        "d": 1.1,
+        "height": 1.3
+      },
+      {
+        "id": "save24",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note24",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "veyr-1610-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "veyr-1610-evidence-0",
+        "x": -2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9424999821186066
+      },
+      {
+        "id": "veyr-1610-evidence-1",
+        "x": 2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9424999821186066
+      },
+      {
+        "id": "veyr-1610-puzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "w": 1.2000000476837158,
+        "d": 0.8500000238418579,
+        "y": 2.384185793236071e-9,
+        "height": 1.1649999594688416
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save24",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note24",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "veyr-1610-back",
+        "name": "Volver a Casa Veyr de 1610",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 23
+      },
+      {
+        "id": "veyr-1610-evidence-0",
+        "name": "Inspeccionar Fecha del inventario",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "veyr-1610-evidence-1",
+        "name": "Inspeccionar Huella tras el retrato",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "veyr-1610-puzzle",
+        "name": "Confronta inventario y genealogía para romper el asiento falso.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "veyr-1610-back",
+        "nearest": {
+          "id": "save24",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        -3.4
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 25,
+    "name": "Teatro de autómatas",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "id": "theatre-proscenium-west",
+        "x": -6.8,
+        "z": -4.65,
+        "w": 0.35,
+        "d": 0.5,
+        "y": 1.205,
+        "height": 3.45
+      },
+      {
+        "id": "theatre-proscenium-east",
+        "x": 6.8,
+        "z": -4.65,
+        "w": 0.35,
+        "d": 0.5,
+        "y": 1.205,
+        "height": 3.45
+      },
+      {
+        "x": -5,
+        "z": -5.1,
+        "w": 2.5,
+        "d": 2.4,
+        "height": 0.7
+      },
+      {
+        "x": 5,
+        "z": -5.1,
+        "w": 2.5,
+        "d": 2.4,
+        "height": 0.7
+      },
+      {
+        "x": -5,
+        "z": 1,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 5,
+        "z": 1,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": -5,
+        "z": 3,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 5,
+        "z": 3,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": -5,
+        "z": 5,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 5,
+        "z": 5,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": -4.8,
+        "z": -0.6,
+        "w": 1.3,
+        "d": 0.8,
+        "height": 2.3
+      },
+      {
+        "id": "save25",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note25",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "theatre-1786-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "theatre-1786-inner",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "theatre-1786-clue",
+        "x": 2.25,
+        "z": -1.6,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save25",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note25",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "theatre-1786-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "theatre-1786-inner",
+        "name": "Entrar en Tramoya de las voces",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 26
+      },
+      {
+        "id": "theatre-1786-clue",
+        "name": "Recoger Partitura de poleas",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "theatre-1786-return",
+        "nearest": {
+          "id": "save25",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "theatre-1786-inner",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 3.75
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 26,
+    "name": "Tramoya de las voces",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "id": "theatre-proscenium-west",
+        "x": -6.8,
+        "z": -4.65,
+        "w": 0.35,
+        "d": 0.5,
+        "y": 1.205,
+        "height": 3.45
+      },
+      {
+        "id": "theatre-proscenium-east",
+        "x": 6.8,
+        "z": -4.65,
+        "w": 0.35,
+        "d": 0.5,
+        "y": 1.205,
+        "height": 3.45
+      },
+      {
+        "x": -5,
+        "z": -5.1,
+        "w": 2.5,
+        "d": 2.4,
+        "height": 0.7
+      },
+      {
+        "x": 5,
+        "z": -5.1,
+        "w": 2.5,
+        "d": 2.4,
+        "height": 0.7
+      },
+      {
+        "x": -5,
+        "z": 1,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 5,
+        "z": 1,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": -5,
+        "z": 3,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 5,
+        "z": 3,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": -5,
+        "z": 5,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 5,
+        "z": 5,
+        "w": 1.15,
+        "d": 0.55,
+        "height": 1.2
+      },
+      {
+        "x": 4.9,
+        "z": -3.4,
+        "w": 1.3,
+        "d": 0.8,
+        "height": 2.3
+      },
+      {
+        "id": "save26",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note26",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "theatre-1786-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "theatre-1786-evidence-0",
+        "x": -2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9330000150203706
+      },
+      {
+        "id": "theatre-1786-evidence-1",
+        "x": 2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9330000150203706
+      },
+      {
+        "id": "theatre-1786-puzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "w": 1.2000000476837158,
+        "d": 0.8500000238418579,
+        "y": 2.384185793236071e-9,
+        "height": 1.1789711689949036
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save26",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note26",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "theatre-1786-back",
+        "name": "Volver a Teatro de autómatas",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 25
+      },
+      {
+        "id": "theatre-1786-evidence-0",
+        "name": "Inspeccionar Polea grave",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "theatre-1786-evidence-1",
+        "name": "Inspeccionar Contrapeso mudo",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "theatre-1786-puzzle",
+        "name": "Alinea los contrapesos según la partitura.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "theatre-1786-back",
+        "nearest": {
+          "id": "save26",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        -3.4
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 27,
+    "name": "Archivo fotográfico",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5,
+        "z": -4,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -5,
+        "z": -1,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -5,
+        "z": 2,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -5,
+        "z": 5,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": -4,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": -1,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": 2,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": 5,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -4,
+        "z": -4,
+        "w": 1.7,
+        "d": 1,
+        "height": 1.6
+      },
+      {
+        "x": -4.8,
+        "z": -0.6,
+        "w": 1.3,
+        "d": 0.8,
+        "height": 2.3
+      },
+      {
+        "id": "save27",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note27",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "photo-1899-return",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "photo-1899-inner",
+        "x": 0,
+        "z": -5.969999997317791,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "photo-1899-clue",
+        "x": 2.25,
+        "z": -1.6,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.30000000461936
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save27",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note27",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "photo-1899-return",
+        "name": "Regresar a 1927",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 0
+      },
+      {
+        "id": "photo-1899-inner",
+        "name": "Entrar en Cuarto de revelado",
+        "kind": "door",
+        "x": 0,
+        "z": -6.1,
+        "level": 0,
+        "target": 28
+      },
+      {
+        "id": "photo-1899-clue",
+        "name": "Recoger Negativo anterior",
+        "kind": "item",
+        "x": 2.25,
+        "z": -1.6,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "photo-1899-return",
+        "nearest": {
+          "id": "save27",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      },
+      {
+        "id": "photo-1899-inner",
+        "nearest": {
+          "id": "mueble o columna",
+          "distance": 3.533058165385903
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        0
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  },
+  {
+    "room": 28,
+    "name": "Cuarto de revelado",
+    "floorBounds": {
+      "x": [
+        -8,
+        8
+      ],
+      "z": [
+        -8,
+        8
+      ]
+    },
+    "referenceSpawn": {
+      "x": 0,
+      "z": 5.2
+    },
+    "upperReferenceSpawn": null,
+    "representativeCamera": {
+      "x": 3.2,
+      "z": 5.7
+    },
+    "actorRadius": 0.34,
+    "obstacles": [
+      {
+        "x": 0,
+        "z": -8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 8,
+        "z": 0,
+        "w": 0.35,
+        "d": 16,
+        "height": 5
+      },
+      {
+        "x": 0,
+        "z": 8,
+        "w": 16,
+        "d": 0.35,
+        "height": 5
+      },
+      {
+        "x": -6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": -5,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": 6.8,
+        "z": 3,
+        "w": 0.4,
+        "d": 0.4,
+        "height": 3.2
+      },
+      {
+        "x": -5,
+        "z": -4,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -5,
+        "z": -1,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -5,
+        "z": 2,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -5,
+        "z": 5,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": -4,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": -1,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": 2,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": 5,
+        "z": 5,
+        "w": 1.25,
+        "d": 0.7,
+        "height": 1.4
+      },
+      {
+        "x": -4,
+        "z": -4,
+        "w": 1.7,
+        "d": 1,
+        "height": 1.6
+      },
+      {
+        "x": 4.9,
+        "z": -3.4,
+        "w": 1.3,
+        "d": 0.8,
+        "height": 2.3
+      },
+      {
+        "id": "save28",
+        "x": -2,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 1.1930268899022416
+      },
+      {
+        "id": "note28",
+        "x": -3.5,
+        "z": 5,
+        "w": 0.949999988079071,
+        "d": 0.699999988079071,
+        "y": -5.9604645663569045e-9,
+        "height": 0.9810000121593476
+      },
+      {
+        "id": "photo-1899-back",
+        "x": 0,
+        "z": 6.230000002682209,
+        "w": 1.899999976158142,
+        "d": 0.48000000417232513,
+        "y": 2.3841858265427618e-8,
+        "height": 2.799999928474426
+      },
+      {
+        "id": "photo-1899-evidence-0",
+        "x": -2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9590525496006013
+      },
+      {
+        "id": "photo-1899-evidence-1",
+        "x": 2.4,
+        "z": 1.15,
+        "w": 0.9599999785423279,
+        "d": 0.6600000262260437,
+        "y": 1.3113021835042815e-8,
+        "height": 0.9590525496006013
+      },
+      {
+        "id": "photo-1899-puzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "w": 1.2000000476837158,
+        "d": 0.8500000238418579,
+        "y": 2.384185793236071e-9,
+        "height": 1.0924999690055848
+      }
+    ],
+    "upperObstacles": [],
+    "objects": [
+      {
+        "id": "save28",
+        "name": "Escritorio de memoria · guardar",
+        "kind": "save",
+        "x": -2,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "note28",
+        "name": "Leer documento",
+        "kind": "note",
+        "x": -3.5,
+        "z": 5,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "photo-1899-back",
+        "name": "Volver a Archivo fotográfico",
+        "kind": "door",
+        "x": 0,
+        "z": 6.1,
+        "level": 0,
+        "target": 27
+      },
+      {
+        "id": "photo-1899-evidence-0",
+        "name": "Inspeccionar Bisagras de la placa",
+        "kind": "lateEvidence",
+        "x": -2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "photo-1899-evidence-1",
+        "name": "Inspeccionar Baño de fijador",
+        "kind": "lateEvidence",
+        "x": 2.4,
+        "z": 1.15,
+        "level": 0,
+        "target": null
+      },
+      {
+        "id": "photo-1899-puzzle",
+        "name": "Superpón los negativos y fija la puerta verdadera.",
+        "kind": "latePuzzle",
+        "x": -2.4,
+        "z": -2.2,
+        "level": 0,
+        "target": null
+      }
+    ],
+    "accessClearance": [
+      {
+        "id": "photo-1899-back",
+        "nearest": {
+          "id": "save28",
+          "distance": 1.6994484479148266
+        },
+        "maneuverAreaClear": true
+      }
+    ],
+    "stairApproach": [],
+    "enemyReference": {
+      "x": 3,
+      "z": -3
+    },
+    "lights": [
+      [
+        -6.8,
+        3.1,
+        -5
+      ],
+      [
+        -6.8,
+        3.1,
+        3
+      ],
+      [
+        6.8,
+        3.1,
+        -5
+      ],
+      [
+        6.8,
+        3.1,
+        3
+      ],
+      [
+        0,
+        3.1,
+        -3.4
+      ]
+    ],
+    "basis": "Escena con todos los capítulos desbloqueados; plano geométrico, no captura ni partida jugada."
+  }
+]

@@ -44,14 +44,13 @@ describe("cantera de Idris, año 1092", () => {
       (object) => object.id === "quarry-portal",
     );
     expect(portal?.target).toBe(17);
-    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(false);
+    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(true);
+    expect(reachableFromEntrance(mansion.obstacles, portal!)).toBe(true);
     mansion.dispose();
     for (const room of [17, 18]) {
       const world = new World(room, [], [], []);
       for (const object of world.objects)
-        expect(blocked(object.x, object.z, world.obstacles), object.id).toBe(
-          false,
-        );
+        expect(object.collider, object.id).toBeDefined();
       for (const object of world.objects)
         expect(reachableFromEntrance(world.obstacles, object), object.id).toBe(
           true,

@@ -60,7 +60,9 @@ export class CinematicCamera {
         eye = new T.Vector3(3.7, 2.55, 2.2);
       } else if (z > 1) {
         this.zone = "entrada";
-        eye = new T.Vector3(6.8, 2.35, 7.25);
+        // The old oblique eye sat inside the east curtain and hid half the
+        // rebuilt hall. The central entrance axis frames both side arcades.
+        eye = new T.Vector3(-0.55, 2.35, 7.15);
       } else if (z > -3.8) {
         this.zone = "galería";
         eye = new T.Vector3(-5.3, 2.1, 3.4);

@@ -47,9 +47,10 @@ it("separa la pista del rellano de los objetos de la planta baja", () => {
   expect(world.nearest(4.35, -6.1, 1.9, 0)?.id).not.toBe("gallery-chart");
   const portal = world.objects.find((object) => object.id === "roman-portal")!;
   expect(mansionFloorHeight(portal.x, portal.z)).toBe(0);
-  expect(blocked(portal.x, portal.z, world.obstacles)).toBe(false);
-  expect(blocked(6.8, 3, world.obstacles, 0.2)).toBe(false);
-  expect(blocked(6.8, 0.7, world.obstacles, 0.2)).toBe(true);
+  expect(blocked(portal.x, portal.z, world.obstacles)).toBe(true);
+  expect(blocked(5.4, 3, world.obstacles, 0.2)).toBe(false);
+  expect(blocked(6.8, 0.7, world.obstacles, 0.2)).toBe(false);
+  expect(blocked(6.8, 1.2, world.obstacles, 0.2)).toBe(true);
   expect(world.nearest(portal.x, portal.z, 1.9, 0)?.id).toBe("roman-portal");
   const camera = new T.PerspectiveCamera();
   const director = new CinematicCamera();

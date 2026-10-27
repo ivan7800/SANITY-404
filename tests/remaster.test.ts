@@ -19,13 +19,13 @@ it("la cámara acorta una línea bloqueada sin atravesar el obstáculo", () => {
   control.update(camera, 0, 5, 0, 0, false);
   const original = camera.position.distanceTo(new T.Vector3(0, 1.25, 5));
   control.update(camera, 0, 5, 0, 0, false, [
-    { x: 3.4, z: 6.125, w: 1, d: 1, height: 5 },
+    { x: -0.3, z: 6.1, w: 0.4, d: 0.4, height: 5 },
   ]);
   expect(control.corrected).toBe(true);
   expect(camera.position.distanceTo(new T.Vector3(0, 1.25, 5))).toBeLessThan(
     original,
   );
-  expect(camera.position.x).toBeLessThan(2.9);
+  expect(camera.position.z).toBeLessThan(5.9);
 });
 it("las calidades bajan resolución, sombras y partículas sin alterar las reglas", () => {
   expect(qualityProfile(1).shadows).toBe(false);
@@ -69,10 +69,10 @@ it("la corrección no termina dentro de una columna cercana al personaje", () =>
   const c = new CinematicCamera(),
     camera = new T.PerspectiveCamera();
   c.update(camera, 0, 5, 0, 0, false, [
-    { x: 0.65, z: 5.2, w: 0.3, d: 0.4, height: 3 },
+    { x: -0.2, z: 5.8, w: 0.3, d: 0.4, height: 3 },
   ]);
   expect(c.corrected).toBe(true);
-  expect(camera.position.x).toBeLessThan(0.5);
+  expect(camera.position.z).toBeLessThan(5.5);
 });
 
 it("la cabeza del protagonista mantiene proporciones adultas respecto al cuerpo", () => {

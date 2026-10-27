@@ -32,6 +32,25 @@ export class Input {
       if (e.buttons === 2) this.mouse -= e.movementX * 0.005;
     });
     canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+    (typeof document === "undefined"
+      ? []
+      : document.querySelectorAll<HTMLButtonElement>("[data-touch-key]")
+    ).forEach((button) => {
+      const key = button.dataset.touchKey!;
+      const release = (event: PointerEvent) => {
+        event.preventDefault();
+        this.keys.delete(key);
+      };
+      button.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        button.setPointerCapture(event.pointerId);
+        if (!this.keys.has(key)) this.pressed.add(key);
+        this.keys.add(key);
+      });
+      button.addEventListener("pointerup", release);
+      button.addEventListener("pointercancel", release);
+      button.addEventListener("lostpointercapture", release);
+    });
   }
   clear() {
     this.keys.clear();

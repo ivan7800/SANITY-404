@@ -1,13 +1,9 @@
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
+import { browserLaunchOptions } from "./browser-launch.mjs";
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
-  headless: true,
-  args: [
-    "--no-sandbox",
-    "--use-angle=swiftshader",
-    "--enable-unsafe-swiftshader",
-  ],
+  ...browserLaunchOptions(),
 });
 const page = await browser.newPage({ viewport: { width: 480, height: 320 } }),
   errors = [];

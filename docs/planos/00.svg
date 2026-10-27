@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 660" role="img" aria-label="Plano técnico de Mansión Veyr">
+<rect width="920" height="660" fill="#101817"/>
+<text x="32" y="26" fill="#e6d8b9" font-family="sans-serif" font-size="19">00 · Mansión Veyr</text>
+<text x="32" y="46" fill="#8fa59c" font-family="sans-serif" font-size="11">Plano de colisiones y objetos · escala 36 px/m · actor r=0.34 m · z− arriba</text>
+<rect x="32" y="32" width="576" height="576" fill="#26332e" stroke="#9a936f"/>
+<path d="M32 32V608 M32 32H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M104 32V608 M32 104H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M176 32V608 M32 176H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M248 32V608 M32 248H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M320 32V608 M32 320H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M392 32V608 M32 392H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M464 32V608 M32 464H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M536 32V608 M32 536H608" stroke="#53625b" stroke-opacity=".35"/>
+<path d="M608 32V608 M32 608H608" stroke="#53625b" stroke-opacity=".35"/>
+<rect x="453.92" y="86.71999999999997" width="92.16" height="177.48000000000002" fill="#a47748" fill-opacity=".18" stroke="#b28c58" stroke-dasharray="5 3"><title>Escalera y rellano</title></rect>
+<rect x="32" y="25.69999999999999" width="576" height="12.6" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 16.00 × 0.35 m</title></rect>
+<rect x="25.69999999999999" y="32" width="12.6" height="576" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 0.35 × 16.00 m</title></rect>
+<rect x="601.7" y="32" width="12.6" height="576" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 0.35 × 16.00 m</title></rect>
+<rect x="32" y="601.7" width="576" height="12.6" fill="#594e43" stroke="#a08c69" opacity="0.8"><title>Obstáculo arquitectónico · 16.00 × 0.35 m</title></rect>
+<rect x="68" y="68" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="68" y="471.20000000000005" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="557.6" y="132.79999999999998" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="557.6" y="356" width="14.4" height="14.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.40 × 0.40 m</title></rect>
+<rect x="443.48" y="134.95999999999998" width="5.76" height="136.79999999999998" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.16 × 3.80 m</title></rect>
+<rect x="550.76" y="82.94" width="5.76" height="189" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 0.16 × 5.25 m</title></rect>
+<rect x="446.9" y="77.35999999999999" width="106.2" height="5.76" fill="#516057" stroke="#90a392" opacity="0.88"><title>Obstáculo arquitectónico · 2.95 × 0.16 m</title></rect>
+<rect x="359.24" y="560.84" width="7.92" height="33.839999999999996" fill="#516057" stroke="#90a392" opacity="0.88"><title>south-memory-pier-0 · 0.22 × 0.94 m</title></rect>
+<rect x="452.84000000000003" y="560.84" width="7.92" height="33.839999999999996" fill="#516057" stroke="#90a392" opacity="0.88"><title>south-memory-pier-1 · 0.22 × 0.94 m</title></rect>
+<rect x="537.44" y="560.84" width="7.92" height="33.839999999999996" fill="#516057" stroke="#90a392" opacity="0.88"><title>south-memory-pier-2 · 0.22 × 0.94 m</title></rect>
+<rect x="158" y="233.6" width="108" height="57.6" fill="#516057" stroke="#90a392" opacity="0.88"><title>hall-writing-desk · 3.00 × 1.60 m</title></rect>
+<rect x="453.20000000000005" y="324.5" width="54" height="59.4" fill="#516057" stroke="#90a392" opacity="0.88"><title>hall-armchair · 1.50 × 1.65 m</title></rect>
+<rect x="230.90000021457672" y="487.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>save0 · 0.95 × 0.70 m</title></rect>
+<rect x="104.90000021457672" y="487.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>note0 · 0.95 × 0.70 m</title></rect>
+<rect x="166.10000021457674" y="325.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>key · 0.95 × 0.70 m</title></rect>
+<rect x="540.5000002145767" y="487.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>tonic0 · 0.95 × 0.70 m</title></rect>
+<rect x="285.80000042915344" y="64.04000002145767" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>next · 1.90 × 0.48 m</title></rect>
+<rect x="379.40000042915347" y="557.2400000214577" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>press-1491-portal · 1.90 × 0.48 m</title></rect>
+<rect x="465.80000042915344" y="557.2400000214577" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>veyr-1610-portal · 1.90 × 0.48 m</title></rect>
+<rect x="134.60000042915343" y="179.2400000214577" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>theatre-1786-portal · 1.90 × 0.48 m</title></rect>
+<rect x="170.60000042915343" y="103.64000002145767" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>photo-1899-portal · 1.90 × 0.48 m</title></rect>
+<rect x="533.479999613762" y="394.3399999141693" width="12.96000051498413" height="67.32000017166138" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>roman-portal · 0.36 × 1.87 m</title></rect>
+<rect x="539.2400000214577" y="264.2000004291534" width="17.280000150203705" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>mosaic-portal · 0.48 × 1.90 m</title></rect>
+<rect x="83.4799998283386" y="375.80000042915344" width="17.280000150203705" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>coast-portal · 0.48 × 1.90 m</title></rect>
+<rect x="83.4799998283386" y="195.80000042915344" width="17.280000150203705" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>stars-portal · 0.48 × 1.90 m</title></rect>
+<rect x="83.4799998283386" y="285.80000042915344" width="17.280000150203705" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>quarry-portal · 0.48 × 1.90 m</title></rect>
+<rect x="380.8400000214577" y="167.00000042915346" width="17.28000015020372" height="68.39999914169312" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>hospital-portal · 0.48 × 1.90 m</title></rect>
+<rect x="77.00000042915346" y="128.84000002145766" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>medieval-portal · 1.90 × 0.48 m</title></rect>
+<rect x="248.90000021457672" y="152.60000021457674" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>legacy-desk · 0.95 × 0.70 m</title></rect>
+<rect x="298.03999948501587" y="402.79999978542327" width="43.92000102996826" height="28.800000429153442" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>ritual-table · 1.22 × 0.80 m</title></rect>
+<rect x="357.80000042915344" y="107.24000002145769" width="68.39999914169312" height="17.280000150203705" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>legacy-passage · 1.90 × 0.48 m</title></rect>
+<rect x="410.9000002145767" y="451.4000002145767" width="34.19999957084656" height="25.199999570846558" fill="#7b6847" stroke="#90a392" opacity="0.88"><title>mansion-puzzle · 0.95 × 0.70 m</title></rect>
+<circle cx="248" cy="500" r="3.5" fill="#e5d4a7"><title>save0: Escritorio de memoria · guardar</title></circle>
+<circle cx="122" cy="500" r="3.5" fill="#e5d4a7"><title>note0: Leer documento</title></circle>
+<circle cx="183.20000000000002" cy="338" r="3.5" fill="#e5d4a7"><title>key: Recoger llave de latón</title></circle>
+<circle cx="557.6" cy="500" r="3.5" fill="#e5d4a7"><title>tonic0: Recoger tónico</title></circle>
+<circle cx="320" cy="68" r="5" fill="#e8a869"><title>next: Abrir · Biblioteca prohibida</title></circle>
+<circle cx="413.6" cy="561.2" r="5" fill="#e8a869"><title>press-1491-portal: Cruzar hacia Imprenta de frontera · año 1491</title></circle>
+<circle cx="500" cy="561.2" r="5" fill="#e8a869"><title>veyr-1610-portal: Cruzar hacia Casa Veyr de 1610 · año 1610</title></circle>
+<circle cx="168.79999999999998" cy="183.20000000000002" r="5" fill="#e8a869"><title>theatre-1786-portal: Cruzar hacia Teatro de autómatas · año 1786</title></circle>
+<circle cx="204.8" cy="107.6" r="5" fill="#e8a869"><title>photo-1899-portal: Cruzar hacia Archivo fotográfico · año 1899</title></circle>
+<circle cx="543.2" cy="428" r="5" fill="#e8a869"><title>roman-portal: Atravesar la grieta romana · año 189</title></circle>
+<circle cx="543.2" cy="298.4" r="5" fill="#e8a869"><title>mosaic-portal: Seguir el molde hacia el taller · año 312</title></circle>
+<circle cx="96.79999999999998" cy="410" r="5" fill="#e8a869"><title>coast-portal: Cruzar hacia el archivo costero · año 537</title></circle>
+<circle cx="96.79999999999998" cy="230" r="5" fill="#e8a869"><title>stars-portal: Seguir la carta astral · año 783</title></circle>
+<circle cx="96.79999999999998" cy="320" r="5" fill="#e8a869"><title>quarry-portal: Seguir las marcas de la cantera · año 1092</title></circle>
+<circle cx="384.8" cy="201.2" r="5" fill="#e8a869"><title>hospital-portal: Seguir el cuaderno de Oona · año 1217</title></circle>
+<circle cx="111.20000000000002" cy="132.79999999999998" r="5" fill="#e8a869"><title>medieval-portal: Cruzar hacia el claustro de 1348</title></circle>
+<circle cx="266" cy="165.20000000000002" r="3.5" fill="#e5d4a7"><title>legacy-desk: Reconstruir la memoria de las tres épocas</title></circle>
+<circle cx="320" cy="417.2" r="3.5" fill="#e5d4a7"><title>ritual-table: Leer la mesa de los tres signos</title></circle>
+<circle cx="392" cy="111.20000000000002" r="5" fill="#e8a869"><title>legacy-passage: Atravesar el pasaje temporal · archivo Veyr</title></circle>
+<circle cx="428" cy="464" r="3.5" fill="#e5d4a7"><title>mansion-puzzle: Examinar caja astronómica</title></circle>
+<circle cx="476.6" cy="100.4" r="3.5" fill="#e5d4a7"><title>gallery-chart: Examinar carta astral del rellano</title></circle>
+<circle cx="539.6" cy="557.6" r="3.5" fill="#e5d4a7"><title>mansion-echo-roman: Examinar la junta de lucius · 189</title></circle>
+<circle cx="100.4" cy="474.79999999999995" r="3.5" fill="#e5d4a7"><title>mansion-echo-emile: Examinar la puerta fotografiada · 1899</title></circle>
+<circle cx="320" cy="507.20000000000005" r="6" fill="#65c4aa"><title>Referencia de aparición para el plano</title></circle>
+<circle cx="320" cy="212" r="5" fill="#bd685e"><title>Aparición genérica del enemigo; la mansión también tiene amenazas dinámicas</title></circle>
+<circle cx="300.2" cy="577.4000000000001" r="5" fill="#78b9df"><title>Cámara representativa</title></circle>
+<text x="627" y="75" fill="#e6d8b9" font-family="sans-serif" font-size="15">Accesos y objetivos</text>
+<text x="627" y="98" fill="#8fa59c" font-family="sans-serif" font-size="11">● puerta   ● objeto   ● aparición   ● enemigo   ● cámara</text>
+<text x="627" y="120" fill="#d4c69f" font-family="sans-serif" font-size="11">note0 (-5.5, 5.0)</text>
+<text x="627" y="139" fill="#e8a869" font-family="sans-serif" font-size="11">next (0.0, -7.0)</text>
+<text x="627" y="158" fill="#e8a869" font-family="sans-serif" font-size="11">press-1491-portal (2.6, 6.7)</text>
+<text x="627" y="177" fill="#e8a869" font-family="sans-serif" font-size="11">veyr-1610-portal (5.0, 6.7)</text>
+<text x="627" y="196" fill="#e8a869" font-family="sans-serif" font-size="11">theatre-1786-portal (-4.2, -3.8)</text>
+<text x="627" y="215" fill="#e8a869" font-family="sans-serif" font-size="11">photo-1899-portal (-3.2, -5.9)</text>
+<text x="627" y="234" fill="#e8a869" font-family="sans-serif" font-size="11">roman-portal (6.2, 3.0)</text>
+<text x="627" y="253" fill="#e8a869" font-family="sans-serif" font-size="11">mosaic-portal (6.2, -0.6)</text>
+<text x="627" y="272" fill="#e8a869" font-family="sans-serif" font-size="11">coast-portal (-6.2, 2.5)</text>
+<text x="627" y="291" fill="#e8a869" font-family="sans-serif" font-size="11">stars-portal (-6.2, -2.5)</text>
+<text x="627" y="310" fill="#e8a869" font-family="sans-serif" font-size="11">quarry-portal (-6.2, 0.0)</text>
+<text x="627" y="329" fill="#e8a869" font-family="sans-serif" font-size="11">hospital-portal (1.8, -3.3)</text>
+<text x="627" y="348" fill="#e8a869" font-family="sans-serif" font-size="11">medieval-portal (-5.8, -5.2)</text>
+<text x="627" y="367" fill="#e8a869" font-family="sans-serif" font-size="11">legacy-passage (2.0, -5.8)</text>
+<text x="627" y="620" fill="#8fa59c" font-family="sans-serif" font-size="10">Geometría reconstruida para análisis; pendiente de jugar en Chromium.</text>
+</svg>

@@ -5,16 +5,18 @@ import { eligibleSanityEvents } from "../src/systems/sanity";
 import { aurelia } from "../src/world/aurelia";
 import { createEnemy, enemyKindForRoom } from "../src/world/enemies";
 import { World } from "../src/world/scene";
+import { reachableFromEntrance } from "./room-navigation";
 
 describe("taller de mosaicos, año 312", () => {
   it("mantiene accesibles puertas, pista, puzle y molde en ambas salas", () => {
     for (const room of [11, 12]) {
       const world = new World(room, [], [], []);
-      for (const object of world.objects)
-        expect(
-          blocked(object.x, object.z, world.obstacles, 0.34),
-          object.id,
-        ).toBe(false);
+      for (const object of world.objects) {
+        expect(object.collider, object.id).toBeDefined();
+        expect(reachableFromEntrance(world.obstacles, object), object.id).toBe(
+          true,
+        );
+      }
       if (room === 12)
         expect(
           world.scene.getObjectByName("mosaic-restored-face")?.visible,

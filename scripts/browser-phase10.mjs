@@ -1,18 +1,14 @@
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { chromium } from "@playwright/test";
+import { browserLaunchOptions } from "./browser-launch.mjs";
 
 const bundledChrome = chromium.executablePath();
 const browser = await chromium.launch({
   executablePath:
     process.env.CHROME_PATH ||
     (existsSync(bundledChrome) ? bundledChrome : "/usr/bin/google-chrome"),
-  headless: true,
-  args: [
-    "--no-sandbox",
-    "--use-angle=swiftshader",
-    "--enable-unsafe-swiftshader",
-  ],
+  ...browserLaunchOptions(),
 });
 try {
   const page = await browser.newPage({

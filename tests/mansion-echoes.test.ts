@@ -19,7 +19,14 @@ describe("historical changes to the 1927 mansion", () => {
     for (const room of new Set(mansionEchoes.map((echo) => echo.room))) {
       const base = new World(room, [], [], []);
       const world = new World(room, items, [], []);
-      expect(world.obstacles).toEqual(base.obstacles);
+      expect(world.obstacles.filter((o) => !o.id)).toEqual(
+        base.obstacles.filter((o) => !o.id),
+      );
+      // Wall reliefs are visual evidence mounted flush to the architecture.
+      // They must not add invisible obstacles to the playable floor.
+      expect(
+        world.obstacles.filter((o) => o.id?.startsWith("mansion-echo-")),
+      ).toHaveLength(0);
       for (const echo of activeMansionEchoes(items, room)) {
         const object = world.objects.find(
           (entry) => entry.id === `mansion-echo-${echo.id}`,

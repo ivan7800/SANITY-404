@@ -45,7 +45,7 @@ describe("1491, 1610, 1786 y 1899", () => {
       );
       expect(portal?.target).toBe(chapter.room);
       expect(blocked(portal!.x, portal!.z, mansion.obstacles), portal!.id).toBe(
-        false,
+        true,
       );
       expect(
         reachableFromEntrance(mansion.obstacles, portal!, { x: 0, z: 4.4 }),
@@ -60,9 +60,7 @@ describe("1491, 1610, 1786 y 1899", () => {
           ),
         ).toBeDefined();
         for (const object of world.objects) {
-          expect(blocked(object.x, object.z, world.obstacles), object.id).toBe(
-            false,
-          );
+          expect(object.collider, object.id).toBeDefined();
           expect(
             reachableFromEntrance(world.obstacles, object),
             object.id,

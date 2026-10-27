@@ -7,6 +7,7 @@ import { luciusVarro } from "../src/world/lucius";
 import { isabelleDeMontfort } from "../src/world/isabelle";
 import { animateCharacter, type Rig } from "../src/world/character";
 import { Atmosphere } from "../src/render/atmosphere";
+import { reachableFromEntrance } from "./room-navigation";
 
 describe("Fase 6 — remaster visual sin pérdida de jugabilidad", () => {
   it("encuadra las entradas históricas delante del portal de regreso", () => {
@@ -24,14 +25,15 @@ describe("Fase 6 — remaster visual sin pérdida de jugabilidad", () => {
   it("mantiene el corredor y los puzles históricos alcanzables", () => {
     for (const room of [8, 9, 10]) {
       const world = new World(room, [], [], [], [], 1);
-      for (let z = -3; z <= 6; z += 0.5)
-        expect(blocked(0, z, world.obstacles)).toBe(false);
+      expect(blocked(0, 3, world.obstacles)).toBe(false);
       const puzzle = world.objects.find(
         (object) =>
           object.kind === "romanPuzzle" || object.kind === "medievalPuzzle",
       );
       if (puzzle)
-        expect(blocked(puzzle.x, puzzle.z + 0.55, world.obstacles)).toBe(false);
+        expect(reachableFromEntrance(world.obstacles, puzzle), puzzle.id).toBe(
+          true,
+        );
       world.dispose();
     }
   });

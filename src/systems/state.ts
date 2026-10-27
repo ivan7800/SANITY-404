@@ -1,6 +1,13 @@
 import { newPhase2, validPhase2, type Phase2Progress } from "./phase2";
 import { newCampaign, validCampaign, type CampaignProgress } from "./campaign";
 import { lateChapters } from "./late-chapters";
+export {
+  ACTOR_RADIUS,
+  blocked,
+  clearAxisLeg,
+  move,
+  type Obstacle,
+} from "./collision";
 export interface State {
   version: 2;
   room: number;
@@ -39,40 +46,6 @@ export const fresh = (): State => ({
 });
 export const clamp = (n: number, min = 0, max = 100) =>
   Math.max(min, Math.min(max, n));
-export interface Obstacle {
-  height?: number;
-  y?: number;
-  x: number;
-  z: number;
-  w: number;
-  d: number;
-}
-export function blocked(
-  x: number,
-  z: number,
-  obstacles: Obstacle[],
-  radius = 0.34,
-) {
-  return (
-    Math.abs(x) > 8 - radius ||
-    Math.abs(z) > 8 - radius ||
-    obstacles.some(
-      (o) =>
-        Math.abs(x - o.x) < o.w / 2 + radius &&
-        Math.abs(z - o.z) < o.d / 2 + radius,
-    )
-  );
-}
-export function move(
-  x: number,
-  z: number,
-  dx: number,
-  dz: number,
-  obstacles: Obstacle[],
-) {
-  const nx = blocked(x + dx, z, obstacles) ? x : x + dx;
-  return { x: nx, z: blocked(nx, z + dz, obstacles) ? z : z + dz };
-}
 export function parseSave(raw: string): State | null {
   try {
     const s = JSON.parse(raw);

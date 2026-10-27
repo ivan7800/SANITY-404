@@ -34,9 +34,15 @@ it("sube, visita ambas salas superiores y baja por la misma escalera", () => {
       );
       actor = next;
     }
-    expect(Math.hypot(actor.x - targetX, actor.z - targetZ)).toBeLessThan(0.14);
+    expect(
+      Math.hypot(actor.x - targetX, actor.z - targetZ),
+      JSON.stringify({ actor, targetX, targetZ }),
+    ).toBeLessThan(0.14);
   };
-  walk(5, -5.8);
+  walk(5.3, -5.8);
+  walk(5.3, -5.2);
+  walk(3.3, -5.2);
+  walk(3.3, -5.8);
   expect(actor.level).toBe(1);
   expect(mansionFloorHeight(actor.x, actor.z, actor.level)).toBe(2.64);
   walk(-5, -5.8);
@@ -52,7 +58,10 @@ it("sube, visita ambas salas superiores y baja por la misma escalera", () => {
     "upper-observatory",
   );
   walk(-1.3, -5.8);
-  walk(5, -5.8);
+  walk(3.3, -5.8);
+  walk(3.3, -5.2);
+  walk(5.3, -5.2);
+  walk(5.3, -5.8);
   walk(5, -1.5);
   expect(actor.level).toBe(0);
   expect(mansionFloorHeight(actor.x, actor.z, actor.level)).toBeLessThan(0.08);
@@ -75,8 +84,8 @@ it("aísla las interacciones por altura y migra guardados anteriores", () => {
   const world = new World(0, [], [], []);
   expect(world.nearest(-5, -3, 1.9, 0)?.id).not.toBe("upper-portraits");
   expect(world.nearest(-5, -3, 1.9, 2.64)?.id).toBe("upper-portraits");
-  expect(world.nearest(2, -5.8, 1.9, 2.64)?.id).toBe("upper-save");
-  expect(world.nearest(2, -5.8, 1.9, 0)?.id).not.toBe("upper-save");
+  expect(world.nearest(-5.8, -5.8, 1.9, 2.64)?.id).toBe("upper-save");
+  expect(world.nearest(-5.8, -5.8, 1.9, 0)?.id).not.toBe("upper-save");
   const old = fresh();
   old.x = 5;
   old.z = -5.8;

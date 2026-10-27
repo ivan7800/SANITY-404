@@ -13,6 +13,7 @@ import {
 } from "../src/systems/campaign";
 import { blocked, fresh, parseSave } from "../src/systems/state";
 import { World } from "../src/world/scene";
+import { reachableFromEntrance } from "./room-navigation";
 import { eligibleSanityEvents } from "../src/systems/sanity";
 
 describe("campaña histórica", () => {
@@ -186,7 +187,8 @@ describe("campaña histórica", () => {
       (object) => object.id === "mosaic-portal",
     );
     expect(portal?.target).toBe(11);
-    expect(blocked(portal!.x, portal!.z, openMansion.obstacles)).toBe(false);
+    expect(blocked(portal!.x, portal!.z, openMansion.obstacles)).toBe(true);
+    expect(reachableFromEntrance(openMansion.obstacles, portal!)).toBe(true);
     openMansion.dispose();
     expect(mosaicObjective(old)).toMatch(/registro/);
     old.room = 11;

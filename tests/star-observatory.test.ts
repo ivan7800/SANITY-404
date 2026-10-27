@@ -10,6 +10,7 @@ import { eligibleSanityEvents } from "../src/systems/sanity";
 import { createEnemy, enemyKindForRoom } from "../src/world/enemies";
 import { samira } from "../src/world/samira";
 import { World, character } from "../src/world/scene";
+import { reachableFromEntrance } from "./room-navigation";
 
 describe("observatorio de Samira, año 783", () => {
   it("enlaza dos salas accesibles después del archivo costero", () => {
@@ -29,14 +30,17 @@ describe("observatorio de Samira, año 783", () => {
       (object) => object.id === "stars-portal",
     );
     expect(portal?.target).toBe(15);
-    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(false);
+    expect(blocked(portal!.x, portal!.z, mansion.obstacles)).toBe(true);
+    expect(reachableFromEntrance(mansion.obstacles, portal!)).toBe(true);
     mansion.dispose();
     for (const room of [15, 16]) {
       const world = new World(room, [], [], []);
-      for (const object of world.objects)
-        expect(blocked(object.x, object.z, world.obstacles), object.id).toBe(
-          false,
+      for (const object of world.objects) {
+        expect(object.collider, object.id).toBeDefined();
+        expect(reachableFromEntrance(world.obstacles, object), object.id).toBe(
+          true,
         );
+      }
       if (room === 16)
         expect(world.scene.getObjectByName("astrolabe-wheel")).toBeDefined();
       world.dispose();

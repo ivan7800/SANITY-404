@@ -51,7 +51,29 @@ describe("Colisiones", () => {
     expect(blocked(-1, 0, furniture)).toBe(false);
   });
   it("permite deslizarse en un eje al chocar en el otro", () => {
-    expect(move(0, 0, 0.3, 0.3, furniture)).toEqual({ x: 0, z: 0.3 });
+    const next = move(0, 0, 0.3, 0.3, furniture);
+    expect(next.x).toBeGreaterThan(0);
+    expect(next.x).toBeLessThan(0.16);
+    expect(next.z).toBeCloseTo(0.3);
+    expect(blocked(next.x, next.z, furniture)).toBe(false);
+  });
+  it("impide atravesar paredes finas con carrera, esquiva o fotogramas largos", () => {
+    const wall = [{ x: 1.5, z: 0, w: 0.08, d: 6 }];
+    for (const speed of [1.1, 2.5, 7]) {
+      const next = move(0, 0, speed, 0, wall);
+      expect(next.x).toBeLessThan(1.5 - 0.04 - 0.34 + 0.001);
+      expect(blocked(next.x, next.z, wall)).toBe(false);
+    }
+  });
+  it("no atraviesa una esquina durante un desplazamiento diagonal largo", () => {
+    const corner = [
+      { x: 1, z: 0, w: 0.08, d: 2 },
+      { x: 0, z: 1, w: 2, d: 0.08 },
+    ];
+    const next = move(0, 0, 3, 3, corner);
+    expect(blocked(next.x, next.z, corner)).toBe(false);
+    expect(next.x).toBeLessThan(0.7);
+    expect(next.z).toBeLessThan(0.7);
   });
   it("impide salir por las cuatro paredes", () => {
     for (const [x, z, dx, dz] of [
