@@ -14,7 +14,7 @@
 
 | Comprobación | Resultado |
 | --- | --- |
-| `npm test` | PASS, 251/251 en 52 archivos |
+| `npm test` | PASS, 252/252 en 52 archivos tras la corrección de `save0` |
 | `npm run build` | PASS; imagen WebP incluida en `dist/assets` |
 | `npm run format:check` | PASS |
 | `npm run audit:rooms` | PASS; 29 salas, 418 rutas y 0 inaccesibles |
@@ -31,3 +31,11 @@ SANITY_TEST_URL=http://127.0.0.1:5174/ SANITY_HARDWARE=1 npm run test:phase23:br
 ```
 
 La campaña principal certificada desde Nueva partida en `docs/capturas/fase22/campana-completa-trace.json` corresponde a la versión de referencia; no se ha repetido tras esta modificación del menú. La reforma visual de las 29 salas sigue pendiente. No se declara GOLD MASTER ni calidad 9,5/10.
+
+## Incidente de Chromium en Linux Mint posterior a `b1148aa`
+
+La ejecución real avanzó hasta «Inventario y diario funcionales» y agotó 20 segundos esperando `state.x <= -1.85` durante el movimiento con A. La [traza del fallo](capturas/fase23/ui-qa-2026-10-27T13-40-07-358Z.json) terminó en sala 0, `x=-1.16964`, `z=5`, salud 100, sin errores JavaScript y con `interaction.id=save0`. La [captura del fallo](capturas/fase23/fallo-2026-10-27T13-40-07-358Z.png) muestra al personaje junto al escritorio sólido. El objeto está en `x=-2,z=5`; el jugador ya estaba en su radio de interacción. El test exigía atravesar su colisionador para llegar a `x=-1.85`. Es un error de la expectativa de navegación del test, no evidencia de una avería del guardado ni del motor.
+
+La prueba ahora mantiene la tecla A hasta observar **ambas** condiciones: desplazamiento real de al menos 0,1 unidades y selección de `save0` por el juego. Suelta A y pulsa E; el guardado solo se considera correcto cuando aparece en `localStorage`. Una regresión del motor reproduce el trayecto desde `x=0,z=5`, comprueba que el escritorio bloquea el paso y que `save0` puede seleccionarse desde el perímetro. En futuros fallos, el JSON y el terminal incluyen paso, estado del juego, panel, foco, aviso, prompt y existencia del guardado, además de la captura. La repetición completa de Chromium real tras esta corrección sigue pendiente.
+
+Tras la corrección, `npm test`, `npm run build`, `npm run format:check` y `npm run audit:rooms` pasaron. Se intentó abrir Chrome desde este sandbox con Vite activo, pero terminó antes de cargar la página por `crashpad setsockopt EPERM` y `SIGTRAP`. Este intento no comprueba la nueva ruta; debe repetirse en Linux Mint antes de publicar.

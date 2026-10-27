@@ -1,6 +1,6 @@
 {
   "url": "http://127.0.0.1:5174/",
-  "startedAt": "2026-10-27T13:40:07.359Z",
+  "startedAt": "2026-10-27T17:18:18.419Z",
   "checks": [
     {
       "label": "Menú real y acciones principales",
@@ -75,6 +75,82 @@
     {
       "label": "Inventario y diario funcionales",
       "passed": true
+    },
+    {
+      "label": "Desplazamiento real hasta el perímetro del escritorio de guardado",
+      "passed": true,
+      "details": {
+        "startX": 0,
+        "x": -0.135,
+        "z": 5,
+        "interaction": {
+          "id": "save0",
+          "name": "Escritorio de memoria · guardar"
+        }
+      }
+    },
+    {
+      "label": "Guardado por interacción real",
+      "passed": true
+    },
+    {
+      "label": "Pantalla de carga presenta el guardado",
+      "passed": true
+    },
+    {
+      "label": "Recarga desde la pantalla de carga",
+      "passed": true
+    },
+    {
+      "label": "Continuar utiliza el guardado existente",
+      "passed": true
+    },
+    {
+      "label": "Menú móvil sin desbordamiento",
+      "passed": true,
+      "details": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "panelLeft": 0,
+        "panelRight": 390,
+        "panelTop": 72.59375,
+        "panelBottom": 844,
+        "viewportHeight": 844
+      }
+    },
+    {
+      "label": "Controles táctiles visibles en móvil",
+      "passed": true
+    },
+    {
+      "label": "Movimiento táctil real",
+      "passed": true
+    },
+    {
+      "label": "Diario accesible por control táctil",
+      "passed": true
+    },
+    {
+      "label": "Inventario móvil sin desbordamiento",
+      "passed": true,
+      "details": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "panelLeft": 12,
+        "panelRight": 378,
+        "panelTop": 12,
+        "panelBottom": 832,
+        "viewportHeight": 844
+      }
+    },
+    {
+      "label": "Diario táctil se cierra y devuelve control",
+      "passed": true
+    },
+    {
+      "label": "Sin errores JavaScript",
+      "passed": true,
+      "details": []
     }
   ],
   "screenshots": [
@@ -85,182 +161,20 @@
     "docs/capturas/fase23/hud-1440x900.png",
     "docs/capturas/fase23/inventario-1440x900.png",
     "docs/capturas/fase23/documentos-1440x900.png",
-    "docs/capturas/fase23/fallo-2026-10-27T13-40-07-358Z.png"
+    "docs/capturas/fase23/cargar-1440x900.png",
+    "docs/capturas/fase23/menu-390x844.png",
+    "docs/capturas/fase23/hud-390x844.png",
+    "docs/capturas/fase23/inventario-390x844.png"
   ],
-  "errors": [
-    {
-      "type": "failure",
-      "message": "TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.",
-      "stack": "page.waitForFunction: Timeout 20000ms exceeded.\n    at /home/ivan/Proyectos/SANITY-404-FASE11/scripts/browser-remaster.mjs:215:16"
-    }
-  ],
+  "errors": [],
   "launchAttempts": [
     {
       "attempt": 1,
       "passed": true
     }
   ],
-  "completed": false,
+  "completed": true,
   "hardwareRequested": true,
-  "state": {
-    "state": {
-      "version": 2,
-      "room": 0,
-      "x": -1.1696399999999996,
-      "z": 5,
-      "floor": 0,
-      "health": 100,
-      "sanity": 100,
-      "items": [],
-      "collected": [],
-      "read": [],
-      "defeated": [],
-      "seals": [],
-      "elapsed": 21.358299999999954,
-      "ended": false,
-      "phase2": {
-        "visited": [
-          0
-        ],
-        "solved": [],
-        "steps": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "discoveries": [],
-        "shortcuts": [],
-        "ending": false
-      },
-      "campaign": {
-        "visited": [
-          "mansion-1927"
-        ],
-        "completed": [],
-        "witnessed": []
-      }
-    },
-    "interaction": {
-      "id": "save0",
-      "name": "Escritorio de memoria · guardar"
-    },
-    "paused": false,
-    "camera": [
-      -0.5500000000000003,
-      2.35,
-      7.15
-    ],
-    "target": [
-      -1.1696399999999996,
-      0,
-      5
-    ],
-    "combat": {
-      "enemyHealth": 60,
-      "windup": 0,
-      "guarding": false,
-      "animation": 0,
-      "kind": "shade",
-      "aiState": "patrol",
-      "phase": 1,
-      "vulnerable": 0,
-      "stamina": 100,
-      "dodge": 0,
-      "hurt": 0
-    },
-    "cinematicZone": "entrada",
-    "cameraMode": "classic",
-    "corpse": {
-      "visible": false,
-      "progress": 0
-    },
-    "cameraCorrected": false,
-    "cameraQuaternion": [
-      -0.22425214682212452,
-      0.13620688900850336,
-      0.031670715494570435,
-      0.9644457599120623
-    ],
-    "cameraFov": 58,
-    "quality": {
-      "name": "Media",
-      "scale": 1,
-      "maxPixels": 1440000,
-      "shadows": true,
-      "shadowSize": 1024,
-      "dust": 80
-    },
-    "performance": {
-      "samples": 529,
-      "frameMedianMs": 33.399999999999636,
-      "frameP95Ms": 50,
-      "renderMedianMs": 9.600000008940697,
-      "renderP95Ms": 15.400000005960464,
-      "updateMedianMs": 2.0999999940395355,
-      "updateP95Ms": 5.300000011920929,
-      "aiMedianMs": 0.4000000059604645,
-      "aiP95Ms": 1.3999999910593033,
-      "averageFps": 24.183299351759572
-    },
-    "gpuTime": {
-      "available": true,
-      "samples": 600,
-      "medianMs": 27.28325,
-      "p95Ms": 32.3645
-    },
-    "sanityEvent": {
-      "id": "",
-      "count": 0
-    },
-    "audio": {
-      "activeTones": 0,
-      "running": true,
-      "volume": 0.35,
-      "reduced": false
-    },
-    "memory": {
-      "geometries": 154,
-      "textures": 21
-    },
-    "textures": {
-      "surfaces": 6,
-      "maps": 18,
-      "bytes": 1572864
-    },
-    "playerRig": true,
-    "playerY": 0,
-    "limbPose": -0.25498811767920426,
-    "enemy": {
-      "position": [
-        2,
-        0,
-        -1.8529250000000004
-      ],
-      "visible": true
-    },
-    "draw": {
-      "frame": 750,
-      "calls": 134,
-      "triangles": 87448,
-      "points": 80,
-      "lines": 0
-    },
-    "canvas": {
-      "width": 1440,
-      "height": 900,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 1440,
-        "height": 900,
-        "top": 0,
-        "right": 1440,
-        "bottom": 900,
-        "left": 0
-      }
-    },
-    "objects": 42
-  },
-  "finishedAt": "2026-10-27T13:40:42.839Z"
+  "currentStep": "Validar menú y controles móviles",
+  "finishedAt": "2026-10-27T17:18:38.247Z"
 }
