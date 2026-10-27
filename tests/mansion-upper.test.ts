@@ -5,6 +5,28 @@ import { mansionMove, upperWalkable } from "../src/world/mansion-navigation";
 import { World } from "../src/world/scene";
 import * as T from "three";
 import { CinematicCamera } from "../src/engine/camera";
+import { moreauHallArchitecture } from "../src/world/mansion-architecture";
+import {
+  MANSION_CHART_FRAME,
+  MANSION_GALLERY_Y,
+  MANSION_NORTH_BALUSTER_START_X,
+  MANSION_VAULT_EAVE_Y,
+} from "../src/world/mansion-topology";
+
+it("deja altura libre en la galería y separa la carta de los balaustres", () => {
+  const hall = moreauHallArchitecture();
+  const roof = hall.getObjectByName("mansion-vault-shell") as T.Mesh;
+  expect(roof).toBeDefined();
+  expect(MANSION_VAULT_EAVE_Y - MANSION_GALLERY_Y).toBeGreaterThan(3);
+  const positions = roof.geometry.getAttribute("position");
+  let minY = Infinity;
+  for (let index = 0; index < positions.count; index++)
+    minY = Math.min(minY, positions.getY(index));
+  expect(minY).toBeCloseTo(MANSION_VAULT_EAVE_Y, 2);
+  expect(MANSION_NORTH_BALUSTER_START_X - 0.075 / 2).toBeGreaterThan(
+    MANSION_CHART_FRAME.x + MANSION_CHART_FRAME.width / 2 + 0.05,
+  );
+});
 
 it("sube, visita ambas salas superiores y baja por la misma escalera", () => {
   const world = new World(0, [], [], []);
@@ -40,6 +62,7 @@ it("sube, visita ambas salas superiores y baja por la misma escalera", () => {
     ).toBeLessThan(0.14);
   };
   walk(5.3, -5.8);
+  expect(world.nearest(actor.x, actor.z, 1.9, 2.64)?.id).toBe("gallery-chart");
   walk(5.3, -5.2);
   walk(3.3, -5.2);
   walk(3.3, -5.8);

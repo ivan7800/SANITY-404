@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 680" role="img" aria-labelledby="title desc">
+  <title id="title">Mansión Veyr 1927: planta baja y galería superior</title>
+  <desc id="desc">Plano técnico a escala esquemática de 35 píxeles por metro. La escalera ocupa el lado este y desemboca en la galería norte, que conecta las dos salas superiores.</desc>
+  <rect width="1320" height="680" fill="#151a1a"/>
+  <g fill="#e9dfcb" font-family="sans-serif">
+    <text x="35" y="30" font-size="19">PLANTA BAJA · cota 0,00 m</text>
+    <text x="685" y="30" font-size="19">GALERÍA SUPERIOR · cota +2,64 m</text>
+  </g>
+  <g stroke="#847861" stroke-width="3" fill="#302e29">
+    <rect x="60" y="45" width="560" height="560"/>
+    <rect x="710" y="45" width="560" height="560"/>
+  </g>
+  <g fill="#665b48" stroke="#baa989" stroke-width="2">
+    <rect x="470" y="98" width="90" height="172"/>
+    <rect x="470" y="98" width="90" height="48" fill="#b0a68f"/>
+    <rect x="761" y="92" width="452" height="75" fill="#69706b"/>
+    <rect x="761" y="132" width="109" height="145" fill="#69706b"/>
+    <rect x="873" y="132" width="140" height="145" fill="#69706b"/>
+    <rect x="1120" y="98" width="90" height="172"/>
+  </g>
+  <g stroke="#d6c399" stroke-width="2">
+    <path d="M 470 266 L 560 266 M 470 252 L 560 252 M 470 238 L 560 238 M 470 224 L 560 224 M 470 210 L 560 210 M 470 196 L 560 196 M 470 182 L 560 182 M 470 168 L 560 168 M 470 154 L 560 154"/>
+    <path d="M 1120 266 L 1210 266 M 1120 252 L 1210 252 M 1120 238 L 1210 238 M 1120 224 L 1210 224 M 1120 210 L 1210 210 M 1120 196 L 1210 196 M 1120 182 L 1210 182 M 1120 168 L 1210 168 M 1120 154 L 1210 154"/>
+  </g>
+  <rect x="1115" y="93" width="55" height="5" fill="#ca9b7f"/>
+  <g stroke="#cc7167" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M 515 290 L 515 115 L 445 115 L 360 115"/>
+    <path d="M 1165 290 L 1165 115 L 1090 130 L 980 130 L 815 130"/>
+  </g>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#cc7167"/></marker></defs>
+  <g fill="#f1e5cb" font-family="sans-serif" font-size="15">
+    <text x="90" y="85">vestíbulo 16 × 16 m</text>
+    <text x="455" y="316">escalera</text>
+    <text x="454" y="336">2,56 × 3,56 m</text>
+    <text x="460" y="78">descansillo</text>
+    <text x="727" y="73">galería norte: 12,9 × 2,15 m</text>
+    <text x="773" y="199">retratos</text>
+    <text x="879" y="199">observatorio</text>
+    <text x="1128" y="307">escalera</text>
+    <text x="1090" y="84">carta astral</text>
+    <text x="295" y="566">entrada · z ≈ +7</text>
+    <text x="900" y="565">vacío sobre vestíbulo</text>
+  </g>
+  <g stroke="#bba477" stroke-width="2" fill="none">
+    <path d="M 60 627 H 620 M 60 620 V 634 M 620 620 V 634"/>
+    <path d="M 710 627 H 1270 M 710 620 V 634 M 1270 620 V 634"/>
+  </g>
+  <g fill="#bba477" font-family="sans-serif" font-size="14"><text x="305" y="650">16 m</text><text x="955" y="650">16 m</text></g>
+</svg>

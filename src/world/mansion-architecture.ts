@@ -1,5 +1,6 @@
 import * as T from "three";
 import { pbr } from "../render/materials";
+import { MANSION_VAULT_EAVE_Y, MANSION_VAULT_RISE } from "./mansion-topology";
 
 /** The authored hall envelope. All parts are above the actor or inset into
  * existing walls; furniture and playable floor keep their original colliders. */
@@ -35,7 +36,8 @@ export function moreauHallArchitecture() {
     material: T.Material,
   ) => add(new T.BoxGeometry(w, h, d), material, x, y, z);
   const vaultY = (x: number) =>
-    4.71 + 0.78 * Math.sqrt(Math.max(0, 1 - (x / 7.46) ** 2));
+    MANSION_VAULT_EAVE_Y +
+    MANSION_VAULT_RISE * Math.sqrt(Math.max(0, 1 - (x / 7.46) ** 2));
 
   // One shallow barrel vault gives the whole 15 m hall a readable roofline.
   // Its ribs describe the structural bays instead of repeating ceiling boxes.
@@ -63,7 +65,7 @@ export function moreauHallArchitecture() {
   roof.setAttribute("uv", new T.Float32BufferAttribute(uvs, 2));
   roof.setIndex(indices);
   roof.computeVertexNormals();
-  add(roof, bone, 0, 0, 0);
+  add(roof, bone, 0, 0, 0).name = "mansion-vault-shell";
 
   for (const z of [-7.25, -4.8, -2.35, 0.1, 2.55, 5, 7.25]) {
     const path: T.Vector3[] = [];
@@ -79,13 +81,29 @@ export function moreauHallArchitecture() {
       0,
     );
     for (const side of [-1, 1]) {
-      block(side * 7.37, 4.63, z, 0.27, 0.22, 0.36, limestone);
-      block(side * 7.36, 4.48, z, 0.34, 0.075, 0.47, bronze);
+      block(
+        side * 7.37,
+        MANSION_VAULT_EAVE_Y - 0.08,
+        z,
+        0.27,
+        0.22,
+        0.36,
+        limestone,
+      );
+      block(
+        side * 7.36,
+        MANSION_VAULT_EAVE_Y - 0.23,
+        z,
+        0.34,
+        0.075,
+        0.47,
+        bronze,
+      );
     }
   }
   // The longitudinal ridge and fine timber ribs make the vault legible from
   // the authored low cameras without extra lights or shadow passes.
-  block(0, 5.47, 0, 0.2, 0.1, 14.75, wood);
+  block(0, vaultY(0) - 0.03, 0, 0.14, 0.08, 14.75, wood);
   for (const x of [-4.8, -2.5, 2.5, 4.8]) {
     const y = vaultY(x) - 0.055;
     block(x, y, 0, 0.075, 0.075, 14.45, bronze);
@@ -94,6 +112,9 @@ export function moreauHallArchitecture() {
   // An inset arcade orders the tall side bays. Column shafts are nearly
   // flush with the existing wall plane (x=7.825); no walkable area is lost.
   for (const side of [-1, 1]) {
+    // A plaster frieze makes the raised vault read as part of the wall.
+    block(side * 7.58, 5.31, 0, 0.19, 0.72, 14.7, bone);
+    block(side * 7.47, 5.08, 0, 0.08, 0.07, 14.7, bronze);
     for (const z of [-6.75, -4.5, -2.25, 0, 2.25, 4.5, 6.75]) {
       const x = side * 7.67;
       add(new T.CylinderGeometry(0.115, 0.15, 3.36, 10), limestone, x, 2.35, z);

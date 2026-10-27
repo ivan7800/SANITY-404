@@ -7,6 +7,20 @@ export const MANSION_LANDING = {
   backZ: -6.48,
 } as const;
 
+/** Architectural datums shared by the hall shell, vaulted roof and gallery. */
+export const MANSION_GALLERY_Y = 2.64;
+export const MANSION_VAULT_EAVE_Y = 5.72;
+export const MANSION_VAULT_RISE = 0.82;
+export const MANSION_CHART_FRAME = {
+  x: 4.35,
+  y: 4.03,
+  z: -6.54,
+  width: 1.58,
+  height: 1.25,
+  depth: 0.15,
+} as const;
+export const MANSION_NORTH_BALUSTER_START_X = 5.28;
+
 export function onMansionLanding(x: number, z: number) {
   return (
     x > MANSION_LANDING.minX &&
