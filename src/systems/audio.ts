@@ -9,6 +9,7 @@ export class Audio {
   private rainLevel?: GainNode;
   private ambientBus?: GainNode;
   private nextAmbient = 7;
+  private nextMansionClock = 0;
   private nextMenuTick = 0;
   private nextMenuCreak = 0;
   private menuAmbientStarted = false;
@@ -203,7 +204,12 @@ export class Audio {
     gain.setTargetAtTime(1, now + seconds, 0.5);
   }
   ambient(time: number, sanity: number) {
-    if (time < this.nextAmbient || time < this.silenceUntil) return;
+    if (time < this.silenceUntil) return;
+    if (this.room === 0 && time >= this.nextMansionClock) {
+      this.nextMansionClock = time + 13.2;
+      this.mansionClock();
+    }
+    if (time < this.nextAmbient) return;
     this.nextAmbient = time + 9 + Math.sin(time) * 2;
     // Slow wood creak; interval and pitch respond to sanity without sudden peaks.
     this.tone(
@@ -245,6 +251,43 @@ export class Audio {
       "triangle",
     );
   }
+  /** Two restrained mechanical ticks; generated locally and routed through volume settings. */
+  private mansionClock() {
+    if (
+      !this.ctx ||
+      !this.gain ||
+      this.volume === 0 ||
+      this.ctx.state !== "running" ||
+      this.activeTones > 8
+    )
+      return;
+    for (const [offset, frequency] of [
+      [0, 390],
+      [0.28, 325],
+    ]) {
+      const oscillator = this.ctx.createOscillator();
+      const level = this.ctx.createGain();
+      const start = this.ctx.currentTime + offset;
+      oscillator.type = "triangle";
+      oscillator.frequency.setValueAtTime(frequency, start);
+      level.gain.setValueAtTime(0.001, start);
+      level.gain.linearRampToValueAtTime(
+        this.reduceAudio ? 0.004 : 0.018,
+        start + 0.012,
+      );
+      level.gain.exponentialRampToValueAtTime(0.001, start + 0.105);
+      oscillator.connect(level);
+      level.connect(this.gain);
+      this.activeTones++;
+      oscillator.start(start);
+      oscillator.stop(start + 0.11);
+      oscillator.onended = () => {
+        this.activeTones--;
+        oscillator.disconnect();
+        level.disconnect();
+      };
+    }
+  }
   /** Sparse title cues; existing wind and drone provide the continuous bed. */
   menuAmbient(time: number) {
     if (!this.ctx || this.ctx.state !== "running" || this.volume === 0) return;
@@ -267,6 +310,7 @@ export class Audio {
     this.room = room;
     this.menuAmbientStarted = false;
     this.nextAmbient = 7;
+    this.nextMansionClock = 0;
     this.silenceUntil = 0;
     if (!this.ctx) return;
     this.windLevel?.gain.setTargetAtTime(

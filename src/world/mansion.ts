@@ -24,10 +24,13 @@ export function mansion(
 ) {
   const group = new T.Group();
   group.name = "Vestíbulo Veyr · arquitectura original";
-  const wood = pbr("wood", 0x684632);
-  const trim = pbr("brass", 0xb59a62);
-  const plaster = pbr("stone", 0x969c91);
-  const marble = pbr("stone", 0xb1ae98, { roughness: 0.8 });
+  const wood = pbr("wood", 0x604234, {
+    roughness: 0.94,
+    normalScale: new T.Vector2(0.28, 0.28),
+  });
+  const trim = pbr("brass", 0x9d8862, { metalness: 0.45, roughness: 0.86 });
+  const plaster = pbr("stone", 0x92988e, { roughness: 0.96 });
+  const marble = pbr("stone", 0xa4a493, { roughness: 0.9 });
   const black = pbr("stone", 0x34424a, { roughness: 0.8 });
   const damp = pbr("plaster", 0x54605b, { roughness: 1 });
   const soot = pbr("stone", 0x282e2c, { roughness: 1 });
@@ -411,8 +414,27 @@ export function mansion(
     fracture.rotation.z = x < 0 ? -0.19 : 0.13;
   }
   // Original chandelier with solid candles and polygonal rings.
-  mesh(new T.CylinderGeometry(0.04, 0.04, 1, 8), trim, 0, 4.5, 0);
-  const ring = mesh(new T.TorusGeometry(0.85, 0.045, 6, 24), trim, 0, 3.95, 0);
+  const chandelierPart = (
+    geometry: T.BufferGeometry,
+    material: T.Material,
+    x: number,
+    y: number,
+    z: number,
+  ) => {
+    const part = mesh(geometry, material, x, y, z);
+    // The overhead key once enlarged this small fixture's shadow across the
+    // entire vault. Its visible metalwork remains, without that false silhouette.
+    part.userData.noShadow = true;
+    return part;
+  };
+  chandelierPart(new T.CylinderGeometry(0.04, 0.04, 1, 8), trim, 0, 4.5, 0);
+  const ring = chandelierPart(
+    new T.TorusGeometry(0.85, 0.045, 6, 24),
+    trim,
+    0,
+    3.95,
+    0,
+  );
   ring.rotation.x = Math.PI / 2;
   const flame = new T.MeshStandardMaterial({
     color: 0xd3a264,
@@ -422,14 +444,14 @@ export function mansion(
   });
   for (let i = 0; i < 8; i++) {
     const a = (i * Math.PI) / 4;
-    mesh(
+    chandelierPart(
       new T.CylinderGeometry(0.05, 0.05, 0.3, 6),
       marble,
       Math.cos(a) * 0.85,
       4.13,
       Math.sin(a) * 0.85,
     );
-    mesh(
+    chandelierPart(
       new T.ConeGeometry(0.035, 0.12, 6),
       flame,
       Math.cos(a) * 0.85,
@@ -452,7 +474,7 @@ export function mansion(
             `${name}-${(attribute as T.BufferAttribute).itemSize}`,
         )
         .sort()
-        .join(",")}`;
+        .join(",")}:${child.userData.noShadow ? "no-shadow" : "shadow"}`;
       const byShape =
         batches.get(child.material) ?? new Map<string, T.BufferGeometry[]>();
       const entries = byShape.get(signature) ?? [];
@@ -463,14 +485,15 @@ export function mansion(
       group.remove(child);
     }
   for (const [material, byShape] of batches) {
-    for (const geometries of byShape.values()) {
+    for (const [signature, geometries] of byShape) {
       const merged = mergeGeometries(geometries, false);
       const output = merged ? [merged] : geometries;
       if (merged) for (const part of geometries) part.dispose();
       for (const geometry of output) {
         const m = new T.Mesh(geometry, material);
         m.receiveShadow = true;
-        m.castShadow = true;
+        m.castShadow = !signature.endsWith(":no-shadow");
+        if (!m.castShadow) m.name = "mansion-chandelier-without-vault-shadow";
         group.add(m);
       }
     }

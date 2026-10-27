@@ -7,11 +7,17 @@ import { MANSION_VAULT_EAVE_Y, MANSION_VAULT_RISE } from "./mansion-topology";
 export function moreauHallArchitecture() {
   const hall = new T.Group();
   hall.name = "Moreau 1927 · bóveda y orden arquitectónico";
-  const limestone = pbr("stone", 0x8c8b7b, { side: T.DoubleSide });
-  const bone = pbr("plaster", 0xa9a493, { side: T.DoubleSide });
-  const darkStone = pbr("stone", 0x434a45);
-  const bronze = pbr("brass", 0x85704d, { roughness: 0.84 });
-  const wood = pbr("wood", 0x42342c);
+  const limestone = pbr("stone", 0x7f887e, {
+    side: T.DoubleSide,
+    roughness: 0.94,
+  });
+  const bone = pbr("plaster", 0x89938d, {
+    side: T.DoubleSide,
+    roughness: 0.98,
+  });
+  const darkStone = pbr("stone", 0x404d4a);
+  const bronze = pbr("brass", 0x776747, { roughness: 0.88 });
+  const wood = pbr("wood", 0x3e332c, { roughness: 0.95 });
   const add = (
     geometry: T.BufferGeometry,
     material: T.Material,

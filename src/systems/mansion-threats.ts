@@ -18,7 +18,9 @@ export const mansionThreats: Record<
   widow: {
     id: "mansion-widow",
     title: "La Viuda del Rellano",
-    spawn: [5, 2.64, -5.7],
+    // The former point overlapped Élise on the first upper step. This corner
+    // remains on the landing and leaves a visible approach to the encounter.
+    spawn: [5.9, 2.64, -6.2],
     cue: 126,
   },
   crawler: {

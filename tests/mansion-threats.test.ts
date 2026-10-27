@@ -13,6 +13,38 @@ import { World } from "../src/world/scene";
 import { upperWalkable } from "../src/world/mansion-navigation";
 import { blocked } from "../src/systems/state";
 
+it("sitúa a la Viuda en suelo libre y fuera de la primera huella superior", () => {
+  const world = new World(0, [], [], []);
+  const [x, y, z] = mansionThreats.widow.spawn;
+  expect(y).toBe(2.64);
+  expect(upperWalkable(x, z)).toBe(true);
+  expect(blocked(x, z, world.upperObstacles)).toBe(false);
+  expect(Math.hypot(x - 5, z - -5.11)).toBeGreaterThan(1.2);
+  world.dispose();
+});
+
+it("la Viuda persigue sin ocupar el cuerpo de Élise en el rellano", () => {
+  const state = fresh();
+  state.floor = 1;
+  const player = character();
+  player.position.set(5, 2.64, -5.11);
+  const enemy = createEnemy("widow");
+  enemy.position.set(...mansionThreats.widow.spawn);
+  const combat = new Combat(0, "widow", "mansion-widow");
+  combat.enemyCooldown = 10;
+  const noop = () => {};
+  for (let frame = 0; frame < 180; frame++) {
+    combat.update(1 / 60, state, player, enemy, [], false, noop, noop);
+    expect(
+      Math.hypot(
+        enemy.position.x - player.position.x,
+        enemy.position.z - player.position.z,
+      ),
+    ).toBeGreaterThanOrEqual(1.049);
+  }
+  expect(enemy.position.distanceTo(player.position)).toBeLessThan(1.8);
+});
+
 it("elige enemigos por posición, cordura y pruebas persistentes", () => {
   const state = fresh();
   expect(mansionThreatAt(state)).toBe("shade");

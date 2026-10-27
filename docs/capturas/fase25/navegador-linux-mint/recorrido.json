@@ -1,0 +1,172 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "startedAt": "2026-10-27T22:41:03.769Z",
+  "hardwareRequested": true,
+  "views": [
+    {
+      "id": "entrada",
+      "requested": {
+        "floor": 0,
+        "x": 0,
+        "z": 4.5
+      },
+      "actual": {
+        "floor": 0,
+        "x": 0,
+        "z": 4.5,
+        "health": 100
+      },
+      "camera": [
+        -0.55,
+        2.35,
+        7.15
+      ],
+      "cameraCorrected": false,
+      "zone": "entrada",
+      "enemy": "shade",
+      "interaction": "ritual-table"
+    },
+    {
+      "id": "pie",
+      "requested": {
+        "floor": 0,
+        "x": 5,
+        "z": -1.3
+      },
+      "actual": {
+        "floor": 0,
+        "x": 5,
+        "z": -1.3,
+        "health": 100
+      },
+      "camera": [
+        5.753335210677619,
+        2.3216249866047254,
+        1.06288960686662
+      ],
+      "cameraCorrected": false,
+      "zone": "pie de escalera Veyr",
+      "enemy": "shade",
+      "interaction": null
+    },
+    {
+      "id": "mitad",
+      "requested": {
+        "floor": 0,
+        "x": 5,
+        "z": -3.35
+      },
+      "actual": {
+        "floor": 0,
+        "x": 5,
+        "z": -3.35,
+        "health": 100
+      },
+      "camera": [
+        5.3201324937283445,
+        3.621862040307808,
+        0.2525943198691962
+      ],
+      "cameraCorrected": false,
+      "zone": "escalera Veyr",
+      "enemy": "shade",
+      "interaction": null
+    },
+    {
+      "id": "descansillo",
+      "requested": {
+        "floor": 1,
+        "x": 5.3,
+        "z": -5.8
+      },
+      "actual": {
+        "floor": 1,
+        "x": 5.3,
+        "z": -5.8,
+        "health": 100
+      },
+      "camera": [
+        6.558776596031234,
+        4.544662349785864,
+        -2.7460684549347927
+      ],
+      "cameraCorrected": false,
+      "zone": "rellano superior",
+      "enemy": "widow",
+      "interaction": "gallery-chart"
+    },
+    {
+      "id": "galeria",
+      "requested": {
+        "floor": 1,
+        "x": 2,
+        "z": -5.8
+      },
+      "actual": {
+        "floor": 1,
+        "x": 2,
+        "z": -5.8,
+        "health": 100
+      },
+      "camera": [
+        5.677288699942258,
+        4.5429329082651835,
+        -2.7492128940633007
+      ],
+      "cameraCorrected": false,
+      "zone": "rellano superior",
+      "enemy": "guest",
+      "interaction": null
+    },
+    {
+      "id": "retratos",
+      "requested": {
+        "floor": 1,
+        "x": -5,
+        "z": -3
+      },
+      "actual": {
+        "floor": 1,
+        "x": -5,
+        "z": -3,
+        "health": 100
+      },
+      "camera": [
+        -5.841287987139747,
+        4.727716487592077,
+        -4.507600200973398
+      ],
+      "cameraCorrected": false,
+      "zone": "sala de retratos superior",
+      "enemy": "crawler",
+      "interaction": "upper-portraits"
+    },
+    {
+      "id": "observatorio",
+      "requested": {
+        "floor": 1,
+        "x": -1.3,
+        "z": -3
+      },
+      "actual": {
+        "floor": 1,
+        "x": -1.3,
+        "z": -3,
+        "health": 100
+      },
+      "camera": [
+        -2.53103991413144,
+        4.4880158608321805,
+        -1.9264556126670211
+      ],
+      "cameraCorrected": false,
+      "zone": "observatorio superior",
+      "enemy": "guest",
+      "interaction": "upper-observatory"
+    }
+  ],
+  "errors": [],
+  "completed": true,
+  "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+  "finishedAt": "2026-10-27T22:41:21.796Z"
+}
