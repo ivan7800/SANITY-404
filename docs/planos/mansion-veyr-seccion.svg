@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 590" role="img" aria-labelledby="title desc">
+  <title id="title">Sección longitudinal de la escalera Veyr</title>
+  <desc id="desc">Sección esquemática por el eje x igual a 5 metros, con planta baja, rampa, descansillo, galería y bóveda. Escala vertical y longitudinal de 55 píxeles por metro.</desc>
+  <rect width="760" height="590" fill="#151a1a"/>
+  <text x="42" y="35" fill="#e9dfcb" font-size="20" font-family="sans-serif">SECCIÓN A—A · eje de la escalera x = +5 m</text>
+  <g stroke="#b5aa92" stroke-width="3" fill="none">
+    <path d="M 55 500 H 680"/>
+    <path d="M 95 355 H 204 L 400 500 H 600"/>
+    <path d="M 80 152 H 650"/>
+    <path d="M 95 355 V 500 M 650 152 V 500"/>
+  </g>
+  <path d="M 204 355 L 400 500 L 400 500 L 204 500 Z" fill="#594b3b" stroke="#c7b18a" stroke-width="2"/>
+  <path d="M 90 355 H 204" stroke="#d8cfb8" stroke-width="12"/>
+  <path d="M 204 355 L 400 500" stroke="#d8cfb8" stroke-width="7"/>
+  <g stroke="#c8aa78" stroke-width="2">
+    <path d="M 219 367 V 500 M 235 379 V 500 M 251 390 V 500 M 267 402 V 500 M 283 414 V 500 M 299 426 V 500 M 315 438 V 500 M 331 449 V 500 M 347 461 V 500 M 363 473 V 500 M 379 485 V 500"/>
+    <path d="M 204 284 L 400 429" stroke-width="5"/>
+  </g>
+  <g fill="#9b8470" stroke="#d5c19c" stroke-width="2">
+    <rect x="363" y="406" width="19" height="94" rx="8"/>
+    <rect x="169" y="261" width="19" height="94" rx="8"/>
+  </g>
+  <g fill="#e9dfcb" font-family="sans-serif" font-size="15">
+    <text x="415" y="489">planta baja · ±0,00</text>
+    <text x="76" y="340">descansillo y galería · +2,64</text>
+    <text x="93" y="137">bóveda sobre la escalera · ≈ +6,33</text>
+    <text x="470" y="183">arranque lateral · +5,72</text>
+    <text x="385" y="316">12 huellas · tramo útil 3,56 m</text>
+    <text x="378" y="336">ancho de paso 2,56 m</text>
+    <text x="178" y="244">altura libre &gt; 3,0 m</text>
+  </g>
+  <g stroke="#9f9278" stroke-width="1.5" stroke-dasharray="5 5">
+    <path d="M 42 355 H 700 M 42 185 H 700"/>
+  </g>
+  <g fill="#bba477" font-family="sans-serif" font-size="13">
+    <text x="45" y="520">norte · z −7</text><text x="545" y="520">sur · z +1</text>
+    <text x="45" y="560">Escala 55 px/m · cotas según src/world/mansion-topology.ts y src/world/mansion.ts</text>
+  </g>
+</svg>

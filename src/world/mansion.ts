@@ -4,12 +4,19 @@ import { portrait } from "../render/portrait";
 import { pbr } from "../render/materials";
 import { furnishings } from "./furnishings";
 import { moreauHallArchitecture } from "./mansion-architecture";
+import {
+  MANSION_CHART_FRAME,
+  MANSION_GALLERY_Y,
+  MANSION_NORTH_BALUSTER_START_X,
+} from "./mansion-topology";
 import type { Obstacle } from "../systems/state";
 /** The stair and landing share a height field, so old saves need no Y value. */
 export function mansionFloorHeight(x: number, z: number, floor: 0 | 1 = 0) {
-  if (floor === 1) return 2.64;
+  if (floor === 1) return MANSION_GALLERY_Y;
   if (x < 3.72 || x > 6.28 || z > -1.55 || z < -6.48) return 0;
-  return z <= -5.11 ? 2.64 : ((-z - 1.55) / 3.56) * 2.64;
+  return z <= -5.11
+    ? MANSION_GALLERY_Y
+    : ((-z - 1.55) / 3.56) * MANSION_GALLERY_Y;
 }
 export function mansion(
   obstacles: Obstacle[],
@@ -124,22 +131,25 @@ export function mansion(
       d: x < 4 ? 3.8 : 5.25,
       height: 3.8,
     });
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 12; i += 2) {
       const z = -1.6 - i * 0.31;
       const h = mansionFloorHeight(5, z);
-      box(x, h + 0.74, z, 0.1, 1.2, 0.1, wood);
-      mesh(new T.SphereGeometry(0.095, 8, 6), trim, x, h + 1.39, z);
+      box(x, h + 0.55, z, 0.1, 1.1, 0.1, wood);
+      box(x, h + 1.11, z, 0.14, 0.055, 0.14, wornGold);
     }
-    const rail = box(x, 1.93, -3.35, 0.15, 0.13, 4.1, wood);
-    rail.rotation.x = 0.38;
-    if (x > 4) box(x, 3.59, -5.83, 0.17, 0.14, 1.48, wood);
+    // The handrail follows the actual stair rise instead of cutting through
+    // posts at the top of the flight.
+    const slope = Math.atan2(MANSION_GALLERY_Y, 3.56);
+    const rail = box(x, 2.36, -3.33, 0.14, 0.12, 4.45, wood);
+    rail.rotation.x = slope;
+    if (x > 4) box(x, 3.67, -5.83, 0.14, 0.12, 1.48, wood);
   }
   obstacles.push({ x: 5, z: -6.66, w: 2.95, d: 0.16, height: 3.7 });
-  for (let x = 3.72; x <= 6.28; x += 0.32) {
-    box(x, 3.2, -6.58, 0.085, 1.04, 0.085, wood);
-    mesh(new T.SphereGeometry(0.07, 8, 6), trim, x, 3.73, -6.58);
+  for (let x = MANSION_NORTH_BALUSTER_START_X; x <= 6.28; x += 0.28) {
+    box(x, 3.2, -6.58, 0.075, 1.04, 0.075, wood);
+    box(x, 3.75, -6.58, 0.11, 0.05, 0.11, wornGold);
   }
-  box(5, 3.75, -6.58, 3.05, 0.13, 0.16, wood);
+  box(5.77, 3.75, -6.58, 1.08, 0.12, 0.14, wood);
   // Walkable mezzanine: the west portrait room and central observatory open
   // from one continuous gallery. Their walls are colliders only at this level.
   const upperWall = (x: number, z: number, w: number, d: number) => {
@@ -185,9 +195,9 @@ export function mansion(
   }
   // The open edge has a raised rail and repeated balusters; the landing keeps
   // its clear connection to the top tread at the east end.
-  for (let x = 0.85; x <= 3.35; x += 0.3) {
+  for (let x = 0.85; x <= 3.35; x += 0.5) {
     box(x, 3.3, -4.54, 0.075, 1.2, 0.075, wood);
-    mesh(new T.SphereGeometry(0.065, 7, 5), trim, x, 3.94, -4.54);
+    box(x, 3.94, -4.54, 0.11, 0.05, 0.11, wornGold);
   }
   box(2.1, 3.93, -4.54, 2.65, 0.11, 0.14, wood);
   upperObstacles.push({
@@ -227,62 +237,57 @@ export function mansion(
     box(x, 4.03, -1.42, 0.72, 0.9, 0.09, wornGold);
     box(x, 4.03, -1.35, 0.58, 0.74, 0.04, black);
   }
-  // The chart is mounted on the inside face of the side balustrade. The
-  // previous north-wall mount put the rear balusters across its drawing.
-  const chartX = 3.78;
-  const chartZ = -5.55;
-  const chartPanel = (
-    x: number,
-    y: number,
-    u: number,
-    thickness: number,
-    height: number,
-    width: number,
-    material: T.Material,
-  ) => box(x, y, chartZ + u, thickness, height, width, material);
-  chartPanel(chartX, 3.56, 0, 0.14, 1.76, 2.5, wood);
-  chartPanel(chartX + 0.11, 3.56, 0, 0.06, 1.48, 2.18, wornGold);
+  // The chart is an infill panel in the north balustrade. The lectern at its
+  // foot remains the actual gallery-chart interaction; neither panel nor rail
+  // projects into the turning lane from the last tread to the gallery.
+  const {
+    x: chartX,
+    y: chartY,
+    z: chartZ,
+    width: chartWidth,
+    height: chartHeight,
+    depth: chartDepth,
+  } = MANSION_CHART_FRAME;
+  box(chartX, chartY, chartZ, chartWidth, chartHeight, chartDepth, wood);
+  box(chartX, chartY, chartZ + 0.09, 1.42, 1.1, 0.04, wornGold);
   const chart = new T.MeshStandardMaterial({
     color: 0x677e84,
     emissive: 0x365662,
     emissiveIntensity: 0.56,
     roughness: 0.7,
   });
-  chartPanel(chartX + 0.165, 3.56, 0, 0.025, 1.27, 1.91, chart);
+  box(chartX, chartY, chartZ + 0.115, 1.28, 0.98, 0.018, chart);
   for (let i = 0; i < 16; i++) {
     const a = (i / 16) * Math.PI * 2;
     mesh(
       new T.SphereGeometry(i % 4 === 0 ? 0.04 : 0.022, 6, 4),
       i % 4 === 0 ? trim : wornGold,
-      chartX + 0.19,
-      3.56 + Math.sin(a) * 0.48,
-      chartZ + Math.cos(a) * 0.76,
+      chartX + Math.cos(a) * 0.49,
+      chartY + Math.sin(a) * 0.38,
+      chartZ + 0.13,
     );
   }
   const dial = mesh(
-    new T.TorusGeometry(0.52, 0.018, 6, 32),
+    new T.TorusGeometry(0.35, 0.018, 6, 32),
     trim,
-    chartX + 0.2,
-    3.56,
-    chartZ,
+    chartX,
+    chartY,
+    chartZ + 0.14,
   );
-  dial.rotation.y = Math.PI / 2;
-  dial.scale.y = 0.78;
+  dial.scale.y = 0.83;
   for (let i = 0; i < 8; i++) {
     const a = (i / 8) * Math.PI * 2;
     const mark = box(
-      chartX + 0.225,
-      3.56 + Math.sin(a) * 0.29,
-      chartZ + Math.cos(a) * 0.36,
+      chartX + Math.cos(a) * 0.25,
+      chartY + Math.sin(a) * 0.25,
+      chartZ + 0.15,
+      0.1,
       0.018,
-      0.022,
-      0.26,
+      0.015,
       i % 2 ? trim : wornGold,
     );
-    mark.rotation.x = a;
+    mark.rotation.z = a;
   }
-  box(4.35, 2.94, -6.12, 1.35, 0.08, 0.48, wood);
-  for (const x of [3.82, 4.88]) box(x, 2.78, -6.12, 0.075, 0.34, 0.37, trim);
   // The Roman fissure opens in a ground-floor bay, clear of the stair. The
   // carved stone surround stands in front of the east pilaster so it reads
   // from the room rather than disappearing behind that structural column.

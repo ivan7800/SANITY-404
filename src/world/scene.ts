@@ -7,6 +7,7 @@ import { lightScene } from "../render/lighting";
 import { qualityProfile } from "../render/quality";
 import { prop } from "./props";
 import { mansion } from "./mansion";
+import { MANSION_VAULT_EAVE_Y } from "./mansion-topology";
 import { decorateMansionEchoes } from "./mansion-echoes";
 import { decorateRomanSanctuary } from "./roman-sanctuary";
 import { decorateMedievalAbbey } from "./medieval-abbey";
@@ -224,27 +225,31 @@ export class World {
       false,
       room >= 8 ? "stone" : undefined,
     );
-    this.box(0, 2.5, -8, 16, 5, 0.35, wall);
-    this.box(-8, 2.5, 0, 0.35, 5, 16, wall);
-    this.box(8, 2.5, 0, 0.35, 5, 16, wall);
-    this.box(0, 2.5, 8, 16, 5, 0.35, wall);
+    const wallHeight = room === 0 ? MANSION_VAULT_EAVE_Y : 5;
+    for (const [x, z, w, d] of [
+      [0, -8, 16, 0.35],
+      [-8, 0, 0.35, 16],
+      [8, 0, 0.35, 16],
+      [0, 8, 16, 0.35],
+    ])
+      this.box(x, wallHeight / 2, z, w, wallHeight, d, wall);
     for (let i = -7; i <= 7; i += 2) {
       const joint = room === 8 ? 0x3c382f : room >= 9 ? 0x333831 : 0x171e1a;
       this.box(i, 0.01, 0, 0.025, 0.015, 16, joint, false);
       this.box(0, 0.012, i, 16, 0.015, 0.025, joint, false);
       this.box(
         i,
-        2.4,
+        room === 0 ? 2.8 : 2.4,
         -7.72,
         0.16,
-        4.8,
+        room === 0 ? 5.6 : 4.8,
         0.14,
         room === 8 ? 0x776b54 : 0x686555,
         false,
       );
       this.box(
         i,
-        4.5,
+        room === 0 ? 5.42 : 4.5,
         -7.65,
         1.8,
         0.12,

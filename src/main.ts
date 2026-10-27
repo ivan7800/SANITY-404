@@ -107,6 +107,8 @@ import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
 const qaMode =
   import.meta.env.DEV && new URLSearchParams(location.search).get("qa") === "1";
+let qaCameraView: { eye: T.Vector3; target: T.Vector3 } | undefined;
+let qaArchitectureOnly = false;
 app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div><div class="help-compact">WASD · MOVER &nbsp; E · INTERACTUAR<br>ESPACIO · ATACAR &nbsp; J · FUERTE<br>V · ESQUIVAR &nbsp; F · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div id="title-scene" aria-hidden="true"><div class="title-lamplight"></div><div class="title-mist"></div><div class="title-dust"></div></div><div class="panel" id="panel"></div></div><div id="title-transition" aria-hidden="true"></div>`;
 app.insertAdjacentHTML(
   "beforeend",
@@ -1967,6 +1969,10 @@ function update(dt: number) {
   }
   const threatStart = performance.now();
   syncMansionThreat();
+  if (qaMode && qaArchitectureOnly) {
+    enemy.visible = false;
+    player.visible = false;
+  }
   aiCostFrame += performance.now() - threatStart;
   contact[0].position.copy(player.position).setY(player.position.y + 0.025);
   contact[1].position.copy(enemy.position).setY(enemy.position.y + 0.025);
@@ -2214,6 +2220,10 @@ function frame(now: number) {
   input.end();
   if (world) {
     world.shadowBudget.apply(world.shadowLight, now);
+    if (qaMode && qaCameraView && started) {
+      camera.position.copy(qaCameraView.eye);
+      camera.lookAt(qaCameraView.target);
+    }
     const start = performance.now();
     gpuTimer?.begin();
     renderer.render(world.scene, camera);
@@ -2476,6 +2486,9 @@ if (import.meta.env.DEV) {
           if (floor === 1 && room !== 0)
             throw new RangeError("Solo la mansión tiene galería superior.");
           clearMarkers();
+          qaCameraView = undefined;
+          qaArchitectureOnly = false;
+          if (player) player.visible = true;
           const diagnostic = fresh();
           diagnostic.room = room;
           diagnostic.floor = floor;
@@ -2483,6 +2496,19 @@ if (import.meta.env.DEV) {
           diagnostic.z = floor ? -5.8 : 5.2;
           begin(diagnostic);
           return inspect();
+        },
+        architectureView(
+          eye: [number, number, number],
+          target: [number, number, number],
+        ) {
+          if (![...eye, ...target].every(Number.isFinite))
+            throw new TypeError("Cámara de diagnóstico no finita.");
+          qaArchitectureOnly = true;
+          qaCameraView = {
+            eye: new T.Vector3(...eye),
+            target: new T.Vector3(...target),
+          };
+          return { eye, target };
         },
         position(x: number, z: number) {
           const obstacles =
