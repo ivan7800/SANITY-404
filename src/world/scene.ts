@@ -181,11 +181,15 @@ export class World {
       new T.HemisphereLight(
         0xb1c3d4,
         0x33302b,
-        quality === 1
-          ? room === 0 || room === 2 || room === 4
-            ? 1.35
-            : 1.55
-          : 1.1,
+        room === 0
+          ? quality === 1
+            ? 1.1
+            : 0.9
+          : quality === 1
+            ? room === 2 || room === 4
+              ? 1.35
+              : 1.55
+            : 1.1,
       ),
     );
     const wall =
@@ -294,7 +298,7 @@ export class World {
           3.1,
           pierZ,
           0xffbd80,
-          7,
+          room === 0 ? 5 : 7,
           quality !== 1 || (room !== 3 && room !== 6 && z < 0),
         );
       }

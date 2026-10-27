@@ -25,7 +25,9 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
                 ? 0x97b9b9
                 : medieval
                   ? 0xa8b8af
-                  : 0x91b7ed,
+                  : room === 0
+                    ? 0x9aadc8
+                    : 0x91b7ed,
     late
       ? 1.28
       : roman
@@ -40,7 +42,9 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
                 ? 1.2
                 : medieval
                   ? 1.45
-                  : 1.7,
+                  : room === 0
+                    ? 1.15
+                    : 1.7,
   );
   moon.position.set(
     roman ? -5 : medieval ? -8 : -7,
@@ -63,14 +67,30 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
                 ? 0xb7d0bd
                 : medieval
                   ? 0xffc69a
-                  : 0xffc58b,
-    roman ? (quality === 1 ? 102 : 94) : quality === 1 ? 115 : 105,
+                  : room === 0
+                    ? 0xf1b77e
+                    : 0xffc58b,
+    room === 0
+      ? quality === 1
+        ? 84
+        : 76
+      : roman
+        ? quality === 1
+          ? 102
+          : 94
+        : quality === 1
+          ? 115
+          : 105,
     22,
     Math.PI * 0.38,
     0.75,
     1.4,
   );
-  key.position.set(roman ? -2 : medieval ? 1.5 : 0, 4.75, roman ? -1 : 2);
+  key.position.set(
+    room === 0 ? -1.2 : roman ? -2 : medieval ? 1.5 : 0,
+    room === 0 ? 5.25 : 4.75,
+    room === 0 ? 1.4 : roman ? -1 : 2,
+  );
   key.target.position.set(0, 0, -1);
   key.castShadow = p.shadows;
   key.shadow.autoUpdate = false;
@@ -94,12 +114,18 @@ export function lightScene(scene: T.Scene, quality: number, room = 0) {
               ? 0x799da1
               : medieval
                 ? 0xe5ae83
-                : 0xffd2a0,
-    quality === 1 ? 7 : 5,
-    11,
+                : room === 0
+                  ? 0x9cafc7
+                  : 0xffd2a0,
+    room === 0 ? 3.8 : quality === 1 ? 7 : 5,
+    room === 0 ? 12 : 11,
     2,
   );
-  fill.position.set(0, 2.5, 4);
+  fill.position.set(
+    room === 0 ? 2.8 : 0,
+    room === 0 ? 3.3 : 2.5,
+    room === 0 ? -4.5 : 4,
+  );
   scene.add(fill);
   scene.add(key, key.target);
   return key;

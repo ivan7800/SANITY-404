@@ -1,0 +1,1498 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "startedAt": "2026-10-27T22:39:09.937Z",
+  "hardwareRequested": true,
+  "route": [
+    {
+      "label": "Subir por la escalera completa",
+      "key": "w",
+      "target": -5.55,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 5,
+        "z": -1.3,
+        "floor": 0,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 0.48330000000000034,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 5,
+        "z": -5.528469999999994,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 2.099399999999998,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Girar en el descansillo",
+      "key": "d",
+      "target": 5.3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 5,
+        "z": -5.528469999999994,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 2.099399999999998,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 5.314819999999999,
+        "z": -5.528469999999994,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 2.215999999999999,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Tomar el pasillo libre tras el descansillo",
+      "key": "s",
+      "target": -5.2,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 5.314819999999999,
+        "z": -5.528469999999994,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 2.3493999999999975,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 5.314819999999999,
+        "z": -5.168829999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 2.482599999999998,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Rodear el atril y entrar en la galería",
+      "key": "a",
+      "target": 3.3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 5.314819999999999,
+        "z": -5.168829999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 2.482599999999998,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 3.155630000000004,
+        "z": -5.168829999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 3.282300000000002,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Alinear el corredor superior",
+      "key": "w",
+      "target": -5.8,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 3.155630000000004,
+        "z": -5.168829999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 3.282300000000002,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 3.155630000000004,
+        "z": -5.798199999999996,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 3.548800000000003,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Cruzar la galería hacia retratos",
+      "key": "a",
+      "target": -5,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 3.155630000000004,
+        "z": -5.798199999999996,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 3.5822000000000025,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": -4.941264999999999,
+        "z": -5.798199999999996,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 6.597700000000009,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Entrar en la sala de retratos",
+      "key": "s",
+      "target": -3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": -4.941264999999999,
+        "z": -5.798199999999996,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 6.597700000000009,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": -4.941264999999999,
+        "z": -3.0541899999999984,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 7.614000000000007,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Regresar de retratos",
+      "key": "w",
+      "target": -5.8,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": -4.941264999999999,
+        "z": -3.0541899999999984,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 7.6473000000000075,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": -4.941264999999999,
+        "z": -5.798199999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 8.663600000000018,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Cruzar hacia el observatorio",
+      "key": "d",
+      "target": -1.3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": -4.941264999999999,
+        "z": -5.798199999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 8.696900000000019,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": -1.2976149999999995,
+        "z": -5.798199999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 10.096300000000037,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Entrar en el observatorio",
+      "key": "s",
+      "target": -3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": -1.2976149999999995,
+        "z": -5.798199999999995,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 10.129700000000037,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": -1.2976149999999995,
+        "z": -3.054459999999993,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 11.145900000000053,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Regresar del observatorio",
+      "key": "w",
+      "target": -5.8,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": -1.2976149999999995,
+        "z": -3.054459999999993,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 11.145900000000053,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": -1.2976149999999995,
+        "z": -5.753649999999991,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 12.19560000000007,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Volver al extremo oriental de la galería",
+      "key": "d",
+      "target": 3.3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": -1.2976149999999995,
+        "z": -5.753649999999991,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 12.22890000000007,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 3.2904949999999964,
+        "z": -5.753649999999991,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 13.928200000000103,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Rodear el borde abierto de la galería",
+      "key": "s",
+      "target": -5.2,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 3.2904949999999964,
+        "z": -5.753649999999991,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 13.961500000000104,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 3.2904949999999964,
+        "z": -5.2587399999999915,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 14.144800000000103,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Girar hacia el descansillo",
+      "key": "d",
+      "target": 5.3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 3.2904949999999964,
+        "z": -5.2587399999999915,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 14.194700000000104,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 5.269864999999991,
+        "z": -5.2587399999999915,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 14.927800000000106,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Entrar de nuevo en el descansillo",
+      "key": "w",
+      "target": -5.8,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 5.269864999999991,
+        "z": -5.2587399999999915,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 14.96110000000011,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 5.269864999999991,
+        "z": -5.798469999999985,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 15.161000000000113,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Bajar la escalera completa",
+      "key": "s",
+      "target": -1.3,
+      "before": {
+        "version": 2,
+        "room": 0,
+        "x": 5.269864999999991,
+        "z": -5.798469999999985,
+        "floor": 1,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 15.194400000000114,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      },
+      "after": {
+        "version": 2,
+        "room": 0,
+        "x": 5.269864999999991,
+        "z": -1.3005399999999931,
+        "floor": 0,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 16.86030000000009,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "label": "Inicio de diagnóstico en el pie de la escalera",
+      "passed": true
+    },
+    {
+      "label": "Subir por la escalera completa",
+      "passed": true,
+      "detail": {
+        "x": 5,
+        "z": -5.528469999999994,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Desembarco alcanzado por movimiento real",
+      "passed": true
+    },
+    {
+      "label": "Girar en el descansillo",
+      "passed": true,
+      "detail": {
+        "x": 5.314819999999999,
+        "z": -5.528469999999994,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Carta astral seleccionada en el rellano",
+      "passed": true,
+      "detail": {
+        "id": "gallery-chart",
+        "name": "Examinar carta astral del rellano"
+      }
+    },
+    {
+      "label": "Interacción real con la carta astral",
+      "passed": true
+    },
+    {
+      "label": "Tomar el pasillo libre tras el descansillo",
+      "passed": true,
+      "detail": {
+        "x": 5.314819999999999,
+        "z": -5.168829999999995,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Rodear el atril y entrar en la galería",
+      "passed": true,
+      "detail": {
+        "x": 3.155630000000004,
+        "z": -5.168829999999995,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Alinear el corredor superior",
+      "passed": true,
+      "detail": {
+        "x": 3.155630000000004,
+        "z": -5.798199999999996,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Cruzar la galería hacia retratos",
+      "passed": true,
+      "detail": {
+        "x": -4.941264999999999,
+        "z": -5.798199999999996,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Entrar en la sala de retratos",
+      "passed": true,
+      "detail": {
+        "x": -4.941264999999999,
+        "z": -3.0541899999999984,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Regresar de retratos",
+      "passed": true,
+      "detail": {
+        "x": -4.941264999999999,
+        "z": -5.798199999999995,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Cruzar hacia el observatorio",
+      "passed": true,
+      "detail": {
+        "x": -1.2976149999999995,
+        "z": -5.798199999999995,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Entrar en el observatorio",
+      "passed": true,
+      "detail": {
+        "x": -1.2976149999999995,
+        "z": -3.054459999999993,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Regresar del observatorio",
+      "passed": true,
+      "detail": {
+        "x": -1.2976149999999995,
+        "z": -5.753649999999991,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Volver al extremo oriental de la galería",
+      "passed": true,
+      "detail": {
+        "x": 3.2904949999999964,
+        "z": -5.753649999999991,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Rodear el borde abierto de la galería",
+      "passed": true,
+      "detail": {
+        "x": 3.2904949999999964,
+        "z": -5.2587399999999915,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Girar hacia el descansillo",
+      "passed": true,
+      "detail": {
+        "x": 5.269864999999991,
+        "z": -5.2587399999999915,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Entrar de nuevo en el descansillo",
+      "passed": true,
+      "detail": {
+        "x": 5.269864999999991,
+        "z": -5.798469999999985,
+        "floor": 1,
+        "health": 100
+      }
+    },
+    {
+      "label": "Bajar la escalera completa",
+      "passed": true,
+      "detail": {
+        "x": 5.269864999999991,
+        "z": -1.3005399999999931,
+        "floor": 0,
+        "health": 100
+      }
+    },
+    {
+      "label": "Regreso físico a planta baja",
+      "passed": true
+    },
+    {
+      "label": "Sin errores JavaScript",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "completed": true,
+  "currentStep": "Bajar la escalera completa",
+  "finishedAt": "2026-10-27T22:39:31.369Z"
+}
