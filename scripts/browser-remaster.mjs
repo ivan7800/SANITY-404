@@ -2,6 +2,7 @@ import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { browserLaunchOptions } from "./browser-launch.mjs";
 
 const option = (name, fallback) =>
   process.argv
@@ -22,6 +23,7 @@ const report = {
   errors: [],
   launchAttempts: [],
   completed: false,
+  hardwareRequested: process.env.SANITY_HARDWARE === "1",
 };
 let browser;
 let page;
@@ -68,12 +70,7 @@ async function launchBrowser() {
     try {
       const instance = await chromium.launch({
         executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
-        headless: true,
-        args: [
-          "--no-sandbox",
-          "--use-angle=swiftshader",
-          "--enable-unsafe-swiftshader",
-        ],
+        ...browserLaunchOptions(),
       });
       report.launchAttempts.push({ attempt, passed: true });
       return instance;
@@ -93,6 +90,7 @@ try {
   browser = await launchBrowser();
   const desktop = await browser.newContext({
     viewport: { width: 1440, height: 900 },
+    reducedMotion: "no-preference",
   });
   page = await desktop.newPage();
   page.on("pageerror", (error) => report.errors.push(error.message));
@@ -112,6 +110,31 @@ try {
     (await page.locator("#load").isDisabled()) &&
       (await page.locator("#load-menu").isDisabled()),
   );
+  check(
+    "Portada cinematográfica muestra escena original y lema",
+    (await page.locator("#overlay.overlay--title #title-scene").isVisible()) &&
+      (await page.getByText("ARCHIVO DE LAS AUSENCIAS · 1927").isVisible()) &&
+      (await page.getByText(/LO QUE OLVIDAS/).isVisible()) &&
+      (await page.evaluate(() =>
+        getComputedStyle(
+          document.querySelector("#title-scene"),
+        ).backgroundImage.includes("menu-hall"),
+      )),
+  );
+  check(
+    "Nueva partida recibe foco inicial",
+    await page
+      .locator("#new")
+      .evaluate((button) => button === document.activeElement),
+  );
+  await page.keyboard.press("Tab");
+  check(
+    "Menú principal navegable con Tab",
+    await page
+      .locator("#settings")
+      .evaluate((button) => button === document.activeElement),
+  );
+  await page.keyboard.press("Shift+Tab");
   await checkLayout("Menú de escritorio sin desbordamiento");
   await screenshot("menu-1440x900");
   await page.setViewportSize({ width: 768, height: 1024 });
@@ -133,11 +156,44 @@ try {
     (await page.locator("#quality").isVisible()) &&
       (await page.locator("#camera-mode").isVisible()),
   );
+  await page.locator("#reduced").check();
   await screenshot("opciones-1440x900");
   await page.getByRole("button", { name: "Aplicar y volver" }).click();
+  check(
+    "Movimiento reducido desactiva animación del título",
+    await page.evaluate(() => {
+      const overlay = document.querySelector("#overlay");
+      const scene = document.querySelector("#title-scene");
+      return (
+        overlay.classList.contains("overlay--reduced") &&
+        getComputedStyle(scene).animationName === "none"
+      );
+    }),
+  );
+  await page.locator("#settings").click();
+  await page.locator("#reduced").uncheck();
+  await page.getByRole("button", { name: "Aplicar y volver" }).click();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  check(
+    "Preferencia del sistema reduce movimiento del título",
+    await page.evaluate(
+      () =>
+        getComputedStyle(document.querySelector("#title-scene"))
+          .animationName === "none",
+    ),
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page
     .getByRole("button", { name: "Nueva partida", exact: true })
     .click();
+  check(
+    "Nueva partida inicia fundido cinematográfico",
+    await page
+      .locator("#title-transition")
+      .evaluate((curtain) =>
+        curtain.classList.contains("title-transition--closed"),
+      ),
+  );
   await page.waitForFunction(() => window.sanityInspect().paused === false);
   check("Nueva partida desde el menú", (await inspect()).state.room === 0);
   await screenshot("hud-1440x900");
@@ -154,16 +210,39 @@ try {
   await screenshot("documentos-1440x900");
   await page.keyboard.press("Escape");
   await page.waitForFunction(() => window.sanityInspect().paused === false);
+  const saveApproachStart = (await inspect()).state.x;
+  report.currentStep = "Acercarse físicamente a save0";
   await page.keyboard.down("a");
   try {
     await page.waitForFunction(
-      () => window.sanityInspect().state.x <= -1.85,
-      null,
-      { timeout: 20000 },
+      (startX) => {
+        const game = window.sanityInspect();
+        return (
+          !game.paused &&
+          game.state.x < startX - 0.1 &&
+          game.interaction?.id === "save0"
+        );
+      },
+      saveApproachStart,
+      { timeout: 10000 },
     );
   } finally {
     await page.keyboard.up("a");
   }
+  const saveApproach = await inspect();
+  check(
+    "Desplazamiento real hasta el perímetro del escritorio de guardado",
+    saveApproach.state.x < saveApproachStart - 0.1 &&
+      saveApproach.interaction?.id === "save0" &&
+      !saveApproach.paused,
+    {
+      startX: saveApproachStart,
+      x: saveApproach.state.x,
+      z: saveApproach.state.z,
+      interaction: saveApproach.interaction,
+    },
+  );
+  report.currentStep = "Interactuar con save0 y observar el guardado";
   await page.keyboard.press("e");
   await page.waitForFunction(
     () => Boolean(localStorage.getItem("sanity404-save")),
@@ -174,6 +253,7 @@ try {
     "Guardado por interacción real",
     Boolean(await page.evaluate(() => localStorage.getItem("sanity404-save"))),
   );
+  report.currentStep = "Abrir pantalla de carga y recuperar la partida";
   await page.keyboard.press("Escape");
   await page.locator("#load-menu").click();
   check(
@@ -186,6 +266,12 @@ try {
     "Recarga desde la pantalla de carga",
     (await inspect()).state.room === 0 && !(await inspect()).paused,
   );
+  await page.keyboard.press("Escape");
+  await page.locator("#load").click();
+  check(
+    "Continuar utiliza el guardado existente",
+    (await inspect()).state.room === 0 && !(await inspect()).paused,
+  );
   await desktop.close();
 
   const mobile = await browser.newContext({
@@ -195,6 +281,7 @@ try {
     deviceScaleFactor: 1,
   });
   page = await mobile.newPage();
+  report.currentStep = "Validar menú y controles móviles";
   page.on("pageerror", (error) => report.errors.push(error.message));
   await page.goto(url, { waitUntil: "domcontentloaded" });
   await page.locator("#new").waitFor();
@@ -264,6 +351,26 @@ try {
   console.error(`FAIL remaster UI: ${error.message}`);
   if (page) {
     report.state = await inspect().catch(() => null);
+    report.ui = await page
+      .evaluate(() => {
+        const overlay = document.querySelector("#overlay");
+        const panel = document.querySelector("#panel");
+        return {
+          activeElement:
+            document.activeElement?.id || document.activeElement?.tagName,
+          overlayHidden: overlay?.hidden,
+          overlayClass: overlay?.className,
+          panelClass: panel?.className,
+          panelTitle: panel?.querySelector("h1,h2")?.textContent,
+          prompt: document.querySelector("#prompt")?.textContent,
+          toast: document.querySelector("#toast")?.textContent,
+          savePresent: Boolean(localStorage.getItem("sanity404-save")),
+        };
+      })
+      .catch(() => null);
+    console.error(
+      `DIAGNÓSTICO UI: ${JSON.stringify({ step: report.currentStep, state: report.state, ui: report.ui })}`,
+    );
     await screenshot(`fallo-${runStamp}`).catch(() => {});
   }
   process.exitCode = 1;

@@ -1,0 +1,180 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "startedAt": "2026-10-27T17:18:18.419Z",
+  "checks": [
+    {
+      "label": "Menú real y acciones principales",
+      "passed": true
+    },
+    {
+      "label": "Continuar y cargar desactivados sin partida",
+      "passed": true
+    },
+    {
+      "label": "Portada cinematográfica muestra escena original y lema",
+      "passed": true
+    },
+    {
+      "label": "Nueva partida recibe foco inicial",
+      "passed": true
+    },
+    {
+      "label": "Menú principal navegable con Tab",
+      "passed": true
+    },
+    {
+      "label": "Menú de escritorio sin desbordamiento",
+      "passed": true,
+      "details": {
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "panelLeft": 0,
+        "panelRight": 600,
+        "panelTop": 0,
+        "panelBottom": 900,
+        "viewportHeight": 900
+      }
+    },
+    {
+      "label": "Menú de tableta sin desbordamiento",
+      "passed": true,
+      "details": {
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "panelLeft": 0,
+        "panelRight": 422.390625,
+        "panelTop": 0,
+        "panelBottom": 1024,
+        "viewportHeight": 1024
+      }
+    },
+    {
+      "label": "Créditos navegables",
+      "passed": true
+    },
+    {
+      "label": "Opciones y controles accesibles",
+      "passed": true
+    },
+    {
+      "label": "Movimiento reducido desactiva animación del título",
+      "passed": true
+    },
+    {
+      "label": "Preferencia del sistema reduce movimiento del título",
+      "passed": true
+    },
+    {
+      "label": "Nueva partida inicia fundido cinematográfico",
+      "passed": true
+    },
+    {
+      "label": "Nueva partida desde el menú",
+      "passed": true
+    },
+    {
+      "label": "Inventario y diario funcionales",
+      "passed": true
+    },
+    {
+      "label": "Desplazamiento real hasta el perímetro del escritorio de guardado",
+      "passed": true,
+      "details": {
+        "startX": 0,
+        "x": -0.135,
+        "z": 5,
+        "interaction": {
+          "id": "save0",
+          "name": "Escritorio de memoria · guardar"
+        }
+      }
+    },
+    {
+      "label": "Guardado por interacción real",
+      "passed": true
+    },
+    {
+      "label": "Pantalla de carga presenta el guardado",
+      "passed": true
+    },
+    {
+      "label": "Recarga desde la pantalla de carga",
+      "passed": true
+    },
+    {
+      "label": "Continuar utiliza el guardado existente",
+      "passed": true
+    },
+    {
+      "label": "Menú móvil sin desbordamiento",
+      "passed": true,
+      "details": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "panelLeft": 0,
+        "panelRight": 390,
+        "panelTop": 72.59375,
+        "panelBottom": 844,
+        "viewportHeight": 844
+      }
+    },
+    {
+      "label": "Controles táctiles visibles en móvil",
+      "passed": true
+    },
+    {
+      "label": "Movimiento táctil real",
+      "passed": true
+    },
+    {
+      "label": "Diario accesible por control táctil",
+      "passed": true
+    },
+    {
+      "label": "Inventario móvil sin desbordamiento",
+      "passed": true,
+      "details": {
+        "documentWidth": 390,
+        "viewportWidth": 390,
+        "panelLeft": 12,
+        "panelRight": 378,
+        "panelTop": 12,
+        "panelBottom": 832,
+        "viewportHeight": 844
+      }
+    },
+    {
+      "label": "Diario táctil se cierra y devuelve control",
+      "passed": true
+    },
+    {
+      "label": "Sin errores JavaScript",
+      "passed": true,
+      "details": []
+    }
+  ],
+  "screenshots": [
+    "docs/capturas/fase23/menu-1440x900.png",
+    "docs/capturas/fase23/menu-768x1024.png",
+    "docs/capturas/fase23/creditos-1440x900.png",
+    "docs/capturas/fase23/opciones-1440x900.png",
+    "docs/capturas/fase23/hud-1440x900.png",
+    "docs/capturas/fase23/inventario-1440x900.png",
+    "docs/capturas/fase23/documentos-1440x900.png",
+    "docs/capturas/fase23/cargar-1440x900.png",
+    "docs/capturas/fase23/menu-390x844.png",
+    "docs/capturas/fase23/hud-390x844.png",
+    "docs/capturas/fase23/inventario-390x844.png"
+  ],
+  "errors": [],
+  "launchAttempts": [
+    {
+      "attempt": 1,
+      "passed": true
+    }
+  ],
+  "completed": true,
+  "hardwareRequested": true,
+  "currentStep": "Validar menú y controles móviles",
+  "finishedAt": "2026-10-27T17:18:38.247Z"
+}

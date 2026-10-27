@@ -1,6 +1,7 @@
 import * as T from "three";
 import "./ui/style.css";
 import "./ui/remaster.css";
+import "./ui/menu-cinematic.css";
 import { applyQuality, qualityProfile } from "./render/quality";
 import { textureBudget, simplifyLowMaterials } from "./render/materials";
 import { FrameMetrics } from "./render/metrics";
@@ -106,7 +107,7 @@ import { trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
 const qaMode =
   import.meta.env.DEV && new URLSearchParams(location.search).get("qa") === "1";
-app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div><div class="help-compact">WASD · MOVER &nbsp; E · INTERACTUAR<br>ESPACIO · ATACAR &nbsp; J · FUERTE<br>V · ESQUIVAR &nbsp; F · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div class="panel" id="panel"></div></div>`;
+app.innerHTML = `<div id="viewport"></div><div id="veil"></div><div id="hit-feedback" aria-hidden="true"></div><div id="hud"><header><div class="brand">SANITY—404</div><div class="chapter"><div class="eyebrow" id="sub"></div><div class="location" id="location"></div><div id="objective" class="objective" aria-live="polite"></div></div></header><div class="bottom"><div class="vitals"><div class="eyebrow" id="hero-name">ÉLISE MOREAU · RESTAURADORA</div><div class="stat"><span>SALUD</span><span id="hptext">100</span></div><div class="bar"><div id="health" class="fill"></div></div><div class="stat"><span>CORDURA</span><span id="sptext">100</span></div><div class="bar"><div id="sanity" class="fill"></div></div><div class="stat"><span>RESISTENCIA</span><span id="sttext">100</span></div><div class="bar"><div id="stamina" class="fill"></div></div><div class="eyebrow" id="target-zone">OBJETIVO · TORSO</div></div><div class="help">WASD / ↑↓←→ · MOVERSE<br>E · INTERACTUAR &nbsp; ESPACIO · ATACAR<br>J / CLIC DERECHO / RB · GOLPE FUERTE<br>C · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZA<br>V / R3 · ESQUIVAR &nbsp; F / LB · DEFENDER<br>DEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUE<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div><div class="help-compact">WASD · MOVER &nbsp; E · INTERACTUAR<br>ESPACIO · ATACAR &nbsp; J · FUERTE<br>V · ESQUIVAR &nbsp; F · DEFENDER<br>TAB · INVENTARIO &nbsp; M · MAPA &nbsp; ESC · PAUSA</div></div></div><div id="prompt"></div><div id="toast" role="status" aria-live="polite"></div><div id="overlay" role="dialog" aria-modal="true" aria-label="Menú del juego"><div id="title-scene" aria-hidden="true"><div class="title-lamplight"></div><div class="title-mist"></div><div class="title-dust"></div></div><div class="panel" id="panel"></div></div><div id="title-transition" aria-hidden="true"></div>`;
 app.insertAdjacentHTML(
   "beforeend",
   `<div id="touch-controls" aria-label="Controles táctiles" hidden><div class="touch-move" aria-label="Movimiento"><button data-touch-key="KeyW" aria-label="Avanzar">↑</button><div><button data-touch-key="KeyA" aria-label="Izquierda">←</button><button data-touch-key="KeyS" aria-label="Retroceder">↓</button><button data-touch-key="KeyD" aria-label="Derecha">→</button></div></div><div class="touch-actions"><button data-touch-key="KeyE">Interactuar</button><button data-touch-key="Space">Atacar</button><button data-touch-key="KeyF">Defender</button><button data-touch-key="KeyV">Esquivar</button><button data-touch-key="KeyH">Tónico</button><button data-touch-key="Tab">Diario</button><button data-touch-key="Escape">Pausa</button></div></div>`,
@@ -187,6 +188,28 @@ let targetZone: TargetZone = "torso";
 audio.setVolume(settings.volume);
 audio.setReduceAudio(settings.reduceAudio);
 applyQuality(renderer, settings.quality);
+const unlockTitleAudio = () => {
+  if (
+    started ||
+    state.ended ||
+    !el("overlay").classList.contains("overlay--title")
+  )
+    return;
+  if (audio.ctx?.state === "running") return;
+  void audio.start().catch(() => {
+    // A blocked audio context must never block menu navigation.
+  });
+};
+el("overlay").addEventListener("pointerdown", unlockTitleAudio);
+el("overlay").addEventListener("keydown", unlockTitleAudio);
+el("overlay").addEventListener("focusin", (event) => {
+  if (
+    !started &&
+    event.target instanceof HTMLButtonElement &&
+    audio.ctx?.state === "running"
+  )
+    audio.tone(240, 0.09, "triangle");
+});
 
 function toast(text: string) {
   el("toast").textContent = text;
@@ -203,9 +226,15 @@ function autoSave() {
 }
 function panel(html: string, kind = "story") {
   paused = true;
-  audio.pause();
+  if (!started || state.ended) audio.resume();
+  else audio.pause();
   input.clear();
   el("overlay").hidden = false;
+  el("overlay").classList.toggle("overlay--title", !started || state.ended);
+  el("overlay").classList.toggle(
+    "overlay--reduced",
+    settings.reduced || matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   el("touch-controls").hidden = true;
   el("panel").className = `panel panel--${kind}`;
   el("panel").innerHTML = html;
@@ -518,9 +547,36 @@ function begin(s: State) {
   toast("Encuentra a Adrien. Empieza por la carta y la llave del vestíbulo.");
 }
 
+let enteringFromTitle = false;
+function beginFromMenu(s: State) {
+  if (enteringFromTitle) return;
+  if (
+    started ||
+    settings.reduced ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    begin(s);
+    return;
+  }
+  enteringFromTitle = true;
+  const curtain = el("title-transition");
+  const menuButtons = el("panel").querySelectorAll<HTMLButtonElement>("button");
+  menuButtons.forEach((control) => (control.disabled = true));
+  el("overlay").classList.add("overlay--departing");
+  curtain.classList.add("title-transition--closed");
+  window.setTimeout(() => {
+    begin(s);
+    el("overlay").classList.remove("overlay--departing");
+    window.requestAnimationFrame(() =>
+      curtain.classList.remove("title-transition--closed"),
+    );
+    enteringFromTitle = false;
+  }, 440);
+}
+
 function menu() {
   panel(
-    `<div class="menu-kicker">${started ? "PAUSA · PARTIDA EN CURSO" : "UN ARCHIVO IMPOSIBLE"} <span>FRANCIA · 1927</span></div><div class="ornament">EXPEDIENTE 404 / MANSIÓN VEYR</div><h1>SANITY<span>—404</span></h1><div class="subtitle">LO QUE OLVIDAS TAMBIÉN TE RECUERDA</div><div class="rule"></div><p class="menu-intro">Una carta de tu hermano desaparecido.<br>Una casa que conserva lo que el mundo olvidó.</p><nav class="actions menu-actions" aria-label="Menú principal"><button id="new">Nueva partida</button><button id="load" ${readSave() ? "" : "disabled"}>Continuar</button><button id="load-menu" ${readSave() ? "" : "disabled"}>Cargar partida</button>${started ? '<button id="resume">Volver</button>' : ""}<button id="settings">Opciones</button><button id="credits">Créditos</button></nav><p class="small menu-footer">DOCE ÉPOCAS · UNA MEMORIA<br>TECLADO, RATÓN Y MANDO · AUDIO ORIGINAL</p>`,
+    `<div class="menu-kicker"><span>${started && !state.ended ? "PAUSA · PARTIDA EN CURSO" : "MANSIÓN VEYR · FRANCIA"}</span><span>1927</span></div><div class="ornament">UN EXPEDIENTE QUE NO DEBIÓ EXISTIR</div><h1>SANITY<span>—404</span></h1><div class="menu-subtitle">ARCHIVO DE LAS AUSENCIAS · 1927</div><div class="rule"></div><p class="menu-motto">LO QUE OLVIDAS<br>TAMBIÉN TE RECUERDA</p><p class="menu-intro">Una carta de tu hermano desaparecido.<br>Una casa que conoce tu nombre.</p><nav class="actions menu-actions" aria-label="Menú principal"><button id="new" aria-label="Nueva partida">Nueva partida</button><button id="load" aria-label="Continuar" ${readSave() ? "" : "disabled"}>Continuar</button><button id="settings" aria-label="Opciones">Opciones</button></nav><div class="menu-secondary"><button id="load-menu" ${readSave() ? "" : "disabled"}>Cargar partida</button>${started && !state.ended ? '<button id="resume">Volver al juego</button>' : ""}<button id="credits">Créditos</button></div><p class="small menu-footer">DOCE ÉPOCAS · UNA MEMORIA<br>TECLADO, RATÓN Y MANDO · AUDIO ORIGINAL</p>`,
     "menu",
   );
   button("new", () => {
@@ -528,9 +584,9 @@ function menu() {
       panel(
         '<h2>¿Comenzar de nuevo?</h2><p>Se perderá el progreso sin guardar. Tu partida guardada se conserva.</p><div class="actions"><button id="yes">Nueva partida</button><button id="no">Volver</button></div>',
       );
-      button("yes", () => begin(fresh()));
+      button("yes", () => beginFromMenu(fresh()));
       button("no", menu);
-    } else begin(fresh());
+    } else beginFromMenu(fresh());
   });
   button("load", () => {
     const s = readSave();
@@ -2140,8 +2196,16 @@ function frame(now: number) {
     if (input.take("Tab") && started && !state.ended) resume();
   }
   if (!started && world) {
-    camera.position.set(Math.sin(now * 0.00008) * 3, 3.2, 6.7);
+    camera.position.set(
+      settings.reduced || matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? 0
+        : Math.sin(now * 0.00008) * 3,
+      3.2,
+      6.7,
+    );
     camera.lookAt(0, 1, -2);
+    if (el("overlay").classList.contains("overlay--title"))
+      audio.menuAmbient(now / 1000);
   }
   if (toastTime > 0 && !paused) {
     toastTime -= dt;

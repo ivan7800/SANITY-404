@@ -95,6 +95,27 @@ describe("colisiones del motor real", () => {
     world.dispose();
   });
 
+  it("permite guardar desde el perímetro de save0 sin exigir atravesar el escritorio", () => {
+    const world = new World(0, [], [], []);
+    let actor = { x: 0, z: 5, level: 0 as 0 | 1 };
+    for (let step = 0; step < 120; step++) {
+      actor = mansionMove(
+        actor.x,
+        actor.z,
+        -0.03,
+        0,
+        actor.level,
+        world.obstacles,
+        world.upperObstacles,
+      );
+    }
+    expect(actor.x).toBeLessThan(-0.1);
+    expect(actor.x).toBeGreaterThan(-1.85);
+    expect(blocked(actor.x, actor.z, world.obstacles)).toBe(false);
+    expect(world.nearest(actor.x, actor.z, 1.9)?.id).toBe("save0");
+    world.dispose();
+  });
+
   it("mantiene un punto de aparición libre en las 29 salas", () => {
     expect(names).toHaveLength(29);
     for (let room = 0; room < names.length; room++) {
