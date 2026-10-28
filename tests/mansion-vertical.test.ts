@@ -1,7 +1,11 @@
 import { expect, it, vi } from "vitest";
 import * as T from "three";
 import { CinematicCamera } from "../src/engine/camera";
-import { mansion, mansionFloorHeight } from "../src/world/mansion";
+import {
+  mansion,
+  mansionFloorHeight,
+  onMansionStair,
+} from "../src/world/mansion";
 import { World } from "../src/world/scene";
 import { blocked } from "../src/systems/state";
 import { Audio } from "../src/systems/audio";
@@ -11,6 +15,9 @@ it("permite subir y bajar por el centro, y las barandillas evitan la caída", ()
   expect(mansionFloorHeight(5, -1.5)).toBe(0);
   expect(mansionFloorHeight(5, -3.25)).toBeGreaterThan(1);
   expect(mansionFloorHeight(5, -5.8)).toBeCloseTo(2.64);
+  expect(onMansionStair(5, -3.25, 0)).toBe(true);
+  expect(onMansionStair(5, -5.8, 0)).toBe(false);
+  expect(onMansionStair(5, -5.8, 1)).toBe(false);
   expect(blocked(5, -3.25, world.obstacles)).toBe(false);
   expect(blocked(3.51, -3.25, world.obstacles)).toBe(true);
   expect(blocked(5, -6.66, world.obstacles)).toBe(true);

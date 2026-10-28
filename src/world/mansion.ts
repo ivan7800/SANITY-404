@@ -18,6 +18,11 @@ export function mansionFloorHeight(x: number, z: number, floor: 0 | 1 = 0) {
     ? MANSION_GALLERY_Y
     : ((-z - 1.55) / 3.56) * MANSION_GALLERY_Y;
 }
+/** The upper gallery and landing are level floors, not stair treads. */
+export function onMansionStair(x: number, z: number, floor: 0 | 1) {
+  const height = mansionFloorHeight(x, z, floor);
+  return floor === 0 && height > 0.05 && height < MANSION_GALLERY_Y - 0.05;
+}
 export function mansion(
   obstacles: Obstacle[],
   upperObstacles: Obstacle[] = [],

@@ -59,7 +59,7 @@ export function parseSave(raw: string): State | null {
       ) ||
       Math.abs(s.x) > 8 ||
       Math.abs(s.z) > 8 ||
-      s.health < 0 ||
+      s.health <= 0 ||
       s.health > 100 ||
       s.sanity < 0 ||
       s.sanity > 100 ||
@@ -91,6 +91,7 @@ export function parseSave(raw: string): State | null {
       if (
         !Array.isArray(s[k]) ||
         s[k].length > 100 ||
+        new Set(s[k]).size !== s[k].length ||
         !s[k].every((v: unknown) => typeof v === "string")
       )
         return null;

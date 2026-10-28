@@ -27,8 +27,8 @@ Se consultó [Actions 39830075172](https://github.com/ivan7800/SANITY-404/action
 
 ## REA y Skills
 
-- La instalación real de REA figura en `~/.codex/config.toml` como servidor MCP `rea`, ejecutado mediante `/home/ivan/.nvm/versions/node/v24.22.0/bin/rea mcp`. `mcp__rea__binary_session({})` respondió en esta sesión: paquete y servidor `rea-agents` **6.5.0**, protocolo `2025-06-18`, catálogo de **207 herramientas**, `open: false`. Esto demuestra conexión del servidor, no que todos los proveedores de análisis estén disponibles.
-- La Skill local `/home/ivan/.agents/skills/reverse-engineer-anything/SKILL.md` (versión 42) indica omitir REA en un repositorio ordinario con código fuente completo. Por ello no se abrió un artefacto, no se ejecutó decompilación y no se instaló ningún motor. El registro anterior está en [REA.md](REA.md).
+- La instalación real de REA figura en `~/.codex/config.toml` como servidor MCP `rea`, ejecutado mediante `/home/<usuario>/.nvm/versions/node/v24.22.0/bin/rea mcp`. `mcp__rea__binary_session({})` respondió en esta sesión: paquete y servidor `rea-agents` **6.5.0**, protocolo `2025-06-18`, catálogo de **207 herramientas**, `open: false`. Esto demuestra conexión del servidor, no que todos los proveedores de análisis estén disponibles.
+- La Skill local `/home/<usuario>/.agents/skills/reverse-engineer-anything/SKILL.md` (versión 42) indica omitir REA en un repositorio ordinario con código fuente completo. Por ello no se abrió un artefacto, no se ejecutó decompilación y no se instaló ningún motor. El registro anterior está en [REA.md](REA.md).
 - [SKILLS-INVENTARIO.md](SKILLS-INVENTARIO.md) enumera **364 archivos `SKILL.md` instalados** en las raíces examinadas: 311 ECC, 37 comandos ECC, 5 de sistema, 5 Google Drive, 2 Sites, 3 Work Pets y 1 REA local. Instalación no significa uso. En Fase 10B se consultaron `ecc:change-impact`, `ecc:frontend-design-direction`, `ecc:browser-qa` y REA. El análisis de impacto y la dirección visual guiaron el cambio; el QA de navegador quedó **incompleto**, así que no se ha superado la puerta de acabado renderizado de esas Skills.
 
 ## Implementado frente a propuesto

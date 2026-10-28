@@ -116,8 +116,19 @@ it("el enemigo persigue, daña con recuperación y no atraviesa límites", () =>
   expect(c.windup).toBeGreaterThan(0);
   c.update(0.43, state, p, e, [], false, noop, noop);
   expect(state.health).toBe(88);
+  expect(c.hitsReceived).toBe(1);
+  expect(c.lastPlayerHit).toMatchObject({
+    source: "enemy1",
+    kind: "shade",
+    raw: 12,
+    applied: 12,
+    guarded: false,
+    healthBefore: 100,
+    healthAfter: 88,
+  });
   c.update(0.1, state, p, e, [], false, noop, noop);
   expect(state.health).toBe(88);
+  expect(c.hitsReceived).toBe(1);
 });
 it("un tónico cura y se consume una única vez, sin superar máximos", () => {
   const s = fresh();
@@ -142,6 +153,12 @@ it("defender reduce el daño y evita atacar simultáneamente", () => {
   expect(c.health).toBe(60);
   c.update(0.43, s, p, e, [], false, noop, noop, true);
   expect(s.health).toBe(97);
+  expect(c.lastPlayerHit).toMatchObject({
+    source: "enemy0",
+    raw: 12,
+    applied: 3,
+    guarded: true,
+  });
 });
 it("el centurión amortigua cortes frontales y expone su escudo al golpe fuerte", () => {
   const state = fresh();

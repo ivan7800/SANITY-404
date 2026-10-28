@@ -1280,7 +1280,7 @@
     {
       "type": "failure",
       "message": "AssertionError [ERR_ASSERTION]: Movimiento hasta x=5.2: {}",
-      "stack": "AssertionError [ERR_ASSERTION]: Movimiento hasta x=5.2: {}\n    at check (file:///home/ivan/Proyectos/SANITY-404-FASE11/scripts/phase22-start-probe.mjs:49:10)\n    at go (file:///home/ivan/Proyectos/SANITY-404-FASE11/scripts/phase22-start-probe.mjs:142:5)\n    at async useObject (file:///home/ivan/Proyectos/SANITY-404-FASE11/scripts/phase22-start-probe.mjs:152:3)\n    at async enterPortal (file:///home/ivan/Proyectos/SANITY-404-FASE11/scripts/phase22-start-probe.mjs:166:3)\n    at async runAurelia (file:///home/ivan/Proyectos/SANITY-404-FASE11/scripts/phase22-start-probe.mjs:487:21)\n    at async file:///home/ivan/Proyectos/SANITY-404-FASE11/scripts/phase22-start-probe.mjs:582:30"
+      "stack": "AssertionError [ERR_ASSERTION]: Movimiento hasta x=5.2: {}\n    at check (file://<workspace>/scripts/phase22-start-probe.mjs:49:10)\n    at go (file://<workspace>/scripts/phase22-start-probe.mjs:142:5)\n    at async useObject (file://<workspace>/scripts/phase22-start-probe.mjs:152:3)\n    at async enterPortal (file://<workspace>/scripts/phase22-start-probe.mjs:166:3)\n    at async runAurelia (file://<workspace>/scripts/phase22-start-probe.mjs:487:21)\n    at async file://<workspace>/scripts/phase22-start-probe.mjs:582:30"
     }
   ],
   "chapters": [

@@ -1,0 +1,76 @@
+
+> sanity-404@0.1.0 test
+> vitest run --maxWorkers=1 tests/phase32-progression-adversarial.test.ts
+
+
+ RUN  v4.1.11 <workspace>
+
+ ❯ tests/phase32-progression-adversarial.test.ts (2 tests | 1 failed) 13ms
+   × rechaza capítulos completados sin sus prerequisitos reales 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/phase32-progression-adversarial.test.ts > rechaza capítulos completados sin sus prerequisitos reales
+AssertionError: expected { version: 2, room: +0, x: +0, …(13) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "campaign": {
+    "completed": [
+      "photo-1899",
+    ],
+    "visited": [
+      "mansion-1927",
+      "photo-1899",
+    ],
+    "witnessed": [],
+  },
+  "collected": [],
+  "defeated": [],
+  "elapsed": 0,
+  "ended": false,
+  "floor": 0,
+  "health": 100,
+  "items": [],
+  "phase2": {
+    "discoveries": [],
+    "ending": false,
+    "shortcuts": [],
+    "solved": [],
+    "steps": [
+      0,
+      0,
+      0,
+      0,
+    ],
+    "visited": [
+      0,
+    ],
+  },
+  "read": [],
+  "room": 0,
+  "sanity": 100,
+  "seals": [],
+  "version": 2,
+  "x": 0,
+  "z": 5,
+}
+
+ ❯ tests/phase32-progression-adversarial.test.ts:8:49
+      6|   const impossible = fresh();
+      7|   completeChapter(impossible.campaign, "photo-1899");
+      8|   expect(parseSave(JSON.stringify(impossible))).toBeNull();
+       |                                                 ^
+      9|
+     10|   const pressWithoutOona = fresh();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  15:39:49
+   Duration  376ms (transform 160ms, setup 0ms, import 186ms, tests 13ms, environment 0ms)

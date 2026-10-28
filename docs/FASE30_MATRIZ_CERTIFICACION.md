@@ -22,12 +22,12 @@
 | 29 salas construidas | PASS | `audit:rooms` enumera 00–28; no certifica inspección visual. |
 | 418 rutas geométricas de campaña | PASS | Auditoría física estática, 0 inaccesibles; no es recorrido WASD. |
 | Puzles e inventario deterministas | PASS | Suite unitaria actual; prueba humana pendiente. |
-| Suite unitaria, compilación y formato | PASS | 277/277, build y Prettier con el código final. |
+| Suite unitaria, compilación y formato | PASS | 278/278, build y Prettier tras F30-007. |
 | Guardado válido y protección frente a estado imposible | PASS | `tests/state.test.ts` y `tests/save.test.ts`; recarga real pendiente. |
 | Audio de transición entre salas | PASS | Envolvente probada en `mansion-atmosphere.test.ts`; escucha real pendiente. |
 | Viuda: persecución y cámara real | PENDING | La última traza Intel anterior falló por muestras idénticas; script revisado, sin ejecución real nueva. |
 | Benchmark Intel, seis escenarios × dos perfiles | BLOCKED | Chrome no arrancó en sandbox; manifiesto de doce casos probado, sin FPS nuevos. |
-| Campaña completa desde Nueva partida | PENDING | Evidencia histórica de F22, no posterior a F26–F30. |
+| Campaña completa desde Nueva partida | FAIL; corrección pendiente de prueba real | [Ejecución Intel del 28-10](capturas/fase30/campana/campana-completa-trace.json): muerte inmóvil en sala 0 por carrera de inicio del script. Corrección y regresión unitaria implementadas; falta repetir el recorrido. |
 | Final anticipado y fracaso | PENDING | No repetidos en esta revisión. |
 | Inspección visual de 29 salas | PENDING | Geometría estática y capturas antiguas no la sustituyen. |
 | Publicación/GitHub Pages | PENDING | No autorizada; no se ha hecho commit ni push. |

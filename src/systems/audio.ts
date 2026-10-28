@@ -1,3 +1,66 @@
+export type FootstepSurface = "wood" | "stone" | "tile" | "metal" | "wet";
+
+/** One surface per existing room; the mansion stair overrides room zero. */
+const roomFootstepSurfaces: readonly FootstepSurface[] = [
+  "wood",
+  "wood",
+  "stone",
+  "stone",
+  "stone",
+  "wood",
+  "wet",
+  "stone",
+  "stone",
+  "stone",
+  "stone",
+  "tile",
+  "tile",
+  "wood",
+  "wet",
+  "stone",
+  "metal",
+  "stone",
+  "stone",
+  "wood",
+  "wood",
+  "wood",
+  "metal",
+  "wood",
+  "wood",
+  "wood",
+  "metal",
+  "wood",
+  "wet",
+];
+const footstepTimbres: Record<
+  FootstepSurface,
+  readonly [number, OscillatorType]
+> = {
+  wood: [72, "triangle"],
+  stone: [59, "triangle"],
+  tile: [104, "sine"],
+  metal: [142, "sine"],
+  wet: [83, "triangle"],
+};
+
+export function footstepSurface(
+  room: number,
+  onWoodStairs = false,
+): FootstepSurface {
+  return onWoodStairs ? "wood" : (roomFootstepSurfaces[room] ?? "stone");
+}
+
+/** A held key against a solid obstacle must not make walking sounds. */
+export function audibleFootstep(
+  inputMagnitude: number,
+  from: { x: number; z: number },
+  to: { x: number; z: number },
+) {
+  return (
+    inputMagnitude > 0.1 && Math.hypot(to.x - from.x, to.z - from.z) > 0.005
+  );
+}
+
 export class Audio {
   ctx?: AudioContext;
   gain?: GainNode;
@@ -337,11 +400,10 @@ export class Audio {
     this.reduceAudio = value;
   }
   step(room: number, running: boolean, onWoodStairs = false) {
-    this.tone(
-      onWoodStairs ? 63 : room === 6 ? 100 : room === 7 ? 58 : 75,
-      onWoodStairs ? 0.15 : running ? 0.045 : 0.07,
-      "triangle",
-    );
+    const surface = footstepSurface(room, onWoodStairs);
+    const [surfaceFrequency, wave] = footstepTimbres[surface];
+    const frequency = onWoodStairs ? 63 : surfaceFrequency;
+    this.tone(frequency, onWoodStairs ? 0.15 : running ? 0.045 : 0.07, wave);
   }
   cue(kind: "door" | "mechanism" | "enemy" | "whisper") {
     const frequency = { door: 105, mechanism: 305, enemy: 62, whisper: 190 }[

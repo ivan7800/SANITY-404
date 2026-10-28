@@ -17,14 +17,14 @@ El intento de sandbox usó un servidor que pasó automáticamente de 5174 a 5175
 Terminal 1:
 
 ```bash
-cd /home/ivan/Proyectos/SANITY-404-FASE11
+cd /ruta/al/repositorio/SANITY-404
 npm run dev -- --port 5174 --strictPort
 ```
 
 Terminal 2:
 
 ```bash
-cd /home/ivan/Proyectos/SANITY-404-FASE11
+cd /ruta/al/repositorio/SANITY-404
 SANITY_HARDWARE=1 SANITY_TEST_URL=http://127.0.0.1:5174/ SANITY_PHASE30_OUTPUT=docs/capturas/fase30/benchmark-intel node scripts/benchmark-phase30.mjs
 ```
 

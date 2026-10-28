@@ -125,6 +125,18 @@ export class Combat {
   enemyHurt = 0;
   impact = 0;
   health = 60;
+  /** Read-only diagnostics; never affects damage or enemy decisions. */
+  hitsReceived = 0;
+  lastPlayerHit?: {
+    elapsed: number;
+    source: string;
+    kind: EnemyKind;
+    raw: number;
+    applied: number;
+    guarded: boolean;
+    healthBefore: number;
+    healthAfter: number;
+  };
   enemyCooldown = 1;
   attackCooldown = 0;
   animation = 0;
@@ -683,7 +695,19 @@ export class Combat {
               ? Math.ceil(amount * (this.kind === "shade" ? 0.25 : 0.28))
               : amount;
             const guarded = absorbVeil(state, incoming);
+            const healthBefore = state.health;
             damage(state, guarded);
+            this.hitsReceived++;
+            this.lastPlayerHit = {
+              elapsed: state.elapsed,
+              source: this.defeatedId,
+              kind: this.kind,
+              raw: amount,
+              applied: guarded,
+              guarded: this.guarding,
+              healthBefore,
+              healthAfter: state.health,
+            };
             if (guarded < incoming)
               onMessage("El velo ritual absorbe el impacto y se rompe.");
             if (this.kind === "typesetter" && !this.guarding)

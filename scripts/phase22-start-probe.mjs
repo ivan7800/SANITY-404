@@ -17,6 +17,7 @@ import {
   routeObstacles,
 } from "./phase22-navigation.mjs";
 import { tonicConsumption } from "./phase22-resources.mjs";
+import { campaignStartReady } from "./phase22-start-readiness.mjs";
 import { phase2DoorLocked, puzzleIds } from "../src/systems/phase2.ts";
 
 const option = (name, fallback) =>
@@ -115,6 +116,7 @@ async function snapshot(label, extra = {}) {
     room: s.state.room,
     x: s.state.x,
     z: s.state.z,
+    elapsed: s.state.elapsed,
     health: s.state.health,
     sanity: s.state.sanity,
     items: s.state.items,
@@ -124,6 +126,11 @@ async function snapshot(label, extra = {}) {
     enemy: s.enemy,
     combat: s.combat,
     paused: s.paused,
+    started: s.started,
+    overlayHidden: s.overlayHidden,
+    titleTransitionClosed: s.titleTransitionClosed,
+    focused: s.focused,
+    pressedKeys: s.pressedKeys,
     selectedInteraction: s.interaction?.id ?? null,
     panelHeading: s.paused
       ? await page.locator("#panel h1, #panel h2").first().textContent()
@@ -156,6 +163,14 @@ async function waitObserved(
       player: observed ? [observed.state.x, observed.state.z] : null,
       selected: observed?.interaction?.id ?? null,
       paused: observed?.paused ?? null,
+      started: observed?.started ?? null,
+      overlayHidden: observed?.overlayHidden ?? null,
+      titleTransitionClosed: observed?.titleTransitionClosed ?? null,
+      elapsed: observed?.state.elapsed ?? null,
+      health: observed?.state.health ?? null,
+      enemy: observed?.enemy ?? null,
+      combat: observed?.combat ?? null,
+      pressedKeys: observed?.pressedKeys ?? null,
       phase2Solved: observed?.state.phase2.solved ?? null,
       prompt: await page
         .locator("#prompt")
@@ -176,6 +191,9 @@ async function waitObserved(
         .catch(() => null),
       recentInteractionKeys: await page
         .evaluate(() => window.sanityQaInteractionKeys?.slice(-5) ?? [])
+        .catch(() => []),
+      recentMovementKeys: await page
+        .evaluate(() => window.sanityQaMovementKeys?.slice(-20) ?? [])
         .catch(() => []),
       error: String(error),
     };
@@ -283,13 +301,47 @@ async function walk(key, ms, running = false) {
 
 async function resumeObservedWitness(state, context) {
   if (!state.paused) return false;
-  const heading = await page.locator("#panel h2").first().textContent();
+  // locator.textContent() waits for an h2 that the title does not contain.
+  // During that wait the game may start and the enemy may kill an idle player.
+  const heading = await page.evaluate(
+    () => document.querySelector("#panel h1, #panel h2")?.textContent ?? null,
+  );
+  const current = await inspect();
+  if (!current.paused) return false;
+  if (current.state.health <= 0 || heading === "Tu voz se ha apagado.")
+    check("Muerte durante navegación", false, {
+      context,
+      heading,
+      elapsed: current.state.elapsed,
+      position: [current.state.x, current.state.z],
+      enemy: current.enemy,
+      combat: current.combat,
+      pressedKeys: current.pressedKeys,
+      recentMovementKeys: await page.evaluate(() =>
+        window.sanityQaMovementKeys?.slice(-20),
+      ),
+    });
   const close = page.getByRole("button", { name: "Conservar el testimonio" });
   const witness = observedRomanWitness(
     state.state.room,
     state.state.campaign.witnessed,
     heading,
   );
+  if (!witness)
+    check("Pausa inesperada durante navegación", false, {
+      room: current.state.room,
+      position: [current.state.x, current.state.z],
+      heading,
+      context,
+      elapsed: current.state.elapsed,
+      health: current.state.health,
+      enemy: current.enemy,
+      combat: current.combat,
+      pressedKeys: current.pressedKeys,
+      recentMovementKeys: await page.evaluate(() =>
+        window.sanityQaMovementKeys?.slice(-20),
+      ),
+    });
   check(
     "Pausa de navegación identificada",
     Boolean(witness) && (await close.isVisible()),
@@ -298,6 +350,13 @@ async function resumeObservedWitness(state, context) {
       position: [state.state.x, state.state.z],
       heading,
       context,
+      elapsed: current.state.elapsed,
+      enemy: current.enemy,
+      combat: current.combat,
+      pressedKeys: current.pressedKeys,
+      recentMovementKeys: await page.evaluate(() =>
+        window.sanityQaMovementKeys?.slice(-20),
+      ),
     },
   );
   trace.actions.push({
@@ -402,6 +461,7 @@ async function goDirect(x, z) {
     const key = axis === "x" ? (positive ? "d" : "a") : positive ? "s" : "w";
     let stalled = 0;
     let dangerLogged = false;
+    let pulses = 0;
     const began = performance.now();
     while (true) {
       const before = await inspect();
@@ -461,6 +521,40 @@ async function goDirect(x, z) {
       );
       await walk(key, stepMs, running);
       const after = await inspect();
+      pulses++;
+      if (
+        pulses <= 3 ||
+        after.state.health < before.state.health ||
+        Math.abs(after.state[axis] - before.state[axis]) < 0.025
+      )
+        trace.actions.push({
+          label: "pulso físico de navegación",
+          at: new Date().toISOString(),
+          key,
+          running,
+          requestedMs: stepMs,
+          before: {
+            x: before.state.x,
+            z: before.state.z,
+            health: before.state.health,
+            elapsed: before.state.elapsed,
+            paused: before.paused,
+            focused: before.focused,
+          },
+          after: {
+            x: after.state.x,
+            z: after.state.z,
+            health: after.state.health,
+            elapsed: after.state.elapsed,
+            paused: after.paused,
+            focused: after.focused,
+          },
+          enemy: after.enemy,
+          combat: after.combat,
+          movementKeys: await page.evaluate(() =>
+            window.sanityQaMovementKeys?.slice(-8),
+          ),
+        });
       if (after.state.health <= 0)
         check(`Movimiento ${axis} interrumpido por muerte`, false, {
           room: after.state.room,
@@ -2161,6 +2255,24 @@ try {
   page = await browser.newPage({ viewport: { width: 960, height: 640 } });
   await page.addInitScript(() => {
     window.sanityQaInteractionKeys = [];
+    window.sanityQaMovementKeys = [];
+    for (const type of ["keydown", "keyup"])
+      window.addEventListener(
+        type,
+        (event) => {
+          if (!/^(Key[WASD]|ShiftLeft|KeyF)$/.test(event.code)) return;
+          window.sanityQaMovementKeys.push({
+            atMs: performance.now(),
+            type,
+            code: event.code,
+            focused: document.activeElement?.tagName ?? null,
+            overlayHidden: document.getElementById("overlay")?.hidden ?? null,
+          });
+          if (window.sanityQaMovementKeys.length > 200)
+            window.sanityQaMovementKeys.shift();
+        },
+        true,
+      );
     window.addEventListener(
       "keydown",
       (event) => {
@@ -2186,19 +2298,43 @@ try {
   });
 
   await page.goto(url);
+  const menuFrame = (await inspect()).draw.frame;
   await page
     .getByRole("button", { name: "Nueva partida", exact: true })
     .click();
   await waitObserved(
-    "Nueva partida renderizada",
-    () => window.sanityInspect().draw.frame > 5,
+    "Nueva partida activa y título cerrado",
+    (previousFrame) => {
+      const current = window.sanityInspect();
+      return (
+        current.started &&
+        !current.paused &&
+        current.overlayHidden &&
+        !current.titleTransitionClosed &&
+        current.state.room === 0 &&
+        current.state.health > 0 &&
+        current.state.elapsed > 0 &&
+        current.draw.frame > previousFrame
+      );
+    },
+    menuFrame,
   );
   let s = await snapshot("Nueva partida");
   check(
     "Nueva partida limpia en 1927",
-    s.state.room === 0 &&
+    campaignStartReady(s, menuFrame) &&
+      s.state.health === 100 &&
       s.state.campaign.completed.length === 0 &&
       !s.state.defeated.includes("enemy8"),
+    {
+      started: s.started,
+      paused: s.paused,
+      overlayHidden: s.overlayHidden,
+      titleTransitionClosed: s.titleTransitionClosed,
+      elapsed: s.state.elapsed,
+      health: s.state.health,
+      enemy: s.enemy,
+    },
   );
 
   await runLucius();

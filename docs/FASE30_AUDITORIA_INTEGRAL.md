@@ -24,6 +24,12 @@ No se ha justificado una refactorización masiva. Esta tanda solo toca validaci�
 
 ## Evidencia de campaña y límites
 
+### Incidente F30-007 · inicio de Nueva partida
+
+La [ejecución real del 28-10](capturas/fase30/campana/campana-completa-trace.json) reprodujo un fallo **del script de certificación** antes de mover al jugador: a las 12:34:11 registró sala 0, `(0,5)`, 100 de salud, `paused=true` y el título `SANITY—404`; a las 12:34:34 registró la misma posición, salud 0 y panel de muerte. La sombra pasó de patrulla a recuperación cerca del jugador. `beginFromMenu` inicia la partida después de una transición de 440 ms, mientras el script aceptaba fotogramas renderizados por el menú como señal de partida. Después, `locator("#panel h2").textContent()` esperó un encabezado que el menú no tiene y dejó al personaje quieto durante ataques normales. La traza no registra golpes individuales, por lo que el origen de cada punto de daño se verificará con la nueva telemetría en la siguiente ejecución real. El motor aplica 12 puntos por golpe normal de sombra; no se modificó esa regla.
+
+La corrección espera condiciones observables de partida activa, transición cerrada y fotograma posterior; la lectura del panel ya no bloquea esperando un selector ausente. Se instrumentaron tiempo, foco, teclas de movimiento, enemigo activo, número de golpes y último daño recibido. Una regresión verifica que un título renderizado y pausado nunca se considere Nueva partida jugable. **Corregido en código; pendiente de validar con Chromium real.** El intento local de abrir Chrome terminó antes de crear página por `crashpad setsockopt EPERM`/`SIGTRAP`; se conserva el [registro íntegro del lanzamiento](capturas/fase30/chromium-launch-bloqueado-2026-10-28.log). No se cambiaron colisiones, enemigos, salud ni dificultad.
+
 La [traza histórica](capturas/fase22/campana-completa-trace.json) del 27-10-2026 registra Nueva partida, 12 capítulos, final histórico, **2808/2808 checks** y cero errores JavaScript en unos **806 s**. Es evidencia de aquella revisión. Los cambios locales posteriores de Fases 26–30 requieren **otra ejecución completa**; por ello ningún capítulo se marca PASS actual en la matriz. El final anticipado también requiere una prueba independiente actual. La prueba aislada de Viuda y el benchmark no certifican campaña.
 
 ## Navegador y entorno

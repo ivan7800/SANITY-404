@@ -48,7 +48,9 @@ it("correr usa una zancada y rodillas distintas de caminar y conserva la defensa
 it("el perfil bajo limita 1080p a un máximo interno de 576p incluso con pantalla HiDPI", () => {
   const scale = renderScale(1920, 1080, 2, 1);
   expect(1920 * 1080 * scale * scale).toBeLessThanOrEqual(1024 * 576 + 1);
-  expect(renderScale(1280, 720, 1, 1.3)).toBe(1);
+  expect(renderScale(1280, 720, 1, 1.3)).toBe(0.9);
+  expect(renderScale(1280, 720, 1, 1.6)).toBe(1);
+  expect(qualityProfile(1.3).shadows).toBe(true);
 });
 
 it("las sombras se reutilizan en reposo y se actualizan al cambiar la pose", async () => {

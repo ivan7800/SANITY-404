@@ -1,0 +1,64 @@
+name: Verify distribution packages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  web:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 22.16.0
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run format:check
+      - run: npm run audit:rooms
+      - run: npm run build:web
+      - run: npm run build:desktop:assets
+      - run: npm run verify:distribution
+
+  windows:
+    needs: web
+    runs-on: windows-2022
+    steps:
+      - name: Require a private repository for the installer artifact
+        if: ${{ !github.event.repository.private }}
+        shell: pwsh
+        run: throw 'The NSIS artifact requires a private repository; run this workflow in a private repository.'
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 22.16.0
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            desktop/package-lock.json
+      - run: npm ci
+      - run: npm ci --prefix desktop
+      - run: npm test
+      - run: npm run build:web
+      - run: npm run build:windows
+      - name: Verify NSIS installer and write SHA-256
+        shell: pwsh
+        run: |
+          $installers = @(Get-ChildItem 'desktop/release/*.exe' -File)
+          if ($installers.Count -ne 1) { throw "Expected one NSIS installer, found $($installers.Count)" }
+          $installer = $installers[0]
+          if ($installer.Length -le 0) { throw "Empty installer: $($installer.Name)" }
+          $hash = (Get-FileHash -LiteralPath $installer.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $($installer.Name)" | Set-Content -Path 'desktop/release/SHA256SUMS.txt' -Encoding ascii
+          Write-Host "$($installer.Name): $($installer.Length) bytes; SHA-256 $hash"
+      - uses: actions/upload-artifact@v4.6.2
+        with:
+          name: sanity-404-windows-nsis-x64
+          path: |
+            desktop/release/*.exe
+            desktop/release/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14

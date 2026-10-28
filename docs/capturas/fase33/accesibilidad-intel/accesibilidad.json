@@ -1,0 +1,70 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "checks": [
+    {
+      "name": "Texto ampliado y perfil Bajo aplicados",
+      "passed": true,
+      "details": {
+        "largeText": true,
+        "settings": {
+          "reduced": false,
+          "volume": 0.35,
+          "cameraMode": "classic",
+          "reduceFlashes": false,
+          "reduceDistortion": false,
+          "reduceAudio": false,
+          "largeText": true,
+          "quality": 1
+        }
+      }
+    },
+    {
+      "name": "Preferencias conservadas tras recarga",
+      "passed": true,
+      "details": {
+        "largeText": true,
+        "quality": "1"
+      }
+    },
+    {
+      "name": "HUD ampliado durante una partida real",
+      "passed": true,
+      "details": {
+        "objectiveSize": 16,
+        "quality": "Baja"
+      }
+    },
+    {
+      "name": "Diario legible y contenido dentro de la pantalla móvil",
+      "passed": true,
+      "details": {
+        "paragraphSize": 16,
+        "left": 12,
+        "right": 378,
+        "viewport": 390,
+        "scrollable": true
+      }
+    },
+    {
+      "name": "Cambio Bajo a Medio conserva la partida",
+      "passed": true,
+      "details": {
+        "quality": "Media",
+        "room": 0,
+        "health": 100
+      }
+    },
+    {
+      "name": "Perfil Medio y texto ampliado persisten tras reiniciar",
+      "passed": true
+    },
+    {
+      "name": "Sin errores JavaScript",
+      "passed": true,
+      "details": []
+    }
+  ],
+  "errors": [],
+  "finished": true,
+  "finishedAt": "2026-10-28T16:58:20.309Z"
+}

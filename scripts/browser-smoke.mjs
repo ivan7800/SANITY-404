@@ -1,5 +1,6 @@
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
+import { mkdirSync, writeFileSync } from "node:fs";
 import {
   axisTargetReached,
   blockedForRoute,
@@ -9,6 +10,7 @@ import {
   PLAYER_RADIUS,
 } from "./phase22-navigation.mjs";
 import { browserLaunchOptions } from "./browser-launch.mjs";
+import { campaignStartReady } from "./phase22-start-readiness.mjs";
 const softwareRenderer = process.env.SANITY_SOFTWARE === "1";
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
@@ -241,13 +243,76 @@ try {
   await page.evaluate(async () => {
     window.game = { inspect: window.sanityInspect };
   });
+  const menuFrame = (await inspect()).draw.frame;
   await page
     .getByRole("button", { name: "Nueva partida", exact: true })
     .click();
-  await page.waitForFunction(() => window.game.inspect().draw.frame > 5);
-  assert.equal((await inspect()).paused, false);
+  try {
+    await page.waitForFunction(
+      (previousFrame) => {
+        const current = window.sanityInspect();
+        return (
+          current.started &&
+          !current.paused &&
+          current.overlayHidden &&
+          !current.titleTransitionClosed &&
+          current.state.room === 0 &&
+          current.state.health > 0 &&
+          current.state.elapsed > 0 &&
+          current.draw.frame > previousFrame
+        );
+      },
+      menuFrame,
+      { timeout: 10000 },
+    );
+  } catch (error) {
+    const diagnostic = await page
+      .evaluate(() => ({
+        game: window.sanityInspect(),
+        overlay: {
+          hidden: document.querySelector("#overlay")?.hidden,
+          classes: document.querySelector("#overlay")?.className,
+        },
+        curtain: {
+          classes: document.querySelector("#title-transition")?.className,
+        },
+        newButton: {
+          disabled: document.querySelector("#new")?.disabled,
+          connected: document.querySelector("#new")?.isConnected,
+        },
+        focus: document.activeElement?.id,
+      }))
+      .catch(() => null);
+    const evidence = {
+      stage: "Nueva partida desde browser-smoke",
+      menuFrame,
+      diagnostic,
+      javascriptErrors: errors,
+      failure: String(error),
+    };
+    mkdirSync("docs/capturas/fase32", { recursive: true });
+    writeFileSync(
+      "docs/capturas/fase32/browser-smoke-start-failure.json",
+      `${JSON.stringify(evidence, null, 2)}\n`,
+    );
+    await page
+      .screenshot({
+        path: "docs/capturas/fase32/browser-smoke-start-failure.png",
+      })
+      .catch(() => {});
+    throw new Error(
+      `Nueva partida no llegó a estado jugable: ${JSON.stringify(evidence)}`,
+      {
+        cause: error,
+      },
+    );
+  }
+  assert.equal(campaignStartReady(await inspect(), menuFrame), true);
   report("WebGL y nueva partida");
-  await page.screenshot({ path: "/tmp/sanity404-game.png" });
+  mkdirSync("docs/capturas/fase32", { recursive: true });
+  await page.screenshot({
+    path: "docs/capturas/fase32/browser-smoke-start-pass.png",
+  });
   await go(-2, 5);
   await interactExpected("save0");
   assert.ok(await page.evaluate(() => localStorage.getItem("sanity404-save")));
@@ -329,7 +394,10 @@ try {
       2,
     ),
   );
-  await page.screenshot({ path: "/tmp/sanity404-failure.png" }).catch(() => {});
+  mkdirSync("docs/capturas/fase32", { recursive: true });
+  await page
+    .screenshot({ path: "docs/capturas/fase32/browser-smoke-failure.png" })
+    .catch(() => {});
   throw e;
 } finally {
   await browser.close();
