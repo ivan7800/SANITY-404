@@ -28,6 +28,15 @@ describe("Persistencia y supervivencia", () => {
   ])("rechaza partidas inválidas: %s", (raw) =>
     expect(parseSave(raw)).toBeNull(),
   );
+  it("rechaza un puzle con tres pasos sin resolver y un atajo incoherente", () => {
+    const stuck = fresh();
+    stuck.phase2.steps[1] = 3;
+    expect(parseSave(JSON.stringify(stuck))).toBeNull();
+    const missingShortcut = fresh();
+    missingShortcut.phase2.steps[2] = 3;
+    missingShortcut.phase2.solved.push("astronomy");
+    expect(parseSave(JSON.stringify(missingShortcut))).toBeNull();
+  });
   it("el daño respeta límites y afecta la cordura", () => {
     const s = fresh();
     damage(s, 12);

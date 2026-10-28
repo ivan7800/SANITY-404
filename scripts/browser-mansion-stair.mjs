@@ -80,7 +80,19 @@ try {
     "Inicio de diagnóstico en el pie de la escalera",
     (await inspect()).state.floor === 0,
   );
-  await step("z", -5.55, "w", "Subir por la escalera completa");
+  await step("z", -4.95, "w", "Subir hasta el último tramo inferior");
+  const stairBeforeLanding = await inspect();
+  check(
+    "La carta del rellano no se selecciona desde otra planta",
+    stairBeforeLanding.state.floor === 0 &&
+      stairBeforeLanding.interaction?.id !== "gallery-chart",
+    {
+      floor: stairBeforeLanding.state.floor,
+      position: [stairBeforeLanding.state.x, stairBeforeLanding.state.z],
+      interaction: stairBeforeLanding.interaction,
+    },
+  );
+  await step("z", -5.55, "w", "Completar la subida por la escalera");
   check(
     "Desembarco alcanzado por movimiento real",
     (await inspect()).state.floor === 1,

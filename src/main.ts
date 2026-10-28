@@ -694,7 +694,7 @@ function inventory() {
       .map((clue) => `${chapter.year} · ${clue.name}: ${clue.text}`),
   );
   panel(
-    `<div class="eyebrow">ARCHIVO PERSONAL · ${names[state.room]}</div><h2>Inventario y diario</h2><div class="inventory-summary"><div><span>ARMA</span><strong>${weaponProfileForRoom(state.room).name}</strong><small>${weaponProfileForRoom(state.room).technique} · sin munición</small></div><div><span>RECURSOS</span><strong>${tonics} tónicos</strong><small>${state.seals.length}/3 sellos · ${state.phase2.solved.length}/4 mecanismos</small></div><div><span>INVESTIGACIONES</span><strong>${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11</strong><small>épocas concluidas</small></div></div><div class="eyebrow section-label">OBJETOS CONSERVADOS</div><div class="item-grid">${items.length ? items.map((item, index) => `<div class="item-card"><span>${String(index + 1).padStart(2, "0")}</span><strong>${item}</strong></div>`).join("") : "<p>La colección está vacía. Examina la mansión para encontrar pistas.</p>"}</div><div class="actions"><button id="heal" ${tonics ? "" : "disabled"}>Beber tónico</button><button id="close">Volver</button></div><div class="eyebrow section-label">DIARIO DE INVESTIGACIÓN</div><p class="journal-lead">${objective}</p><details><summary>Memoria y decisión</summary><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}.</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}.</p></details><details><summary>Testimonios romanos · ${witnesses.length}/3</summary><p>${witnesses.map((echo) => `${echo.title}: ${echo.text}`).join("<br>") || "Aún no has leído ninguna estela romana."}</p></details><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
+    `<div class="eyebrow">ARCHIVO PERSONAL · ${names[state.room]}</div><h2>Inventario y diario</h2><div class="inventory-summary"><div><span>ARMA</span><strong>${weaponProfileForRoom(state.room).name}</strong><small>${weaponProfileForRoom(state.room).technique} · sin munición</small></div><div><span>RECURSOS</span><strong>${tonics} tónicos</strong><small>${state.seals.length}/3 sellos · ${state.phase2.solved.length}/4 mecanismos</small></div><div><span>INVESTIGACIONES</span><strong>${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11</strong><small>épocas concluidas</small></div></div><div class="eyebrow section-label">OBJETOS CONSERVADOS</div><div class="item-grid">${items.length ? items.map((item, index) => `<div class="item-card"><span>${String(index + 1).padStart(2, "0")}</span><strong>${item}</strong></div>`).join("") : "<p>La colección está vacía. Examina la mansión para encontrar pistas.</p>"}</div><div class="actions"><button id="heal" ${tonics && state.health > 0 ? "" : "disabled"}>Beber tónico</button><button id="close">Volver</button></div><div class="eyebrow section-label">DIARIO DE INVESTIGACIÓN</div><p class="journal-lead">${objective}</p><details><summary>Memoria y decisión</summary><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}.</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}.</p></details><details><summary>Testimonios romanos · ${witnesses.length}/3</summary><p>${witnesses.map((echo) => `${echo.title}: ${echo.text}`).join("<br>") || "Aún no has leído ninguna estela romana."}</p></details><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
       activeMansionEchoes(state.items)
         .map((echo) => `${echo.year} · ${echo.title}: ${echo.text}`)
         .join("<br>") ||
@@ -717,6 +717,7 @@ function inventory() {
 }
 function heal() {
   const result = drinkTonic(state);
+  if (result === "dead") return;
   if (result === "empty") toast("No tienes tónicos.");
   else if (result === "full") toast("No necesitas un tónico ahora.");
   else {
@@ -2017,6 +2018,9 @@ function update(dt: number) {
           enemy.position.x,
           enemy.position.z,
         ),
+    state.room === 0
+      ? { ground: world.obstacles, upper: world.upperObstacles }
+      : undefined,
   );
   aiCostFrame += performance.now() - combatStart;
   if (wasAlive && !enemy.visible) {
@@ -2073,7 +2077,7 @@ function update(dt: number) {
   world.lastEnemyX = enemy.position.x;
   world.lastEnemyZ = enemy.position.z;
   world.lastEnemyVisible = enemy.visible;
-  near = world.nearest(state.x, state.z, 1.9, player.position.y);
+  near = world.nearest(state.x, state.z, 1.9, player.position.y, state.floor);
   const inspectionFocus =
     (near &&
       [
@@ -2149,8 +2153,14 @@ function update(dt: number) {
     hud.veil,
     "opacity",
     String(
-      sanity.update(state, world, settings, toast, (event) =>
-        audio.sanityEvent(event),
+      sanity.update(
+        state,
+        world,
+        settings,
+        toast,
+        (event) => audio.sanityEvent(event),
+        enemy.visible &&
+          ["chase", "windup", "attack", "recover"].includes(combat.aiState),
       ),
     ),
   );
@@ -2193,13 +2203,16 @@ function frame(now: number) {
       ]?.focus();
       nextMenuMove = now + 220;
     }
-    if (input.take("Space") && started && !state.ended) resume();
-    if (input.take("Escape") && started && !state.ended) resume();
+    if (input.take("Space") && started && !state.ended && state.health > 0)
+      resume();
+    if (input.take("Escape") && started && !state.ended && state.health > 0)
+      resume();
     if (input.take("KeyE")) {
       const b = el("panel").querySelector<HTMLButtonElement>("button:focus");
       b?.click();
     }
-    if (input.take("Tab") && started && !state.ended) resume();
+    if (input.take("Tab") && started && !state.ended && state.health > 0)
+      resume();
   }
   if (!started && world) {
     camera.position.set(
@@ -2342,11 +2355,13 @@ export function inspect() {
     target: player.position.toArray(),
     combat: {
       enemyHealth: combat.health,
+      defeatedId: combat.defeatedId,
       windup: combat.windup,
       guarding: combat.guarding,
       animation: combat.animation,
       kind: combat.kind,
       aiState: combat.aiState,
+      route: combat.routeDiagnostic,
       phase: combat.phase,
       vulnerable: combat.vulnerable,
       stamina: combat.stamina,
@@ -2374,7 +2389,13 @@ export function inspect() {
     playerRig: Boolean(player.userData.rig),
     playerY: player.position.y,
     limbPose: player.userData.rig?.leftLeg.rotation.x,
-    enemy: { position: enemy.position.toArray(), visible: enemy.visible },
+    enemy: {
+      name: enemy.name,
+      position: enemy.position.toArray(),
+      visible: enemy.visible,
+      selectedKind: currentThreatKind,
+      expectedKind: state.room === 0 ? mansionThreatAt(state) : undefined,
+    },
     draw: renderer.info.render,
     canvas: {
       width: renderer.domElement.width,
@@ -2401,6 +2422,7 @@ if (import.meta.env.DEV) {
     aiState: "",
     eventCount: 0,
     eventId: "",
+    eventActive: false,
   };
   Object.defineProperty(window, "sanityBenchmarkState", {
     value: () => {
@@ -2416,6 +2438,7 @@ if (import.meta.env.DEV) {
       benchmarkState.aiState = combat.aiState;
       benchmarkState.eventCount = sanity.eventCount;
       benchmarkState.eventId = sanity.activeId;
+      benchmarkState.eventActive = sanity.isEventActive(state.elapsed);
       return benchmarkState;
     },
     configurable: true,
@@ -2531,6 +2554,13 @@ if (import.meta.env.DEV) {
           );
           return inspect();
         },
+        /** Isolated rendering diagnosis only; never available in production. */
+        setSanity(value: number) {
+          if (!Number.isFinite(value) || value < 0 || value > 100)
+            throw new RangeError(`Cordura de diagnóstico inválida: ${value}`);
+          state.sanity = value;
+          return inspect();
+        },
         inspect,
         objects: () =>
           world.objects.map(({ id, kind, x, z, level }) => ({
@@ -2546,6 +2576,18 @@ if (import.meta.env.DEV) {
               ? world.upperObstacles
               : world.obstacles,
           ),
+        walkableAt(x: number, z: number, floor: 0 | 1 = state.floor) {
+          const obstacles =
+            state.room === 0 && floor === 1
+              ? world.upperObstacles
+              : world.obstacles;
+          return (
+            Number.isFinite(x) &&
+            Number.isFinite(z) &&
+            !blocked(x, z, obstacles) &&
+            (state.room !== 0 || floor === 0 || upperWalkable(x, z))
+          );
+        },
         showColliders() {
           const group = markerGroup();
           const obstacles =

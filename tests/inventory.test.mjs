@@ -59,6 +59,17 @@ it("no consume con inventario vacío ni cuando salud y cordura están completas"
   expect(state).toMatchObject({ health: 100, sanity: 25 });
 });
 
+it("no reanima ni consume un tónico después de llegar a cero salud", () => {
+  const state = fresh();
+  state.health = 0;
+  state.sanity = 0;
+  state.items = ["Tónico 6"];
+  expect(drinkTonic(state)).toBe("dead");
+  expect(state.health).toBe(0);
+  expect(state.sanity).toBe(0);
+  expect(state.items).toEqual(["Tónico 6"]);
+});
+
 it("rechaza lecturas tempranas y consumos duplicados en la certificación", () => {
   const before = {
     health: 32,

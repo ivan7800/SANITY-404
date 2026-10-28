@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" role="img" aria-label="Plano técnico de la biblioteca Veyr, sala 1">
+  <rect width="720" height="720" fill="#161d1b"/>
+  <text x="36" y="40" fill="#e4d8b8" font-family="serif" font-size="25">Biblioteca Veyr · sala 01</text>
+  <text x="36" y="64" fill="#adad97" font-family="sans-serif" font-size="12">Planta baja · recinto 16 × 16 m · x horizontal, z vertical · escala 40 px/m</text>
+  <g transform="translate(360 370) scale(40)" stroke-width="0.025">
+    <rect x="-8" y="-8" width="16" height="16" fill="#303934" stroke="#b2a584" stroke-width="0.12"/>
+    <path d="M0 7 L0 2 L2.4 -1 L0 -4.5 L0 -7 M0 2 L5.8 2 L6.7 0 M0 -4.5 L-6.7 -5.3" fill="none" stroke="#aaa486" stroke-width="0.2" stroke-dasharray="0.3 0.18"/>
+    <g fill="#685238" stroke="#c6a879">
+      <rect x="-5.5" y="-3.9" width="1" height="3.4"/>
+      <rect x="-5.5" y="1.1" width="1" height="3.4"/>
+      <rect x="4.5" y="-3.9" width="1" height="3.4"/>
+      <rect x="4.5" y="1.1" width="1" height="3.4"/>
+    </g>
+    <g fill="#b85f51" stroke="#ead7b4">
+      <circle cx="0" cy="7" r="0.18"/><circle cx="0" cy="-7" r="0.18"/>
+      <circle cx="6.7" cy="0" r="0.18"/><circle cx="-6.7" cy="-5.3" r="0.18"/>
+    </g>
+    <g fill="#d3b16e" stroke="#1d2524">
+      <circle cx="0" cy="-4.5" r="0.18"/><circle cx="2.4" cy="-1" r="0.18"/>
+      <circle cx="-2" cy="5" r="0.18"/>
+    </g>
+  </g>
+  <g fill="#e4d8b8" font-family="sans-serif" font-size="13">
+    <text x="369" y="659">Mansión / entrada</text>
+    <text x="369" y="83">Siguiente sala</text>
+    <text x="635" y="364">Archivo</text>
+    <text x="33" y="171">Capilla</text>
+    <text x="453" y="323">Manuscritos</text>
+    <text x="369" y="183">Sello</text>
+  </g>
+  <text x="36" y="700" fill="#adad97" font-family="sans-serif" font-size="12">Huellas físicas conservadas: 1,0 × 3,4 m por armario. Línea: eje de circulación, no ruta certificada.</text>
+</svg>

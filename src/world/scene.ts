@@ -20,6 +20,10 @@ import { decorateLateChapter } from "./late-chapters";
 import { lateChapters, lateChapterForRoom } from "../systems/late-chapters";
 import { hallArmchair, hallWritingDesk } from "./furnishings";
 import { decoratePhase2Room } from "./phase2-rooms";
+import {
+  libraryCabinetry,
+  libraryCabinetFootprints,
+} from "./library-cabinetry";
 import { historicArchitecture } from "./historic-architecture";
 import { newPhase2, type Phase2Progress } from "../systems/phase2";
 import {
@@ -310,21 +314,10 @@ export class World {
       );
     }
     if (room === 1) {
-      for (const x of [-5, 5])
-        for (const z of [-2.2, 2.8]) {
-          this.box(x, 1.7, z, 1, 3.4, 3.4, 0x30281d);
-          for (let i = 0; i < 14; i++)
-            this.box(
-              x + (x < 0 ? 0.55 : -0.55),
-              0.4 + (i % 4) * 0.75,
-              z - 1.6 + Math.floor(i / 4) * 0.8,
-              0.15,
-              0.55,
-              0.4,
-              [0x625338, 0x3e5146, 0x69433c][i % 3],
-              false,
-            );
-        }
+      scene.add(libraryCabinetry());
+      this.obstacles.push(
+        ...libraryCabinetFootprints.map((footprint) => ({ ...footprint })),
+      );
     }
     if (room === 2) {
       for (const x of [-4, 4])
@@ -1634,20 +1627,20 @@ export class World {
     ).push(collider);
     this.objects.push(o);
   }
-  nearest(x: number, z: number, radius = 1.9, y = 0) {
+  nearest(x: number, z: number, radius = 1.9, y = 0, floor?: 0 | 1) {
     let nearest: Interactable | undefined;
     let best = radius * radius;
+    const upper = this.room === 0 && (floor ?? (y > 1.4 ? 1 : 0)) === 1;
     for (const object of this.objects) {
       if (
         this.room === 0 &&
-        (object.level === 1 || object.kind === "galleryClue") !== y > 1.4
+        (object.level === 1 || object.kind === "galleryClue") !== upper
       )
         continue;
       const dx = object.x - x;
       const dz = object.z - z;
       const distance = dx * dx + dz * dz;
-      const obstacles =
-        y > 1.4 && this.room === 0 ? this.upperObstacles : this.obstacles;
+      const obstacles = upper ? this.upperObstacles : this.obstacles;
       if (
         distance < best &&
         clearInteractionLine({ x, z }, object, obstacles, y + 1.05)

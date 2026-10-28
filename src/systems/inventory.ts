@@ -1,5 +1,6 @@
 import { clamp, type State } from "./state";
-export function drinkTonic(state: State): "empty" | "full" | "used" {
+export function drinkTonic(state: State): "dead" | "empty" | "full" | "used" {
+  if (state.health <= 0) return "dead";
   const i = state.items.findIndex((i) => i.startsWith("Tónico"));
   if (i < 0) return "empty";
   if (state.health === 100 && state.sanity === 100) return "full";

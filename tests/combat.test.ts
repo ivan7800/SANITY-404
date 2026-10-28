@@ -68,6 +68,38 @@ it("un golpe tiene recuperación, un enemigo derrotado deja de causar daño", ()
   combat.update(5, state, player, enemy, [], false, sound, message);
   expect(state.health).toBe(hp);
 });
+it("una pared sólida impide tanto el golpe del jugador como el daño enemigo", () => {
+  const state = fresh();
+  const player = character();
+  const enemy = character(true);
+  enemy.position.z = 1.3;
+  enemy.lookAt(player.position);
+  const combat = new Combat(0);
+  const wall = [{ id: "muro-qa", x: 0, z: 0.65, w: 2, d: 0.14, height: 2.5 }];
+  combat.update(
+    0.01,
+    state,
+    player,
+    enemy,
+    wall,
+    true,
+    () => {},
+    () => {},
+  );
+  expect(combat.health).toBe(60);
+  combat.windup = 0.01;
+  combat.update(
+    0.02,
+    state,
+    player,
+    enemy,
+    wall,
+    false,
+    () => {},
+    () => {},
+  );
+  expect(state.health).toBe(100);
+});
 it("el enemigo persigue, daña con recuperación y no atraviesa límites", () => {
   const state = fresh(),
     p = character(),

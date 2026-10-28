@@ -9,7 +9,9 @@ export function readSave(): State | null {
 }
 export function writeSave(state: State): boolean {
   try {
-    localStorage.setItem(key, JSON.stringify(state));
+    const serialized = JSON.stringify(state);
+    if (!parseSave(serialized)) return false;
+    localStorage.setItem(key, serialized);
     return true;
   } catch {
     return false;
