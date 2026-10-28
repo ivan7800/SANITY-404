@@ -1,0 +1,870 @@
+{
+  "startedAt": "2026-10-28T16:58:32.384Z",
+  "url": "http://127.0.0.1:5174/",
+  "mode": "QA aislado; no certifica campaña ni final",
+  "viewport": [
+    1440,
+    900
+  ],
+  "durationSeconds": 4,
+  "warmup": "1,5 s tras entrada observable; cordura espera manifestación real",
+  "hardwareRequired": true,
+  "manifest": {
+    "url": "http://127.0.0.1:5174/",
+    "viewport": [
+      1440,
+      900
+    ],
+    "durationSeconds": 4,
+    "profiles": [
+      {
+        "name": "Medio",
+        "quality": 1.3
+      },
+      {
+        "name": "Bajo",
+        "quality": 1
+      }
+    ],
+    "scenarios": [
+      {
+        "id": "menu",
+        "name": "Menú principal"
+      },
+      {
+        "id": "simple",
+        "name": "Ruinas del intervalo",
+        "room": 4
+      },
+      {
+        "id": "hall",
+        "name": "Vestíbulo Veyr",
+        "room": 0
+      },
+      {
+        "id": "stairs",
+        "name": "Escalera Veyr",
+        "room": 0,
+        "position": [
+          5,
+          -1.3
+        ]
+      },
+      {
+        "id": "widow",
+        "name": "Combate con la Viuda",
+        "room": 0,
+        "floor": 1,
+        "position": [
+          3.8,
+          -5.2
+        ]
+      },
+      {
+        "id": "sanity",
+        "name": "Manifestación de cordura",
+        "room": 0,
+        "sanity": 20
+      }
+    ],
+    "samplesPlanned": 12,
+    "hardwareRequired": true
+  },
+  "results": [
+    {
+      "profile": "Medio",
+      "scenario": "menu",
+      "name": "Menú principal",
+      "startedAt": "2026-10-28T16:58:32.770Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 1296,
+        "height": 810
+      },
+      "quality": {
+        "name": "Media",
+        "scale": 0.9,
+        "maxPixels": 1440000,
+        "shadows": true,
+        "shadowSize": 1024,
+        "dust": 80
+      },
+      "elapsedMs": 4081.7000000000003,
+      "frames": 96,
+      "fpsMean": 23.51961192640321,
+      "fpsLow1": 10,
+      "frameMedianMs": 33.30000000000018,
+      "frameP95Ms": 83.30000000000018,
+      "cpu": null,
+      "gpu": {
+        "available": true,
+        "samples": 26,
+        "medianMs": 27.567331,
+        "p95Ms": 42.867491
+      },
+      "draw": {
+        "frame": 160,
+        "calls": 135,
+        "triangles": 81850,
+        "points": 80,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 157,
+        "textures": 21
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "medio-menu.png",
+      "finishedAt": "2026-10-28T16:58:41.585Z"
+    },
+    {
+      "profile": "Medio",
+      "scenario": "simple",
+      "name": "Ruinas del intervalo",
+      "startedAt": "2026-10-28T16:58:41.616Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 1296,
+        "height": 810
+      },
+      "quality": {
+        "name": "Media",
+        "scale": 0.9,
+        "maxPixels": 1440000,
+        "shadows": true,
+        "shadowSize": 1024,
+        "dust": 80
+      },
+      "elapsedMs": 4031.7,
+      "frames": 163,
+      "fpsMean": 40.429595456011114,
+      "fpsLow1": 29.940119760478552,
+      "frameMedianMs": 16.799999999999727,
+      "frameP95Ms": 33.399999999999636,
+      "cpu": {
+        "samples": 232,
+        "frameMedianMs": 16.700000000000728,
+        "frameP95Ms": 33.40000000000009,
+        "renderMedianMs": 5,
+        "renderP95Ms": 8.900000005960464,
+        "updateMedianMs": 1.5,
+        "updateP95Ms": 3.5,
+        "aiMedianMs": 0.5,
+        "aiP95Ms": 1.2000000178813934,
+        "averageFps": 37.841100001631084
+      },
+      "gpu": {
+        "available": true,
+        "samples": 231,
+        "medianMs": 14.865,
+        "p95Ms": 21.33975
+      },
+      "draw": {
+        "frame": 236,
+        "calls": 109,
+        "triangles": 44890,
+        "points": 80,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 108,
+        "textures": 21
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "medio-simple.png",
+      "finishedAt": "2026-10-28T16:58:50.439Z"
+    },
+    {
+      "profile": "Medio",
+      "scenario": "hall",
+      "name": "Vestíbulo Veyr",
+      "startedAt": "2026-10-28T16:58:50.491Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 1296,
+        "height": 810
+      },
+      "quality": {
+        "name": "Media",
+        "scale": 0.9,
+        "maxPixels": 1440000,
+        "shadows": true,
+        "shadowSize": 1024,
+        "dust": 80
+      },
+      "elapsedMs": 4031.8,
+      "frames": 117,
+      "fpsMean": 29.019296592092857,
+      "fpsLow1": 20,
+      "frameMedianMs": 33.30000000000018,
+      "frameP95Ms": 50,
+      "cpu": {
+        "samples": 167,
+        "frameMedianMs": 33.30000000000018,
+        "frameP95Ms": 50,
+        "renderMedianMs": 9.899999976158142,
+        "renderP95Ms": 14.5,
+        "updateMedianMs": 2.7000000178813934,
+        "updateP95Ms": 4.800000011920929,
+        "aiMedianMs": 0.800000011920929,
+        "aiP95Ms": 1.899999976158142,
+        "averageFps": 26.51845970623263
+      },
+      "gpu": {
+        "available": true,
+        "samples": 166,
+        "medianMs": 23.718916,
+        "p95Ms": 24.475166
+      },
+      "draw": {
+        "frame": 171,
+        "calls": 131,
+        "triangles": 84710,
+        "points": 80,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 150,
+        "textures": 21
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "medio-hall.png",
+      "finishedAt": "2026-10-28T16:58:59.652Z"
+    },
+    {
+      "profile": "Medio",
+      "scenario": "stairs",
+      "name": "Escalera Veyr",
+      "startedAt": "2026-10-28T16:58:59.725Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 1296,
+        "height": 810
+      },
+      "quality": {
+        "name": "Media",
+        "scale": 0.9,
+        "maxPixels": 1440000,
+        "shadows": true,
+        "shadowSize": 1024,
+        "dust": 80
+      },
+      "elapsedMs": 4031.7000000000003,
+      "frames": 110,
+      "fpsMean": 27.283776074608728,
+      "fpsLow1": 20,
+      "frameMedianMs": 33.30000000000018,
+      "frameP95Ms": 50,
+      "cpu": {
+        "samples": 158,
+        "frameMedianMs": 33.30000000000018,
+        "frameP95Ms": 50,
+        "renderMedianMs": 8.5,
+        "renderP95Ms": 12.599999994039536,
+        "updateMedianMs": 2.7999999821186066,
+        "updateP95Ms": 5.5,
+        "aiMedianMs": 0.7000000178813934,
+        "aiP95Ms": 1.9000000059604645,
+        "averageFps": 25.15603107884346
+      },
+      "gpu": {
+        "available": true,
+        "samples": 158,
+        "medianMs": 25.096498,
+        "p95Ms": 25.892331
+      },
+      "draw": {
+        "frame": 162,
+        "calls": 117,
+        "triangles": 82044,
+        "points": 80,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 153,
+        "textures": 21
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "medio-stairs.png",
+      "finishedAt": "2026-10-28T16:59:08.761Z"
+    },
+    {
+      "profile": "Medio",
+      "scenario": "widow",
+      "name": "Combate con la Viuda",
+      "startedAt": "2026-10-28T16:59:08.790Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 1296,
+        "height": 810
+      },
+      "quality": {
+        "name": "Media",
+        "scale": 0.9,
+        "maxPixels": 1440000,
+        "shadows": true,
+        "shadowSize": 1024,
+        "dust": 80
+      },
+      "elapsedMs": 4031.7000000000003,
+      "frames": 117,
+      "fpsMean": 29.020016370265648,
+      "fpsLow1": 20,
+      "frameMedianMs": 33.30000000000018,
+      "frameP95Ms": 50,
+      "cpu": {
+        "samples": 166,
+        "frameMedianMs": 33.30000000000018,
+        "frameP95Ms": 50,
+        "renderMedianMs": 7.5999999940395355,
+        "renderP95Ms": 11.600000023841858,
+        "updateMedianMs": 2.699999988079071,
+        "updateP95Ms": 4.100000023841858,
+        "aiMedianMs": 0.6000000238418579,
+        "aiP95Ms": 1.7999999821186066,
+        "averageFps": 25.68069306930693
+      },
+      "gpu": {
+        "available": true,
+        "samples": 166,
+        "medianMs": 23.628333,
+        "p95Ms": 24.535833
+      },
+      "draw": {
+        "frame": 170,
+        "calls": 117,
+        "triangles": 80786,
+        "points": 80,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 148,
+        "textures": 21
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 66,
+      "enemyKind": "widow",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "medio-widow.png",
+      "finishedAt": "2026-10-28T16:59:17.918Z"
+    },
+    {
+      "profile": "Medio",
+      "scenario": "sanity",
+      "name": "Manifestación de cordura",
+      "startedAt": "2026-10-28T16:59:17.982Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "screenshot": "medio-sanity.png",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 1296,
+        "height": 810
+      },
+      "quality": {
+        "name": "Media",
+        "scale": 0.9,
+        "maxPixels": 1440000,
+        "shadows": true,
+        "shadowSize": 1024,
+        "dust": 80
+      },
+      "elapsedMs": 4031.699999999999,
+      "frames": 123,
+      "fpsMean": 30.508222337971585,
+      "fpsLow1": 29.94011976047774,
+      "frameMedianMs": 33.29999999999927,
+      "frameP95Ms": 33.399999999999636,
+      "cpu": {
+        "samples": 395,
+        "frameMedianMs": 33.30000000000018,
+        "frameP95Ms": 33.400000000001455,
+        "renderMedianMs": 5.5,
+        "renderP95Ms": 9,
+        "updateMedianMs": 1.899999976158142,
+        "updateP95Ms": 3.5999999940395355,
+        "aiMedianMs": 0.09999999403953552,
+        "aiP95Ms": 0.20000001788139343,
+        "averageFps": 29.234788658382246
+      },
+      "gpu": {
+        "available": true,
+        "samples": 392,
+        "medianMs": 20.998414,
+        "p95Ms": 22.475
+      },
+      "draw": {
+        "frame": 399,
+        "calls": 77,
+        "triangles": 44906,
+        "points": 80,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 96,
+        "textures": 21
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "wrongReflection",
+      "eventCount": 1,
+      "effectFrames": 65,
+      "finishedAt": "2026-10-28T16:59:33.269Z"
+    },
+    {
+      "profile": "Bajo",
+      "scenario": "menu",
+      "name": "Menú principal",
+      "startedAt": "2026-10-28T16:59:33.925Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 971,
+        "height": 607
+      },
+      "quality": {
+        "name": "Baja",
+        "scale": 0.8,
+        "maxPixels": 589824,
+        "shadows": false,
+        "shadowSize": 512,
+        "dust": 32
+      },
+      "elapsedMs": 4015.2000000000003,
+      "frames": 204,
+      "fpsMean": 50.806933652121934,
+      "fpsLow1": 20,
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 33.399999999999636,
+      "cpu": null,
+      "gpu": {
+        "available": true,
+        "samples": 71,
+        "medianMs": 8.574666,
+        "p95Ms": 16.534583
+      },
+      "draw": {
+        "frame": 289,
+        "calls": 135,
+        "triangles": 81850,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 134,
+        "textures": 14
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "bajo-menu.png",
+      "finishedAt": "2026-10-28T16:59:42.564Z"
+    },
+    {
+      "profile": "Bajo",
+      "scenario": "simple",
+      "name": "Ruinas del intervalo",
+      "startedAt": "2026-10-28T16:59:42.615Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 971,
+        "height": 607
+      },
+      "quality": {
+        "name": "Baja",
+        "scale": 0.8,
+        "maxPixels": 589824,
+        "shadows": false,
+        "shadowSize": 512,
+        "dust": 32
+      },
+      "elapsedMs": 4015.1,
+      "frames": 239,
+      "fpsMean": 59.52529202261462,
+      "fpsLow1": 59.52380952380888,
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 16.700000000000728,
+      "cpu": {
+        "samples": 332,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.799999999999727,
+        "renderMedianMs": 2.5999999940395355,
+        "renderP95Ms": 6.9000000059604645,
+        "updateMedianMs": 0.4000000059604645,
+        "updateP95Ms": 1.9000000059604645,
+        "aiMedianMs": 0.10000002384185791,
+        "aiP95Ms": 0.5,
+        "averageFps": 54.596283506002294
+      },
+      "gpu": {
+        "available": true,
+        "samples": 332,
+        "medianMs": 7.112083,
+        "p95Ms": 12.428
+      },
+      "draw": {
+        "frame": 335,
+        "calls": 109,
+        "triangles": 44890,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 108,
+        "textures": 14
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "bajo-simple.png",
+      "finishedAt": "2026-10-28T16:59:51.307Z"
+    },
+    {
+      "profile": "Bajo",
+      "scenario": "hall",
+      "name": "Vestíbulo Veyr",
+      "startedAt": "2026-10-28T16:59:51.376Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 971,
+        "height": 607
+      },
+      "quality": {
+        "name": "Baja",
+        "scale": 0.8,
+        "maxPixels": 589824,
+        "shadows": false,
+        "shadowSize": 512,
+        "dust": 32
+      },
+      "elapsedMs": 4015,
+      "frames": 237,
+      "fpsMean": 59.02864259028643,
+      "fpsLow1": 30.120481927710184,
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 16.799999999999272,
+      "cpu": {
+        "samples": 331,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.799999999999272,
+        "renderMedianMs": 4.200000017881393,
+        "renderP95Ms": 9.300000011920929,
+        "updateMedianMs": 0.699999988079071,
+        "updateP95Ms": 2.2000000178813934,
+        "aiMedianMs": 0.20000001788139343,
+        "aiP95Ms": 0.699999988079071,
+        "averageFps": 52.98034445226968
+      },
+      "gpu": {
+        "available": true,
+        "samples": 331,
+        "medianMs": 9.30275,
+        "p95Ms": 14.507333
+      },
+      "draw": {
+        "frame": 334,
+        "calls": 131,
+        "triangles": 84710,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 131,
+        "textures": 14
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "bajo-hall.png",
+      "finishedAt": "2026-10-28T17:00:00.644Z"
+    },
+    {
+      "profile": "Bajo",
+      "scenario": "stairs",
+      "name": "Escalera Veyr",
+      "startedAt": "2026-10-28T17:00:00.706Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 971,
+        "height": 607
+      },
+      "quality": {
+        "name": "Baja",
+        "scale": 0.8,
+        "maxPixels": 589824,
+        "shadows": false,
+        "shadowSize": 512,
+        "dust": 32
+      },
+      "elapsedMs": 4015.1000000000004,
+      "frames": 215,
+      "fpsMean": 53.54785684042738,
+      "fpsLow1": 29.94011976047937,
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 33.30000000000018,
+      "cpu": {
+        "samples": 298,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 33.30000000000018,
+        "renderMedianMs": 4.200000017881393,
+        "renderP95Ms": 12.199999988079071,
+        "updateMedianMs": 0.7000000178813934,
+        "updateP95Ms": 2.4000000059604645,
+        "aiMedianMs": 0.20000001788139343,
+        "aiP95Ms": 0.5999999940395355,
+        "averageFps": 47.826156734982106
+      },
+      "gpu": {
+        "available": true,
+        "samples": 299,
+        "medianMs": 8.737916,
+        "p95Ms": 15.467833
+      },
+      "draw": {
+        "frame": 302,
+        "calls": 117,
+        "triangles": 82044,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 137,
+        "textures": 14
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "shade",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "bajo-stairs.png",
+      "finishedAt": "2026-10-28T17:00:10.040Z"
+    },
+    {
+      "profile": "Bajo",
+      "scenario": "widow",
+      "name": "Combate con la Viuda",
+      "startedAt": "2026-10-28T17:00:10.161Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 971,
+        "height": 607
+      },
+      "quality": {
+        "name": "Baja",
+        "scale": 0.8,
+        "maxPixels": 589824,
+        "shadows": false,
+        "shadowSize": 512,
+        "dust": 32
+      },
+      "elapsedMs": 4015,
+      "frames": 195,
+      "fpsMean": 48.56787048567871,
+      "fpsLow1": 29.940119760478552,
+      "frameMedianMs": 16.699999999999818,
+      "frameP95Ms": 33.399999999999636,
+      "cpu": {
+        "samples": 282,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 33.399999999999636,
+        "renderMedianMs": 4.4000000059604645,
+        "renderP95Ms": 11.599999994039536,
+        "updateMedianMs": 0.7000000178813934,
+        "updateP95Ms": 3.2000000178813934,
+        "aiMedianMs": 0.19999998807907104,
+        "aiP95Ms": 0.8999999761581421,
+        "averageFps": 43.852146733637085
+      },
+      "gpu": {
+        "available": true,
+        "samples": 282,
+        "medianMs": 8.114582,
+        "p95Ms": 15.242916
+      },
+      "draw": {
+        "frame": 286,
+        "calls": 117,
+        "triangles": 80786,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 114,
+        "textures": 14
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 66,
+      "enemyKind": "widow",
+      "eventCount": 0,
+      "effectFrames": 0,
+      "screenshot": "bajo-widow.png",
+      "finishedAt": "2026-10-28T17:00:19.245Z"
+    },
+    {
+      "profile": "Bajo",
+      "scenario": "sanity",
+      "name": "Manifestación de cordura",
+      "startedAt": "2026-10-28T17:00:19.295Z",
+      "status": "PASS",
+      "errors": [],
+      "renderer": "ANGLE (Intel, Mesa Intel(R) HD Graphics 620 (KBL GT2), OpenGL 4.6)",
+      "screenshot": "bajo-sanity.png",
+      "browser": "156.0.8078.47",
+      "canvas": {
+        "width": 971,
+        "height": 607
+      },
+      "quality": {
+        "name": "Baja",
+        "scale": 0.8,
+        "maxPixels": 589824,
+        "shadows": false,
+        "shadowSize": 512,
+        "dust": 32
+      },
+      "elapsedMs": 4015.1000000000004,
+      "frames": 229,
+      "fpsMean": 57.034694030036604,
+      "fpsLow1": 30.030030030029046,
+      "frameMedianMs": 16.69999999999891,
+      "frameP95Ms": 16.80000000000109,
+      "cpu": {
+        "samples": 600,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.80000000000109,
+        "renderMedianMs": 3.5999999940395355,
+        "renderP95Ms": 8.5,
+        "updateMedianMs": 0.4000000059604645,
+        "updateP95Ms": 1.4000000059604645,
+        "aiMedianMs": 0,
+        "aiP95Ms": 0.09999999403953552,
+        "averageFps": 57.34767025089606
+      },
+      "gpu": {
+        "available": true,
+        "samples": 600,
+        "medianMs": 7.863332,
+        "p95Ms": 13.587249
+      },
+      "draw": {
+        "frame": 758,
+        "calls": 77,
+        "triangles": 44906,
+        "points": 32,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 83,
+        "textures": 14
+      },
+      "sceneBudget": {
+        "surfaces": 6,
+        "maps": 18,
+        "bytes": 1572864
+      },
+      "health": 100,
+      "enemyKind": "wrongReflection",
+      "eventCount": 1,
+      "effectFrames": 104,
+      "finishedAt": "2026-10-28T17:00:34.753Z"
+    }
+  ],
+  "finishedAt": "2026-10-28T17:00:35.041Z"
+}

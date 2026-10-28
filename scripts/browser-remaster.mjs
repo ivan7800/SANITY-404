@@ -242,6 +242,26 @@ try {
       interaction: saveApproach.interaction,
     },
   );
+  const savePrompt = await page.locator("#prompt").evaluate((prompt) => {
+    const rect = prompt.getBoundingClientRect();
+    return {
+      text: prompt.textContent,
+      visible: getComputedStyle(prompt).display !== "none",
+      left: rect.left,
+      right: rect.right,
+      viewportWidth: innerWidth,
+    };
+  });
+  check(
+    "Aviso contextual del guardado legible y sin verbo duplicado",
+    savePrompt.visible &&
+      savePrompt.text?.includes("Escritorio de memoria · guardar") &&
+      !savePrompt.text?.includes("GUARDAR · Escritorio") &&
+      savePrompt.left >= 0 &&
+      savePrompt.right <= savePrompt.viewportWidth,
+    savePrompt,
+  );
+  await screenshot("prompt-guardar-1440x900");
   report.currentStep = "Interactuar con save0 y observar el guardado";
   await page.keyboard.press("e");
   await page.waitForFunction(

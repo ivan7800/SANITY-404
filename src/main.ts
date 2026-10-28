@@ -33,7 +33,7 @@ import {
   latePuzzleStage,
   solveLatePuzzle,
 } from "./systems/late-chapters";
-import { mansionFloorHeight } from "./world/mansion";
+import { mansionFloorHeight, onMansionStair } from "./world/mansion";
 import { mansionMove, upperWalkable } from "./world/mansion-navigation";
 import { safeSpawn } from "./systems/collision";
 import { activeMansionEchoes, mansionEchoes } from "./world/mansion-echoes";
@@ -60,7 +60,8 @@ import {
   puzzles,
   type PuzzleId,
 } from "./systems/phase2";
-import { Audio } from "./systems/audio";
+import { Audio, audibleFootstep } from "./systems/audio";
+import { interactionPrompt } from "./ui/interaction-prompt";
 import { TerrorDirector } from "./systems/terror";
 import { notes, discoveries } from "./world/narrative";
 import { readSave, writeSave } from "./systems/save";
@@ -189,6 +190,7 @@ const targetNames = { torso: "TORSO", arms: "BRAZOS", head: "CABEZA" };
 let targetZone: TargetZone = "torso";
 audio.setVolume(settings.volume);
 audio.setReduceAudio(settings.reduceAudio);
+document.documentElement.classList.toggle("large-text", settings.largeText);
 applyQuality(renderer, settings.quality);
 const unlockTitleAudio = () => {
   if (
@@ -622,7 +624,7 @@ function credits() {
 }
 function options() {
   panel(
-    `<div class="eyebrow">AJUSTES DE LA EXPERIENCIA</div><h2>Un horror a tu medida</h2><div class="settings-grid"><section class="settings-group"><div class="eyebrow">ACCESIBILIDAD Y ATMÓSFERA</div><label><input type="checkbox" id="reduced" ${settings.reduced ? "checked" : ""}> Reducir efectos psicológicos y movimiento de cámara</label><label><input type="checkbox" id="reduce-flashes" ${settings.reduceFlashes ? "checked" : ""}> Reducir variaciones de luz</label><label><input type="checkbox" id="reduce-distortion" ${settings.reduceDistortion ? "checked" : ""}> Reducir distorsiones visuales</label><label><input type="checkbox" id="reduce-audio" ${settings.reduceAudio ? "checked" : ""}> Reducir sonidos intensos y susurros</label><p class="small">Los eventos no bloquean el progreso ni imitan avisos del sistema. No hay destellos rápidos.</p></section><section class="settings-group"><div class="eyebrow">IMAGEN Y SONIDO</div><label>Volumen <input id="volume" type="range" min="0" max="1" step=".05" value="${settings.volume}"></label><label>Calidad gráfica <select id="quality"><option value="1">Baja</option><option value="1.3">Media</option><option value="1.6">Alta</option></select></label><label>Cámara <select id="camera-mode"><option value="classic">Clásica · encuadres por zona</option><option value="modern">Moderna · seguimiento cercano</option></select></label></section></div><details class="controls-help"><summary>Controles de teclado, ratón y mando</summary><p>Movimiento: WASD o stick izquierdo · Interactuar: E / A · Ataque: Espacio / B · Fuerte: J / RB · Defender: F / LB · Esquivar: V / R3 · Tónico: H / X · Inventario: Tab / Y · Mapa: M / Select · Pausa: Esc / Start · Correr: Shift · Ratón: izquierdo atacar, derecho fuerte.</p></details><div class="actions"><button id="back">Aplicar y volver</button></div>`,
+    `<div class="eyebrow">AJUSTES DE LA EXPERIENCIA</div><h2>Un horror a tu medida</h2><div class="settings-grid"><section class="settings-group"><div class="eyebrow">ACCESIBILIDAD Y ATMÓSFERA</div><label><input type="checkbox" id="large-text" ${settings.largeText ? "checked" : ""}> Texto ampliado en diario, avisos y HUD</label><label><input type="checkbox" id="reduced" ${settings.reduced ? "checked" : ""}> Reducir efectos psicológicos y movimiento de cámara</label><label><input type="checkbox" id="reduce-flashes" ${settings.reduceFlashes ? "checked" : ""}> Reducir variaciones de luz</label><label><input type="checkbox" id="reduce-distortion" ${settings.reduceDistortion ? "checked" : ""}> Reducir distorsiones visuales</label><label><input type="checkbox" id="reduce-audio" ${settings.reduceAudio ? "checked" : ""}> Reducir sonidos intensos y susurros</label><p class="small">Los eventos no bloquean el progreso ni imitan avisos del sistema. No hay destellos rápidos.</p></section><section class="settings-group"><div class="eyebrow">IMAGEN Y SONIDO</div><label>Volumen <input id="volume" type="range" min="0" max="1" step=".05" value="${settings.volume}"></label><label>Calidad gráfica <select id="quality"><option value="1">Baja</option><option value="1.3">Media</option><option value="1.6">Alta</option></select></label><label>Cámara <select id="camera-mode"><option value="classic">Clásica · encuadres por zona</option><option value="modern">Moderna · seguimiento cercano</option></select></label></section></div><details class="controls-help"><summary>Controles de teclado, ratón y mando</summary><p>Movimiento: WASD o stick izquierdo · Interactuar: E / A · Ataque: Espacio / B · Fuerte: J / RB · Defender: F / LB · Esquivar: V / R3 · Tónico: H / X · Inventario: Tab / Y · Mapa: M / Select · Pausa: Esc / Start · Correr: Shift · Ratón: izquierdo atacar, derecho fuerte.</p></details><div class="actions"><button id="back">Aplicar y volver</button></div>`,
     "settings",
   );
   (el("camera-mode") as HTMLSelectElement).value = settings.cameraMode;
@@ -638,6 +640,8 @@ function options() {
       el("reduce-distortion") as HTMLInputElement
     ).checked;
     settings.reduceAudio = (el("reduce-audio") as HTMLInputElement).checked;
+    settings.largeText = (el("large-text") as HTMLInputElement).checked;
+    document.documentElement.classList.toggle("large-text", settings.largeText);
     settings.volume = Number((el("volume") as HTMLInputElement).value);
     const quality = Number((el("quality") as HTMLSelectElement).value);
     const qualityChanged = quality !== settings.quality;
@@ -1936,6 +1940,7 @@ function update(dt: number) {
   const speed = combat.dodge > 0 ? 6.8 : c.guard ? 1.2 : c.run ? 4.1 : 2.7,
     dx = (x * Math.cos(yaw) + z * Math.sin(yaw)) * speed * dt,
     dz = (-x * Math.sin(yaw) + z * Math.cos(yaw)) * speed * dt;
+  const beforeMove = { x: state.x, z: state.z };
   let p: { x: number; z: number };
   if (state.room === 0) {
     const next = mansionMove(
@@ -1959,11 +1964,14 @@ function update(dt: number) {
   );
   if (len > 0.1) {
     player.rotation.y = Math.atan2(dx, dz);
-    if (state.elapsed - audio.lastStep > 0.43) {
+    if (
+      audibleFootstep(len, beforeMove, p) &&
+      state.elapsed - audio.lastStep > 0.43
+    ) {
       audio.step(
         state.room,
         c.run,
-        state.room === 0 && player.position.y > 0.05,
+        state.room === 0 && onMansionStair(p.x, p.z, state.floor),
       );
       audio.lastStep = state.elapsed;
     }
@@ -2131,7 +2139,7 @@ function update(dt: number) {
     );
   world.atmosphere.update(dt, state.elapsed, settings.reduced);
   const prompt = el("prompt");
-  const promptText = near ? "E / A · " + near.name : "";
+  const promptText = interactionPrompt(near);
   if (prompt.textContent !== promptText) prompt.textContent = promptText;
   const promptDisplay = near ? "block" : "none";
   if (prompt.style.display !== promptDisplay)
@@ -2349,8 +2357,15 @@ function sceneProfile() {
 export function inspect() {
   return {
     state: structuredClone(state),
+    started,
     interaction: near ? { id: near.id, name: near.name } : null,
     paused,
+    overlayHidden: el("overlay").hidden,
+    titleTransitionClosed: el("title-transition").classList.contains(
+      "title-transition--closed",
+    ),
+    focused: document.activeElement?.tagName ?? null,
+    pressedKeys: [...input.keys],
     camera: camera.position.toArray(),
     target: player.position.toArray(),
     combat: {
@@ -2367,6 +2382,8 @@ export function inspect() {
       stamina: combat.stamina,
       dodge: combat.dodge,
       hurt: combat.hurt,
+      hitsReceived: combat.hitsReceived,
+      lastPlayerHit: combat.lastPlayerHit,
     },
     cinematicZone: cinematic.zone,
     cameraMode: settings.cameraMode,

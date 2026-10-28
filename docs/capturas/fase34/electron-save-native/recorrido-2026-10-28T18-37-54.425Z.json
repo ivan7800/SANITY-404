@@ -1,0 +1,156 @@
+{
+  "startedAt": "2026-10-28T18:37:54.426Z",
+  "checks": [
+    {
+      "label": "Continuar deshabilitado sin guardado",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "Escritorio alcanzado con movimiento real",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "Partida guardada mediante E",
+      "passed": true,
+      "details": {
+        "version": 2,
+        "room": 0,
+        "x": -0.135,
+        "z": 5,
+        "floor": 0,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 0.44989999999999963,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Aplicación cerrada tras guardar",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "Continuar habilitado al reabrir",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "label": "Guardado real conservado",
+      "passed": true,
+      "details": {
+        "version": 2,
+        "room": 0,
+        "x": -0.135,
+        "z": 5,
+        "floor": 0,
+        "health": 100,
+        "sanity": 100,
+        "items": [],
+        "collected": [],
+        "read": [],
+        "defeated": [],
+        "seals": [],
+        "elapsed": 0.44989999999999963,
+        "ended": false,
+        "phase2": {
+          "visited": [
+            0
+          ],
+          "solved": [],
+          "steps": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "discoveries": [],
+          "shortcuts": [],
+          "ending": false
+        },
+        "campaign": {
+          "visited": [
+            "mansion-1927"
+          ],
+          "completed": [],
+          "witnessed": []
+        }
+      }
+    },
+    {
+      "label": "Carga devuelve al escritorio",
+      "passed": true,
+      "details": {
+        "readyState": "complete",
+        "title": "SANITY-404 · El archivo de las ausencias",
+        "origin": "sanity://game",
+        "body": {
+          "width": 1440,
+          "height": 0,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "content": "SANITY—404ALPES EUROPEOS · NOVIEMBRE DE 1927Mansión VeyrLee la carta y busca la llave junto al escritorio del vestíbulo.ÉLISE MOREAU · RESTAURADORASALUD100CORDURA100RESISTENCIA100OBJETIVO · TORSOWASD / ↑↓←→ · MOVERSEE · INTERACTUAR   ESPACIO · ATACARJ / CLIC DERECHO / RB · GOLPE FUERTEC · CAMBIAR OBJETIVO: TORSO / BRAZOS / CABEZAV / R3 · ESQUIVAR   F / LB · DEFENDERDEFENDER JUSTO ANTES DEL IMPACTO · CONTRAATAQUETAB · INVENTARIO   M · MAPA   ESC · PAUSAWASD · MOVER   E · INTERACTUARESPACIO · ATAC"
+        },
+        "menu": {
+          "present": true,
+          "width": 0,
+          "height": 0
+        },
+        "overlayHidden": true,
+        "transitionClosed": false,
+        "canvas": true,
+        "savePresent": true
+      }
+    },
+    {
+      "label": "Sin fallos de carga ni renderer",
+      "passed": true,
+      "details": []
+    },
+    {
+      "label": "Sin errores JavaScript",
+      "passed": true,
+      "details": []
+    }
+  ],
+  "errors": [],
+  "completed": true,
+  "executablePath": "<workspace>/desktop/node_modules/electron/dist/electron",
+  "saved": {
+    "room": 0,
+    "x": -0.135,
+    "z": 5,
+    "health": 100,
+    "elapsed": 0.44989999999999963
+  },
+  "finishedAt": "2026-10-28T18:38:04.531Z"
+}

@@ -6,6 +6,7 @@ export interface Settings {
   reduceFlashes: boolean;
   reduceDistortion: boolean;
   reduceAudio: boolean;
+  largeText: boolean;
 }
 export function readSettings(): Settings {
   const defaults: Settings = {
@@ -16,6 +17,7 @@ export function readSettings(): Settings {
     reduceFlashes: matchMedia("(prefers-reduced-motion: reduce)").matches,
     reduceDistortion: false,
     reduceAudio: false,
+    largeText: false,
   };
   try {
     const s = JSON.parse(localStorage.getItem("sanity404-settings") || "{}");
@@ -33,6 +35,7 @@ export function readSettings(): Settings {
       reduceDistortion:
         typeof s.reduceDistortion === "boolean" ? s.reduceDistortion : false,
       reduceAudio: typeof s.reduceAudio === "boolean" ? s.reduceAudio : false,
+      largeText: typeof s.largeText === "boolean" ? s.largeText : false,
       quality: [1, 1.3, 1.6].includes(s.quality) ? s.quality : defaults.quality,
     };
   } catch {

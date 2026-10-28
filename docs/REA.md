@@ -1,6 +1,6 @@
 # Registro de REA · 18 de octubre de 2026
 
-Documentación consultada antes de la llamada: `/home/ivan/.agents/skills/reverse-engineer-anything/SKILL.md`, versión de skill 42.
+Documentación consultada antes de la llamada: `/home/<usuario>/.agents/skills/reverse-engineer-anything/SKILL.md`, versión de skill 42.
 
 La sesión ofrece herramientas `mcp__rea__*`. Para satisfacer la comprobación explícita solicitada, se ejecutó **una única llamada**:
 

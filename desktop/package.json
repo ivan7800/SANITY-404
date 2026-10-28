@@ -1,0 +1,54 @@
+{
+  "name": "sanity-404-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "main.mjs",
+  "description": "SANITY-404 · Archivo de las Ausencias",
+  "author": "SANITY-404",
+  "homepage": "https://github.com/ivan7800/SANITY-404",
+  "desktopName": "sanity-404.desktop",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "prepare:electron": "node -e \"require('electron')\"",
+    "package:appimage": "npm run prepare:electron && electron-builder --linux AppImage --publish never",
+    "package:deb": "npm run prepare:electron && electron-builder --linux deb --publish never",
+    "package:linux": "npm run prepare:electron && electron-builder --linux AppImage deb --publish never",
+    "package:windows": "npm run prepare:electron && electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "45.1.0",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.sanity404.game",
+    "productName": "SANITY-404",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.mjs",
+      "paths.mjs",
+      "dist-desktop/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "electronDist": "node_modules/electron/dist",
+    "beforeBuild": "./before-build.cjs",
+    "linux": {
+      "category": "Game",
+      "icon": "assets/icon.png",
+      "maintainer": "SANITY-404 <ivan7800@users.noreply.github.com>",
+      "syncDesktopName": true
+    },
+    "win": {
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

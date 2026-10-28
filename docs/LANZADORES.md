@@ -2,7 +2,7 @@
 
 ## Uso
 
-Linux Mint: doble clic en `INICIAR-SANITY-404.desktop` o ejecutar `./INICIAR-SANITY-404.sh`. El escritorio puede pedir que se marque el archivo como lanzador de confianza. El archivo y el shell son ejecutables; el icono es `public/sanity-404.svg`, dibujado para el proyecto. El acceso .desktop apunta a la ubicación solicitada; al mover el proyecto hay que editar sus campos Exec, Path e Icon.
+Linux Mint: doble clic en `INICIAR-SANITY-404.desktop` o ejecutar `./INICIAR-SANITY-404.sh`. El escritorio puede pedir que se marque el archivo como lanzador de confianza. El archivo y el shell son ejecutables; el acceso `.desktop` resuelve el shell desde su propia ubicación y utiliza un icono genérico del sistema. El paquete Electron conserva su icono propio.
 
 Windows 10/11: abrir `INICIAR-SANITY-404.cmd`, que invoca `scripts/iniciar-windows.ps1` con PowerShell sin perfil. La política Bypass se limita a esa invocación; no se cambia la política del sistema. El navegador se abre mediante el manejador predeterminado de Windows.
 

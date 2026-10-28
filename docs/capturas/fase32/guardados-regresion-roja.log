@@ -1,0 +1,96 @@
+
+> sanity-404@0.1.0 test
+> vitest run --maxWorkers=1 tests/phase32-save-adversarial.test.ts
+
+
+ RUN  v4.1.11 <workspace>
+
+ ❯ tests/phase32-save-adversarial.test.ts (3 tests | 2 failed) 17ms
+   × rechaza inventario, lecturas y enemigos duplicados en un guardado externo 10ms
+   × no ofrece Continuar con una partida muerta ni sobrescribe la anterior 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/phase32-save-adversarial.test.ts > rechaza inventario, lecturas y enemigos duplicados en un guardado externo
+AssertionError: expected { version: 2, room: +0, x: +0, …(13) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "campaign": {
+    "completed": [],
+    "visited": [
+      "mansion-1927",
+    ],
+    "witnessed": [],
+  },
+  "collected": [],
+  "defeated": [],
+  "elapsed": 0,
+  "ended": false,
+  "floor": 0,
+  "health": 100,
+  "items": [
+    "Tónico 0",
+    "Tónico 0",
+  ],
+  "phase2": {
+    "discoveries": [],
+    "ending": false,
+    "shortcuts": [],
+    "solved": [],
+    "steps": [
+      0,
+      0,
+      0,
+      0,
+    ],
+    "visited": [
+      0,
+    ],
+  },
+  "read": [],
+  "room": 0,
+  "sanity": 100,
+  "seals": [],
+  "version": 2,
+  "x": 0,
+  "z": 5,
+}
+
+ ❯ tests/phase32-save-adversarial.test.ts:15:46
+     13|   ]) {
+     14|     const state = { ...fresh(), ...change };
+     15|     expect(parseSave(JSON.stringify(state))).toBeNull();
+       |                                              ^
+     16|   }
+     17| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/phase32-save-adversarial.test.ts > no ofrece Continuar con una partida muerta ni sobrescribe la anterior
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/phase32-save-adversarial.test.ts:32:27
+     30|   const dead = fresh();
+     31|   dead.health = 0;
+     32|   expect(writeSave(dead)).toBe(false);
+       |                           ^
+     33|   expect(values.get("sanity404-save")).toBe(previous);
+     34|   values.set("sanity404-save", JSON.stringify(dead));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  15:32:05
+   Duration  375ms (transform 156ms, setup 0ms, import 185ms, tests 17ms, environment 0ms)

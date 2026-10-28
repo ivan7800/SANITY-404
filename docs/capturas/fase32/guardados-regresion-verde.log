@@ -1,0 +1,12 @@
+
+> sanity-404@0.1.0 test
+> vitest run --maxWorkers=1 tests/phase32-save-adversarial.test.ts tests/state.test.ts tests/save.test.ts
+
+
+ RUN  v4.1.11 <workspace>
+
+
+ Test Files  3 passed (3)
+      Tests  23 passed (23)
+   Start at  15:33:23
+   Duration  763ms (transform 172ms, setup 0ms, import 253ms, tests 27ms, environment 0ms)

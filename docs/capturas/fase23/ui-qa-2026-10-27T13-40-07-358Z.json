@@ -91,7 +91,7 @@
     {
       "type": "failure",
       "message": "TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.",
-      "stack": "page.waitForFunction: Timeout 20000ms exceeded.\n    at /home/ivan/Proyectos/SANITY-404-FASE11/scripts/browser-remaster.mjs:215:16"
+      "stack": "page.waitForFunction: Timeout 20000ms exceeded.\n    at <workspace>/scripts/browser-remaster.mjs:215:16"
     }
   ],
   "launchAttempts": [

@@ -8,7 +8,7 @@ Europa, noviembre de 1927. La restauradora Élise Moreau recibe una carta de su 
 
 Los requisitos vigentes están en [docs/REQUISITOS.md](docs/REQUISITOS.md). La remasterización visual está documentada en [Fase 1.5](docs/FASE15.md), con [comparador antes/después](docs/comparativa-fase15.html).
 
-**Linux Mint:** abre `INICIAR-SANITY-404.desktop` (si el escritorio lo pide, marca el archivo como lanzador de confianza), o ejecuta `./INICIAR-SANITY-404.sh`. Detecta Node compatible desde PATH o NVM, comprueba dependencias existentes, busca un puerto local disponible y abre Chrome/Chromium con el videojuego. No instala paquetes. El `.desktop` contiene la ruta de este proyecto; si mueves la carpeta, actualiza `Exec`, `Path` e `Icon`.
+**Linux Mint:** abre `INICIAR-SANITY-404.desktop` (si el escritorio lo pide, marca el archivo como lanzador de confianza), o ejecuta `./INICIAR-SANITY-404.sh`. Detecta Node compatible desde PATH o NVM, comprueba dependencias existentes, busca un puerto local disponible y abre Chrome/Chromium con el videojuego. No instala paquetes. El `.desktop` usa la ubicación del propio archivo para encontrar el lanzador; conserva ambos archivos en la misma carpeta.
 
 ```sh
 ./INICIAR-SANITY-404.sh --check       # comprobar Node y dependencias

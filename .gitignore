@@ -1,5 +1,9 @@
 node_modules/
 dist/
+desktop/dist-desktop/
+desktop/node_modules/
+desktop/release/
+desktop/release-*/
 test-results/
 playwright-report/
 coverage/
@@ -16,6 +20,15 @@ coverage/
 !.env.example
 *.local
 *.log
+!docs/capturas/fase30/chromium-launch-bloqueado-2026-10-28.log
+!docs/capturas/fase31/chromium-launch.log
+!docs/capturas/fase32/browser-phase10-sandbox.log
+!docs/capturas/fase32/browser-smoke-sandbox.log
+!docs/capturas/fase32/chromium-launch.log
+!docs/capturas/fase32/guardados-regresion-roja.log
+!docs/capturas/fase32/guardados-regresion-verde.log
+!docs/capturas/fase32/progreso-regresion-roja.log
+!docs/capturas/fase32/progreso-regresion-verde.log
 *.pid
 *.pid.lock
 *.pem

@@ -832,3 +832,30 @@ button:disabled {
     backdrop-filter: none;
   }
 }
+
+/* A persisted reading aid. Panels already scroll on small viewports. */
+html.large-text .panel p,
+html.large-text .panel li,
+html.large-text .panel label,
+html.large-text .panel summary,
+html.large-text .panel .small,
+html.large-text .panel .save-slot span {
+  font-size: 16px;
+  line-height: 1.55;
+  letter-spacing: normal;
+}
+html.large-text .panel button,
+html.large-text .panel select {
+  font-size: 16px;
+  line-height: 1.3;
+}
+html.large-text #objective,
+html.large-text #prompt,
+html.large-text #toast {
+  font-size: 16px;
+  line-height: 1.5;
+}
+html.large-text #hud .stat,
+html.large-text #hud .eyebrow {
+  font-size: 13px;
+}

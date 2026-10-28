@@ -20,7 +20,7 @@ export const qualityProfile = (value: number) =>
         }
       : {
           name: "Media",
-          scale: 1,
+          scale: 0.9,
           maxPixels: 1600 * 900,
           shadows: true,
           shadowSize: 1024,
