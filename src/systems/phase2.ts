@@ -115,8 +115,13 @@ export function validPhase2(value: unknown): value is Phase2Progress {
     Array.isArray(p.steps) &&
     p.steps.length === 4 &&
     p.steps.every((v) => Number.isInteger(v) && v >= 0 && v <= 3) &&
+    puzzleIds.every(
+      (id, index) => (p.steps![index] === 3) === p.solved!.includes(id),
+    ) &&
     unique(p.discoveries, ["adrien", "society", "guardian"]) &&
     unique(p.shortcuts, ["library-chapel"]) &&
+    p.shortcuts!.includes("library-chapel") ===
+      p.solved!.includes("astronomy") &&
     typeof p.ending === "boolean"
   );
 }

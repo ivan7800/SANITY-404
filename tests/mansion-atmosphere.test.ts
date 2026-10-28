@@ -86,3 +86,27 @@ it("el reloj de la mansión respeta estancia, audio reducido y liberación de vo
   for (const voice of voices) voice.onended?.();
   expect(audio.activeVoices).toBe(0);
 });
+
+it("restaura el ambiente de la nueva sala si una transición corta un silencio dramático", () => {
+  const audio = new Audio();
+  const cancelScheduledValues = vi.fn();
+  const setValueAtTime = vi.fn();
+  const setTargetAtTime = vi.fn();
+  audio.ctx = { currentTime: 12 } as AudioContext;
+  Reflect.set(audio, "ambientBus", {
+    gain: {
+      value: 0.08,
+      cancelScheduledValues,
+      setValueAtTime,
+      setTargetAtTime,
+    },
+  });
+  audio.silence(10, 5);
+  expect(setTargetAtTime).toHaveBeenCalledWith(0.015, 12, 0.18);
+  expect(setTargetAtTime).toHaveBeenCalledWith(1, 17, 0.5);
+  audio.setRoom(8);
+  expect(audio.room).toBe(8);
+  expect(cancelScheduledValues).toHaveBeenLastCalledWith(12);
+  expect(setValueAtTime).toHaveBeenLastCalledWith(0.08, 12);
+  expect(setTargetAtTime).toHaveBeenLastCalledWith(1, 12, 0.18);
+});

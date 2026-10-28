@@ -313,6 +313,15 @@ export class Audio {
     this.nextMansionClock = 0;
     this.silenceUntil = 0;
     if (!this.ctx) return;
+    // A room transition cancels the previous room's dramatic silence. Without
+    // this, its delayed recovery can keep the new room almost inaudible.
+    if (this.ambientBus) {
+      const now = this.ctx.currentTime;
+      const gain = this.ambientBus.gain;
+      gain.cancelScheduledValues(now);
+      gain.setValueAtTime(gain.value, now);
+      gain.setTargetAtTime(1, now, 0.18);
+    }
     this.windLevel?.gain.setTargetAtTime(
       room === 6 ? 0.055 : room === 7 ? 0.016 : 0.035,
       this.ctx.currentTime,

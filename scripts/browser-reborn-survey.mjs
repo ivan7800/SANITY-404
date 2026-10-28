@@ -5,6 +5,16 @@ import { chromium } from "@playwright/test";
 import { browserLaunchOptions } from "./browser-launch.mjs";
 
 const url = process.env.SANITY_TEST_URL || "http://127.0.0.1:5174/";
+const requestedRooms = process.env.SANITY_SURVEY_ROOMS
+  ? process.env.SANITY_SURVEY_ROOMS.split(",").map(Number)
+  : Array.from({ length: 29 }, (_, room) => room);
+if (
+  !requestedRooms.length ||
+  requestedRooms.some(
+    (room) => !Number.isInteger(room) || room < 0 || room > 28,
+  )
+)
+  throw new RangeError("SANITY_SURVEY_ROOMS admite índices de sala 0–28");
 const stamp = new Date()
   .toISOString()
   .replaceAll(":", "-")
@@ -33,7 +43,7 @@ try {
   page.on("pageerror", (error) => result.errors.push(error.message));
   await page.goto(new URL("?qa=1", url).toString());
   await page.waitForFunction(() => Boolean(window.sanityQa));
-  for (let room = 0; room < 29; room++) {
+  for (const room of requestedRooms) {
     const opened = await page.evaluate(
       (index) => window.sanityQa.openRoom(index),
       room,
@@ -60,7 +70,7 @@ try {
     });
   }
   assert.deepEqual(result.errors, []);
-  result.status = "PASS: 29 capturas; evaluación visual humana pendiente";
+  result.status = `PASS: ${requestedRooms.length} capturas; evaluación visual humana pendiente`;
 } catch (error) {
   result.status = "FAIL";
   result.failure = String(error);

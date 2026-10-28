@@ -68,6 +68,38 @@ describe("Fase 8: director psicológico", () => {
     expect(sanity.apparition.position.z).toBe(-5.8);
     world.dispose();
   });
+  it("retira una aparición de cordura al comenzar una persecución sin alterar el mundo", () => {
+    const state = fresh();
+    state.sanity = 30;
+    state.elapsed = 8;
+    const world = new World(0, [], [], []);
+    const sanity = new Sanity(world);
+    const options = {
+      reduced: false,
+      reduceFlashes: true,
+      reduceDistortion: true,
+      reduceAudio: false,
+    };
+    const notify = vi.fn();
+    const sound = vi.fn();
+    const before = JSON.stringify(state);
+    const obstacles = JSON.stringify(world.obstacles);
+    sanity.update(state, world, options, notify, sound);
+    expect(sanity.apparition.visible).toBe(true);
+    expect(sanity.isEventActive(state.elapsed)).toBe(true);
+    state.elapsed = 8.1;
+    sanity.update(state, world, options, notify, sound, true);
+    expect(sanity.apparition.visible).toBe(false);
+    expect(sanity.isEventActive(state.elapsed)).toBe(false);
+    state.elapsed = 8.2;
+    sanity.update(state, world, options, notify, sound);
+    expect(sanity.apparition.visible).toBe(false);
+    expect(notify).toHaveBeenCalledOnce();
+    expect(sound).toHaveBeenCalledOnce();
+    expect(JSON.stringify(world.obstacles)).toBe(obstacles);
+    expect(JSON.stringify({ ...state, elapsed: 8 })).toBe(before);
+    world.dispose();
+  });
   it("pliega temporalmente la galería sin modificar colisiones ni guardado", () => {
     const state = fresh();
     state.sanity = 50;
@@ -171,8 +203,45 @@ describe("Fase 8: director psicológico", () => {
     state.room = 9;
     state.read.push("9");
     state.elapsed = 110;
+    expect(director.choose(state)).toBeUndefined();
+    state.elapsed = 114;
     expect(director.choose(state)?.id).toBe("abbey-bell");
     expect(director.choose(state, false)).toBeUndefined();
+  });
+
+  it("aplaza manifestaciones durante el combate y deja una ventana de recuperación", () => {
+    const state = fresh();
+    state.room = 8;
+    state.sanity = 35;
+    state.read.push("8");
+    const director = new PsychologicalDirector();
+    state.elapsed = 8;
+    expect(director.choose(state, true, true)).toBeUndefined();
+    state.elapsed = 11;
+    expect(director.choose(state, true, true)).toBeUndefined();
+    state.elapsed = 16.9;
+    expect(director.choose(state)).toBeUndefined();
+    state.elapsed = 17;
+    expect(director.choose(state)?.id).toBe("roman-ritual");
+    expect(state.read).toEqual(["8"]);
+    expect(state.campaign.witnessed).toEqual([]);
+  });
+
+  it("deja respirar una revelación recién leída antes de otra manifestación", () => {
+    const state = fresh();
+    state.room = 8;
+    state.sanity = 35;
+    const director = new PsychologicalDirector();
+    state.elapsed = 8;
+    expect(director.choose(state)).toBeDefined();
+    state.read.push("8");
+    state.elapsed = 20;
+    expect(director.choose(state)).toBeUndefined();
+    state.elapsed = 23.9;
+    expect(director.choose(state)).toBeUndefined();
+    state.elapsed = 24;
+    expect(director.choose(state)?.id).toBe("roman-ritual");
+    expect(state.read).toEqual(["8"]);
   });
 
   it("no repite inmediatamente y puede recuperar un evento tras su enfriamiento", () => {

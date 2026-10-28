@@ -387,10 +387,32 @@ export class PsychologicalDirector {
   private nextAt: number;
   private last = new Map<string, number>();
   private recent: string[] = [];
+  private readCount = -1;
+  private itemCount = -1;
+  private witnessedCount = -1;
   constructor(entryTime = 0) {
     this.nextAt = entryTime + 8;
   }
-  choose(state: State, enabled = true): SanityEvent | undefined {
+  choose(
+    state: State,
+    enabled = true,
+    inDanger = false,
+  ): SanityEvent | undefined {
+    const progressChanged =
+      this.readCount >= 0 &&
+      (this.readCount !== state.read.length ||
+        this.itemCount !== state.items.length ||
+        this.witnessedCount !== state.campaign.witnessed.length);
+    this.readCount = state.read.length;
+    this.itemCount = state.items.length;
+    this.witnessedCount = state.campaign.witnessed.length;
+    if (progressChanged) this.nextAt = Math.max(this.nextAt, state.elapsed + 4);
+    // Combat already has its own audible and visual tells. Keep the next
+    // hallucination at least six seconds beyond the last dangerous frame.
+    if (inDanger) {
+      this.nextAt = Math.max(this.nextAt, state.elapsed + 6);
+      return;
+    }
     if (!enabled || state.elapsed < this.nextAt) return;
     const eligible = eligibleSanityEvents(state)
       .filter(
@@ -442,6 +464,9 @@ export class Sanity {
   private eraGlyph?: T.Mesh;
   private latePortrait?: T.Mesh;
   private glyphIntensity = 0;
+  isEventActive(elapsed: number) {
+    return elapsed < this.until;
+  }
   constructor(world: World, entryTime = 0) {
     this.director = new PsychologicalDirector(entryTime);
     this.initialLights = world.lights.map((light) => light.intensity);
@@ -617,9 +642,11 @@ export class Sanity {
     options: SanityOptions,
     notify: (text: string) => void,
     sound: (event: string) => void,
+    inDanger = false,
   ) {
     const intensity = 1 - state.sanity / 100;
-    const event = this.director.choose(state, !options.reduced);
+    if (inDanger) this.until = 0;
+    const event = this.director.choose(state, !options.reduced, inDanger);
     if (event) {
       this.activeId = event.id;
       this.until = state.elapsed + 3.2;
@@ -628,7 +655,9 @@ export class Sanity {
       if (!options.reduceAudio) sound(event.id);
     }
     const active =
-      !options.reduced && state.elapsed < this.until ? this.activeId : "";
+      !inDanger && !options.reduced && state.elapsed < this.until
+        ? this.activeId
+        : "";
     for (let i = 0; i < world.lights.length; i++) {
       const light = world.lights[i];
       const base = this.initialLights[i];

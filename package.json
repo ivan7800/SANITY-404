@@ -18,6 +18,8 @@
     "test:phase23:browser": "node scripts/browser-remaster.mjs --output-dir=docs/capturas/fase23",
     "test:mansion:stair:browser": "node scripts/browser-mansion-stair.mjs",
     "test:mansion:cinema:browser": "node scripts/browser-mansion-cinema.mjs",
+    "test:phase26:widow:browser": "node scripts/browser-phase26-widow.mjs",
+    "benchmark:phase26:widow": "node scripts/benchmark-phase26-widow.mjs",
     "test:phase21:browser": "bash scripts/phase21-1-qa.sh",
     "benchmark:phase9": "node scripts/performance-phase9.mjs",
     "benchmark:phase10": "node scripts/performance-phase10.mjs",

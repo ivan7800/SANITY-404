@@ -54,6 +54,9 @@ it("elige enemigos por posición, cordura y pruebas persistentes", () => {
   expect(mansionThreatAt(state)).toBe("guest");
   state.x = 5;
   expect(mansionThreatAt(state)).toBe("widow");
+  state.x = 3.8;
+  state.z = -5.2;
+  expect(mansionThreatAt(state)).toBe("widow");
   state.x = -5;
   state.z = -3;
   expect(mansionThreatAt(state)).toBe("crawler");

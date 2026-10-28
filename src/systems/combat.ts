@@ -15,7 +15,9 @@ import {
 } from "./state";
 import { absorbVeil } from "./ritual";
 import { mansionFloorHeight } from "../world/mansion";
-import { upperWalkable } from "../world/mansion-navigation";
+import { mansionMove, upperWalkable } from "../world/mansion-navigation";
+import { MANSION_GALLERY_Y } from "../world/mansion-topology";
+import { actorPath, type PathPoint } from "./actor-path";
 import { weaponProfileForRoom, type WeaponProfile } from "./weapons";
 export type TargetZone = "torso" | "arms" | "head";
 /** Segment/AABB at chest height: low carpets do not block a strike, furniture does. */
@@ -108,6 +110,18 @@ export class Combat {
   private guestPose = 0;
   private guestPoseStep = 0;
   private crawlerJink = 0;
+  private pursuitPath: PathPoint[] = [];
+  private pursuitGoal?: PathPoint;
+  private pathRetry = 0;
+  /** Read-only QA view of the physical route; never changes AI decisions. */
+  get routeDiagnostic() {
+    return {
+      waypoint: this.pursuitPath[0] ? { ...this.pursuitPath[0] } : null,
+      remaining: this.pursuitPath.length,
+      goal: this.pursuitGoal ? { ...this.pursuitGoal } : null,
+      retrySeconds: this.pathRetry,
+    };
+  }
   enemyHurt = 0;
   impact = 0;
   health = 60;
@@ -199,6 +213,7 @@ export class Combat {
     noise = 0,
     target: TargetZone = "torso",
     observed = false,
+    mansionObstacles?: { ground: Obstacle[]; upper: Obstacle[] },
   ) {
     this.crippled = Math.max(0, this.crippled - dt);
     this.stamina = clamp(this.stamina + dt * (guard ? -7 : 18));
@@ -326,17 +341,38 @@ export class Combat {
             .sub(player.position)
             .normalize()
             .multiplyScalar(0.4);
-          const p = move(
-            enemy.position.x,
-            enemy.position.z,
-            knock.x,
-            knock.z,
-            obstacles,
-          );
+          const widowLevel =
+            this.kind === "widow" &&
+            enemy.position.y >= MANSION_GALLERY_Y - 0.01 &&
+            upperWalkable(enemy.position.x, enemy.position.z)
+              ? 1
+              : 0;
+          const p: { x: number; z: number; level?: 0 | 1 } =
+            this.kind === "widow" && mansionObstacles
+              ? mansionMove(
+                  enemy.position.x,
+                  enemy.position.z,
+                  knock.x,
+                  knock.z,
+                  widowLevel,
+                  mansionObstacles.ground,
+                  mansionObstacles.upper,
+                )
+              : move(
+                  enemy.position.x,
+                  enemy.position.z,
+                  knock.x,
+                  knock.z,
+                  obstacles,
+                );
           enemy.position.set(
             p.x,
             this.kind === "widow"
-              ? mansionFloorHeight(p.x, p.z)
+              ? mansionFloorHeight(
+                  p.x,
+                  p.z,
+                  mansionObstacles ? (p.level ?? widowLevel) : 0,
+                )
               : enemy.position.y,
             p.z,
           );
@@ -388,6 +424,7 @@ export class Combat {
       onSound,
       onMessage,
       observed,
+      mansionObstacles,
     );
     this.separateReflection(player, enemy, obstacles);
   }
@@ -448,7 +485,9 @@ export class Combat {
     onSound: (frequency: number, duration: number) => void,
     onMessage: (text: string) => void,
     observed: boolean,
+    mansionObstacles?: { ground: Obstacle[]; upper: Obstacle[] },
   ) {
+    this.pathRetry = Math.max(0, this.pathRetry - dt);
     const dist = enemy.position.distanceTo(player.position);
     const mansionCreature = [
       "guest",
@@ -870,12 +909,41 @@ export class Combat {
         if (enemy.position.distanceTo(target) < 0.6) this.searchTime -= dt;
         if (this.searchTime <= 0) this.aiState = "patrol";
       }
+      const widowUpper =
+        this.kind === "widow" &&
+        mansionObstacles &&
+        enemy.position.y >= MANSION_GALLERY_Y - 0.01 &&
+        player.position.y >= MANSION_GALLERY_Y - 0.01;
+      if (
+        !widowUpper ||
+        this.aiState !== "chase" ||
+        (this.pursuitGoal &&
+          Math.hypot(
+            player.position.x - this.pursuitGoal.x,
+            player.position.z - this.pursuitGoal.z,
+          ) > 1.3)
+      )
+        this.pursuitPath = [];
+      while (
+        this.pursuitPath.length &&
+        Math.hypot(
+          enemy.position.x - this.pursuitPath[0].x,
+          enemy.position.z - this.pursuitPath[0].z,
+        ) < 0.16
+      )
+        this.pursuitPath.shift();
+      if (this.pursuitPath.length)
+        target = new T.Vector3(
+          this.pursuitPath[0].x,
+          enemy.position.y,
+          this.pursuitPath[0].z,
+        );
       if (
         this.aiState !== "suspect" &&
         (this.kind !== "guardian" || seen || this.aiState === "investigate")
       ) {
         const vector = target.clone().sub(enemy.position).setY(0);
-        if (vector.length() > 0.35) {
+        if (vector.length() > (this.pursuitPath.length ? 0.12 : 0.35)) {
           vector
             .normalize()
             .multiplyScalar(
@@ -923,13 +991,55 @@ export class Combat {
             !bodySpace ||
             Math.hypot(x - player.position.x, z - player.position.z) >=
               Math.min(bodySpace, playerDistance);
-          const next = move(
-            enemy.position.x,
-            enemy.position.z,
-            vector.x,
-            vector.z,
-            obstacles,
+          const widowLevel =
+            this.kind === "widow" &&
+            enemy.position.y >= MANSION_GALLERY_Y - 0.01 &&
+            upperWalkable(enemy.position.x, enemy.position.z)
+              ? 1
+              : 0;
+          const moveEnemy = (
+            dx: number,
+            dz: number,
+          ): { x: number; z: number; level?: 0 | 1 } =>
+            this.kind === "widow" && mansionObstacles
+              ? mansionMove(
+                  enemy.position.x,
+                  enemy.position.z,
+                  dx,
+                  dz,
+                  widowLevel,
+                  mansionObstacles.ground,
+                  mansionObstacles.upper,
+                )
+              : move(enemy.position.x, enemy.position.z, dx, dz, obstacles);
+          const next = moveEnemy(vector.x, vector.z);
+          const progress = Math.hypot(
+            next.x - enemy.position.x,
+            next.z - enemy.position.z,
           );
+          if (
+            widowUpper &&
+            progress < vector.length() * 0.45 &&
+            !this.pursuitPath.length &&
+            this.pathRetry <= 0 &&
+            Math.hypot(
+              enemy.position.x - player.position.x,
+              enemy.position.z - player.position.z,
+            ) > 1.6
+          ) {
+            this.pathRetry = 1;
+            this.pursuitGoal = {
+              x: player.position.x,
+              z: player.position.z,
+            };
+            this.pursuitPath =
+              actorPath(
+                { x: enemy.position.x, z: enemy.position.z },
+                this.pursuitGoal,
+                mansionObstacles.upper,
+                upperWalkable,
+              ) ?? [];
+          }
           const upperThreat =
             ["guest", "crawler", "wrongReflection", "nameRoot"].includes(
               this.kind,
@@ -938,24 +1048,33 @@ export class Combat {
             (next.x === enemy.position.x && next.z === enemy.position.z) ||
             (upperThreat && !upperWalkable(next.x, next.z))
           ) {
-            const side = move(
-              enemy.position.x,
-              enemy.position.z,
-              -vector.z,
-              vector.x,
-              obstacles,
-            );
+            const side = moveEnemy(-vector.z, vector.x);
             if (
               (!upperThreat || upperWalkable(side.x, side.z)) &&
               preservesBodySpace(side.x, side.z)
             )
-              enemy.position.set(side.x, enemy.position.y, side.z);
+              enemy.position.set(
+                side.x,
+                this.kind === "widow"
+                  ? mansionFloorHeight(
+                      side.x,
+                      side.z,
+                      mansionObstacles ? (side.level ?? widowLevel) : 0,
+                    )
+                  : enemy.position.y,
+                side.z,
+              );
           } else if (preservesBodySpace(next.x, next.z))
-            enemy.position.set(next.x, enemy.position.y, next.z);
-          if (this.kind === "widow")
-            enemy.position.y = mansionFloorHeight(
-              enemy.position.x,
-              enemy.position.z,
+            enemy.position.set(
+              next.x,
+              this.kind === "widow"
+                ? mansionFloorHeight(
+                    next.x,
+                    next.z,
+                    mansionObstacles ? (next.level ?? widowLevel) : 0,
+                  )
+                : enemy.position.y,
+              next.z,
             );
           enemy.lookAt(target);
         }
