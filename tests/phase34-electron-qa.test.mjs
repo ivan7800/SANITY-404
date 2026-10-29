@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { mainFailures, menuReady } from "../scripts/phase34-electron-qa.mjs";
+import { readFile } from "node:fs/promises";
+import {
+  mainFailures,
+  menuReady,
+  playwrightElectronLoader,
+} from "../scripts/phase34-electron-qa.mjs";
 
 const visibleMenu = {
   main: { visible: true, url: "sanity://game/index.html" },
@@ -11,6 +16,10 @@ const visibleMenu = {
 };
 
 describe("visibilidad del menú Electron", () => {
+  it("resuelve el cargador que completa el arranque de Playwright", async () => {
+    const loader = await readFile(playwrightElectronLoader(), "utf8");
+    expect(loader).toContain("__playwright_run");
+  });
   it("acepta el menú real aunque body mida cero por los hijos fixed", () => {
     expect(menuReady(visibleMenu)).toBe(true);
   });

@@ -1,13 +1,32 @@
 import { app, BrowserWindow, protocol, session } from "electron";
 import path from "node:path";
+import { appendFileSync } from "node:fs";
 import { serveAsset } from "./paths.mjs";
 
 const origin = "sanity://game";
 const qaMode = !app.isPackaged && Boolean(process.env.SANITY_QA_USER_DATA);
 const qaEvents = [];
+function startup(stage, details = {}) {
+  if (!qaMode) return;
+  const entry = {
+    at: new Date().toISOString(),
+    pid: process.pid,
+    stage,
+    ...details,
+  };
+  const line = `SANITY_QA_STARTUP ${JSON.stringify(entry)}`;
+  process.stderr.write(`${line}\n`);
+  if (process.env.SANITY_QA_STARTUP_LOG)
+    appendFileSync(
+      process.env.SANITY_QA_STARTUP_LOG,
+      `${JSON.stringify(entry)}\n`,
+    );
+}
+startup("main-loaded", { electron: process.versions.electron });
 if (qaMode) {
   app.setPath("userData", path.resolve(process.env.SANITY_QA_USER_DATA));
   globalThis.sanityDesktopQaEvents = qaEvents;
+  startup("user-data-set");
 }
 function record(type, details = {}) {
   if (qaMode) {
@@ -24,10 +43,12 @@ protocol.registerSchemesAsPrivileged([
     privileges: { standard: true, secure: true, supportFetchAPI: true },
   },
 ]);
+startup("scheme-registered");
 
 if (process.platform === "win32") app.setAppUserModelId("com.sanity404.game");
 
 function openWindow() {
+  startup("window-creating");
   const window = new BrowserWindow({
     width: 1440,
     height: 900,
@@ -43,6 +64,7 @@ function openWindow() {
       webSecurity: true,
     },
   });
+  startup("window-created", { windowId: window.id });
   const contents = window.webContents;
   contents.on("did-fail-load", (_event, code, description, url, mainFrame) =>
     record("did-fail-load", { code, description, url, mainFrame }),
@@ -68,28 +90,51 @@ function openWindow() {
   window.webContents.on("will-navigate", preventExternalNavigation);
   window.webContents.on("will-redirect", preventExternalNavigation);
   record("window-created", { visible: window.isVisible() });
-  window.loadURL(`${origin}/index.html`);
+  startup("window-loading");
+  void window.loadURL(`${origin}/index.html`).then(
+    () => startup("window-loaded"),
+    (error) => {
+      startup("window-load-failed", { message: String(error) });
+      process.stderr.write(
+        `SANITY Electron window load failed: ${error.stack || error}\n`,
+      );
+      app.exit(1);
+    },
+  );
 }
 
-app.whenReady().then(async () => {
-  const root = path.join(app.getAppPath(), "dist-desktop");
-  protocol.handle("sanity", async (request) => {
-    const response = await serveAsset(root, request);
-    record("asset", { url: request.url, status: response.status });
-    if (response.status >= 400)
-      console.error(
-        `SANITY Electron recurso ${response.status}: ${request.url}`,
-      );
-    return response;
+startup("waiting-for-ready");
+app
+  .whenReady()
+  .then(async () => {
+    startup("app-ready");
+    const root = path.join(app.getAppPath(), "dist-desktop");
+    protocol.handle("sanity", async (request) => {
+      const response = await serveAsset(root, request);
+      record("asset", { url: request.url, status: response.status });
+      if (response.status >= 400)
+        console.error(
+          `SANITY Electron recurso ${response.status}: ${request.url}`,
+        );
+      return response;
+    });
+    startup("protocol-handled");
+    session.defaultSession.setPermissionRequestHandler(
+      (_contents, _permission, callback) => callback(false),
+    );
+    startup("permissions-configured");
+    openWindow();
+    app.on("activate", () => {
+      if (BrowserWindow.getAllWindows().length === 0) openWindow();
+    });
+  })
+  .catch((error) => {
+    startup("startup-failed", { message: String(error), stack: error.stack });
+    process.stderr.write(
+      `SANITY Electron startup failed: ${error.stack || error}\n`,
+    );
+    app.exit(1);
   });
-  session.defaultSession.setPermissionRequestHandler(
-    (_contents, _permission, callback) => callback(false),
-  );
-  openWindow();
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) openWindow();
-  });
-});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
