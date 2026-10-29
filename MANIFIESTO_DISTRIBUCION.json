@@ -1,0 +1,21 @@
+{
+  "name": "SANITY-404",
+  "version": "1.0",
+  "origin": "http://127.0.0.1:40404",
+  "sourceBaseCommit": "8d57c6665a5a5ddc19aa6700e37d0cc11b96351f",
+  "sourceTree": "local-working-tree",
+  "packages": [
+    {
+      "file": "portable/release/SANITY-404-Linux-x64.zip",
+      "platform": "linux-x64",
+      "bytes": 783944,
+      "sha256": "2f918b6616ca70e9a6bce08f63bb62b955216388e3ba85a82c2ba99b0a309e2d",
+      "nativeValidation": "blocked: sandbox disallows AF_INET sockets"
+    },
+    {
+      "file": "portable/release/SANITY-404-Windows-x64.zip",
+      "platform": "windows-x64",
+      "status": "pending native Windows build and validation"
+    }
+  ]
+}

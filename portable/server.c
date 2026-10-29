@@ -72,7 +72,23 @@ static int initialize(const char *folder) {
   if (snprintf(index, sizeof(index), "%s%cindex.html", root, PATH_SEP) >= (int)sizeof(index)) return 0;
   FILE *file = fopen(index, "rb");
   if (!file) return 0;
+  char html[8192];
+  size_t size = fread(html, 1, sizeof(html) - 1, file);
   fclose(file);
+  html[size] = 0;
+  int assets = 0;
+  for (char *at = html; (at = strstr(at, "./assets/")) != NULL;) {
+    char *end = strchr(at, '"');
+    if (!end || end - at > 512) return 0;
+    char asset[MAX_PATH_SIZE];
+    if (snprintf(asset, sizeof(asset), "%s%c%.*s", root, PATH_SEP, (int)(end - at), at) >= (int)sizeof(asset)) return 0;
+    FILE *resource = fopen(asset, "rb");
+    if (!resource) return 0;
+    fclose(resource);
+    assets++;
+    at = end;
+  }
+  if (assets < 2) return 0;
   return 1;
 }
 static int probe(void) {
