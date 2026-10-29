@@ -1,5 +1,10 @@
 import { it, expect, vi, afterEach } from "vitest";
-import { Input, normalizeMovement, radialStick } from "../src/engine/input";
+import {
+  Input,
+  cameraRelativeMovement,
+  normalizeMovement,
+  radialStick,
+} from "../src/engine/input";
 afterEach(() => vi.unstubAllGlobals());
 it("el mando usa zona muerta y activa acciones una sola vez por pulsación", () => {
   vi.stubGlobal("addEventListener", () => {});
@@ -101,4 +106,16 @@ it("combina WASD y stick sin superar la velocidad máxima", () => {
   expect(Math.hypot(movement.x, movement.z)).toBeLessThanOrEqual(1.0000001);
   expect(movement.x).toBeGreaterThan(0);
   expect(movement.z).toBeLessThan(0);
+});
+
+it("Modern usa la orientación de la cámara y Classic conserva ejes del mundo", () => {
+  expect(cameraRelativeMovement(0, -1, 0, -1)).toEqual({ x: 0, z: -1 });
+  const turned = cameraRelativeMovement(0, -1, -1, 0);
+  expect(turned.x).toBeCloseTo(-1);
+  expect(turned.z).toBeCloseTo(0);
+  const right = cameraRelativeMovement(1, 0, -1, 0);
+  expect(right.x).toBeCloseTo(0);
+  expect(right.z).toBeCloseTo(-1);
+  const fallback = cameraRelativeMovement(1, 0, 0, 0);
+  expect(fallback).toEqual({ x: 1, z: 0 });
 });
