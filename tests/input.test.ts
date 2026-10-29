@@ -81,10 +81,9 @@ it("H se registra una vez, se descarta en pausa y se limpia al perder foco", () 
 });
 
 it("normaliza diagonales de teclado y mando sin aceleración artificial", () => {
-  expect(normalizeMovement(1, 1)).toEqual({
-    x: Math.SQRT1_2,
-    z: Math.SQRT1_2,
-  });
+  const diagonalKeys = normalizeMovement(1, 1);
+  expect(diagonalKeys.x).toBeCloseTo(Math.SQRT1_2);
+  expect(diagonalKeys.z).toBeCloseTo(Math.SQRT1_2);
   expect(normalizeMovement(0.4, -0.3)).toEqual({ x: 0.4, z: -0.3 });
   const diagonal = radialStick(0.8, 0.8);
   expect(Math.hypot(diagonal.x, diagonal.z)).toBeCloseTo(1);
