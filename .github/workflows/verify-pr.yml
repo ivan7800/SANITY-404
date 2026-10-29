@@ -14,6 +14,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Diagnose formatting for premium files
+        run: |
+          npx prettier --write src/engine/input.ts src/render/materials.ts
+          git diff -- src/engine/input.ts src/render/materials.ts
       - run: npm run format:check
       - run: npm test
       - run: npm run build
