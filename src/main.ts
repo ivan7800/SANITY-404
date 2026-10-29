@@ -44,7 +44,7 @@ import {
   mansionThreatAt,
   mansionThreats,
 } from "./systems/mansion-threats";
-import { Input } from "./engine/input";
+import { Input, cameraRelativeMovement } from "./engine/input";
 import {
   World,
   character,
@@ -160,6 +160,7 @@ const camera = new T.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 70),
   cinematic = new CinematicCamera(),
   metrics = new FrameMetrics(),
   gpuTimer = import.meta.env.DEV ? new GpuTimer(renderer.domElement) : null;
+const movementForward = new T.Vector3();
 let state: State = fresh(),
   world: World,
   player: T.Group,
@@ -175,7 +176,6 @@ let state: State = fresh(),
   paused = true,
   started = false,
   graphicsLost = false,
-  yaw = 0,
   toastTime = 0,
   near: Interactable | undefined,
   settings = readSettings();
@@ -544,7 +544,6 @@ function syncMansionThreat() {
 function begin(s: State) {
   state = s;
   started = true;
-  yaw = 0;
   loadRoom();
   void audio
     .start()
@@ -626,7 +625,7 @@ function credits() {
 }
 function options() {
   panel(
-    `<div class="eyebrow">AJUSTES DE LA EXPERIENCIA</div><h2>Un horror a tu medida</h2><div class="settings-grid"><section class="settings-group"><div class="eyebrow">ACCESIBILIDAD Y ATMÓSFERA</div><label><input type="checkbox" id="large-text" ${settings.largeText ? "checked" : ""}> Texto ampliado en diario, avisos y HUD</label><label><input type="checkbox" id="reduced" ${settings.reduced ? "checked" : ""}> Reducir efectos psicológicos y movimiento de cámara</label><label><input type="checkbox" id="reduce-flashes" ${settings.reduceFlashes ? "checked" : ""}> Reducir variaciones de luz</label><label><input type="checkbox" id="reduce-distortion" ${settings.reduceDistortion ? "checked" : ""}> Reducir distorsiones visuales</label><label><input type="checkbox" id="reduce-audio" ${settings.reduceAudio ? "checked" : ""}> Reducir sonidos intensos y susurros</label><p class="small">Los eventos no bloquean el progreso ni imitan avisos del sistema. No hay destellos rápidos.</p></section><section class="settings-group"><div class="eyebrow">IMAGEN Y SONIDO</div><label>Volumen <input id="volume" type="range" min="0" max="1" step=".05" value="${settings.volume}"></label><label>Calidad gráfica <select id="quality"><option value="1">Baja</option><option value="1.3">Media</option><option value="1.6">Alta</option></select></label><label>Cámara <select id="camera-mode"><option value="classic">Clásica · encuadres por zona</option><option value="modern">Moderna · seguimiento cercano</option></select></label></section></div><details class="controls-help"><summary>Controles de teclado, ratón y mando</summary><p>Movimiento: WASD o stick izquierdo · Interactuar: E / A · Ataque: Espacio / B · Fuerte: J / RB · Defender: F / LB · Esquivar: V / R3 · Tónico: H / X · Inventario: Tab / Y · Mapa: M / Select · Pausa: Esc / Start · Correr: Shift · Ratón: izquierdo atacar, derecho fuerte.</p></details><div class="actions"><button id="back">Aplicar y volver</button></div>`,
+    `<div class="eyebrow">AJUSTES DE LA EXPERIENCIA</div><h2>Un horror a tu medida</h2><div class="settings-grid"><section class="settings-group"><div class="eyebrow">ACCESIBILIDAD Y ATMÓSFERA</div><label><input type="checkbox" id="large-text" ${settings.largeText ? "checked" : ""}> Texto ampliado en diario, avisos y HUD</label><label><input type="checkbox" id="reduced" ${settings.reduced ? "checked" : ""}> Reducir efectos psicológicos y movimiento de cámara</label><label><input type="checkbox" id="reduce-flashes" ${settings.reduceFlashes ? "checked" : ""}> Reducir variaciones de luz</label><label><input type="checkbox" id="reduce-distortion" ${settings.reduceDistortion ? "checked" : ""}> Reducir distorsiones visuales</label><label><input type="checkbox" id="reduce-audio" ${settings.reduceAudio ? "checked" : ""}> Reducir sonidos intensos y susurros</label><p class="small">Los eventos no bloquean el progreso ni imitan avisos del sistema. No hay destellos rápidos.</p></section><section class="settings-group"><div class="eyebrow">IMAGEN Y SONIDO</div><label>Volumen <input id="volume" type="range" min="0" max="1" step=".05" value="${settings.volume}"></label><label>Calidad gráfica <select id="quality"><option value="1">Baja</option><option value="1.3">Media</option><option value="1.6">Alta</option></select></label><label>Cámara <select id="camera-mode"><option value="classic">Clásica · movimiento por ejes</option><option value="modern">Moderna · seguimiento y movimiento según cámara</option></select></label></section></div><details class="controls-help"><summary>Controles de teclado, ratón y mando</summary><p>Movimiento: WASD o stick izquierdo · Interactuar: E / A · Ataque: Espacio / B · Fuerte: J / RB · Defender: F / LB · Esquivar: V / R3 · Tónico: H / X · Inventario: Tab / Y · Mapa: M / Select · Pausa: Esc / Start · Correr: Shift · Ratón: izquierdo atacar, derecho fuerte.</p></details><div class="actions"><button id="back">Aplicar y volver</button></div>`,
     "settings",
   );
   (el("camera-mode") as HTMLSelectElement).value = settings.cameraMode;
@@ -1925,10 +1924,20 @@ function update(dt: number) {
     }
     return;
   }
-  // Stable world axes prevent reversed input when the cinematic framing changes.
-  yaw = 0;
+  // Classic keeps authored world-space controls; Modern follows the view.
   let x = c.x,
     z = c.z;
+  if (settings.cameraMode === "modern") {
+    camera.getWorldDirection(movementForward);
+    const relative = cameraRelativeMovement(
+      x,
+      z,
+      movementForward.x,
+      movementForward.z,
+    );
+    x = relative.x;
+    z = relative.z;
+  }
   let len = Math.hypot(x, z);
   if (input.take("KeyV") && combat.startDodge() && len < 0.1) {
     x = Math.sin(player.rotation.y);
@@ -1940,8 +1949,8 @@ function update(dt: number) {
     z /= len;
   }
   const speed = combat.dodge > 0 ? 6.8 : c.guard ? 1.2 : c.run ? 4.1 : 2.7,
-    dx = (x * Math.cos(yaw) + z * Math.sin(yaw)) * speed * dt,
-    dz = (-x * Math.sin(yaw) + z * Math.cos(yaw)) * speed * dt;
+    dx = x * speed * dt,
+    dz = z * speed * dt;
   const beforeMove = { x: state.x, z: state.z };
   let p: { x: number; z: number };
   if (state.room === 0) {

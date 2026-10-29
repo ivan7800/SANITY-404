@@ -155,7 +155,12 @@ export class CinematicCamera {
       return false;
     };
     this.corrected = resolve(eye);
-    camera.position.lerp(eye, reduced || dt === 0 ? 1 : 1 - Math.exp(-dt * 5));
+    camera.position.lerp(
+      eye,
+      reduced || dt === 0
+        ? 1
+        : 1 - Math.exp(-dt * (context.mode === "modern" ? 7.5 : 5)),
+    );
     this.corrected = resolve(camera.position) || this.corrected;
     const desired = anchor.clone();
     if (this.zone === "rellano superior" && context.mode !== "modern")
@@ -199,8 +204,13 @@ export class CinematicCamera {
               : fighting || context.focus
                 ? 59
                 : 58;
-    if (camera.fov !== fov) {
-      camera.fov = fov;
+    // Smooth lens changes at camera cuts; avoid a projection update at rest.
+    if (Math.abs(camera.fov - fov) > 0.03) {
+      camera.fov =
+        dt === 0 || reduced
+          ? fov
+          : T.MathUtils.lerp(camera.fov, fov, 1 - Math.exp(-dt * 9));
+      if (Math.abs(camera.fov - fov) < 0.06) camera.fov = fov;
       camera.updateProjectionMatrix();
     }
   }
