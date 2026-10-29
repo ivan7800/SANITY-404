@@ -85,9 +85,7 @@ export function surfaceTextures(kind: Surface) {
               : 0.82 + n * 0.12) +
         (macro - 0.5) * 0.08;
       for (let c = 0; c < 3; c++) {
-        albedo[i + c] = Math.round(
-          Math.min(1, t * variation * tint[c]) * 255,
-        );
+        albedo[i + c] = Math.round(Math.min(1, t * variation * tint[c]) * 255);
         rough[i + c] = Math.round(Math.max(0, Math.min(1, r)) * 255);
       }
       if (kind === "brass" && t < 0.5) {
