@@ -91,26 +91,6 @@ static int initialize(const char *folder) {
   if (assets < 2) return 0;
   return 1;
 }
-static int probe(void) {
-  socket_t sock = socket(AF_INET, SOCK_STREAM, 0);
-  if (sock == INVALID_SOCKET) return 0;
-  struct sockaddr_in addr;
-  memset(&addr, 0, sizeof(addr));
-  addr.sin_family = AF_INET;
-  addr.sin_port = htons(PORT);
-  addr.sin_addr.s_addr = htonl(0x7f000001);
-  if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) == SOCKET_ERROR) { CLOSE(sock); return 0; }
-  const char *request = "GET /__sanity404/health HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n";
-  send_all(sock, request, strlen(request));
-  char buffer[8192];
-  size_t used = 0;
-  int n;
-  while (used < sizeof(buffer) - 1 && (n = recv(sock, buffer + used, (int)(sizeof(buffer) - 1 - used), 0)) > 0) used += (size_t)n;
-  CLOSE(sock);
-  buffer[used] = 0;
-  char *body = strstr(buffer, "\r\n\r\n");
-  return strncmp(buffer, "HTTP/1.1 200", 12) == 0 && body && strcmp(body + 4, root) == 0;
-}
 static int open_browser(void) {
 #ifdef _WIN32
   return (INT_PTR)ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL) > 32;
@@ -163,11 +143,10 @@ static void handle(socket_t client) {
   free(data);
 }
 int main(int argc, char **argv) {
-  if (argc != 3 || (strcmp(argv[1], "--launch") && strcmp(argv[1], "--serve") && strcmp(argv[1], "--probe"))) {
-    fprintf(stderr, "Uso: sanity404-server --launch|--serve|--probe <carpeta-game>\n"); return 2;
+  if (argc != 3 || (strcmp(argv[1], "--launch") && strcmp(argv[1], "--serve"))) {
+    fprintf(stderr, "Uso: sanity404-server --launch|--serve <carpeta-game>\n"); return 2;
   }
   if (!initialize(argv[2])) { fprintf(stderr, "Faltan recursos del juego: %s/index.html\n", argv[2]); return 2; }
-  if (!strcmp(argv[1], "--probe")) return probe() ? 0 : 1;
   socket_t listener = socket(AF_INET, SOCK_STREAM, 0);
   if (listener == INVALID_SOCKET) { perror("socket"); return 2; }
   struct sockaddr_in addr;
@@ -177,11 +156,7 @@ int main(int argc, char **argv) {
   addr.sin_addr.s_addr = htonl(0x7f000001);
   if (bind(listener, (struct sockaddr *)&addr, sizeof(addr)) == SOCKET_ERROR) {
     CLOSE(listener);
-    if (probe()) {
-      puts("SANITY-404 ya está en ejecución con este paquete.");
-      if (!strcmp(argv[1], "--launch") && !open_browser()) return 3;
-      return 0;
-    }
+    // A health response can be forged by another process. Only a successful bind proves ownership.
     fprintf(stderr, "No se puede usar 127.0.0.1:40404. Si el puerto está ocupado, cierre la otra aplicación; no se cambiará de origen.\n");
     return 3;
   }

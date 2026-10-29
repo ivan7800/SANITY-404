@@ -54,11 +54,21 @@ async function inventory(directory, prefix = "") {
 }
 await inventory(stage);
 files.sort((a, b) => a.file.localeCompare(b.file));
-const head = (await readFile(path.join(root, ".git", "HEAD"), "utf8")).trim();
+const gitEntry = path.join(root, ".git");
+const gitDir = (await stat(gitEntry)).isDirectory()
+  ? gitEntry
+  : path.resolve(root, (await readFile(gitEntry, "utf8")).trim().slice(8));
+const head = (await readFile(path.join(gitDir, "HEAD"), "utf8")).trim();
+const commonDir = path.resolve(
+  gitDir,
+  (
+    await readFile(path.join(gitDir, "commondir"), "utf8").catch(() => ".")
+  ).trim(),
+);
 const commit =
   process.env.GITHUB_SHA ??
   (head.startsWith("ref: ")
-    ? (await readFile(path.join(root, ".git", head.slice(5)), "utf8")).trim()
+    ? (await readFile(path.join(commonDir, head.slice(5)), "utf8")).trim()
     : head);
 const manifest = {
   name: "SANITY-404",

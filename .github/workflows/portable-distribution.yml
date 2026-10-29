@@ -19,28 +19,19 @@ jobs:
       - run: npm test -- --maxWorkers=1
       - run: npm run format:check
       - run: npm run audit:rooms
+      - run: npx playwright install chromium
       - run: npm run package:portable:linux
       - run: node scripts/verify-portable-stage.mjs portable/release/linux
-      - run: SANITY_PORTABLE_SERVER=portable/bin/linux/sanity404-server SANITY_PORTABLE_GAME=portable/game node scripts/test-portable-server.mjs
-      - name: Test game and saved state through portable origin
-        run: |
-          portable/bin/linux/sanity404-server --serve portable/game > /tmp/sanity404-portable.log 2>&1 &
-          server=$!
-          trap 'kill "$server" 2>/dev/null || true' EXIT
-          for i in $(seq 1 40); do curl --fail --silent http://127.0.0.1:40404/__sanity404/health >/dev/null && break; sleep 1; done
-          SANITY_TEST_URL=http://127.0.0.1:40404/ SANITY_EXPECT_PATH_PREFIX=/ SANITY_TEST_CORRUPT_SAVE=1 SANITY_OFFLINE_TEST=1 SANITY_PERSIST_PROFILE="$RUNNER_TEMP/sanity-profile" node scripts/phase34-web-production-smoke.mjs
-          kill "$server"
-          wait "$server" || true
-          portable/bin/linux/sanity404-server --serve portable/game > /tmp/sanity404-portable-restart.log 2>&1 &
-          server=$!
-          for i in $(seq 1 40); do curl --fail --silent http://127.0.0.1:40404/__sanity404/health >/dev/null && break; sleep 1; done
-          SANITY_TEST_URL=http://127.0.0.1:40404/ SANITY_EXPECT_PATH_PREFIX=/ SANITY_EXPECT_EXISTING_SAVE=1 SANITY_OFFLINE_TEST=1 SANITY_PERSIST_PROFILE="$RUNNER_TEMP/sanity-profile" node scripts/phase34-web-production-smoke.mjs
       - name: Verify extracted ZIP
         run: |
-          mkdir -p /tmp/sanity404-linux-zip
-          unzip -q portable/release/SANITY-404-Linux-x64.zip -d /tmp/sanity404-linux-zip
-          node scripts/verify-portable-stage.mjs /tmp/sanity404-linux-zip
+          mkdir -p "$RUNNER_TEMP/sanity404-linux-zip"
+          unzip -q portable/release/SANITY-404-Linux-x64.zip -d "$RUNNER_TEMP/sanity404-linux-zip"
+          node scripts/verify-portable-stage.mjs "$RUNNER_TEMP/sanity404-linux-zip"
           sha256sum portable/release/SANITY-404-Linux-x64.zip
+      - name: Test extracted Linux launcher and server
+        run: node scripts/test-portable-runtime.mjs "$RUNNER_TEMP/sanity404-linux-zip"
+      - name: Test browser and saved state across server restart
+        run: node scripts/test-portable-browser.mjs "$RUNNER_TEMP/sanity404-linux-zip"
       - uses: actions/upload-artifact@v4.6.2
         with:
           name: SANITY-404-Linux-x64
@@ -57,46 +48,22 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test -- --maxWorkers=1
+      - run: npx playwright install chromium
       - run: npm run build:portable:assets
       - name: Compile standalone Windows server
         shell: cmd
         run: |
-          call "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer" || exit /b 1
+          for /f "usebackq delims=" %%I in (`vswhere.exe -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VSINSTALL=%%I"
+          popd
+          if not defined VSINSTALL exit /b 1
+          call "%VSINSTALL%\VC\Auxiliary\Build\vcvars64.bat"
           if errorlevel 1 exit /b 1
           mkdir portable\bin\windows
           cl /nologo /O2 /MT /W4 /WX portable\server.c /Fe:portable\bin\windows\sanity404-server.exe ws2_32.lib shell32.lib
+          if errorlevel 1 exit /b 1
       - run: node scripts/stage-portable.mjs windows
       - run: node scripts/verify-portable-stage.mjs portable/release/windows
-      - name: Test Windows server and launcher origin
-        shell: pwsh
-        run: |
-          $env:SANITY_PORTABLE_SERVER = 'portable/bin/windows/sanity404-server.exe'
-          $env:SANITY_PORTABLE_GAME = 'portable/game'
-          node scripts/test-portable-server.mjs
-      - name: Test saved state through portable origin
-        shell: pwsh
-        run: |
-          $server = Start-Process -FilePath 'portable/bin/windows/sanity404-server.exe' -ArgumentList '--serve','portable/game' -PassThru
-          try {
-            for ($i = 0; $i -lt 40; $i++) {
-              try { $r = Invoke-WebRequest 'http://127.0.0.1:40404/__sanity404/health' -UseBasicParsing; if ($r.StatusCode -eq 200) { break } } catch {}
-              Start-Sleep -Seconds 1
-            }
-            $env:SANITY_TEST_URL = 'http://127.0.0.1:40404/'
-            $env:SANITY_EXPECT_PATH_PREFIX = '/'
-            $env:SANITY_TEST_CORRUPT_SAVE = '1'
-            $env:SANITY_OFFLINE_TEST = '1'
-            $env:SANITY_PERSIST_PROFILE = "$env:RUNNER_TEMP\sanity-profile"
-            $env:CHROME_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-            node scripts/phase34-web-production-smoke.mjs
-            if ($LASTEXITCODE -ne 0) { throw 'Browser QA failed' }
-            Stop-Process -Id $server.Id -Force
-            $server = Start-Process -FilePath 'portable/bin/windows/sanity404-server.exe' -ArgumentList '--serve','portable/game' -PassThru
-            Remove-Item Env:SANITY_TEST_CORRUPT_SAVE
-            $env:SANITY_EXPECT_EXISTING_SAVE = '1'
-            node scripts/phase34-web-production-smoke.mjs
-            if ($LASTEXITCODE -ne 0) { throw 'Persistent save QA failed' }
-          } finally { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
       - name: Create and verify Windows ZIP
         shell: pwsh
         run: |
@@ -104,6 +71,13 @@ jobs:
           Expand-Archive 'portable/release/SANITY-404-Windows-x64.zip' -DestinationPath "$env:RUNNER_TEMP\sanity404-windows-zip"
           node scripts/verify-portable-stage.mjs "$env:RUNNER_TEMP\sanity404-windows-zip"
           Get-FileHash 'portable/release/SANITY-404-Windows-x64.zip' -Algorithm SHA256
+          if ($LASTEXITCODE -ne 0) { throw 'ZIP verification failed' }
+      - name: Test extracted Windows launcher and server
+        shell: pwsh
+        run: node scripts/test-portable-runtime.mjs "$env:RUNNER_TEMP\sanity404-windows-zip"
+      - name: Test browser and saved state across server restart
+        shell: pwsh
+        run: node scripts/test-portable-browser.mjs "$env:RUNNER_TEMP\sanity404-windows-zip"
       - uses: actions/upload-artifact@v4.6.2
         with:
           name: SANITY-404-Windows-x64
