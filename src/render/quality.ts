@@ -12,8 +12,8 @@ export const qualityProfile = (value: number) =>
     : value === 1.6
       ? {
           name: "Alta",
-          scale: 1.25,
-          maxPixels: 1920 * 1080,
+          scale: 1.5,
+          maxPixels: 2560 * 1440,
           shadows: true,
           shadowSize: 2048,
           dust: 160,
