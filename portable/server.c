@@ -149,6 +149,16 @@ int main(int argc, char **argv) {
   if (!initialize(argv[2])) { fprintf(stderr, "Faltan recursos del juego: %s/index.html\n", argv[2]); return 2; }
   socket_t listener = socket(AF_INET, SOCK_STREAM, 0);
   if (listener == INVALID_SOCKET) { perror("socket"); return 2; }
+#ifndef _WIN32
+  // Allow a restart while closed HTTP connections are still in TIME_WAIT.
+  // SO_REUSEADDR does not allow another listener on this same address and port.
+  int reuse_address = 1;
+  if (setsockopt(listener, SOL_SOCKET, SO_REUSEADDR, &reuse_address, sizeof(reuse_address)) == SOCKET_ERROR) {
+    perror("setsockopt(SO_REUSEADDR)");
+    CLOSE(listener);
+    return 2;
+  }
+#endif
   struct sockaddr_in addr;
   memset(&addr, 0, sizeof(addr));
   addr.sin_family = AF_INET;
