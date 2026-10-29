@@ -9,6 +9,7 @@ it("las texturas originales se comparten y sus mapas tienen colorimetría correc
     b = surfaceTextures("wood");
   expect(a).toBe(b);
   expect(a.map.colorSpace).toBe(T.SRGBColorSpace);
+  expect(a.map.anisotropy).toBe(8);
   expect(a.normalMap.colorSpace).toBe(T.NoColorSpace);
   expect(a.map.image.width).toBe(128);
   expect(textureBudget().bytes).toBeLessThan(2 * 1024 * 1024);
