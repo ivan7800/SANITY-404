@@ -58,7 +58,11 @@ export class Input {
       if (e.button === 2) this.pressed.add("KeyJ");
     });
     canvas.addEventListener("pointermove", (e) => {
-      if (e.buttons === 2) this.mouse -= e.movementX * 0.005;
+      // Middle-button drag rotates the Modern camera without triggering attacks.
+      if ((e.buttons & 4) !== 0) this.mouse -= e.movementX * 0.005;
+    });
+    canvas.addEventListener("auxclick", (e) => {
+      if (e.button === 1) e.preventDefault();
     });
     canvas.addEventListener("contextmenu", (e) => e.preventDefault());
     (typeof document === "undefined"
