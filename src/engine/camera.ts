@@ -102,8 +102,10 @@ export class CinematicCamera {
       eye.set(Math.sign(x) * 6.35, 1.85, T.MathUtils.clamp(z + 3.2, -7.2, 7.2));
     }
     if (context.mode === "modern") {
-      const side = Math.cos(this.modernYaw) * 2.1 + Math.sin(this.modernYaw) * 3.8;
-      const behind = Math.cos(this.modernYaw) * 3.8 - Math.sin(this.modernYaw) * 2.1;
+      const side =
+        Math.cos(this.modernYaw) * 2.1 + Math.sin(this.modernYaw) * 3.8;
+      const behind =
+        Math.cos(this.modernYaw) * 3.8 - Math.sin(this.modernYaw) * 2.1;
       eye.set(
         T.MathUtils.clamp(x + side, -7.2, 7.2),
         height + 2.05,
