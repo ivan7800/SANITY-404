@@ -13,6 +13,20 @@ export function radialStick(x: number, z: number, deadZone = 0.16) {
   return { x: x * gain, z: z * gain };
 }
 
+/** Translate WASD into camera-relative ground movement for the Modern view. */
+export function cameraRelativeMovement(
+  x: number,
+  z: number,
+  forwardX: number,
+  forwardZ: number,
+) {
+  const length = Math.hypot(forwardX, forwardZ);
+  if (length < 0.0001) return normalizeMovement(x, z);
+  const fx = forwardX / length;
+  const fz = forwardZ / length;
+  return normalizeMovement(fz * -x - fx * z, fx * x - fz * z);
+}
+
 export class Input {
   keys = new Set<string>();
   pressed = new Set<string>();
