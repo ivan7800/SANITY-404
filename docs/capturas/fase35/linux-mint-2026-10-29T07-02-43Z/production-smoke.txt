@@ -1,0 +1,4 @@
+PASS recursos, menú y Nueva partida
+PASS navegación y guardado real
+PASS recarga y Continuar
+PASS sin errores JavaScript ni recursos fallidos

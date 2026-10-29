@@ -1,0 +1,6 @@
+PASS puerta cerrada sin llave
+PASS respuesta incorrecta reduce cordura
+PASS ruinas bloqueadas sin sellos
+PASS daño, muerte y reintento
+PASS segundo desenlace y ajustes reducidos
+PASS sin errores JavaScript
