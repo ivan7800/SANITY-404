@@ -85,3 +85,32 @@ it("la cabeza del protagonista mantiene proporciones adultas respecto al cuerpo"
     head = new T.Box3().setFromObject(r.head).getSize(new T.Vector3());
   expect(body.y / head.y).toBeGreaterThan(6.5);
 });
+
+it("Alta renderiza 1440p nativos, mientras Media mantiene el presupuesto de píxeles", () => {
+  expect(qualityProfile(1.6).maxPixels).toBe(2560 * 1440);
+  expect(renderScale(2560, 1440, 1, 1.6)).toBe(1);
+  expect(renderScale(2560, 1440, 2, 1.6)).toBe(1);
+  expect(renderScale(2560, 1440, 1, 1.3)).toBeLessThan(1);
+});
+
+it("la madera y la piedra tienen matices cromáticos distintos con texturas compartidas", () => {
+  const wood = surfaceTextures("wood").map.image.data as Uint8Array;
+  const stone = surfaceTextures("stone").map.image.data as Uint8Array;
+  const pixel = (64 * 128 + 64) * 4;
+  expect(wood[pixel]).toBeGreaterThan(wood[pixel + 2]);
+  expect(stone[pixel + 2]).toBeGreaterThan(stone[pixel]);
+});
+
+it("la cámara interpola suavemente cambios de objetivo de FOV", () => {
+  const camera = new T.PerspectiveCamera();
+  const control = new CinematicCamera();
+  control.update(camera, 0, 5, 0, 0, false, [], { mode: "classic" });
+  expect(camera.fov).toBe(58);
+  control.update(camera, 0, 5, 0, 1 / 60, false, [], { mode: "modern" });
+  expect(camera.fov).toBeGreaterThan(54);
+  expect(camera.fov).toBeLessThan(58);
+  for (let i = 0; i < 70; i++) {
+    control.update(camera, 0, 5, 0, 1 / 60, false, [], { mode: "modern" });
+  }
+  expect(camera.fov).toBeCloseTo(54, 1);
+});
