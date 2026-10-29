@@ -125,9 +125,7 @@ export class Input {
     return {
       ...movement,
       turn:
-        (Number(this.keys.has("KeyQ")) -
-          Number(this.keys.has("KeyR")) -
-          look) *
+        (Number(this.keys.has("KeyQ")) - Number(this.keys.has("KeyR")) - look) *
         1.8,
       guard: this.keys.has("KeyF") || Boolean(p?.buttons[4]?.pressed),
       run: this.keys.has("ShiftLeft") || Boolean(p?.buttons[10]?.pressed),
