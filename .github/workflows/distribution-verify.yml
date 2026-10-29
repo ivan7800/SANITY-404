@@ -46,6 +46,8 @@ jobs:
       - run: npm run build:web
       - run: npm run build:desktop:assets
       - run: npm run verify:distribution
+      - name: Diagnose Electron startup without Playwright on Windows runner
+        run: npm run test:desktop:startup
       - name: Verify Electron resources and persistence on Windows runner
         run: npm run test:desktop:smoke && npm run test:desktop:save
       - run: npm --prefix desktop run package:windows
@@ -93,5 +95,6 @@ jobs:
           path: |
             docs/capturas/fase34/electron-native/
             docs/capturas/fase34/electron-save-native/
+            docs/capturas/fase34/electron-independent-native/
           if-no-files-found: warn
           retention-days: 14

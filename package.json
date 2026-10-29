@@ -14,6 +14,7 @@
     "verify:windows-package": "node scripts/verify-windows-package.mjs",
     "test:desktop:smoke": "node scripts/phase34-electron-smoke.mjs",
     "test:desktop:save": "node scripts/phase34-electron-save-smoke.mjs",
+    "test:desktop:startup": "node scripts/phase35-electron-startup.mjs",
     "report:packages": "node scripts/phase34-package-report.mjs",
     "clean:artifacts": "node scripts/phase34-clean.mjs",
     "test": "vitest run",

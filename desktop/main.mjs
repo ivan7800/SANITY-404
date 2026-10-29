@@ -64,7 +64,10 @@ function openWindow() {
       webSecurity: true,
     },
   });
-  startup("window-created", { windowId: window.id });
+  startup("window-created", {
+    windowId: window.id,
+    visible: window.isVisible(),
+  });
   const contents = window.webContents;
   contents.on("did-fail-load", (_event, code, description, url, mainFrame) =>
     record("did-fail-load", { code, description, url, mainFrame }),
@@ -92,7 +95,7 @@ function openWindow() {
   record("window-created", { visible: window.isVisible() });
   startup("window-loading");
   void window.loadURL(`${origin}/index.html`).then(
-    () => startup("window-loaded"),
+    () => startup("window-loaded", { url: window.webContents.getURL() }),
     (error) => {
       startup("window-load-failed", { message: String(error) });
       process.stderr.write(
