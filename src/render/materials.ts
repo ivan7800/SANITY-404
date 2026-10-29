@@ -56,17 +56,29 @@ export function surfaceTextures(kind: Surface) {
       }
       const i = (y * size + x) * 4;
       height[y * size + x] = h;
+      // Subtle periodic colour variation gives otherwise monochrome
+      // procedural surfaces material identity without new texture assets.
+      const macro = 0.5 + 0.25 * Math.sin(u * Math.PI * 2) +
+        0.25 * Math.cos(v * Math.PI * 2);
+      const variation = 0.94 + macro * 0.1;
+      const tint =
+        kind === "wood" ? [1.07, 0.98, 0.88] :
+        kind === "stone" ? [0.96, 0.99, 1.03] :
+        kind === "brass" ? [1.08, 0.99, 0.84] :
+        kind === "fabric" ? [1.04, 0.97, 0.95] :
+        kind === "leather" ? [1.06, 0.97, 0.89] :
+        [0.98, 0.99, 1.02];
       const r =
-        kind === "brass"
+        (kind === "brass"
           ? 0.42 + n * 0.28
           : kind === "stone"
             ? 0.57 + n * 0.2
             : kind === "wood"
               ? 0.6 + n * 0.2
-              : 0.82 + n * 0.12;
+              : 0.82 + n * 0.12) + (macro - 0.5) * 0.08;
       for (let c = 0; c < 3; c++) {
-        albedo[i + c] = Math.round(t * 255);
-        rough[i + c] = r * 255;
+        albedo[i + c] = Math.round(Math.min(1, t * variation * tint[c]) * 255);
+        rough[i + c] = Math.round(Math.max(0, Math.min(1, r)) * 255);
       }
       if (kind === "brass" && t < 0.5) {
         albedo[i] = 75;
