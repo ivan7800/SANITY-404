@@ -18,6 +18,17 @@ export class CinematicCamera {
   private initialized = false;
   private ray = new T.Ray();
   private box = new T.Box3();
+  private modernYaw = 0;
+
+  /** Rotate the optional modern follow camera without changing classic shots. */
+  rotateModern(delta: number) {
+    if (!Number.isFinite(delta)) return;
+    this.modernYaw = T.MathUtils.euclideanModulo(
+      this.modernYaw + T.MathUtils.clamp(delta, -0.35, 0.35),
+      Math.PI * 2,
+    );
+  }
+
   update(
     camera: T.PerspectiveCamera,
     x: number,
@@ -91,10 +102,12 @@ export class CinematicCamera {
       eye.set(Math.sign(x) * 6.35, 1.85, T.MathUtils.clamp(z + 3.2, -7.2, 7.2));
     }
     if (context.mode === "modern") {
+      const side = Math.cos(this.modernYaw) * 2.1 + Math.sin(this.modernYaw) * 3.8;
+      const behind = Math.cos(this.modernYaw) * 3.8 - Math.sin(this.modernYaw) * 2.1;
       eye.set(
-        T.MathUtils.clamp(x + 2.1, -7.2, 7.2),
+        T.MathUtils.clamp(x + side, -7.2, 7.2),
         height + 2.05,
-        T.MathUtils.clamp(z + 3.8, -7.2, 7.2),
+        T.MathUtils.clamp(z + behind, -7.2, 7.2),
       );
     }
     const fighting = context.combat && context.enemy;
