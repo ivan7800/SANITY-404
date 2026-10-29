@@ -118,3 +118,18 @@ it("Modern usa la orientación de la cámara y Classic conserva ejes del mundo",
   const fallback = cameraRelativeMovement(1, 0, 0, 0);
   expect(fallback).toEqual({ x: 1, z: 0 });
 });
+
+it("botón central gira la cámara sin pulsar el ataque fuerte", () => {
+  vi.stubGlobal("addEventListener", () => {});
+  vi.stubGlobal("navigator", { getGamepads: () => [] });
+  const listeners = new Map<string, (event: PointerEvent) => void>();
+  const input = new Input({
+    addEventListener: (name: string, fn: (event: PointerEvent) => void) =>
+      listeners.set(name, fn),
+  } as unknown as HTMLCanvasElement);
+  listeners.get("pointermove")!({ buttons: 4, movementX: 25 } as PointerEvent);
+  expect(input.mouse).toBeCloseTo(-0.125);
+  expect(input.take("KeyJ")).toBe(false);
+  listeners.get("pointermove")!({ buttons: 2, movementX: 40 } as PointerEvent);
+  expect(input.mouse).toBeCloseTo(-0.125);
+});
