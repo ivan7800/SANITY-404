@@ -85,15 +85,19 @@ export class Input {
     }
     const axis = (n: number) =>
       p && Math.abs(p.axes[n] ?? 0) > 0.16 ? p.axes[n] : 0;
-    return {
-      x:
+    const x =
         Number(this.keys.has("KeyD") || this.keys.has("ArrowRight")) -
         Number(this.keys.has("KeyA") || this.keys.has("ArrowLeft")) +
-        axis(0),
-      z:
+        axis(0);
+    const z =
         Number(this.keys.has("KeyS") || this.keys.has("ArrowDown")) -
         Number(this.keys.has("KeyW") || this.keys.has("ArrowUp")) +
-        axis(1),
+        axis(1);
+    const magnitude = Math.hypot(x, z);
+    const moveScale = magnitude > 1 ? 1 / magnitude : 1;
+    return {
+      x: x * moveScale,
+      z: z * moveScale,
       turn:
         (Number(this.keys.has("KeyQ")) -
           Number(this.keys.has("KeyR")) -
