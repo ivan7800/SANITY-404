@@ -7,6 +7,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc --noEmit && vite build",
     "build:web": "npm run build",
+    "build:portable:assets": "tsc --noEmit && vite build --mode portable --outDir portable/game",
+    "package:portable:linux": "sh scripts/package-portable-linux.sh",
     "build:desktop:assets": "tsc --noEmit && vite build --mode desktop --outDir desktop/dist-desktop",
     "build:linux": "npm run build:desktop:assets && npm --prefix desktop run package:linux",
     "build:windows": "npm run build:desktop:assets && npm --prefix desktop run package:windows",

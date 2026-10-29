@@ -4,6 +4,10 @@ desktop/dist-desktop/
 desktop/node_modules/
 desktop/release/
 desktop/release-*/
+portable/game/
+portable/release/
+portable/bin/
+.local-git/
 test-results/
 playwright-report/
 coverage/
