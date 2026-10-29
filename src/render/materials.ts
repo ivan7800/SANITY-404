@@ -120,6 +120,8 @@ export function surfaceTextures(kind: Surface) {
     t.wrapS = t.wrapT = T.RepeatWrapping;
     t.magFilter = T.LinearFilter;
     t.minFilter = T.LinearMipmapLinearFilter;
+    // Reduce blur on floors and walls seen at grazing angles.
+    t.anisotropy = 8;
     t.generateMipmaps = true;
     t.colorSpace = color ? T.SRGBColorSpace : T.NoColorSpace;
     t.needsUpdate = true;

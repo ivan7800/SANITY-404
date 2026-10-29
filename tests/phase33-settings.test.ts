@@ -27,3 +27,9 @@ it("mantiene la compatibilidad de preferencias antiguas y descarta valores invá
   expect(invalid.quality).toBe(1.3);
   expect(invalid.volume).toBe(1);
 });
+
+it("la cámara Moderna es la opción inicial, pero se respeta Clásica guardada", () => {
+  expect(withSettings(null).cameraMode).toBe("modern");
+  expect(withSettings('{"cameraMode":"classic"}').cameraMode).toBe("classic");
+  expect(withSettings('{"cameraMode":"modern"}').cameraMode).toBe("modern");
+});

@@ -13,7 +13,7 @@ export function readSettings(): Settings {
     reduced: matchMedia("(prefers-reduced-motion: reduce)").matches,
     volume: 0.35,
     quality: 1.3,
-    cameraMode: "classic",
+    cameraMode: "modern",
     reduceFlashes: matchMedia("(prefers-reduced-motion: reduce)").matches,
     reduceDistortion: false,
     reduceAudio: false,
@@ -27,7 +27,7 @@ export function readSettings(): Settings {
         typeof s.volume === "number" && Number.isFinite(s.volume)
           ? Math.max(0, Math.min(1, s.volume))
           : defaults.volume,
-      cameraMode: s.cameraMode === "modern" ? "modern" : "classic",
+      cameraMode: s.cameraMode === "classic" ? "classic" : defaults.cameraMode,
       reduceFlashes:
         typeof s.reduceFlashes === "boolean"
           ? s.reduceFlashes

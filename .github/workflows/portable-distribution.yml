@@ -1,6 +1,8 @@
 name: Build portable SANITY-404 ZIPs
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
