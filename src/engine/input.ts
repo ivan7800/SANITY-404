@@ -1,3 +1,18 @@
+/** Keep keyboard+gamepad input within a unit circle without changing its heading. */
+export function normalizeMovement(x: number, z: number) {
+  const length = Math.hypot(x, z);
+  const scale = length > 1 ? 1 / length : 1;
+  return { x: x * scale, z: z * scale };
+}
+
+/** Radial dead zone avoids uneven diagonals and restores the full analogue range. */
+export function radialStick(x: number, z: number, deadZone = 0.16) {
+  const length = Math.min(1, Math.hypot(x, z));
+  if (length <= deadZone) return { x: 0, z: 0 };
+  const gain = (length - deadZone) / ((1 - deadZone) * Math.hypot(x, z));
+  return { x: x * gain, z: z * gain };
+}
+
 export class Input {
   keys = new Set<string>();
   pressed = new Set<string>();
@@ -83,25 +98,22 @@ export class Input {
         }
       });
     }
-    const axis = (n: number) =>
-      p && Math.abs(p.axes[n] ?? 0) > 0.16 ? p.axes[n] : 0;
-    const x =
-        Number(this.keys.has("KeyD") || this.keys.has("ArrowRight")) -
+    const stick = radialStick(p?.axes[0] ?? 0, p?.axes[1] ?? 0);
+    const movement = normalizeMovement(
+      Number(this.keys.has("KeyD") || this.keys.has("ArrowRight")) -
         Number(this.keys.has("KeyA") || this.keys.has("ArrowLeft")) +
-        axis(0);
-    const z =
-        Number(this.keys.has("KeyS") || this.keys.has("ArrowDown")) -
+        stick.x,
+      Number(this.keys.has("KeyS") || this.keys.has("ArrowDown")) -
         Number(this.keys.has("KeyW") || this.keys.has("ArrowUp")) +
-        axis(1);
-    const magnitude = Math.hypot(x, z);
-    const moveScale = magnitude > 1 ? 1 / magnitude : 1;
+        stick.z,
+    );
+    const look = p && Math.abs(p.axes[2] ?? 0) > 0.16 ? p.axes[2] : 0;
     return {
-      x: x * moveScale,
-      z: z * moveScale,
+      ...movement,
       turn:
         (Number(this.keys.has("KeyQ")) -
           Number(this.keys.has("KeyR")) -
-          axis(2)) *
+          look) *
         1.8,
       guard: this.keys.has("KeyF") || Boolean(p?.buttons[4]?.pressed),
       run: this.keys.has("ShiftLeft") || Boolean(p?.buttons[10]?.pressed),
