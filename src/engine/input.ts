@@ -1,11 +1,11 @@
-/** Keep keyboard+gamepad input within a unit circle without changing its heading. */
+/** Clamp mixed keyboard/gamepad movement to a unit circle. */
 export function normalizeMovement(x: number, z: number) {
   const length = Math.hypot(x, z);
   const scale = length > 1 ? 1 / length : 1;
   return { x: x * scale, z: z * scale };
 }
 
-/** Radial dead zone avoids uneven diagonals and restores the full analogue range. */
+/** Radial dead zone keeps diagonal gamepad movement even. */
 export function radialStick(x: number, z: number, deadZone = 0.16) {
   const length = Math.min(1, Math.hypot(x, z));
   if (length <= deadZone) return { x: 0, z: 0 };
