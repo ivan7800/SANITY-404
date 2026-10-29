@@ -65,7 +65,14 @@ const fresh = {
 async function seed(patch) {
   await page.goto(url);
   await page.evaluate(
-    (save) => localStorage.setItem("sanity404-save", JSON.stringify(save)),
+    (save) => {
+      // Historical QA asserts authored Classic camera cuts explicitly.
+      localStorage.setItem(
+        "sanity404-settings",
+        JSON.stringify({ cameraMode: "classic" }),
+      );
+      localStorage.setItem("sanity404-save", JSON.stringify(save));
+    },
     {
       ...structuredClone(fresh),
       ...patch,
@@ -209,6 +216,27 @@ try {
   assert.ok((await inspect()).state.items.includes("Códice de Montfort"));
   assert.deepEqual(faults, []);
   console.log("PASS historical portals, puzzles, artifacts, save and choice");
+
+  // Exercise the new manual orbit on an actual WebGL canvas.
+  await page.evaluate(() =>
+    localStorage.setItem(
+      "sanity404-settings",
+      JSON.stringify({ cameraMode: "modern" }),
+    ),
+  );
+  await page.reload();
+  await page.getByRole("button", { name: "Continuar", exact: true }).click();
+  await page.waitForFunction(() => window.sanityInspect().draw.frame > 4);
+  assert.equal((await inspect()).cameraMode, "modern");
+  const beforeOrbit = (await inspect()).cameraQuaternion;
+  await page.keyboard.down("q");
+  await page.waitForTimeout(300);
+  await page.keyboard.up("q");
+  await page.waitForTimeout(150);
+  const afterOrbit = (await inspect()).cameraQuaternion;
+  assert.notDeepEqual(afterOrbit, beforeOrbit);
+  assert.deepEqual(faults, []);
+  console.log("PASS camera orbit in Modern mode without WebGL errors");
 } catch (error) {
   await capture("fallo-historico.png").catch(() => {});
   throw error;
