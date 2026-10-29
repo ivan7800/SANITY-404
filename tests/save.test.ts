@@ -20,3 +20,18 @@ it("no reemplaza una partida cargable por un estado interno imposible", () => {
   expect(values.get("sanity404-save")).toBe(original);
   expect(readSave()).toEqual(valid);
 });
+
+it("recupera el menú tras una partida corrupta y conserva un guardado nuevo", () => {
+  const values = new Map<string, string>([["sanity404-save", "{invalid json"]]);
+  vi.stubGlobal("localStorage", {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => values.set(key, value),
+  });
+  expect(readSave()).toBeNull();
+  const next = fresh();
+  next.x = -1.25;
+  next.items.push("Llave de latón");
+  expect(writeSave(next)).toBe(true);
+  expect(readSave()).toEqual(next);
+  expect(values.get("sanity404-save")).toBe(JSON.stringify(next));
+});

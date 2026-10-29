@@ -1,7 +1,9 @@
 import { defineConfig } from "vite";
 export default defineConfig(({ mode }) => ({
   base:
-    mode === "development" ? "/" : mode === "desktop" ? "./" : "/SANITY-404/",
+    mode === "development" || mode === "desktop" || mode === "portable"
+      ? "./"
+      : "/SANITY-404/",
   build: {
     target: "es2022",
     chunkSizeWarningLimit: 650,

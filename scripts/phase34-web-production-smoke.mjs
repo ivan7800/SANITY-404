@@ -3,14 +3,30 @@ import { chromium } from "@playwright/test";
 import { browserLaunchOptions } from "./browser-launch.mjs";
 
 const url = process.env.SANITY_TEST_URL ?? "http://127.0.0.1:5180/SANITY-404/";
-const browser = await chromium.launch({
+const expectedPath = process.env.SANITY_EXPECT_PATH_PREFIX ?? "/SANITY-404/";
+const launchOptions = {
   executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
   ...browserLaunchOptions(),
-});
-const context = await browser.newContext({
+};
+const contextOptions = {
   viewport: { width: 1280, height: 800 },
-});
+};
+const profile = process.env.SANITY_PERSIST_PROFILE;
+const browser = profile ? null : await chromium.launch(launchOptions);
+const context = profile
+  ? await chromium.launchPersistentContext(profile, {
+      ...launchOptions,
+      ...contextOptions,
+    })
+  : await browser.newContext(contextOptions);
 const page = await context.newPage();
+if (process.env.SANITY_OFFLINE_TEST === "1") {
+  await context.route("**/*", async (route) => {
+    if (new URL(route.request().url()).origin === new URL(url).origin)
+      await route.continue();
+    else await route.abort("internetdisconnected");
+  });
+}
 const failures = [];
 page.on("pageerror", (error) => failures.push(`JavaScript: ${error.message}`));
 page.on("console", (message) => {
@@ -39,7 +55,32 @@ const waitForGame = () =>
 try {
   const response = await page.goto(url, { waitUntil: "load" });
   assert.equal(response?.status(), 200, "Página de producción");
-  assert.ok(new URL(page.url()).pathname.startsWith("/SANITY-404/"));
+  assert.equal(new URL(page.url()).origin, new URL(url).origin);
+  assert.ok(new URL(page.url()).pathname.startsWith(expectedPath));
+  if (process.env.SANITY_EXPECT_EXISTING_SAVE === "1") {
+    assert.equal(
+      await page
+        .getByRole("button", { name: "Continuar", exact: true })
+        .isEnabled(),
+      true,
+      "El guardado debe persistir tras reiniciar el servidor y el navegador",
+    );
+    console.log("PASS guardado entre sesiones de navegador y servidor");
+  }
+  if (process.env.SANITY_TEST_CORRUPT_SAVE === "1") {
+    await page.evaluate(() =>
+      localStorage.setItem("sanity404-save", "{invalid json"),
+    );
+    await page.reload({ waitUntil: "load" });
+    assert.equal(
+      await page
+        .getByRole("button", { name: "Continuar", exact: true })
+        .isEnabled(),
+      false,
+      "Una partida corrupta no debe bloquear Nueva partida ni habilitar Continuar",
+    );
+    console.log("PASS partida corrupta tolerada");
+  }
   await page
     .getByRole("button", { name: "Nueva partida", exact: true })
     .click();
@@ -87,5 +128,6 @@ try {
   assert.deepEqual(failures, []);
   console.log("PASS sin errores JavaScript ni recursos fallidos");
 } finally {
-  await browser.close();
+  await context.close();
+  if (browser) await browser.close();
 }

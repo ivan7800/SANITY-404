@@ -1,5 +1,7 @@
 # Fase 34 · Windows
 
+**Actualización F35.6:** el procedimiento vigente, incluido `build-manifest.json`, la copia privada y la aceptación del instalador, está en [FASE35_6_DISTRIBUCION_WINDOWS.md](FASE35_6_DISTRIBUCION_WINDOWS.md). Esta sección conserva el plan original de F34.
+
 El workflow `.github/workflows/distribution-verify.yml` queda preparado para una ejecución **manual** (`workflow_dispatch`). Usa Ubuntu 24.04 para pruebas y verificación de bundles, y Windows Server 2022 para repetir pruebas, compilar web/escritorio y generar NSIS **x64**. Usa Node 22.16.0, acciones con versión exacta y `npm ci` con ambos lockfiles. `electron-builder` usa `--publish never`.
 
 El job Windows exige que el repositorio sea **privado** antes de compilar o subir el EXE. Un artefacto de Actions en un repositorio público puede descargarse por quien tenga acceso de lectura; por ello un artefacto de ejecución no sería realmente privado allí. El workflow falla con un mensaje explícito si se lanza desde un repositorio público. No se usa secreto adicional. El permiso del token es `contents: read`. No hay pasos de commit, push, Pages ni release.

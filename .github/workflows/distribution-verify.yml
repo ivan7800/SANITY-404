@@ -26,6 +26,7 @@ jobs:
   windows:
     needs: web
     runs-on: windows-2022
+    timeout-minutes: 45
     steps:
       - name: Require a private repository for the installer artifact
         if: ${{ !github.event.repository.private }}
@@ -43,7 +44,14 @@ jobs:
       - run: npm ci --prefix desktop
       - run: npm test
       - run: npm run build:web
-      - run: npm run build:windows
+      - run: npm run build:desktop:assets
+      - run: npm run verify:distribution
+      - name: Diagnose Electron startup without Playwright on Windows runner
+        run: npm run test:desktop:startup
+      - name: Verify Electron resources and persistence on Windows runner
+        run: npm run test:desktop:smoke && npm run test:desktop:save
+      - run: npm --prefix desktop run package:windows
+      - run: npm run verify:windows-package
       - name: Verify NSIS installer and write SHA-256
         shell: pwsh
         run: |
@@ -53,6 +61,22 @@ jobs:
           if ($installer.Length -le 0) { throw "Empty installer: $($installer.Name)" }
           $hash = (Get-FileHash -LiteralPath $installer.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash  $($installer.Name)" | Set-Content -Path 'desktop/release/SHA256SUMS.txt' -Encoding ascii
+          $manifest = [ordered]@{
+            commit = $env:GITHUB_SHA
+            runnerOs = $env:RUNNER_OS
+            runnerArch = $env:RUNNER_ARCH
+            runnerImageVersion = $env:ImageVersion
+            node = (node --version)
+            npm = (npm --version)
+            electron = (Get-Content 'desktop/package.json' -Raw | ConvertFrom-Json).devDependencies.electron
+            electronBuilder = (Get-Content 'desktop/package.json' -Raw | ConvertFrom-Json).devDependencies.'electron-builder'
+            rootLockSha256 = (Get-FileHash 'package-lock.json' -Algorithm SHA256).Hash.ToLowerInvariant()
+            desktopLockSha256 = (Get-FileHash 'desktop/package-lock.json' -Algorithm SHA256).Hash.ToLowerInvariant()
+            asarSha256 = (Get-FileHash 'desktop/release/win-unpacked/resources/app.asar' -Algorithm SHA256).Hash.ToLowerInvariant()
+            installer = $installer.Name
+            installerSha256 = $hash
+          }
+          $manifest | ConvertTo-Json -Depth 4 | Set-Content -Path 'desktop/release/build-manifest.json' -Encoding utf8
           Write-Host "$($installer.Name): $($installer.Length) bytes; SHA-256 $hash"
       - uses: actions/upload-artifact@v4.6.2
         with:
@@ -60,5 +84,17 @@ jobs:
           path: |
             desktop/release/*.exe
             desktop/release/SHA256SUMS.txt
+            desktop/release/build-manifest.json
           if-no-files-found: error
+          retention-days: 14
+      - name: Preserve Windows Electron QA evidence
+        if: ${{ always() && github.event.repository.private }}
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: sanity-404-windows-qa
+          path: |
+            docs/capturas/fase34/electron-native/
+            docs/capturas/fase34/electron-save-native/
+            docs/capturas/fase34/electron-independent-native/
+          if-no-files-found: warn
           retention-days: 14

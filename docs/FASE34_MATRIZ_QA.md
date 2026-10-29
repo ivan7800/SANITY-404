@@ -1,6 +1,6 @@
 # Fase 34 · matriz QA
 
-Fecha de cierre: 28-10-2026. `PASS manual` recoge la confirmación del usuario; `PASS automatizado` indica ejecución de una prueba; `PENDIENTE` no equivale a fallo.
+Fecha de cierre F34: 28-10-2026; actualización F35.6: 29-10-2026. `PASS manual` recoge la confirmación del usuario; `PASS automatizado` indica ejecución de una prueba; `PENDIENTE` no equivale a fallo.
 
 | Comprobación                                                 | Estado                       | Evidencia y alcance                                                                                                                                                           |
 | ------------------------------------------------------------ | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -18,7 +18,10 @@ Fecha de cierre: 28-10-2026. `PASS manual` recoge la confirmación del usuario; 
 | Ejecución Windows del EXE                                    | PENDIENTE                    | Instalar y probar en Windows real; generar el EXE en CI no certifica ejecución.                                                                                               |
 | Web de producción: base y recursos                           | PASS automatizado            | Build y `verify:distribution`; base `/SANITY-404/`, siete archivos presentes.                                                                                                 |
 | Web de producción: navegación, guardado, recarga, consola JS | PASS automatizado            | `phase34-web-production-smoke.mjs` contra preview local: menú, recursos, Nueva partida, movimiento, guardado real, recarga, «Continuar», sin errores JS ni recursos fallidos. |
-| Fallo de timeout de producción web                           | PENDIENTE                    | Fallo comunicado; el smoke local corto no la reproduce ni la cierra. Repetir con URL, duración y traza antes de certificar estabilidad.                                       |
+| Regresión `game-systems` en preview de producción             | PASS automatizado            | Linux Mint real: `game-systems` código 0; daño, muerte, «Reintentar» y reinicio. Evidencia F35.6.                                                                           |
+| Validación F35 en Linux Mint                                  | PASS automatizado            | 11/11 etapas y código global 0 en `capturas/fase35/linux-mint-2026-10-29T07-02-43Z/`; Chrome 156, 50 navegaciones, 20 con GC y WebGL.                                    |
+| Recuperación WebGL en Chrome real                             | PASS automatizado            | Pérdida y restauración registradas, sin errores JS ni de recursos, en `webgl/resultado.json` de la misma ejecución.                                                          |
+| Timeout de la URL remota                                      | PENDIENTE                    | El PASS de Preview local no certifica la URL de GitHub Pages; requiere validación después de un despliegue autorizado.                                                       |
 | Web remota GitHub Pages                                      | PENDIENTE                    | No desplegada en esta fase.                                                                                                                                                   |
 | F33: cambio de perfil durante combate                        | PENDIENTE                    | Riesgo previo conservado.                                                                                                                                                     |
 
@@ -26,11 +29,12 @@ Fecha de cierre: 28-10-2026. `PASS manual` recoge la confirmación del usuario; 
 
 ### Windows
 
-- [ ] Workflow manual en repositorio privado: suite, builds, NSIS x64, EXE no vacío, SHA-256 y artefacto de ejecución.
+- [ ] Workflow manual en repositorio privado: suite, builds, NSIS x64, EXE no vacío, SHA-256, manifiesto de procedencia y artefacto de ejecución.
 - [ ] Hash descargado coincide con `SHA256SUMS.txt`.
 - [ ] Instalación y apertura del EXE en Windows x64 real; menú, recursos, controles, audio y gráficos sin errores.
 - [ ] Guardar una partida real, cerrar, reabrir y recuperar mediante «Continuar».
 - [ ] Desinstalación y ausencia de errores JavaScript o del proceso principal.
+- [ ] Registrar si la desinstalación conserva el guardado del perfil; no borrarlo durante la prueba sin copia previa.
 
 ### Linux
 
@@ -43,4 +47,5 @@ Fecha de cierre: 28-10-2026. `PASS manual` recoge la confirmación del usuario; 
 
 - [x] Base `/SANITY-404/` y recursos de producción verificados en el build.
 - [x] Preview de producción: menú, navegación, guardado, recarga, «Continuar» y consola sin errores.
+- [x] F35.6 en Linux Mint: 11/11 PASS, incluidas `game-systems`, 50 navegaciones, 20 con GC y restauración WebGL.
 - [ ] Repetir en la URL remota después de un despliegue autorizado.

@@ -1,0 +1,12 @@
+step	exit_code	command
+chrome	0	/usr/bin/google-chrome --version
+npm-ci	0	npm ci
+build-web	0	npm run build:web
+bundle-sha256	0	sha256sum dist/index.html dist/assets/index-BcOKB6X4.css dist/assets/index-Cl7BbRia.js dist/assets/menu-hall-7KuaWIEB.webp dist/assets/three-CIZrMHr1.js
+preview	0	vite preview --host 127.0.0.1 --port 5180 --strictPort
+url	0	curl http://127.0.0.1:5180/SANITY-404/; base /SANITY-404/assets/
+production-smoke	0	node scripts/phase34-web-production-smoke.mjs
+game-systems	0	node scripts/browser-systems.mjs
+navigation-50	0	node scripts/phase35-web-navigation.mjs
+navigation-gc-20	0	node scripts/phase35-web-navigation.mjs
+webgl	0	node scripts/phase35-webgl-production.mjs

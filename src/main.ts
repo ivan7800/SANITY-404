@@ -174,6 +174,7 @@ let state: State = fresh(),
   sanity: Sanity,
   paused = true,
   started = false,
+  graphicsLost = false,
   yaw = 0,
   toastTime = 0,
   near: Interactable | undefined,
@@ -314,6 +315,7 @@ function offerEnding(route: "ruins" | "basement") {
 }
 renderer.domElement.tabIndex = 0;
 function resume() {
+  if (graphicsLost) return;
   paused = false;
   el("overlay").hidden = true;
   el("touch-controls").hidden = false;
@@ -2239,7 +2241,7 @@ function frame(now: number) {
     if (toastTime <= 0) el("toast").textContent = "";
   }
   input.end();
-  if (world) {
+  if (world && !graphicsLost) {
     world.shadowBudget.apply(world.shadowLight, now);
     if (qaMode && qaCameraView && started) {
       camera.position.copy(qaCameraView.eye);
@@ -2270,7 +2272,9 @@ addEventListener("blur", () => {
   if (started && !paused) menu();
 });
 addEventListener("pagehide", () => audio.dispose());
-renderer.domElement.addEventListener("webglcontextlost", () => {
+renderer.domElement.addEventListener("webglcontextlost", (event) => {
+  event.preventDefault();
+  graphicsLost = true;
   gpuTimer?.contextLost();
   if (started)
     panel(
@@ -2281,6 +2285,7 @@ renderer.domElement.addEventListener("webglcontextrestored", () => {
   gpuTimer?.contextRestored();
   applyQuality(renderer, settings.quality);
   world.shadowLight.shadow.needsUpdate = true;
+  graphicsLost = false;
   if (started) menu();
 });
 document.addEventListener("visibilitychange", () => {

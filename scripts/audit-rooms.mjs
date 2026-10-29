@@ -1,8 +1,6 @@
 /** Static geometry audit. No browser save or campaign state is changed. */
 import { writeFile } from "node:fs/promises";
 import { createServer } from "vite";
-import { planRoute } from "./phase22-navigation.mjs";
-import { auditCampaignConnectivity } from "./phase22-dynamic-audit.mjs";
 
 // These are actual staging points used by the continuous campaign probe.
 // Interactables and exits are checked separately with World.nearest below.
@@ -22,6 +20,14 @@ const server = await createServer({
 });
 
 try {
+  // Load the audit helpers through Vite too: their imports include .ts files.
+  // Node 22.16 in Actions cannot load those files as native ESM modules.
+  const { planRoute } = await server.ssrLoadModule(
+    "/scripts/phase22-navigation.mjs",
+  );
+  const { auditCampaignConnectivity } = await server.ssrLoadModule(
+    "/scripts/phase22-dynamic-audit.mjs",
+  );
   const { World, names } = await server.ssrLoadModule("/src/world/scene.ts");
   const { chapters, historicalProofs, newCampaign } =
     await server.ssrLoadModule("/src/systems/campaign.ts");

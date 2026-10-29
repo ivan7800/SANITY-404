@@ -3,6 +3,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {
+  closeElectron,
   launchElectron,
   mainFailures,
   menuReady,
@@ -25,6 +26,11 @@ const report = {
   errors: [],
   completed: false,
 };
+process.on("unhandledRejection", (error) => {
+  report.errors.push({ type: "unhandledRejection", message: String(error) });
+  console.error(`FAIL promesa Electron sin manejar: ${error?.stack || error}`);
+  process.exitCode = 1;
+});
 let app;
 let page;
 await mkdir(outputDir, { recursive: true });
@@ -101,7 +107,7 @@ try {
         { saved },
       );
     }
-    await app.close();
+    await closeElectron(app, report);
     app = undefined;
     page = undefined;
     check(`Cierre de aplicación ${run}`, true);
@@ -121,7 +127,11 @@ try {
       .catch(() => {});
   }
 } finally {
-  if (app) await app.close().catch(() => {});
+  if (app)
+    await closeElectron(app, report).catch((error) => {
+      report.cleanupError = String(error);
+      process.exitCode = 1;
+    });
   report.finishedAt = new Date().toISOString();
   await writeFile(
     path.join(outputDir, `recorrido-${stamp}.json`),
