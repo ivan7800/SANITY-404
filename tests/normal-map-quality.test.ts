@@ -1,10 +1,17 @@
 import { describe, expect, it } from "vitest";
 import * as T from "three";
-import { setNormalMapQuality, simplifyLowMaterials } from "../src/render/materials";
+import {
+  setNormalMapQuality,
+  simplifyLowMaterials,
+} from "../src/render/materials";
 
 describe("quality profile normal-map restoration", () => {
   it("restores the exact normal texture after Low -> High", () => {
-    const normal = new T.DataTexture(new Uint8Array([128, 128, 255, 255]), 1, 1);
+    const normal = new T.DataTexture(
+      new Uint8Array([128, 128, 255, 255]),
+      1,
+      1,
+    );
     const material = new T.MeshStandardMaterial({ normalMap: normal });
     const scene = new T.Group();
     const mesh = new T.Mesh(new T.BoxGeometry(), material);
