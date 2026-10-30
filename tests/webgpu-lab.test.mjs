@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { test } from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
 const read = (p) => readFileSync(new URL("../" + p, import.meta.url), "utf8");
 test("experimental HTML points to isolated entry", () => {
