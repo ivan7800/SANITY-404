@@ -157,8 +157,13 @@ export function textureBudget() {
   };
 }
 
-/** Remove the subtle normal lookup only in Low; color and roughness remain PBR. */
-export function simplifyLowMaterials(root: T.Object3D) {
+/** The low-quality profile must not permanently discard normal maps.
+ * Shared materials can survive room changes, so retain their original maps
+ * using weak references (no extra ownership or GPU allocations).
+ */
+const savedNormalMaps = new WeakMap<T.MeshStandardMaterial, T.Texture>();
+
+export function setNormalMapQuality(root: T.Object3D, enabled: boolean): void {
   const seen = new Set<T.Material>();
   root.traverse((object) => {
     if (!(object instanceof T.Mesh)) return;
@@ -167,10 +172,23 @@ export function simplifyLowMaterials(root: T.Object3D) {
       : [object.material]) {
       if (seen.has(material)) continue;
       seen.add(material);
-      if (material instanceof T.MeshStandardMaterial && material.normalMap) {
+      if (!(material instanceof T.MeshStandardMaterial)) continue;
+      if (!enabled && material.normalMap) {
+        savedNormalMaps.set(material, material.normalMap);
         material.normalMap = null;
         material.needsUpdate = true;
+      } else if (enabled && !material.normalMap) {
+        const previous = savedNormalMaps.get(material);
+        if (previous) {
+          material.normalMap = previous;
+          material.needsUpdate = true;
+        }
       }
     }
   });
+}
+
+/** Backward-compatible low profile helper. */
+export function simplifyLowMaterials(root: T.Object3D): void {
+  setNormalMapQuality(root, false);
 }

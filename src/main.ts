@@ -3,7 +3,7 @@ import "./ui/style.css";
 import "./ui/remaster.css";
 import "./ui/menu-cinematic.css";
 import { applyQuality, qualityProfile } from "./render/quality";
-import { textureBudget, simplifyLowMaterials } from "./render/materials";
+import { textureBudget, setNormalMapQuality } from "./render/materials";
 import { FrameMetrics } from "./render/metrics";
 import { simulationDeltaSeconds } from "./engine/time";
 import { GpuTimer } from "./render/gpu-timer";
@@ -443,7 +443,7 @@ function loadRoom() {
   }
   terror = new TerrorDirector(world);
   sanity = new Sanity(world, state.elapsed);
-  if (settings.quality === 1) simplifyLowMaterials(world.scene);
+  setNormalMapQuality(world.scene, settings.quality !== 1);
   audio.setRoom(state.room);
   el("location").textContent = names[state.room];
   el("hero-name").textContent = late
@@ -508,10 +508,8 @@ function syncMansionThreat() {
       actor.position.set(Math.max(-6.5, state.x - 1.2), 0, state.z - 1.2);
     const fallen = createEnemy(kind);
     fallen.visible = false;
-    if (settings.quality === 1) {
-      simplifyLowMaterials(actor);
-      simplifyLowMaterials(fallen);
-    }
+    setNormalMapQuality(actor, settings.quality !== 1);
+    setNormalMapQuality(fallen, settings.quality !== 1);
     world.scene.add(actor, fallen);
     entry = { actor, corpse: fallen, combat: new Combat(0, kind, spec.id) };
     mansionActors.set(kind, entry);
