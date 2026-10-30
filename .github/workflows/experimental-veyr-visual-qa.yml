@@ -1,0 +1,33 @@
+name: Experimental mansion art validation
+
+on:
+  push:
+    branches:
+      - feature/mansion-veyr-art-pass
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Targeted regression tests
+        run: npx vitest run tests/normal-map-quality.test.ts tests/veyr-vault-art.test.ts
+      - name: Full unit suite
+        run: npm test -- --maxWorkers=1
+      - name: TypeScript and Vite production build
+        run: npm run build
+      - name: Format validation
+        run: npm run format:check
+      - name: Architectural route audit
+        run: npm run audit:rooms
