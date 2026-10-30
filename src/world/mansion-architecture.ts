@@ -185,5 +185,74 @@ export function moreauHallArchitecture() {
     );
     stroke.rotation.y = angle;
   }
+  // Original Veyr star-chart relief beneath the barrel vault. This is purely
+  // decorative: no new collisions, interactions, lights or shadow casters.
+  // Both stars and their connecting inlays are instanced (two draw calls).
+  const chart = new T.Group();
+  chart.name = "Veyr · carta astral de la bóveda";
+  const starMaterial = new T.MeshStandardMaterial({
+    color: 0x968469,
+    emissive: 0x4c3320,
+    emissiveIntensity: 0.14,
+    metalness: 0.55,
+    roughness: 0.73,
+  });
+  const lineMaterial = new T.MeshStandardMaterial({
+    color: 0x655b4a,
+    metalness: 0.48,
+    roughness: 0.9,
+  });
+  const starPoints: T.Vector3[] = [];
+  const chartEdges: Array<[T.Vector3, T.Vector3]> = [];
+  const starPattern = [
+    [-1.5, -0.55],
+    [-0.72, 0.37],
+    [0.05, -0.1],
+    [0.88, 0.65],
+    [1.58, -0.4],
+  ] as const;
+  for (const bayZ of [-5.9, -3.95, -2, -0.05, 1.9, 3.85, 5.8]) {
+    const stars = starPattern.map(([x, offsetZ]) =>
+      new T.Vector3(x, vaultY(x) - 0.12, bayZ + offsetZ),
+    );
+    starPoints.push(...stars);
+    for (let i = 1; i < stars.length; i++) {
+      chartEdges.push([stars[i - 1], stars[i]]);
+    }
+  }
+  const pointGeometry = new T.OctahedronGeometry(0.042, 0);
+  const points = new T.InstancedMesh(pointGeometry, starMaterial, starPoints.length);
+  points.name = "veyr-vault-constellation-stars";
+  points.castShadow = false;
+  points.receiveShadow = false;
+  const transform = new T.Object3D();
+  for (let i = 0; i < starPoints.length; i++) {
+    transform.position.copy(starPoints[i]);
+    transform.quaternion.identity();
+    transform.scale.setScalar(1);
+    transform.updateMatrix();
+    points.setMatrixAt(i, transform.matrix);
+  }
+  points.instanceMatrix.needsUpdate = true;
+  chart.add(points);
+
+  const segmentGeometry = new T.CylinderGeometry(0.009, 0.009, 1, 5);
+  const inlays = new T.InstancedMesh(segmentGeometry, lineMaterial, chartEdges.length);
+  inlays.name = "veyr-vault-constellation-lines";
+  inlays.castShadow = false;
+  inlays.receiveShadow = false;
+  const axis = new T.Vector3(0, 1, 0);
+  for (let i = 0; i < chartEdges.length; i++) {
+    const [start, end] = chartEdges[i];
+    const direction = new T.Vector3().subVectors(end, start);
+    transform.position.copy(start).add(end).multiplyScalar(0.5);
+    transform.quaternion.setFromUnitVectors(axis, direction.clone().normalize());
+    transform.scale.set(1, direction.length(), 1);
+    transform.updateMatrix();
+    inlays.setMatrixAt(i, transform.matrix);
+  }
+  inlays.instanceMatrix.needsUpdate = true;
+  chart.add(inlays);
+  hall.add(chart);
   return hall;
 }
