@@ -212,8 +212,8 @@ export function moreauHallArchitecture() {
     [1.58, -0.4],
   ] as const;
   for (const bayZ of [-5.9, -3.95, -2, -0.05, 1.9, 3.85, 5.8]) {
-    const stars = starPattern.map(([x, offsetZ]) =>
-      new T.Vector3(x, vaultY(x) - 0.12, bayZ + offsetZ),
+    const stars = starPattern.map(
+      ([x, offsetZ]) => new T.Vector3(x, vaultY(x) - 0.12, bayZ + offsetZ),
     );
     starPoints.push(...stars);
     for (let i = 1; i < stars.length; i++) {
@@ -221,7 +221,11 @@ export function moreauHallArchitecture() {
     }
   }
   const pointGeometry = new T.OctahedronGeometry(0.042, 0);
-  const points = new T.InstancedMesh(pointGeometry, starMaterial, starPoints.length);
+  const points = new T.InstancedMesh(
+    pointGeometry,
+    starMaterial,
+    starPoints.length,
+  );
   points.name = "veyr-vault-constellation-stars";
   points.castShadow = false;
   points.receiveShadow = false;
@@ -237,7 +241,11 @@ export function moreauHallArchitecture() {
   chart.add(points);
 
   const segmentGeometry = new T.CylinderGeometry(0.009, 0.009, 1, 5);
-  const inlays = new T.InstancedMesh(segmentGeometry, lineMaterial, chartEdges.length);
+  const inlays = new T.InstancedMesh(
+    segmentGeometry,
+    lineMaterial,
+    chartEdges.length,
+  );
   inlays.name = "veyr-vault-constellation-lines";
   inlays.castShadow = false;
   inlays.receiveShadow = false;
@@ -246,7 +254,10 @@ export function moreauHallArchitecture() {
     const [start, end] = chartEdges[i];
     const direction = new T.Vector3().subVectors(end, start);
     transform.position.copy(start).add(end).multiplyScalar(0.5);
-    transform.quaternion.setFromUnitVectors(axis, direction.clone().normalize());
+    transform.quaternion.setFromUnitVectors(
+      axis,
+      direction.clone().normalize(),
+    );
     transform.scale.set(1, direction.length(), 1);
     transform.updateMatrix();
     inlays.setMatrixAt(i, transform.matrix);

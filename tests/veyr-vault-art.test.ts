@@ -36,7 +36,9 @@ describe("Mansion Veyr ceiling constellation art", () => {
         item.geometry.dispose();
         disposedGeometry.add(item.geometry);
       }
-      for (const material of Array.isArray(item.material) ? item.material : [item.material]) {
+      for (const material of Array.isArray(item.material)
+        ? item.material
+        : [item.material]) {
         if (!disposedMaterials.has(material)) {
           material.dispose();
           disposedMaterials.add(material);
