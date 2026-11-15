@@ -35,7 +35,16 @@ export class Input {
   private previous = new Set<string>();
   constructor(canvas: HTMLCanvasElement) {
     addEventListener("keydown", (e) => {
-      if (e.code === "Tab" && !document.getElementById("overlay")?.hidden)
+      const inMenu =
+        typeof document !== "undefined" &&
+        document.getElementById("overlay")?.hidden === false;
+      if (inMenu && (e.code === "Tab" || e.code === "Space")) return;
+      if (
+        inMenu &&
+        (e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLSelectElement) &&
+        e.code.startsWith("Arrow")
+      )
         return;
       if (
         [

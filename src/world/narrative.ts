@@ -1,7 +1,7 @@
 export const notes = [
   [
-    "Carta sin remitente",
-    "Élise: si encuentras esta casa, aún me recuerdas. En 1927 Veyr dejó de figurar en los mapas. Yo dejé de figurar en las fotografías. La llave descansa junto al escritorio del vestíbulo. La caja astronómica guarda el medallón: elige lo que queda después del fuego, CENIZA. Inés escribió lo mismo en 1610; el cantero Lucan lo talló en el siglo IV. Tres épocas, una sola herida. — Adrien.",
+    "El envío de Adrien",
+    "Élise: te mando cuatro reproducciones: una plancha de imprenta, un acta de 1610, una partitura y el negativo de una puerta. Las cuatro llevan el mismo número de inventario. Cuando volví a comprobarlo, mi nombre había desaparecido de la ficha. Busca los originales en Veyr. Dejé la llave junto al escritorio. Para abrir la caja astronómica, elige lo que queda después del fuego: CENIZA. Si encuentras otra carta con mi firma, mira primero el reverso. — Adrien.",
   ],
   [
     "Catálogo de ausencias",

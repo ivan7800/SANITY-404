@@ -57,7 +57,10 @@ export async function runPhase21BrowserCases(page, url) {
   async function seed(patch) {
     await page.goto(url);
     await page.evaluate(
-      (state) => localStorage.setItem("sanity404-save", JSON.stringify(state)),
+      (state) => {
+        localStorage.removeItem("sanity404-checkpoint");
+        localStorage.setItem("sanity404-save", JSON.stringify(state));
+      },
       {
         ...base(),
         ...patch,
@@ -165,6 +168,19 @@ export async function runPhase21BrowserCases(page, url) {
   await seed(full);
   await interact();
   await page.getByRole("button", { name: "Cerrar con las pruebas" }).click();
+  await page.getByRole("button", { name: "La fecha más antigua" }).click();
+  assert.match(
+    await page.locator("#panel").innerText(),
+    /no sostiene esa lectura/,
+  );
+  assert.equal((await inspect()).state.ended, false);
+  for (const answer of [
+    "El signo invertido",
+    "El inventario de 1608",
+    "La pausa entre ambos",
+    "Por las tres bisagras del plano",
+  ])
+    await page.getByRole("button", { name: answer, exact: true }).click();
   assert.match(await page.locator("#panel").innerText(), /FINAL HISTÓRICO/);
   assert.match(await page.locator("#panel").innerText(), /Tomás/);
   assert.match(await page.locator("#panel").innerText(), /Bran/);

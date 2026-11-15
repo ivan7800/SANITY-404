@@ -394,7 +394,7 @@ export class World {
     this.add(
       {
         id: "note" + room,
-        name: "Leer documento",
+        name: room === 0 ? "Abrir el envío de Adrien" : "Leer documento",
         x: room >= 11 ? -3.5 : -5.5,
         z: 5,
         kind: "note",

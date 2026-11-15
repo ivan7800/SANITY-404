@@ -145,10 +145,10 @@ export async function runChapterExitCases(
   const inspect = () => page.evaluate(() => window.sanityInspect());
   for (const chapter of chapters) {
     await page.goto(url);
-    await page.evaluate(
-      (state) => localStorage.setItem("sanity404-save", JSON.stringify(state)),
-      fresh(chapter),
-    );
+    await page.evaluate((state) => {
+      localStorage.removeItem("sanity404-checkpoint");
+      localStorage.setItem("sanity404-save", JSON.stringify(state));
+    }, fresh(chapter));
     await page.reload();
     await page.getByRole("button", { name: "Continuar", exact: true }).click();
     await page.waitForFunction(
@@ -163,7 +163,7 @@ export async function runChapterExitCases(
     await page.locator("#close").click();
     assert.equal((await inspect()).state.room, 0);
     const stored = JSON.parse(
-      await page.evaluate(() => localStorage.getItem("sanity404-save")),
+      await page.evaluate(() => localStorage.getItem("sanity404-checkpoint")),
     );
     assert.ok(stored.campaign.completed.includes(chapter.id));
     assert.ok(stored.items.includes(chapter.artifact));

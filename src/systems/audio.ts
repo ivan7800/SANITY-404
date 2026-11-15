@@ -173,6 +173,13 @@ export class Audio {
       g.disconnect();
     };
   }
+  playDossierMotif() {
+    if (!this.ctx || this.reduceAudio) return;
+    this.directional(196, -0.28, 0.34);
+    this.directional(233.08, 0.28, 0.38, 0.25);
+    this.directional(146.83, 0, 0.68, 0.8);
+  }
+
   directional(frequency: number, pan: number, duration = 0.45, delay = 0) {
     if (
       !this.ctx ||
