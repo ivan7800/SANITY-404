@@ -1,12 +1,14 @@
 import { chromium } from "@playwright/test";
 import fs from "node:fs";
 import assert from "node:assert/strict";
-const { url } = JSON.parse(
-  fs.readFileSync(
-    new URL("../.sanity-launcher/server.json", import.meta.url),
-    "utf8",
-  ),
-);
+const url =
+  process.env.SANITY_TEST_URL ??
+  JSON.parse(
+    fs.readFileSync(
+      new URL("../.sanity-launcher/server.json", import.meta.url),
+      "utf8",
+    ),
+  ).url;
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome",
   headless: true,

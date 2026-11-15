@@ -52,11 +52,17 @@ jobs:
         env:
           SANITY_TEST_URL: http://127.0.0.1:5173/
         run: node scripts/browser-phase21.mjs
+      - name: Test simulated gamepad
+        if: ${{ !cancelled() }}
+        env:
+          SANITY_TEST_URL: http://127.0.0.1:5173/
+        run: node scripts/browser-gamepad.mjs
       - name: Test the compiled web game
         if: ${{ !cancelled() }}
         env:
           SANITY_SOFTWARE: "1"
           SANITY_TEST_CORRUPT_SAVE: "1"
+          SANITY_TEST_URL: http://127.0.0.1:5180/SANITY-404/
         run: |
           npm run build
           mkdir -p /tmp/sanity-web
