@@ -32,6 +32,10 @@ const page = await browser.newPage({ viewport: { width: 480, height: 320 } }),
   errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 await page.addInitScript(() => {
+  localStorage.setItem(
+    "sanity404-settings",
+    JSON.stringify({ cameraMode: "classic", quality: 1 }),
+  );
   window.pad = {
     axes: [0, 0, 0, 0],
     buttons: Array.from({ length: 17 }, () => ({ pressed: false })),
@@ -61,15 +65,18 @@ try {
   await page
     .getByRole("button", { name: "Nueva partida", exact: true })
     .click();
+  await page.waitForFunction(() => !window.game.inspect().paused);
   await page.evaluate(() => {
     window.pad.axes[0] = 1;
   });
-  await page.waitForFunction(() => window.game.inspect().state.x > 7.4, null, {
-    timeout: 60000,
+  // The south bay partition blocks the starting lane before the outer wall.
+  await page.waitForFunction(() => window.game.inspect().state.x > 5.65, null, {
+    timeout: 30000,
   });
   await page.waitForTimeout(300);
-  let s = await page.evaluate(() => window.game.inspect());
-  assert.ok(s.state.x <= 7.5);
+  const s = await page.evaluate(() => window.game.inspect());
+  assert.ok(s.state.x > 5.65 && s.state.x <= 5.81);
+  assert.equal(s.state.z, 5);
   await page.evaluate(() => {
     window.pad.axes[0] = 0;
   });
