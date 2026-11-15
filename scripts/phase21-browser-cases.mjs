@@ -160,6 +160,9 @@ export async function runPhase21BrowserCases(page, url) {
   full.items = full.items.filter((item) => item !== "Placa de la puerta");
   await seed(full);
   await interact();
+  await page
+    .getByRole("heading", { name: "Una salida antes de conocer el origen" })
+    .waitFor();
   assert.equal(await page.locator("#full-ending").count(), 0);
   assert.match(await page.locator("#panel").innerText(), /pruebas materiales/);
   console.log("PASS F21 una prueba ausente bloquea el final histórico");
