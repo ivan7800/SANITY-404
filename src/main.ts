@@ -64,7 +64,7 @@ import { Audio, audibleFootstep } from "./systems/audio";
 import { interactionPrompt } from "./ui/interaction-prompt";
 import { TerrorDirector } from "./systems/terror";
 import { notes, discoveries } from "./world/narrative";
-import { readSave, writeSave } from "./systems/save";
+import { readSave, removeSave, writeSave, type SaveSlot } from "./systems/save";
 import { legacy, reconcileLegacy, legacyEnding } from "./systems/legacy";
 import {
   chosenMemory,
@@ -102,9 +102,14 @@ import {
   historicalEndingReadiness,
   chapterIntroductions,
 } from "./systems/campaign";
+import {
+  dossierFindings,
+  historicalLead,
+  reconstructionQuestion,
+} from "./systems/dossier";
 import { readSettings } from "./systems/config";
 import { weaponProfileForRoom } from "./systems/weapons";
-import { trapFocus } from "./ui/accessibility";
+import { panelControls, trapFocus } from "./ui/accessibility";
 const app = document.querySelector<HTMLDivElement>("#app")!;
 const qaMode =
   import.meta.env.DEV && new URLSearchParams(location.search).get("qa") === "1";
@@ -180,6 +185,7 @@ let state: State = fresh(),
   near: Interactable | undefined,
   settings = readSettings();
 let ritualVisual: RitualVisual | undefined;
+let queueDossierMotif = false;
 let pendingRitualSound: "veil" | "reading" | undefined;
 const mansionActors = new Map<
   EnemyKind,
@@ -222,7 +228,7 @@ function toast(text: string) {
 }
 function autoSave() {
   if (qaMode) return;
-  if (!writeSave(state))
+  if (!writeSave(state, "checkpoint"))
     queueMicrotask(() =>
       toast(
         "No se ha guardado el progreso. Libera almacenamiento o sal del modo privado.",
@@ -274,7 +280,9 @@ function showEnding(route: "ruins" | "basement", full: boolean) {
         ? "La memoria del amanecer"
         : "La última ausencia";
   const text = full
-    ? historical!.text + (chosen ? ` ${chosen.description}` : "")
+    ? "Élise descarta la copia por el signo invertido, localiza el umbral por las tres bisagras y corta la sustitución en la pausa de Amara. " +
+      historical!.text +
+      (chosen ? ` ${chosen.description}` : "")
     : route === "basement"
       ? remembered
         ? "Élise pronuncia el nombre de Étienne y Adrien cruza el umbral. Al salir, ambos saben que quedan testimonios de otras épocas sin escuchar; la casa pierde una voz, pero su origen permanece incompleto."
@@ -309,9 +317,35 @@ function offerEnding(route: "ruins" | "basement") {
   panel(
     `<div class="eyebrow">UMBRAL DE 1927</div><h2>${readiness.ready ? "Las doce épocas responden" : "Una salida antes de conocer el origen"}</h2><p>${readiness.ready ? "Las once investigaciones, sus pruebas y tu decisión permiten reconstruir el nombre borrado." : `Puedes cerrar el Intervalo ahora y obtener un final anticipado. Para el desenlace histórico faltan: ${missing}.`}</p><div class="actions">${readiness.ready ? '<button id="full-ending">Cerrar con las pruebas</button>' : ""}<button id="early-ending">Cerrar ahora · final anticipado</button><button id="return-ending">Volver a investigar</button></div>`,
   );
-  if (readiness.ready) button("full-ending", () => showEnding(route, true));
+  if (readiness.ready) button("full-ending", () => reconstructEnding(route));
   button("early-ending", () => showEnding(route, false));
   button("return-ending", resume);
+}
+function reconstructEnding(
+  route: "ruins" | "basement",
+  index = 0,
+  retry = false,
+) {
+  const evidence = reconstructionQuestion(index);
+  if (!evidence) {
+    showEnding(route, true);
+    return;
+  }
+  const findings = dossierFindings(state.items);
+
+  panel(
+    `<div class="eyebrow">EL INTERVALO · RECONSTRUCCIÓN ${index + 1}/${findings.length}</div><h2>${evidence.question}</h2>${retry ? '<p role="status">La prueba no sostiene esa lectura. Revisa las notas.</p>' : ""}<details class="case-dossier"><summary>Consultar el expediente</summary><dl>${findings.map(({ artifact, observation }) => `<dt><strong>${artifact}</strong></dt><dd>${observation}</dd>`).join("")}</dl></details><div class="actions">${evidence.options.map((option, i) => `<button id="reconstruction-answer${i}">${option}</button>`).join("")}<button id="close">Volver al umbral</button></div>`,
+  );
+  evidence.options.forEach((_, i) =>
+    button(`reconstruction-answer${i}`, () =>
+      reconstructEnding(
+        route,
+        i === evidence.correct ? index + 1 : index,
+        i !== evidence.correct,
+      ),
+    ),
+  );
+  button("close", () => offerEnding(route));
 }
 renderer.domElement.tabIndex = 0;
 function resume() {
@@ -346,6 +380,7 @@ function loadRoom() {
   ritualVisual?.dispose();
   ritualVisual = undefined;
   pendingRitualSound = undefined;
+  queueDossierMotif = false;
   terror?.restore();
   world?.dispose();
   world = new World(
@@ -549,7 +584,9 @@ function begin(s: State) {
     .start()
     .catch(() => toast("Audio no disponible; puedes continuar sin sonido."));
   resume();
-  toast("Encuentra a Adrien. Empieza por la carta y la llave del vestíbulo.");
+  if (state.room === 0 && !state.read.includes("0"))
+    toast("Abre el envío de Adrien junto al escritorio. Empieza por la carta.");
+  else if (state.room === 0 && state.floor === 0) toast(historicalLead(state));
 }
 
 let enteringFromTitle = false;
@@ -581,7 +618,7 @@ function beginFromMenu(s: State) {
 
 function menu() {
   panel(
-    `<div class="menu-kicker"><span>${started && !state.ended ? "PAUSA · PARTIDA EN CURSO" : "MANSIÓN VEYR · FRANCIA"}</span><span>1927</span></div><div class="ornament">UN EXPEDIENTE QUE NO DEBIÓ EXISTIR</div><h1>SANITY<span>—404</span></h1><div class="menu-subtitle">ARCHIVO DE LAS AUSENCIAS · 1927</div><div class="rule"></div><p class="menu-motto">LO QUE OLVIDAS<br>TAMBIÉN TE RECUERDA</p><p class="menu-intro">Una carta de tu hermano desaparecido.<br>Una casa que conoce tu nombre.</p><nav class="actions menu-actions" aria-label="Menú principal"><button id="new" aria-label="Nueva partida">Nueva partida</button><button id="load" aria-label="Continuar" ${readSave() ? "" : "disabled"}>Continuar</button><button id="settings" aria-label="Opciones">Opciones</button></nav><div class="menu-secondary"><button id="load-menu" ${readSave() ? "" : "disabled"}>Cargar partida</button>${started && !state.ended ? '<button id="resume">Volver al juego</button>' : ""}<button id="credits">Créditos</button></div><p class="small menu-footer">DOCE ÉPOCAS · UNA MEMORIA<br>TECLADO, RATÓN Y MANDO · AUDIO ORIGINAL</p>`,
+    `<div class="menu-kicker"><span>${started && !state.ended ? "PAUSA · PARTIDA EN CURSO" : "MANSIÓN VEYR · FRANCIA"}</span><span>1927</span></div><div class="ornament">UN EXPEDIENTE QUE NO DEBIÓ EXISTIR</div><h1>SANITY<span>—404</span></h1><div class="menu-subtitle">ARCHIVO DE LAS AUSENCIAS · 1927</div><div class="rule"></div><p class="menu-motto">LO QUE OLVIDAS<br>TAMBIÉN TE RECUERDA</p><p class="menu-intro">Cuatro piezas con un solo número de inventario.<br>Tu hermano siguió la pista hasta Veyr.</p><nav class="actions menu-actions" aria-label="Menú principal"><button id="new" aria-label="Nueva partida">Nueva partida</button><button id="load" aria-label="Continuar" ${readSave() ? "" : "disabled"}>Continuar</button><button id="settings" aria-label="Opciones">Opciones</button></nav><div class="menu-secondary"><button id="load-menu" ${readSave() ? "" : "disabled"}>Cargar partida</button>${started && !state.ended ? '<button id="resume">Volver al juego</button>' : ""}<button id="credits">Créditos</button></div><p class="small menu-footer">DOCE ÉPOCAS · UNA MEMORIA<br>TECLADO, RATÓN Y MANDO · AUDIO ORIGINAL</p>`,
     "menu",
   );
   button("new", () => {
@@ -598,23 +635,69 @@ function menu() {
     if (s) begin(s);
     else toast("No hay una partida válida.");
   });
-  button("load-menu", loadMenu);
+  button("load-menu", () => loadMenu());
   button("settings", options);
   button("credits", credits);
   if (started) button("resume", resume);
 }
-function loadMenu() {
-  const saved = readSave();
+function loadMenu(message = "") {
+  const slots = (["manual", "checkpoint"] as const).flatMap((id) => {
+    const saved = readSave(id);
+    return saved ? [{ id, saved }] : [];
+  });
   panel(
-    `<div class="eyebrow">ARCHIVO DE PARTIDA</div><h2>Cargar partida</h2>${saved ? `<div class="save-slot"><div class="eyebrow">ÚLTIMA MEMORIA GUARDADA</div><strong>${names[saved.room]}</strong><span>${saved.campaign.completed.length}/12 capítulos · ${Math.floor(saved.elapsed / 60)} min · Salud ${Math.ceil(saved.health)}</span></div>` : "<p>No hay una partida guardada válida.</p>"}<div class="actions"><button id="load-confirm" ${saved ? "" : "disabled"}>Cargar memoria</button><button id="back">Volver al título</button></div>`,
+    `<div class="eyebrow">ARCHIVO DE PARTIDA</div><h2>Cargar partida</h2>${message ? `<p role="status">${message}</p>` : ""}${slots.length ? slots.map(({ id, saved }) => `<div class="save-slot"><div class="eyebrow">${saveSlotName(id)}</div><strong>${names[saved.room]}</strong><span>${saved.campaign.completed.length}/12 capítulos · ${Math.floor(saved.elapsed / 60)} min · Salud ${Math.ceil(saved.health)}</span><div class="actions"><button id="load-${id}">Cargar ${id === "manual" ? "memoria" : "punto de control"}</button><button id="delete-${id}">Borrar ${id === "manual" ? "memoria" : "punto de control"}</button></div></div>`).join("") : "<p>No hay una partida guardada válida.</p>"}<button id="back">Volver al título</button>`,
     "save",
   );
-  button("load-confirm", () => {
-    const current = readSave();
-    if (current) begin(current);
-    else loadMenu();
-  });
+  for (const { id } of slots) {
+    button(`load-${id}`, () => {
+      const saved = readSave(id);
+      if (saved) begin(saved);
+      else loadMenu("La partida seleccionada ya no está disponible.");
+    });
+    button(`delete-${id}`, () => {
+      panel(
+        `<h2>¿Borrar ${saveSlotName(id).toLowerCase()}?</h2><p>La partida de esa ranura dejará de estar disponible.</p><div class="actions"><button id="cancel-delete">Cancelar</button><button id="confirm-delete">Borrar partida</button></div>`,
+        "save",
+      );
+      button("cancel-delete", () => loadMenu());
+      button("confirm-delete", () =>
+        loadMenu(
+          removeSave(id) ? "Partida borrada." : "No se pudo borrar la partida.",
+        ),
+      );
+    });
+  }
   button("back", menu);
+}
+function saveSlotName(slot: SaveSlot): string {
+  return slot === "manual" ? "Memoria manual" : "Punto de control";
+}
+function saveAtDesk() {
+  if (qaMode) {
+    toast("Modo QA: la partida de diagnóstico no se guarda.");
+    return;
+  }
+  const save = () => {
+    toast(
+      writeSave(state)
+        ? "Memoria conservada. Partida guardada."
+        : "El navegador no permite guardar. Libera almacenamiento o sal del modo privado.",
+    );
+  };
+  if (!readSave("manual")) {
+    save();
+    return;
+  }
+  panel(
+    '<h2>¿Sobrescribir la memoria manual?</h2><p>La partida de esa ranura se sustituirá por tu posición y progreso actuales.</p><div class="actions"><button id="close">Cancelar</button><button id="overwrite">Guardar aquí</button></div>',
+    "save",
+  );
+  button("close", resume);
+  button("overwrite", () => {
+    resume();
+    save();
+  });
 }
 function credits() {
   panel(
@@ -699,7 +782,16 @@ function inventory() {
       .map((clue) => `${chapter.year} · ${clue.name}: ${clue.text}`),
   );
   panel(
-    `<div class="eyebrow">ARCHIVO PERSONAL · ${names[state.room]}</div><h2>Inventario y diario</h2><div class="inventory-summary"><div><span>ARMA</span><strong>${weaponProfileForRoom(state.room).name}</strong><small>${weaponProfileForRoom(state.room).technique} · sin munición</small></div><div><span>RECURSOS</span><strong>${tonics} tónicos</strong><small>${state.seals.length}/3 sellos · ${state.phase2.solved.length}/4 mecanismos</small></div><div><span>INVESTIGACIONES</span><strong>${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11</strong><small>épocas concluidas</small></div></div><div class="eyebrow section-label">OBJETOS CONSERVADOS</div><div class="item-grid">${items.length ? items.map((item, index) => `<div class="item-card"><span>${String(index + 1).padStart(2, "0")}</span><strong>${item}</strong></div>`).join("") : "<p>La colección está vacía. Examina la mansión para encontrar pistas.</p>"}</div><div class="actions"><button id="heal" ${tonics && state.health > 0 ? "" : "disabled"}>Beber tónico</button><button id="close">Volver</button></div><div class="eyebrow section-label">DIARIO DE INVESTIGACIÓN</div><p class="journal-lead">${objective}</p><details><summary>Memoria y decisión</summary><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}.</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}.</p></details><details><summary>Testimonios romanos · ${witnesses.length}/3</summary><p>${witnesses.map((echo) => `${echo.title}: ${echo.text}`).join("<br>") || "Aún no has leído ninguna estela romana."}</p></details><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
+    `<div class="eyebrow">ARCHIVO PERSONAL · ${names[state.room]}</div><h2>Inventario y diario</h2><div class="inventory-summary"><div><span>ARMA</span><strong>${weaponProfileForRoom(state.room).name}</strong><small>${weaponProfileForRoom(state.room).technique} · sin munición</small></div><div><span>RECURSOS</span><strong>${tonics} tónicos</strong><small>${state.seals.length}/3 sellos · ${state.phase2.solved.length}/4 mecanismos</small></div><div><span>INVESTIGACIONES</span><strong>${state.campaign.completed.filter((id) => id !== "mansion-1927").length}/11</strong><small>épocas concluidas</small></div></div><div class="eyebrow section-label">OBJETOS CONSERVADOS</div><div class="item-grid">${items.length ? items.map((item, index) => `<div class="item-card"><span>${String(index + 1).padStart(2, "0")}</span><strong>${item}</strong></div>`).join("") : "<p>La colección está vacía. Examina la mansión para encontrar pistas.</p>"}</div><div class="actions"><button id="heal" ${tonics && state.health > 0 ? "" : "disabled"}>Beber tónico</button><button id="close">Volver</button></div><div class="eyebrow section-label">DIARIO DE INVESTIGACIÓN</div><p class="journal-lead">${objective}</p><details class="case-dossier"><summary>Expediente de Adrien</summary><p>${historicalLead(state)}</p><dl>${dossierFindings(
+      state.items,
+    )
+      .map(
+        ({ artifact, observation }) =>
+          `<dt><strong>${artifact}</strong></dt><dd>${observation}</dd>`,
+      )
+      .join(
+        "",
+      )}</dl></details><details><summary>Memoria y decisión</summary><p>${legacy(state).clue}</p><p>Memoria de las tres épocas: ${state.items.includes("Memoria reconciliada") ? "reconciliada · pasaje Veyr abierto" : "pendiente"}.</p><p>Decisión histórica: ${chosenMemory(state) ?? "pendiente"}.</p></details><details><summary>Testimonios romanos · ${witnesses.length}/3</summary><p>${witnesses.map((echo) => `${echo.title}: ${echo.text}`).join("<br>") || "Aún no has leído ninguna estela romana."}</p></details><details><summary>La mansión transformada · ${activeMansionEchoes(state.items).length}/12</summary><p>${
       activeMansionEchoes(state.items)
         .map((echo) => `${echo.year} · ${echo.title}: ${echo.text}`)
         .join("<br>") ||
@@ -1186,7 +1278,6 @@ function interact(o: Interactable) {
     const index = Number(o.value);
     const evidence = chapter.evidence[index];
     if (inspectLateEvidence(state, chapter, index)) {
-      state.sanity = clamp(state.sanity - 2);
       autoSave();
       audio.tone(185 - index * 35, 0.28, "triangle");
     }
@@ -1366,15 +1457,14 @@ function interact(o: Interactable) {
     }
   }
   if (o.kind === "note") {
-    if (!state.read.includes(String(state.room))) {
-      state.read.push(String(state.room));
-      state.sanity = clamp(state.sanity - 4);
-    }
+    const firstReading = !state.read.includes(String(state.room));
+    if (firstReading) state.read.push(String(state.room));
     panel(
       `<div class="eyebrow">DOCUMENTO ${state.room + 1} / ${notes.length}</div><h2>${notes[state.room][0]}</h2><p>${notes[state.room][1]}</p><button id="close">Guardar en el diario</button>`,
     );
     button("close", () => {
       resume();
+      if (firstReading && state.room === 0) queueDossierMotif = true;
       if (
         state.room === 8 &&
         !state.campaign.witnessed.includes("roman-formation")
@@ -1388,15 +1478,7 @@ function interact(o: Interactable) {
       }
     });
   }
-  if (o.kind === "save") {
-    toast(
-      qaMode
-        ? "Modo QA: la partida de diagnóstico no se guarda."
-        : writeSave(state)
-          ? "Memoria conservada. Partida guardada."
-          : "El navegador no permite guardar. Libera almacenamiento o sal del modo privado.",
-    );
-  }
+  if (o.kind === "save") saveAtDesk();
   if (o.kind === "phase2Puzzle") phase2Puzzle(o.id as PuzzleId);
   if (o.kind === "discovery") {
     if (!state.phase2.discoveries.includes(o.id))
@@ -1851,15 +1933,15 @@ function update(dt: number) {
           state.items.includes("Carta de la raíz")
           ? "Las dos pruebas despiertan la raíz en el observatorio. Puedes regresar por la escalera."
           : "Explora las dos salas del rellano y conserva sus documentos."
-        : state.seals.length === 3
-          ? historicalEndingReadiness(state).ready
-            ? "Las once pruebas y tu decisión permiten el final histórico en el umbral."
-            : "Puedes cerrar el Intervalo temprano o continuar las investigaciones históricas."
+        : !state.read.includes("0")
+          ? "Abre el envío de Adrien junto al escritorio."
           : !state.items.includes("Llave de latón")
-            ? "Lee la carta y busca la llave junto al escritorio del vestíbulo."
-            : !state.items.includes("Medallón Veyr")
-              ? "Resuelve la caja astronómica del vestíbulo para abrir la biblioteca."
-              : "Sigue las pistas de biblioteca, cripta y capilla para reunir tres sellos.";
+            ? "Busca la llave junto al escritorio del vestíbulo."
+            : !state.items.includes("Medallón Veyr") && state.seals.length < 3
+              ? "Resuelve la caja astronómica para abrir la biblioteca. Tab abre el expediente histórico."
+              : state.seals.length < 3
+                ? "Busca los tres sellos. Tab abre el expediente histórico."
+                : historicalLead(state);
     if (el("objective").textContent !== objective)
       el("objective").textContent = objective;
   }
@@ -2062,6 +2144,10 @@ function update(dt: number) {
   );
   hud.hitFeedback.classList.toggle("blocked", combat.guarding);
   audio.ambient(state.elapsed, state.sanity);
+  if (queueDossierMotif && audio.ctx?.state === "running") {
+    queueDossierMotif = false;
+    audio.playDossierMotif();
+  }
   if (pendingRitualSound && audio.ritual(pendingRitualSound))
     pendingRitualSound = undefined;
   animateCharacter(
@@ -2213,11 +2299,7 @@ function frame(now: number) {
   } else {
     const nav = input.poll();
     if (Math.abs(nav.z) > 0.4 && now > nextMenuMove) {
-      const controls = Array.from(
-        el("panel").querySelectorAll<HTMLElement>(
-          "button:not(:disabled),input,select",
-        ),
-      );
+      const controls = panelControls(el("panel"));
       const i = controls.indexOf(document.activeElement as HTMLElement);
       controls[
         (i + (nav.z > 0 ? 1 : -1) + controls.length) % controls.length
@@ -2229,8 +2311,10 @@ function frame(now: number) {
     if (input.take("Escape") && started && !state.ended && state.health > 0)
       resume();
     if (input.take("KeyE")) {
-      const b = el("panel").querySelector<HTMLButtonElement>("button:focus");
-      b?.click();
+      const focused = el("panel").querySelector<HTMLElement>(
+        "button:focus,summary:focus,input[type=checkbox]:focus",
+      );
+      focused?.click();
     }
     if (input.take("Tab") && started && !state.ended && state.health > 0)
       resume();

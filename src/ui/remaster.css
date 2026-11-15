@@ -859,3 +859,29 @@ html.large-text #hud .stat,
 html.large-text #hud .eyebrow {
   font-size: 13px;
 }
+
+.case-dossier {
+  margin: 1rem 0;
+  padding: 0.7rem 1rem;
+  border-inline-start: 2px solid #a99873;
+  background: #211f19;
+}
+
+.case-dossier summary {
+  color: #ead9ab;
+  cursor: pointer;
+}
+
+.case-dossier dl {
+  margin: 0;
+}
+
+.case-dossier dt {
+  margin-top: 0.8rem;
+  color: #ead9ab;
+}
+
+.case-dossier dd {
+  margin: 0.25rem 0 0.8rem;
+  color: #e8e0cc;
+}

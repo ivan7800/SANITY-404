@@ -35,3 +35,24 @@ it("recupera el menú tras una partida corrupta y conserva un guardado nuevo", (
   expect(readSave()).toEqual(next);
   expect(values.get("sanity404-save")).toBe(JSON.stringify(next));
 });
+
+it("protege la memoria manual de los puntos de control y tolera un punto corrupto", () => {
+  const values = new Map<string, string>();
+  vi.stubGlobal("localStorage", {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => values.set(key, value),
+    removeItem: (key: string) => values.delete(key),
+  });
+  const manual = fresh();
+  const checkpoint = { ...fresh(), elapsed: 75 };
+  expect(writeSave(manual)).toBe(true);
+  expect(writeSave(checkpoint, "checkpoint")).toBe(true);
+  expect(readSave()).toEqual(checkpoint);
+  expect(readSave("manual")).toEqual(manual);
+  values.set("sanity404-checkpoint", "{invalid json");
+  expect(readSave()).toEqual(manual);
+  expect(writeSave(checkpoint, "checkpoint")).toBe(true);
+  expect(writeSave(manual)).toBe(true);
+  expect(readSave("checkpoint")).toBeNull();
+  expect(readSave()).toEqual(manual);
+});

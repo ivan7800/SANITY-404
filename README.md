@@ -49,7 +49,7 @@ Con el lanzador activo, la regresión nueva se reproduce con `node scripts/brows
 - H: beber tónico. Tab: inventario y documentos. M: mapa. Escape: pausa/volver.
 - Mando estándar: stick izquierdo movimiento, LB defensa, RB ataque fuerte, R3 esquiva; A interactuar/confirmar, B ataque ligero/volver, X tónico, Y inventario, Select mapa, Start pausa. Stick izquierdo arriba/abajo recorre menús.
 
-Guarda en los escritorios de memoria. No hay guardado automático: morir permite volver a la última partida conservada. El navegador guarda localmente; otro perfil, otro dominio o borrar almacenamiento elimina el acceso a esa memoria.
+Los escritorios guardan tu memoria manual y piden confirmación si ya existe. Algunos avances históricos crean un punto de control separado. Continuar recupera el punto de control si es válido, o la memoria manual. Cargar partida permite elegir y borrar cada ranura. Guardar manualmente inicia un nuevo punto de partida. El navegador guarda localmente; otro perfil, otro dominio o borrar almacenamiento elimina el acceso a esa memoria.
 
 ## Contenido de esta versión
 
@@ -74,11 +74,11 @@ Three.js, TypeScript, Vite, Web Audio y localStorage. Sin frameworks de interfaz
 
 ## GitHub Pages
 
-El [repositorio público](https://github.com/ivan7800/SANITY-404) contiene el código y prepara [SANITY-404 para navegador](https://ivan7800.github.io/SANITY-404/). El workflow `.github/workflows/pages.yml` se ejecuta manualmente mediante `workflow_dispatch`; solo una ejecución autorizada despliega `dist` en GitHub Pages. Vite genera las rutas de producción con la base `/SANITY-404/`; el servidor local conserva `/` para los lanzadores. Para que la URL pública sirva el juego compilado, selecciona **Settings → Pages → Build and deployment → Source: GitHub Actions**. Si permanece «Deploy from a branch», GitHub puede volver a publicar el HTML fuente después del workflow y mostrar una página vacía. La estabilidad del preview local y los límites de la comprobación remota se detallan en [Fase 35](docs/FASE35_INFORME_FINAL.md).
+El [repositorio público](https://github.com/ivan7800/SANITY-404) contiene el código y prepara [SANITY-404 para navegador](https://ivan7800.github.io/SANITY-404/). El workflow `.github/workflows/pages.yml` se ejecuta al actualizar `main` o mediante `workflow_dispatch` y despliega `dist` en GitHub Pages cuando supera sus verificaciones. Vite genera las rutas de producción con la base `/SANITY-404/`; el servidor local conserva `/` para los lanzadores. Para que la URL pública sirva el juego compilado, selecciona **Settings → Pages → Build and deployment → Source: GitHub Actions**. Si permanece «Deploy from a branch», GitHub puede volver a publicar el HTML fuente después del workflow y mostrar una página vacía. La estabilidad del preview local y los límites de la comprobación remota se detallan en [Fase 35](docs/FASE35_INFORME_FINAL.md).
 
 Consulta [la revisión y prueba de Fase 1](docs/FASE1-REVISION.md), [los lanzadores](docs/LANZADORES.md), [el registro histórico de verificación](docs/VERIFICACION.md) y [el registro de REA](docs/REA.md).
 
-La campaña histórica de la rama `fase11/campana-historica` incluye las investigaciones de 1491, 1610, 1786 y 1899. Su alcance y las comprobaciones pendientes están en [Fase 12](docs/FASE12.md).
+La campaña contiene once investigaciones históricas. El expediente de Adrien, dentro del diario, indica cuál sigue. Las pruebas de Tomás, Inés, Amara y Émile sirven para reconstruir el Intervalo en el final histórico. [Diseño y verificación](docs/ARCHIVO_DE_LAS_AUSENCIAS.md).
 
 ## Fase 1.6 · Presentación cinematográfica
 

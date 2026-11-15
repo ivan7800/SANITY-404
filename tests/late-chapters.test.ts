@@ -73,7 +73,7 @@ describe("1491, 1610, 1786 y 1899", () => {
   });
 
   it.each(lateChapters)(
-    "$year exige pistas, puzle, combate y prueba persistente",
+    "$year exige pistas, puzle y prueba persistente, con combate según la época",
     (chapter) => {
       const state = fresh();
       state.room = chapter.room + 1;
@@ -107,8 +107,11 @@ describe("1491, 1610, 1786 y 1899", () => {
       expect(solveLatePuzzle(state, chapter, chapter.order[1])).toBe("correct");
       expect(latePuzzleStage(state, chapter)).toBe(2);
       expect(solveLatePuzzle(state, chapter, chapter.order[2])).toBe("solved");
-      expect(lateObjective(state)).toBe(chapter.fight);
-      expect(lateArtifactUnlocked(state, chapter)).toBe(false);
+      const canEvade = "evade" in chapter;
+      expect(lateObjective(state)).toBe(
+        canEvade ? chapter.evade : chapter.fight,
+      );
+      expect(lateArtifactUnlocked(state, chapter)).toBe(canEvade);
       state.defeated.push(`enemy${chapter.room + 1}`);
       expect(lateArtifactUnlocked(state, chapter)).toBe(true);
       expect(lateObjective(state)).toBe(chapter.artifactTask);

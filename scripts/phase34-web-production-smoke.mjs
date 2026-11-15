@@ -101,6 +101,10 @@ try {
     await page.keyboard.up("a");
   }
   await page.keyboard.press("e");
+  if (process.env.SANITY_EXPECT_EXISTING_SAVE === "1")
+    await page
+      .getByRole("button", { name: "Guardar aquí", exact: true })
+      .click();
   await page.waitForFunction(() =>
     document
       .querySelector("#toast")
@@ -113,6 +117,20 @@ try {
   assert.equal(saved?.room, 0);
   assert.ok(saved?.x < -0.05);
   console.log("PASS navegación y guardado real");
+
+  await page.keyboard.press("e");
+  await page
+    .getByRole("heading", { name: "¿Sobrescribir la memoria manual?" })
+    .waitFor();
+  await page.getByRole("button", { name: "Cancelar", exact: true }).click();
+  assert.deepEqual(
+    await page.evaluate(() =>
+      JSON.parse(localStorage.getItem("sanity404-save") || "null"),
+    ),
+    saved,
+    "Cancelar conserva el guardado manual",
+  );
+  console.log("PASS confirmación de sobrescritura y cancelación");
 
   await page.reload({ waitUntil: "load" });
   const load = page.getByRole("button", { name: "Continuar", exact: true });

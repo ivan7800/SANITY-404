@@ -47,6 +47,32 @@ jobs:
           SANITY_TEST_URL: http://127.0.0.1:5173
           SANITY_ARTIFACT_DIR: browser-artifacts
         run: node scripts/browser-historical.mjs
+      - name: Test the historical reconstruction in Chrome
+        if: ${{ !cancelled() }}
+        env:
+          SANITY_TEST_URL: http://127.0.0.1:5173/
+        run: node scripts/browser-phase21.mjs
+      - name: Test simulated gamepad
+        if: ${{ !cancelled() }}
+        env:
+          SANITY_TEST_URL: http://127.0.0.1:5173/
+        run: node scripts/browser-gamepad.mjs
+      - name: Test the compiled web game
+        if: ${{ !cancelled() }}
+        env:
+          SANITY_SOFTWARE: "1"
+          SANITY_TEST_CORRUPT_SAVE: "1"
+          SANITY_TEST_URL: http://127.0.0.1:5180/SANITY-404/
+        run: |
+          npm run build
+          mkdir -p /tmp/sanity-web
+          ln -s "$PWD/dist" /tmp/sanity-web/SANITY-404
+          python3 -m http.server 5180 --bind 127.0.0.1 --directory /tmp/sanity-web &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:5180/SANITY-404/ > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:web:production
       - name: Preserve browser evidence
         if: always()
         uses: actions/upload-artifact@v4

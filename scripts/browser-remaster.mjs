@@ -281,7 +281,7 @@ try {
     await page.locator(".save-slot").isVisible(),
   );
   await screenshot("cargar-1440x900");
-  await page.locator("#load-confirm").click();
+  await page.locator("#load-manual").click();
   check(
     "Recarga desde la pantalla de carga",
     (await inspect()).state.room === 0 && !(await inspect()).paused,

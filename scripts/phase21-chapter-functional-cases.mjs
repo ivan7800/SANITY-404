@@ -197,10 +197,10 @@ export async function runChapterFunctionalCases(
   const inspect = () => page.evaluate(() => window.sanityInspect());
   async function seed(state) {
     await page.goto(url);
-    await page.evaluate(
-      (value) => localStorage.setItem("sanity404-save", JSON.stringify(value)),
-      state,
-    );
+    await page.evaluate((value) => {
+      localStorage.removeItem("sanity404-checkpoint");
+      localStorage.setItem("sanity404-save", JSON.stringify(value));
+    }, state);
     await page.reload();
     await page.getByRole("button", { name: "Continuar", exact: true }).click();
     await page.waitForFunction(

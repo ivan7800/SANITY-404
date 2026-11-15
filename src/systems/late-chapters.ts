@@ -120,6 +120,8 @@ export const lateChapters = [
     innerTask: "Entra en la tramoya y lee el ritmo codificado.",
     puzzleTask: "Alinea los contrapesos según la partitura.",
     fight: "Desactiva al autómata de escena.",
+    evade:
+      "La pausa soltó la partitura. Rodéala por la tramoya y vuelve con ella.",
     artifactTask: "Conserva la partitura del silencio.",
     epilogue:
       "Amara detiene las voces mecánicas; la partitura conserva el ritmo del rito.",
@@ -158,6 +160,8 @@ export const lateChapters = [
     innerTask: "Entra en el revelado y estudia la exposición.",
     puzzleTask: "Superpón los negativos y fija la puerta verdadera.",
     fight: "Aparta la sombra de revelado.",
+    evade:
+      "La placa está fijada. Puedes recogerla y retirarte mientras la sombra sigue en la sala.",
     artifactTask: "Envía la placa verificable a Veyr.",
     epilogue:
       "Émile fija la puerta futura. En la última copia su rostro es más viejo que en el espejo.",
@@ -185,9 +189,11 @@ export function lateObjective(
   )
     return "Inspecciona las dos pruebas materiales de la sala antes de actuar.";
   if (!state.items.includes(chapter.solution)) return chapter.puzzleTask;
-  if (!state.defeated.includes(`enemy${chapter.room + 1}`))
-    return chapter.fight;
-  if (!state.items.includes(chapter.artifact)) return chapter.artifactTask;
+  if (!state.items.includes(chapter.artifact)) {
+    if (state.defeated.includes(`enemy${chapter.room + 1}`))
+      return chapter.artifactTask;
+    return "evade" in chapter ? chapter.evade : chapter.fight;
+  }
   return `Regresa por ${chapter.place} con la prueba conservada.`;
 }
 export function solveLatePuzzle(
@@ -260,7 +266,7 @@ export function lateArtifactUnlocked(
 ): boolean {
   return (
     state.items.includes(chapter.solution) &&
-    state.defeated.includes(`enemy${chapter.room + 1}`)
+    ("evade" in chapter || state.defeated.includes(`enemy${chapter.room + 1}`))
   );
 }
 
